@@ -1,7 +1,6 @@
 # Secrets
 **/*.env
 **/*.env.yaml
-*.pem
 *.key
 *.csr
 *.srl
