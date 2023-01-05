@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-postgres-db
+  namespace: keycloak
+  labels:
+    app: keycloak
+spec:
+  selector:
+    app: keycloak-postgressql-db
+  ports:
+    - name: pgql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: keycloak-postgressql-db
+  namespace: keycloak
+  labels:
+    app: keycloak
+spec:
+  serviceName: keycloak-postgressql-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak-postgressql-db
+  template:
+    metadata:
+      labels:
+        app: keycloak-postgressql-db
+    spec:
+      containers:
+        - name: keycloak-postgressql-db
+          image: postgres:14.5
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secrets
+                  key: PG_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secrets
+                  key: PG_PASS
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secrets
+                  key: PG_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata #/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata
+      terminationGracePeriodSeconds: 60
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - 'ReadWriteOnce'
+        resources:
+          requests:
+            storage: 10Gi
