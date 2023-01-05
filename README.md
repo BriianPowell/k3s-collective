@@ -38,3 +38,27 @@ flux create helmrelease sealed-secrets \
   --chart-version=">=1.15.0-0" \
   --crds=CreateReplace
 ```
+
+3. Retrieve the public key:
+
+```sh
+kubeseal --fetch-cert \
+  --controller-name=sealed-secrets-controller \
+  --controller-namespace=flux-system \
+  > pub-sealed-secrets.pem
+```
+
+4. Create a secret
+
+```sh
+kubectl -n default create secret generic basic-auth \
+  --from-literal=user=admin \
+  --from-literal=password=change-me \
+  --dry-run=client \
+  -o yaml > basic-auth.yaml
+```
+
+kubectl create secret generic cloudflare-api-token-secret -n cert-manager \
+  --from-literal=
+  --dry-run=client \
+  -o yaml > basic-auth.yaml
