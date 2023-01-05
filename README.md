@@ -58,7 +58,15 @@ kubectl -n default create secret generic basic-auth \
   -o yaml > basic-auth.yaml
 ```
 
-kubectl create secret generic cloudflare-api-token-secret -n cert-manager \
-  --from-literal=
-  --dry-run=client \
-  -o yaml > basic-auth.yaml
+5. Seal the Secret
+
+```sh
+kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
+  < basic-auth.yaml > basic-auth-sealed.yaml
+```
+
+6. Apply the Sealed Secret
+
+```sh
+kubectl apply -f basic-auth-sealed.yaml
+```

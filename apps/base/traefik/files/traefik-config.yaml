@@ -1,0 +1,31 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--log.level=INFO"
+    dashboard:
+      enabled: true
+    ports:
+      websecure:
+        tls:
+          enabled: true
+      web:
+        redirectTo: websecure
+    logs:
+      access:
+        enabled: true
+
+# - "--entryPoints.web.proxyProtocol.insecure"
+# - "--entryPoints.web.forwardedHeaders.insecure"
+# - "--providers.kubernetescrd.allowCrossNamespace=true"
+
+#
+# File Requires manual Installation:
+# scp traefik-config.yaml root@server:/var/lib/rancher/k3s/server/
+# chown root:root /var/lib/rancher/k3s/server/traefik-config.yaml
+# chmod 600 /var/lib/rancher/k3s/server/traefik-config.yaml
+#
