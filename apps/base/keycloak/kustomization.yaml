@@ -4,6 +4,6 @@ namespace: keycloak
 resources:
   - namespace.yaml
   - config.yaml
-  - posgres.yaml
+  - postgres.yaml
   - deployment.yaml
   - ingress.yaml
