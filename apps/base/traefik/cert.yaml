@@ -1,12 +1,12 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: wildcard-powell-place-secret
-  namespace: cert-manager
-  # annotations:
-  #   kubed.appscode.com/sync: '' # Sync certificate to matching namespaces
-type: kubernetes.io/tls
----
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: wildcard-powell-place-secret
+#   namespace: cert-manager
+#   # annotations:
+#   #   kubed.appscode.com/sync: '' # Sync certificate to matching namespaces
+# type: kubernetes.io/tls
+# ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
