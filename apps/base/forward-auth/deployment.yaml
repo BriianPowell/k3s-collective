@@ -39,8 +39,6 @@ spec:
     metadata:
       labels:
         app: traefik-forward-auth
-      annotations:
-        container.apparmor.security.beta.kubernetes.io/traefik-forward-auth: runtime/default
     spec:
       terminationGracePeriodSeconds: 60
       containers:
