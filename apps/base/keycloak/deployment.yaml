@@ -120,7 +120,7 @@ spec:
               port: 8080
           volumeMounts:
             - name: inferno-realm
-              mountpath: /opt/keycloak/data/import
+              mountPath: /opt/keycloak/data/import
       volumes:
         - name: inferno-realm
           configMap:
