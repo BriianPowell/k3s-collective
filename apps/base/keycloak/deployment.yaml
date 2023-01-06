@@ -63,7 +63,7 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:19.0.1
-          args: ['start --opti']
+          args: ['start --optimized']
           env:
             - name: KEYCLOAK_ADMIN
               valueFrom:
