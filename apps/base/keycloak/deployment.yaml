@@ -63,7 +63,7 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:19.0.1
-          args: ['start --import-realm']
+          args: ['start']
           env:
             - name: KEYCLOAK_ADMIN
               valueFrom:
@@ -118,10 +118,3 @@ spec:
             httpGet:
               path: /realms/inferno
               port: 8080
-          volumeMounts:
-            - name: inferno-realm
-              mountPath: /opt/keycloak/data/import
-      volumes:
-        - name: inferno-realm
-          configMap:
-            name: inferno-realm
