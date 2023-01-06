@@ -6,3 +6,4 @@
 *.srl
 
 secrets/*-secret.yaml
+testclient.json

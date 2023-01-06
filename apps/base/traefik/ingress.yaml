@@ -11,9 +11,9 @@ spec:
   routes:
     - match: Host(`traefik.powell.place`)
       kind: Rule
-      # middlewares:
-      #   - name: traefik-forward-auth
-      #     namespace: kube-system
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: kube-system
       services:
         - name: api@internal
           kind: TraefikService

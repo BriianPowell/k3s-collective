@@ -1,0 +1,51 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-forward-auth
+  namespace: kube-system
+  labels:
+    app: traefik-forward-auth
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`auth.powell.place`)
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: kube-system
+      services:
+        - name: traefik-forward-auth
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-forward-auth
+  namespace: kube-system
+  labels:
+    app: traefik-forward-auth
+spec:
+  forwardAuth:
+    address: http://traefik-forward-auth/
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Forwarded-User
+#
+# Usage Example
+#
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: example-forward-auth-https
+#   namespace: default
+#   labels:
+#     app: traefik
+# spec:
+#   entryPoints:
+#     - https
+#   routes:
+#   - match: Host(`example.powell.place`)
+#     kind: Rule
+#     services:
+#     - name: traefik-forward-auth

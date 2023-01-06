@@ -1,0 +1,134 @@
+#
+# Reference:
+# https://github.com/thomseddon/traefik-forward-auth
+# https://github.com/thomseddon/traefik-forward-auth/issues/83
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-forward-auth
+  namespace: kube-system
+  labels:
+    app: traefik-forward-auth
+spec:
+  selector:
+    app: traefik-forward-auth
+  type: ClusterIP
+  ports:
+    - name: auth-http
+      port: 80
+      protocol: TCP
+      targetPort: 4181
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik-forward-auth
+  namespace: kube-system
+  labels:
+    app: traefik-forward-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik-forward-auth
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: traefik-forward-auth
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/traefik-forward-auth: runtime/default
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: traefik-forward-auth
+          image: thomseddon/traefik-forward-auth:2
+          imagePullPolicy: Always
+          env:
+            - name: LOG_LEVEL
+              value: debug
+            - name: AUTH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: AUTH_HOST
+            - name: URL_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: URL_PATH
+            - name: DEFAULT_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: DEFAULT_PROVIDER
+            # - name: DOMAIN
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: traefik-forward-auth-config
+            #       key: DOMAINS
+            - name: COOKIE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: COOKIE_DOMAIN
+            - name: INSECURE_COOKIE
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: INSECURE_COOKIE
+            - name: PROVIDERS_OIDC_ISSUER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-forward-auth-config
+                  key: PROVIDERS_OIDC_ISSUER_URL
+            - name: PROVIDERS_OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: traefik-forward-auth-client-id
+            - name: PROVIDERS_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: traefik-forward-auth-client-secret
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-forward-auth-secrets
+                  key: traefik-forward-auth-secret
+          ports:
+            - name: http
+              containerPort: 4181
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 4181
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            limits:
+              memory: '10Mi'
+              cpu: '100m'
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: traefik-forward-auth-config
+        - name: traefik-forward-auth-secrets
+          secret:
+            secretName: traefik-forward-auth-secrets
