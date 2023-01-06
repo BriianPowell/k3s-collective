@@ -63,7 +63,7 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:19.0.1
-          args: ['start']
+          args: ['start --opti']
           env:
             - name: KEYCLOAK_ADMIN
               valueFrom:
@@ -87,7 +87,7 @@ spec:
             - name: KC_METRICS_ENABLED
               value: 'true'
             - name: KC_SPI_ADMIN_REALM
-              value: inferno
+              value: master
             - name: KC_DB
               value: postgres
             - name: KC_DB_URL_HOST
@@ -116,5 +116,5 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
             httpGet:
-              path: /realms/inferno
+              path: /realms/master
               port: 8080
