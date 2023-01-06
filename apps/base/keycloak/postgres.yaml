@@ -8,11 +8,13 @@ metadata:
 spec:
   selector:
     app: keycloak-postgressql-db
+  type: NodePort
   ports:
     - name: pgql
       port: 5432
       protocol: TCP
       targetPort: 5432
+      nodePort: 30007
 ---
 apiVersion: apps/v1
 kind: StatefulSet
