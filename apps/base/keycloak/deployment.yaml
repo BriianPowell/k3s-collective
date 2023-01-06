@@ -87,7 +87,7 @@ spec:
             - name: KC_METRICS_ENABLED
               value: 'true'
             - name: KC_SPI_ADMIN_REALM
-              value: master
+              value: inferno
             - name: KC_DB
               value: postgres
             - name: KC_DB_URL_HOST
@@ -116,5 +116,5 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
             httpGet:
-              path: /realms/master
+              path: /realms/inferno
               port: 8080

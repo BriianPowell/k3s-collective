@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: keycloak
 resources:
   - namespace.yaml
-  - config.yaml
   - postgres.yaml
   - deployment.yaml
   - ingress.yaml
