@@ -83,7 +83,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [alertmanager](https://github.com/prometheus/alertmanager)
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [x] [HomeAssistant](https://www.home-assistant.io/)
+- [ ] [HomeAssistant](https://www.home-assistant.io/)
 - [ ] [Nextcloud](https://github.com/nextcloud/server)
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
