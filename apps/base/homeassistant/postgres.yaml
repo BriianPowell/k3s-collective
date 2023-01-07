@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homeassistant-postgres-db
+  namespace: homeassistant
+  labels:
+    app: homeassistant
+spec:
+  selector:
+    app: homeassistant-postgressql-db
+  type: NodePort
+  ports:
+    - name: pgql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+      nodePort: 30008
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: homeassistant-postgressql-db
+  namespace: homeassistant
+  labels:
+    app: homeassistant
+spec:
+  serviceName: homeassistant-postgressql-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homeassistant-postgressql-db
+  template:
+    metadata:
+      labels:
+        app: homeassistant-postgressql-db
+    spec:
+      containers:
+        - name: homeassistant-postgressql-db
+          image: postgres:14.5
+          args:
+            - -c
+            - max_wal_size=4096
+            - -c
+            - min_wal_size=2048
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant-secrets
+                  key: PG_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant-secrets
+                  key: PG_PASS
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant-secrets
+                  key: PG_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata #/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata
+      terminationGracePeriodSeconds: 60
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - 'ReadWriteOnce'
+        resources:
+          requests:
+            storage: 5Gi
