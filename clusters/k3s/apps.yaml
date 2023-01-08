@@ -13,6 +13,6 @@ spec:
   dependsOn:
     - name: infra-configs
   sourceRef:
-    kind: GitRepositorf
+    kind: GitRepository
     name: flux-system
   path: ./apps/base
