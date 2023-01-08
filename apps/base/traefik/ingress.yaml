@@ -15,5 +15,5 @@ spec:
         - name: traefik-forward-auth
           namespace: kube-system
       services:
-        - name: api@internal
-          kind: TraefikService
+        - name: traefik
+          port: 443
