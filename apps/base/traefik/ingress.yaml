@@ -15,5 +15,5 @@ spec:
       #   - name: traefik-forward-auth
       #     namespace: kube-system
       services:
-        Kind: TraefikService
-        Name: api@internal
+        - kind: TraefikService
+          name: api@internal
