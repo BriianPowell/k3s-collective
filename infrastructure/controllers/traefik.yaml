@@ -50,9 +50,6 @@ spec:
     additionalArguments:
       - '--entryPoints.web.proxyProtocol.insecure' # Used for HomeAssistant
       - '--entryPoints.web.forwardedHeaders.insecure' # Used for HomeAssistant
-    # ingressRoute:
-    #   dashboard:
-    #     matchRule: (`traefik.powell.place`)
-    #   middlewares:
-    #     name: traefik-forward-auth
-    #     namespace: kube-system
+    ingressRoute:
+      dashboard:
+        enabled: false
