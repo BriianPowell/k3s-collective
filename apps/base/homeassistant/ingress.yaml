@@ -14,3 +14,11 @@ spec:
       services:
         - name: homeassistant
           port: 8123
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: homeassistant-headers
+  namespace: homeassistant
+spec:
+  headers:
