@@ -1,19 +1,19 @@
-# apiVersion: traefik.containo.us/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: traefik-dashboard-https
-#   namespace: kube-system
-#   labels:
-#     app: traefik
-# spec:
-#   entryPoints:
-#     - websecure
-#   routes:
-#     - match: Host(`traefik.powell.place`)
-#       kind: Rule
-#       middlewares:
-#         - name: traefik-forward-auth
-#           namespace: kube-system
-#       services:
-#         Kind: TraefikService
-#         Name: api@internal
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-https
+  namespace: kube-system
+  labels:
+    app: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`traefik.powell.place`)
+      kind: Rule
+      # middlewares:
+      #   - name: traefik-forward-auth
+      #     namespace: kube-system
+      services:
+        Kind: TraefikService
+        Name: api@internal
