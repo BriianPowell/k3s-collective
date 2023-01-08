@@ -6,6 +6,8 @@ metadata:
 spec:
   valuesContent: |-
     additionalArguments:
+      - "--entryPoints.web.proxyProtocol.insecure" # Used for HomeAssistant
+      - "--entryPoints.web.forwardedHeaders.insecure" # Used for HomeAssistant
       - "--log.level=INFO"
     dashboard:
       enabled: true
@@ -19,8 +21,6 @@ spec:
       access:
         enabled: true
 
-# - "--entryPoints.web.proxyProtocol.insecure"
-# - "--entryPoints.web.forwardedHeaders.insecure"
 # - "--providers.kubernetescrd.allowCrossNamespace=true"
 
 #

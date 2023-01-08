@@ -87,6 +87,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [ ] [Nextcloud](https://github.com/nextcloud/server)
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
+- [ ] CrowdSec - maybe worth looking into
 
 ## Helpful References
 
@@ -95,6 +96,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
 - <https://github.com/cert-manager/cert-manager>
 - <https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/>
+- <https://github.com/fluxcd/flux2-kustomize-helm-example>
 
 ## Helpful Debugging
 
