@@ -1,52 +1,52 @@
-# ---
-# apiVersion: source.toolkit.fluxcd.io/v1beta2
-# kind: HelmRepository
-# metadata:
-#   name: traefik
-#   namespace: kube-system
-# spec:
-#   interval: 1h0m0s
-#   url: https://helm.traefik.io/traefik
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: traefik
-#   namespace: kube-system
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: traefik
-#       sourceRef:
-#         kind: HelmRepository
-#         name: traefik
-#         namespace: kube-system
-#       version: '>=20.0.0'
-#   values:
-#     podAnnotations:
-#       prometheus.io/port: '8082'
-#       prometheus.io/scrape: 'true'
-#     priorityClassName: 'system-cluster-critical'
-#     tolerations:
-#       - key: 'CriticalAddonsOnly'
-#         operator: 'Exists'
-#       - key: 'node-role.kubernetes.io/control-plane'
-#         operator: 'Exists'
-#         effect: 'NoSchedule'
-#       - key: 'node-role.kubernetes.io/master'
-#         operator: 'Exists'
-#         effect: 'NoSchedule'
-#     service:
-#       ipFamilyPolicy: 'PreferDualStack'
-#     ports:
-#       web:
-#         redirectTo: websecure
-#     logs:
-#       general:
-#         level: INFO
-#       access:
-#         enabled: true
-#     additionalArguments:
-#       - '--entryPoints.web.proxyProtocol.insecure' # Used for HomeAssistant
-#       - '--entryPoints.web.forwardedHeaders.insecure' # Used for HomeAssistant
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  interval: 1h0m0s
+  url: https://helm.traefik.io/traefik
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: traefik
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: kube-system
+      version: '>=20.0.0'
+  values:
+    podAnnotations:
+      prometheus.io/port: '8082'
+      prometheus.io/scrape: 'true'
+    priorityClassName: 'system-cluster-critical'
+    tolerations:
+      - key: 'CriticalAddonsOnly'
+        operator: 'Exists'
+      - key: 'node-role.kubernetes.io/control-plane'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+      - key: 'node-role.kubernetes.io/master'
+        operator: 'Exists'
+        effect: 'NoSchedule'
+    service:
+      ipFamilyPolicy: 'PreferDualStack'
+    ports:
+      web:
+        redirectTo: websecure
+    logs:
+      general:
+        level: INFO
+      access:
+        enabled: true
+    additionalArguments:
+      - '--entryPoints.web.proxyProtocol.insecure' # Used for HomeAssistant
+      - '--entryPoints.web.forwardedHeaders.insecure' # Used for HomeAssistant
