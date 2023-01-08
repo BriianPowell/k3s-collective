@@ -46,7 +46,7 @@ spec:
         forwardedHeaders:
           insecure: true
           trustedIPs:
-            - 0.0.0.0/8
+            - 0.0.0.0/0
             - 127.0.0.1/32 # localhost
             - 10.0.0.0/16 # local subnet
             - 10.42.0.0/24 # Kubernetes Subnet
@@ -54,7 +54,7 @@ spec:
         proxyProtocol:
           insecure: true
           trustedIPs:
-            - 0.0.0.0/8
+            - 0.0.0.0/0
             - 127.0.0.1/32 # localhost
             - 10.0.0.0/16 # local subnet
             - 10.42.0.0/24 # Kubernetes Subnet
