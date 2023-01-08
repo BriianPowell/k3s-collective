@@ -42,37 +42,29 @@ spec:
     ports:
       web:
         redirectTo: websecure
-      # websecure:
-      #   forwardedHeaders:
-      #     insecure: true
-      #     trustedIPs:
-      #       - 0.0.0.0/8
-      #       - 127.0.0.1/32 # localhost
-      #       - 10.0.0.0/16 # local subnet
-      #       - 10.42.0.0/24 # Kubernetes Subnet
-      #       - 10.43.0.0/24 # Kubernetes Subnet
-      #   proxyProtocol:
-      #     insecure: true
-      #     trustedIPs:
-      #       - 0.0.0.0/8
-      #       - 127.0.0.1/32 # localhost
-      #       - 10.0.0.0/16 # local subnet
-      #       - 10.42.0.0/24 # Kubernetes Subnet
-      #       - 10.43.0.0/24 # Kubernetes Subnet
+      websecure:
+        forwardedHeaders:
+          insecure: true
+          trustedIPs:
+            - 0.0.0.0/8
+            - 127.0.0.1/32 # localhost
+            - 10.0.0.0/16 # local subnet
+            - 10.42.0.0/24 # Kubernetes Subnet
+            - 10.43.0.0/24 # Kubernetes Subnet
+        proxyProtocol:
+          insecure: true
+          trustedIPs:
+            - 0.0.0.0/8
+            - 127.0.0.1/32 # localhost
+            - 10.0.0.0/16 # local subnet
+            - 10.42.0.0/24 # Kubernetes Subnet
+            - 10.43.0.0/24 # Kubernetes Subnet
     logs:
       general:
         level: INFO
       access:
         enabled: true
     # additionalArguments:
-    #   - '--entryPoints.web.proxyProtocol.insecure' # Used for HomeAssistant
-    #   - '--entrypoints.web.proxyProtocol.trustedIPs=127.0.0.1/32,10.0.0.0/8,10.42.0.0/24,10.43.0.0/24'
-    #   - '--entryPoints.web.forwardedHeaders.insecure' # Used for HomeAssistant
-    #   - '--entrypoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32,10.0.0.0/8,10.42.0.0/24,10.43.0.0/24'
-    #   - '--entryPoints.websecure.proxyProtocol.insecure' # Used for HomeAssistant
-    #   - '--entrypoints.websecure.proxyProtocol.trustedIPs=127.0.0.1/32,10.0.0.0/8,10.42.0.0/24,10.43.0.0/24'
-    #   - '--entryPoints.websecure.forwardedHeaders.insecure' # Used for HomeAssistant
-    #   - '--entrypoints.websecure.forwardedHeaders.trustedIPs=127.0.0.1/32,10.0.0.0/8,10.42.0.0/24,10.43.0.0/24'
     #   - '--providers.kubernetescrd.allowCrossNamespace=true'
     ingressRoute:
       dashboard:
