@@ -54,5 +54,5 @@ spec:
       dashboard:
         matchRule: (`traefik.powell.place`)
       middlewares:
-        - name: traefik-forward-auth
-          namespace: kube-system
+        name: traefik-forward-auth
+        namespace: kube-system
