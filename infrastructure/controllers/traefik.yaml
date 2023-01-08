@@ -21,8 +21,8 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
+        namespace: kube-system
       version: '>=20.0.0'
-  targetNamespace: kube-system
   values:
     podAnnotations:
       prometheus.io/port: '8082'
