@@ -41,7 +41,7 @@ spec:
               name: ha-storage
           ports:
             - name: http
-              containerPort: 8123l
+              containerPort: 8123
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
