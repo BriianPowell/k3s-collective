@@ -24,9 +24,6 @@ spec:
         namespace: kube-system
       version: '>=20.0.0'
   values:
-    # image:
-    #   name: 'rancher/mirrored-library-traefik'
-    #   tag: '2.9.4'
     podAnnotations:
       prometheus.io/port: '8082'
       prometheus.io/scrape: 'true'
