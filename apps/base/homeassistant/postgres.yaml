@@ -13,7 +13,7 @@ spec:
     - name: pgql
       port: 5432
       protocol: TCP
-      targetPort: 5432
+      targetPort: pgql
       nodePort: 30008
 ---
 apiVersion: apps/v1
@@ -61,7 +61,8 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata #/data/pgdata
           ports:
-            - containerPort: 5432
+            - name: pgql
+              containerPort: 5432
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
