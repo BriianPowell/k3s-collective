@@ -24,6 +24,7 @@ metadata:
   labels:
     app: homeassistant
 spec:
+  serviceName: homeassistant-postgres-db
   replicas: 1
   selector:
     matchLabels:
