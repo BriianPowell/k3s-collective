@@ -5,6 +5,7 @@ commonLabels:
   app: prometheus
 
 resources:
+  - namespace.yaml
   - config.yaml
   - cluster-role.yaml
   - deployment.yaml
