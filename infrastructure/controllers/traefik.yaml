@@ -64,8 +64,9 @@ spec:
         level: INFO
       access:
         enabled: true
-    # additionalArguments:
-    #   - '--providers.kubernetescrd.allowCrossNamespace=true'
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true # Use Middlewares accross namespaces
     ingressRoute:
       dashboard:
         enabled: false
