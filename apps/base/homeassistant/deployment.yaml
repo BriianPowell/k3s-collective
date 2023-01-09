@@ -42,6 +42,10 @@ spec:
           ports:
             - name: http
               containerPort: 8123
+            - name: homekitUDP
+              containerPort: 5353
+            - name: homekitTCP
+              containerPort: 21063
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
