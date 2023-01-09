@@ -11,7 +11,6 @@ spec:
   ports:
     - name: http
       port: 8123
-      targetPort: http
       protocol: TCP
 ---
 apiVersion: apps/v1
@@ -39,9 +38,6 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: ha-storage
-          ports:
-            - name: http
-              containerPort: 8123
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
