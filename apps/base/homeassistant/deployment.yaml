@@ -35,7 +35,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:2022.11.4
+          image: ghcr.io/home-assistant/home-assistant:stable
           volumeMounts:
             - mountPath: /config
               name: ha-storage
