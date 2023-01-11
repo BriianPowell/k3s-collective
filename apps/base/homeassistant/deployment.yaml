@@ -32,7 +32,7 @@ spec:
         app: homeassistant
     spec:
       hostNetwork: true
-      # dnsPolicy: ClusterFirstWithHostNet
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: homeassistant
           image: ghcr.io/home-assistant/home-assistant:stable
@@ -42,6 +42,7 @@ spec:
           ports:
             - name: http
               containerPort: 8123
+              hostPort: 8123
             # - name: homekitudp
             #   containerPort: 5353
             #   protocol: UDP
