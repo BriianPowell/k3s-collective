@@ -49,6 +49,8 @@ spec:
             # - name: homekittcp
             #   containerPort: 21063
             #   protocol: TCP
+      securityContext:
+        privileged: true
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
