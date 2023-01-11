@@ -5,5 +5,5 @@ metadata:
   name: valheim-k8s
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 24h
   url: https://addyvan.github.io/valheim-k8s/
