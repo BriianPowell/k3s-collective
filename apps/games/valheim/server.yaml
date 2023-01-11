@@ -31,7 +31,7 @@ spec:
     serverStorage.pvc.size: '5Gi'
 
     nodeSelector:
-      node-role.kubernetes.io/master: true
+      node-role.kubernetes.io/master: 'true'
 
     extraEnvironmentVars:
       # BEPINEX: 'true'
