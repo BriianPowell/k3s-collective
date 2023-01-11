@@ -22,13 +22,15 @@ spec:
     worldName: 'The Neighborhood of Make-Believe'
     passwordSecret: 'valheim-secrets' # minimum of 5 chars
 
-    storage:
-      kind: 'persistentVolumeClaim'
-      pvc.size: '5Gi'
+    storage.hostvol.path: '/k3s/valheim/save'
+    # storage:
+    #   kind: 'persistentVolumeClaim'
+    #   pvc.size: '5Gi'
 
-    serverStorage:
-      kind: 'persistentVolumeClaim'
-      pvc.size: '5Gi'
+    serverStorage.hostvol.path: '/k3s/valheim/bin'
+    # serverStorage:
+    #   kind: 'persistentVolumeClaim'
+    #   pvc.size: '5Gi'
 
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
