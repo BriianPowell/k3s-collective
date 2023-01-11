@@ -42,12 +42,12 @@ spec:
           ports:
             # - name: http
             #   containerPort: 8123
-          #   - name: homekitudp
-          #     containerPort: 5353
-          #     protocol: UDP
-          #   - name: homekittcp
-          #     containerPort: 21063
-          #     protocol: TCP
+            # - name: homekitudp
+            #   containerPort: 5353
+            #   protocol: UDP
+            # - name: homekittcp
+            #   containerPort: 21063
+            #   protocol: TCP
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
