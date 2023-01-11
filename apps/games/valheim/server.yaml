@@ -30,7 +30,7 @@ spec:
     serverStorage.pvc.storageClassName: 'valheim-bin'
     serverStorage.pvc.size: '5Gi'
 
-    nodeSelector: 'sheol'
+    nodeSelector: '{"node-role.kubernetes.io/master": true}'
 
     extraEnvironmentVars:
       # BEPINEX: 'true'
