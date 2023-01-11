@@ -11,7 +11,7 @@ spec:
   ports:
     - name: http
       port: 8123
-      # targetPort: http
+      targetPort: 8123
       protocol: TCP
 ---
 apiVersion: apps/v1
