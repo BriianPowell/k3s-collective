@@ -16,6 +16,7 @@ spec:
       sourceRef:
         kind: 'HelmRepository'
         name: 'valheim-k8s'
+        namespace: 'flux-system'
   values:
     serverName: 'The Neighborhood'
     worldName: 'The Neighborhood of Make-Believe'
