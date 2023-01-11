@@ -104,5 +104,5 @@ Useful to verify k8s DNS entries
 
 ```bash
 kubectl create -f https://k8s.io/examples/admin/dns/busybox.yaml
-kubectl exec -ti busybox -- nslookup kubernetes.default
+kubectl exec -ti busybox -- nslookup kubernetes.default homeassistant.homeassistant.svc:8123
 ```
