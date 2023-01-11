@@ -29,7 +29,7 @@ spec:
     serverStorage.pvc.storageClassName: 'valheim-bin'
     serverStorage.pvc.size: '5Gi'
 
-    nodeSelector: ''
+    nodeSelector: 'sheol'
 
     extraEnvironmentVars:
       # BEPINEX: 'true'
