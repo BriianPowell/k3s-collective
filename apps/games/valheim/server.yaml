@@ -1,0 +1,139 @@
+---
+apiVersion: 'helm.toolkit.fluxcd.io/v2beta1'
+kind: 'HelmRelease'
+metadata:
+  labels:
+    app: 'valheim'
+    environment: 'production'
+    tier: 'backend'
+  name: 'valheim-server'
+  namespace: 'valheim'
+spec:
+  chart:
+    spec:
+      chart: 'valheim-k8s'
+      reconcileStrategy: 'ChartVersion'
+      sourceRef:
+        kind: 'HelmRepository'
+        name: 'valheim-k8s'
+  values:
+    serverName: 'The Neighborhood'
+    worldName: 'The Neighborhood of Make-Believe'
+    passwordSecret: 'valheim-secrets' # minimum of 5 chars
+
+    storage.kind: 'pvc'
+    storage.pvc.storageClassName: 'valheim-save'
+    storage.pvc.size: '5Gi'
+
+    storage.hostvol.path: 'pvc'
+    serverStorage.pvc.storageClassName: 'valheim-bin'
+    serverStorage.pvc.size: '5Gi'
+
+    nodeSelector: 'sheol'
+
+    extraEnvironmentVars:
+      # BEPINEX: 'true'
+      VALHEIM_PLUS: 'true'
+
+      VPCFG_Server_enabled: 'true'
+      VPCFG_Server_enforceMod: 'true'
+      VPCFG_Server_serverSyncsConfig: 'true'
+      VPCFG_Server_serverSyncHotkeys: 'true'
+
+      VPCFG_ValheimPlus_mainMenuLogo: 'false'
+      VPCFG_ValheimPlus_serverBrowserAdvertisement: 'false'
+
+      VPCFG_Building_enabled: 'true'
+      VPCFG_Building_alwaysDropResources: 'true'
+      VPCFG_Building_alwaysDropExcludedResources: 'false'
+      VPCFG_Building_enableAreaRepair: 'true'
+
+      VPCFG_Hud_enabled: 'true'
+      VPCFG_Hud_showRequiredItems: 'true'
+      VPCFG_Hud_displayBowAmmoCounts: '1'
+
+      VPCFG_Map_enabled: 'true'
+      VPCFG_Map_shareMapProgression: 'true'
+      VPCFG_Map_preventPlayerFromTurningOffPublicPosition: 'true'
+      VPCFG_Map_shareAllPins: 'true'
+      VPCFG_Map_displayCartsAndBoats: 'true'
+
+      VPCFG_Ward_enabled: 'true'
+      VPCFG_Ward_wardRange: '50'
+
+      VPCFG_Player_enabled: 'true'
+      # VPCFG_Player_autoRepair: 'true'
+      VPCFG_Player_autoEquipShield: 'true'
+      VPCFG_Player_autoUnequipShield: 'false'
+      VPCFG_Player_queueWeaponChanges: 'true'
+      VPCFG_Player_reequipItemsAfterSwimming: 'true'
+      VPCFG_Player_mergeWithExistingStacks: 'true'
+      VPCFG_Player_cropNotifier: 'true'
+      VPCFG_Player_deathPenaltyMultiplier: '-99'
+      # VPCFG_Player_skipIntro: 'true'
+
+      VPCFG_Inventory_enabled: 'true'
+      VPCFG_Inventory_woodChestRows: '3'
+      VPCFG_Inventory_mergeWithExistingStacks: 'true'
+      VPCFG_Inventory_playerInventoryRows: '6'
+
+      VPCFG_Workbench_enabled: 'true'
+      VPCFG_Workbench_workbenchRange: '30'
+
+      VPCFG_Beehive_enabled: 'true'
+      VPCFG_Beehive_autoDeposit: 'true'
+      VPCFG_Beehive_showDuration: 'true'
+
+      VPCFG_Fermenter_enabled: 'true'
+      VPCFG_Fermenter_showDuration: 'true'
+      VPCFG_Fermenter_autoFuel: 'true'
+      VPCFG_Fermenter_autoDeposit: 'true'
+      VPCFG_Fermenter_fermenterDuration: 'true'
+
+      VPCFG_Smelter_enabled: 'true'
+      VPCFG_Smelter_autoFuel: 'true'
+      VPCFG_Smelter_autoDeposit: 'true'
+
+      VPCFG_Furnace_enabled: 'true'
+      VPCFG_Furnace_autoFuel: 'true'
+      VPCFG_Furnace_autoDeposit: 'true'
+
+      VPCFG_SpinningWheel_enabled: 'true'
+      VPCFG_SpinningWheel_autoFuel: 'true'
+      VPCFG_SpinningWheel_autoDeposit: 'true'
+
+      VPCFG_Windmill_enabled: 'true'
+      VPCFG_Windmill_autoFuel: 'true'
+      VPCFG_Windmill_autoDeposit: 'true'
+
+      VPCFG_FireSource_enabled: 'true'
+      VPCFG_FireSource_torches: 'true'
+
+      VPCFG_Items_enabled: 'true'
+      VPCFG_Items_noTeleportPrevention: 'true'
+      VPCFG_Items_itemsFloatInWater: 'true'
+
+      # VPCFG_Brightness_enabled: 'true'
+      # VPCFG_Brightness_nightBrightnessMultiplier: '3'
+
+      VPCFG_Hotkeys_enabled: 'true'
+      VPCFG_Hotkeys_rollForwards: 'T'
+      VPCFG_Hotkeys_rollBackwards: 'Y'
+
+      VPCFG_FirstPerson_enabled: 'true'
+      VPCFG_FirstPerson_hotkey: 'F4'
+      VPCFG_FirstPerson_defaultFOV: '95.0'
+
+      VPCFG_GameClock_enabled: 'true'
+      VPCFG_GameClock_textFontSize: '30'
+
+      VPCFG_GridAlignment_enabled: 'true'
+      VPCFG_Chat_forcedCase: 'false'
+
+      STATUS_HTTP: 'true'
+
+      PUID: '1000'
+      PGID: '100'
+      TZ: 'America/Los_Angeles'
+  interval: '1m0s'
+  targetNamespace: 'valheim'
