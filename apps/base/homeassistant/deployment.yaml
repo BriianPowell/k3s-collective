@@ -31,7 +31,7 @@ spec:
       labels:
         app: homeassistant
     spec:
-      # hostNetwork: true
+      hostNetwork: true
       # dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: homeassistant
