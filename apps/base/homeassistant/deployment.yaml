@@ -11,7 +11,7 @@ spec:
   ports:
     - name: http
       port: 8123
-      targetPort: http
+      # targetPort: http
       protocol: TCP
 ---
 apiVersion: apps/v1
@@ -35,13 +35,13 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:2022.11.4
+          image: ghcr.io/home-assistant/home-assistant:stable
           volumeMounts:
             - mountPath: /config
               name: ha-storage
           ports:
-            - name: http
-              containerPort: 8123
+            # - name: http
+            #   containerPort: 8123
           #   - name: homekitudp
           #     containerPort: 5353
           #     protocol: UDP
