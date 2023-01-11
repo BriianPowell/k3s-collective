@@ -12,5 +12,5 @@ spec:
     - match: Host(`ha.powell.place`)
       kind: Rule
       services:
-        - name: homeassistant
+        - name: homeassistant.homeassistant.svc
           port: 8123
