@@ -23,11 +23,9 @@ spec:
     passwordSecret: 'valheim-secrets' # minimum of 5 chars
 
     storage.kind: 'persistentVolumeClaim'
-    storage.pvc.storageClassName: 'valheim-save'
     storage.pvc.size: '5Gi'
 
-    storage.hostvol.path: 'persistentVolumeClaim'
-    serverStorage.pvc.storageClassName: 'valheim-bin'
+    serverStorage.kind: 'persistentVolumeClaim'
     serverStorage.pvc.size: '5Gi'
 
     # nodeSelector:
