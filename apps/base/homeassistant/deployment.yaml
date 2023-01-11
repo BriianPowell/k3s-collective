@@ -8,11 +8,9 @@ metadata:
 spec:
   selector:
     app: homeassistant
-  type: NodePort
   ports:
     - name: http
       port: 8123
-      nodePort: 8123
       targetPort: http
       protocol: TCP
 ---
