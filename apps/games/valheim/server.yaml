@@ -24,14 +24,14 @@ spec:
 
     storage:
       hostvol:
-        path: '/k3s/valheim/save'
+        path: '/mnt/moriyya/valheim/save'
       # kind: 'persistentVolumeClaim'
       # pvc:
       #   size: '5Gi'
 
     serverStorage:
       hostvol:
-        path: '/k3s/valheim/bin'
+        path: '/mnt/moriyya/valheim/bin'
       # kind: 'persistentVolumeClaim'
       # pvc:
       #   size: '5Gi'

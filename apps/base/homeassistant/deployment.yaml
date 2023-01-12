@@ -84,7 +84,7 @@ spec:
     name: homeassistant-pvc
     namespace: homeassistant
   local:
-    path: /k3s/hass-config
+    path: /mnt/moriyya/hass-config
   nodeAffinity:
     required:
       nodeSelectorTerms:
