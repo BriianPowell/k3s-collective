@@ -1,0 +1,42 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+  labels:
+    app: alertmanager
+data:
+  config.yml: |-
+    global:
+      smtp_from: alert@${DOMAIN}
+      smtp_smarthost: ${HOST}:587
+      smtp_auth_username: ${USER}
+      smtp_auth_password: ${PASS}
+      smtp_require_tls: true
+    templates:
+    - '/etc/alertmanager/*.tmpl'
+    route:
+      receiver: alert-emailer
+      group_by: ['alertname', 'priority']
+      group_wait: 30s
+      repeat_interval: 10m
+      # routes:
+      #   - receiver: slack_demo
+      #   # Send severity=slack alerts to slack.
+      #     match:
+      #       severity: slack
+      #     group_wait: 10s
+      #     repeat_interval: 1m
+
+    receivers:
+    - name: alert-emailer
+      email_configs:
+      - to: brian@{DOMAIN}
+        send_resolved: true
+    # - name: slack_demo
+    #   slack_configs:
+    #   - api_url: https://hooks.slack.com/services/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sz4Qk
+    #     channel: '#devopscube-demo'
+
+# Configuration:
+# https://prometheus.io/docs/alerting/latest/configuration/#%3Creceiver%3E

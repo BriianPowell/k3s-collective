@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-postgres-db
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+    component: postgressql
+spec:
+  selector:
+    app: nextcloud
+    component: postgressql-db
+  type: NodePort
+  ports:
+    - name: pgql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+      nodePort: 31432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nextcloud-postgressql-db
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+    component: postgressql
+spec:
+  serviceName: nextcloud-postgressql-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: postgressql-db
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+        component: postgressql-db
+    spec:
+      containers:
+        - name: nextcloud-postgressql-db
+          image: postgres:14.5
+          args:
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_PASS
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata #/data/pgdata
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata
+      terminationGracePeriodSeconds: 60
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - 'ReadWriteOnce'
+        resources:
+          requests:
+            storage: 5Gi

@@ -73,7 +73,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ## Infrastructure
 
-- [x] Traefik Dashboard
+- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
 - [x] [Kubed](https://appscode.com/products/kubed/v0.12.0/welcome/)
 - [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
@@ -88,6 +88,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
 - [ ] CrowdSec - maybe worth looking into
+- [ ] Graylog 
 
 ## Helpful References
 

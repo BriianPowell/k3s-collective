@@ -1,0 +1,168 @@
+#
+# Reference:
+# https://github.com/docker-library/docs/blob/master/nextcloud/README.md
+# https://docs.nextcloud.com/server/latest/admin_manual/contents.html
+# https://blog.w3asel.com/2019/10/authenticating-nextcloud-with-keycloak-using-openid-connect/
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+    component: app
+spec:
+  selector:
+    component: app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+    component: app
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: app
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+        component: app
+    spec:
+      containers:
+        - name: nextcloud
+          image: nextcloud:apache
+          imagePullPolicy: Always
+          env:
+            - name: TIMEZONE
+              value: America/Los Angeles
+            - name: DEFAULT_PHONE_REGION
+              value: US
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: PG_PASS
+            - name: POSTGRES_HOST
+              value: nextcloud-postgres-db
+            - name: NEXTCLOUD_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: ADMIN_USER
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: ADMIN_PASS
+            - name: NEXTCLOUD_TRUSTED_DOMAINS
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: DOMAIN
+            - name: REDIS_HOST
+              value: nextcloud-redis
+            - name: SMTP_HOST
+              value: smtp.mail.me.com
+            - name: SMTP_SECURE
+              value: ssl
+            - name: SMTP_PORT
+              value: '587'
+            - name: SMTP_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: SMTP_NAME
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: SMTP_PASSWORD
+            - name: MAIL_FROM_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: MAIL_FROM_ADDRESS
+            - name: APACHE_DISABLE_REWRITE_IP
+              value: '1'
+            - name: TRUSTED_PROXIES
+              value: 10.0.0.0/16 10.42.0.0/24
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: nextcloud-storage
+              mountPath: /var/www/html
+      restartPolicy: Always
+      volumes:
+        - name: nextcloud-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-pvc
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20T
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-pv
+  labels:
+    app: nextcloud
+    type: local
+spec:
+  capacity:
+    storage: 20T
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: nextcloud-pvc
+    namespace: nextcloud
+  local:
+    path: /mnt/moriyya/nextcloud
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

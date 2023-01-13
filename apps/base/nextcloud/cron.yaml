@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-cron
+  namespace: nextcloud
+  labels:
+    app: nexcloud
+    component: cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexcloud
+      component: cron
+  template:
+    metadata:
+      labels:
+        app: nexcloud
+        component: cron
+    spec:
+      containers:
+        - name: cron
+          image: nextcloud:apache
+          command:
+            - /cron.sh
+          volumeMounts:
+            - name: nextcloud-storage
+              mountPath: /var/www/html
+      restartPolicy: Always
+      volumes:
+        - name: nextcloud-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-pvc

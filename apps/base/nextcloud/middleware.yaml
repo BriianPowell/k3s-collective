@@ -1,0 +1,22 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-headers-middleware
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+spec:
+  headers:
+    stsSeconds: 15552000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nextcloud-redirect-middleware
+  namespace: nextcloud
+  labels:
+    app: nextcloud
+spec:
+  replacePathRegex:
+    regex: ^/.well-known/ca(l|rd)dav
+    replacement: /remote.php/dav/

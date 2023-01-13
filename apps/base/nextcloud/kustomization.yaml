@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nextcloud
+commonLabels:
+  app: nextcloud
+
+resources:
+  - namespace.yaml
+  - cron.yaml
+  - redis.yaml
+  - postgres.yaml
+  - deployment.yaml
+  - middleware.yaml
+  - ingress.yaml
