@@ -73,24 +73,35 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ## Infrastructure
 
+### Base
+
 - [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
-- [x] [Kubed](https://appscode.com/products/kubed/v0.12.0/welcome/)
+- [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
+- [x] [Kubed](https://appscode.com/products/kubed/v0.12.0/welcome/) - NO LONGER USED
 - [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
-- [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
-- [x] [Grafana](https://github.com/grafana/grafana)
+- [ ] [HomeAssistant](https://www.home-assistant.io/)
+- [ ] [Nextcloud](https://github.com/nextcloud/server)
+
+### Monitoring & Logging
+
 - [x] [Prometheus](https://prometheus.io/)
-- [x] [alertmanager](https://github.com/prometheus/alertmanager)
+- [ ] [Grafana](https://github.com/grafana/grafana)
+- [ ] [alertmanager](https://github.com/prometheus/alertmanager)
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [x] [HomeAssistant](https://www.home-assistant.io/)
-- [ ] [Nextcloud](https://github.com/nextcloud/server)
-- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
-- [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
-- [ ] CrowdSec - maybe worth looking into
 - [ ] Graylog 
 
-## Helpful References
+### Security
+
+- [ ] CrowdSec - maybe worth looking into
+
+### TBD
+
+- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
+- [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
+
+## References
 
 - <https://stackoverflow.com/questions/60528376/traefik-redirect-from-one-host-to-another>
 - <https://community.traefik.io/t/cant-route-to-other-ip-port-on-subnet/11152/2>
@@ -99,7 +110,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - <https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/>
 - <https://github.com/fluxcd/flux2-kustomize-helm-example>
 
-## Helpful Debugging
+## Debugging
 
 Useful to verify k8s DNS entries
 

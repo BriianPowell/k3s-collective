@@ -61,8 +61,8 @@ spec:
               mountPath: /alertmanager
       volumes:
         - name: config-volume
-          configMap:
-            name: alertmanager-config
+          secret:
+            secretName: alertmanager-config-secret
         - name: templates-volume
           configMap:
             name: alertmanager-templates

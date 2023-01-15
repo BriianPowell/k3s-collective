@@ -234,11 +234,11 @@ data:
             regex: 'node-exporter'
             action: keep
 
-      # - job_name: 'hass'
-      #   scrape_interval: 60s
-      #   metrics_path: /api/prometheus
-      #   authorization:
-      #     credentials: ${HASS_TOKEN}
-      #   scheme: http
-      #   static_configs:
-      #     - targets: ['homeassistant.homeassistant.svc.cluster.local:8123']
+      - job_name: 'hass'
+        scrape_interval: 60s
+        metrics_path: /api/prometheus
+        authorization:
+          credentials: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmMTc5Mzg2NjY2MTU0ZTJlOGMxZTQyMTgzYTJiODllYyIsImlhdCI6MTY3MzcyOTE1MCwiZXhwIjoxOTg5MDg5MTUwfQ.SY2lvF6JvA-bUeN9rIQlggzIPRXJQKVvvIUGgeT28X0
+        scheme: http
+        static_configs:
+          - targets: ['homeassistant.homeassistant.svc.cluster.local:8123']

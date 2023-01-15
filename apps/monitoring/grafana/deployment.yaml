@@ -89,8 +89,8 @@ spec:
           persistentVolumeClaim:
             claimName: grafana-pvc
         - name: g-config
-          configMap:
-            name: grafana-config
+          secret:
+            secretName: grafana-config-secret
         - name: grafana-datasources
           configMap:
             defaultMode: 420
