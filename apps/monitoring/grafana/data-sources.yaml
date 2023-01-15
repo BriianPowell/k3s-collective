@@ -4,7 +4,7 @@ metadata:
   name: grafana-datasources
   namespace: monitoring
   labels:
-    name: grafana-datasources
+    app: grafana
 data:
   prometheus.yaml: |-
     {
