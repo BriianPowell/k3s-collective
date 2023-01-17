@@ -80,14 +80,14 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [Kubed](https://appscode.com/products/kubed/v0.12.0/welcome/) - NO LONGER USED
 - [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
-- [ ] [HomeAssistant](https://www.home-assistant.io/)
+- [x] [HomeAssistant](https://www.home-assistant.io/)
 - [ ] [Nextcloud](https://github.com/nextcloud/server)
 
 ### Monitoring & Logging
 
 - [x] [Prometheus](https://prometheus.io/)
-- [ ] [Grafana](https://github.com/grafana/grafana)
-- [ ] [alertmanager](https://github.com/prometheus/alertmanager)
+- [x] [Grafana](https://github.com/grafana/grafana)
+- [x] [alertmanager](https://github.com/prometheus/alertmanager)
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
 - [ ] Graylog 
