@@ -148,7 +148,7 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 20T
+    storage: 10T
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
