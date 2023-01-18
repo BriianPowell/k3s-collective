@@ -1,45 +1,69 @@
 ---
-apiVersion: 'helm.toolkit.fluxcd.io/v2beta1'
-kind: 'HelmRelease'
+apiVersion: v1
+kind: Namespace
 metadata:
-  labels:
-    app: 'valheim'
-    environment: 'production'
-    tier: 'backend'
-  name: 'valheim-server'
-  namespace: 'valheim'
+  name: valheim
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: k8s-at-home
+  namespace: valheim
 spec:
+  interval: 24h
+  url: https://k8s-at-home.com/charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: valheim-server
+  namespace: valheim
+  labels:
+    game: valheim
+    tier: backend
+spec:
+  interval: '1h0m0s'
   chart:
     spec:
-      chart: 'valheim-k8s'
-      reconcileStrategy: 'ChartVersion'
+      chart: valheim
       sourceRef:
-        kind: 'HelmRepository'
-        name: 'valheim-k8s'
-        namespace: 'flux-system'
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: valheim
+      reconcileStrategy: ChartVersion
+      version: '>=4.4.0'
   values:
-    serverName: 'The Neighborhood'
-    worldName: 'The Neighborhood of Make-Believe'
-    passwordSecret: 'valheim-secrets' # minimum of 5 chars
+    persistence:
+      config:
+        enabled: true
+        type: pvc
+        existingClaim: valheim-pvc
 
-    storage:
-      hostvol:
-        path: '/mnt/moriyya/valheim/save'
-      # kind: 'persistentVolumeClaim'
-      # pvc:
-      #   size: '5Gi'
+    # storage:
+    #   hostvol:
+    #     path: '/mnt/moriyya/valheim/save'
+    # kind: 'persistentVolumeClaim'
+    # pvc:
+    #   size: '5Gi'
 
-    serverStorage:
-      hostvol:
-        path: '/mnt/moriyya/valheim/bin'
-      # kind: 'persistentVolumeClaim'
-      # pvc:
-      #   size: '5Gi'
+    # serverStorage:
+    #   hostvol:
+    #     path: '/mnt/moriyya/valheim/bin'
+    # kind: 'persistentVolumeClaim'
+    # pvc:
+    #   size: '5Gi'
 
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
 
-    extraEnvironmentVars:
+    env:
+      SERVER_NAME: 'The Neighborhood'
+      WORLD_NAME: 'The Neighborhood of Make-Believe'
+      SERVER_PASS:
+        secretKeyRef:
+          name: valheim-secrets
+          key: password # minimum of 5 chars
+
       # BEPINEX: 'true'
       VALHEIM_PLUS: 'true'
 
@@ -143,4 +167,46 @@ spec:
       PUID: '1000'
       PGID: '100'
       TZ: 'America/Los_Angeles'
-  interval: '1m0s'
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: valheim-pvc
+  namespace: valheim
+  labels:
+    game: valheim
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25G
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: valheim-pv
+  labels:
+    game: valheim
+    type: local
+spec:
+  capacity:
+    storage: 25G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: valheim-pvc
+    namespace: valheim
+  local:
+    path: /mnt/moriyya/valheim
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
