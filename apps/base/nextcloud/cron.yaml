@@ -13,7 +13,7 @@ spec:
       app: nexcloud
       component: cron
   strategy:
-    type: recreate
+    type: Recreate
   template:
     metadata:
       labels:
