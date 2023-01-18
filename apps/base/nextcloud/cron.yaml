@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app: nexcloud
       component: cron
+  strategy:
+    type: recreate
   template:
     metadata:
       labels:
