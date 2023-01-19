@@ -9,8 +9,10 @@ metadata:
 spec:
   selector:
     component: redis
+  type: NodePort
   ports:
     - port: 6379
+      nodePort: 31379
 ---
 apiVersion: apps/v1
 kind: Deployment
