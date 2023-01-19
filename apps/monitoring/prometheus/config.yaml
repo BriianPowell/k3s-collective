@@ -25,12 +25,19 @@ data:
       - name: Pods
         rules:
           - alert: High Pod Memory
-            expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!="kube-system"}) by (namespace,container,pod) > 1200000000
+            expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!~"kube-system|valheim"}) by (namespace,container,pod) > 1200000000
             for: 1m
             labels:
               severity: critical
             annotations:
               summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2GB)
+          - alert: High Game Pod Memory
+            expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server", namespace=~"valheim"}) by (namespace,container,pod) > 5000000000
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: Pod {{$labels.pod}} is currently utilizing high memory (> 5GB)
           - alert: Container Restarted
             expr: sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[1m])) by (pod,namespace,container) > 0
             for: 0m
@@ -74,12 +81,12 @@ data:
       evaluation_interval: 20s
     rule_files:
       - /etc/prometheus/prometheus.rules
-    # alerting:
-    #   alertmanagers:
-    #     - scheme: http
-    #       static_configs:
-    #         - targets:
-    #           - "alertmanager.monitoring.svc:9093"
+    alerting:
+      alertmanagers:
+        - scheme: http
+          static_configs:
+            - targets:
+              - "alertmanager.monitoring.svc:9093"
 
     scrape_configs:
       # Scrape config for API servers.

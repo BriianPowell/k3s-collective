@@ -37,24 +37,8 @@ spec:
         enabled: true
         type: pvc
         existingClaim: valheim-pvc
-
-    # storage:
-    #   hostvol:
-    #     path: '/mnt/moriyya/valheim/save'
-    # kind: 'persistentVolumeClaim'
-    # pvc:
-    #   size: '5Gi'
-
-    # serverStorage:
-    #   hostvol:
-    #     path: '/mnt/moriyya/valheim/bin'
-    # kind: 'persistentVolumeClaim'
-    # pvc:
-    #   size: '5Gi'
-
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
-
     env:
       SERVER_NAME: 'The Neighborhood'
       WORLD_NAME: 'The Neighborhood of Make-Believe'
