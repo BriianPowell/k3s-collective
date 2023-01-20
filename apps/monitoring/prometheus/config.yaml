@@ -81,12 +81,12 @@ data:
       evaluation_interval: 20s
     rule_files:
       - /etc/prometheus/prometheus.rules
-    alerting:
-      alertmanagers:
-        - scheme: http
-          static_configs:
-            - targets:
-              - "alertmanager.monitoring.svc:9093"
+    # alerting:
+    #   alertmanagers:
+    #     - scheme: http
+    #       static_configs:
+    #         - targets:
+    #           - "alertmanager.monitoring.svc:9093"
 
     scrape_configs:
       # Scrape config for API servers.
