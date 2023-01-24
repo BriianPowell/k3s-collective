@@ -32,7 +32,7 @@ data:
             annotations:
               summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2GB)
           - alert: High Game Pod Memory
-            expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server", namespace=~"valheim"}) by (namespace,container,pod) > 5000000000
+            expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server", namespace=~"valheim"}) by (namespace,container,pod) > 7000000000
             for: 1m
             labels:
               severity: critical
@@ -54,8 +54,10 @@ data:
               summary: Container named {{$labels.container}} in {{$labels.pod}} in {{$labels.namespace}} was restarted
       - name: Node
         rules:
+          # https://stackoverflow.com/questions/69281327/why-container-memory-usage-is-doubled-in-cadvisor-metrics/69282328#69282328
+          # https://stackoverflow.com/questions/54866777/count-k8s-cluster-cpu-memory-usage-with-prometheus
           - alert: High Node Memory Usage
-            expr: (sum (container_memory_working_set_bytes{id="/",container!="POD"}) by (kubernetes_io_hostname) / sum (machine_memory_bytes{}) by (kubernetes_io_hostname) * 100) > 80
+            expr: (sum(container_memory_usage_bytes{container!=""}) by (kubernetes_io_hostname) / sum (machine_memory_bytes{}) by (kubernetes_io_hostname)) * 100 > 80
             for: 5m
             labels:
               severity: warn
@@ -81,12 +83,12 @@ data:
       evaluation_interval: 20s
     rule_files:
       - /etc/prometheus/prometheus.rules
-    # alerting:
-    #   alertmanagers:
-    #     - scheme: http
-    #       static_configs:
-    #         - targets:
-    #           - "alertmanager.monitoring.svc:9093"
+    alerting:
+      alertmanagers:
+        - scheme: http
+          static_configs:
+            - targets:
+              - "alertmanager.monitoring.svc:9093"
 
     scrape_configs:
       # Scrape config for API servers.
