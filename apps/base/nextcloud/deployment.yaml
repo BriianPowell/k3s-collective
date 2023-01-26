@@ -115,6 +115,12 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          resources:
+            requests:
+              memory: 150Mi
+            limits:
+              cpu: 300m
+              memory: 500Mi
           volumeMounts:
             - name: nextcloud-storage
               mountPath: /var/www/html

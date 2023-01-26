@@ -44,13 +44,10 @@ spec:
             - '--web.route-prefix=/'
           ports:
             - containerPort: 9090
-          # resources:
-          #   requests:
-          #     cpu: 500m
-          #     memory: 600M
-          #   limits:
-          #     cpu: '1'
-          #     memory: 1Gi
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1Gi
           volumeMounts:
             - name: prometheus-config-volume
               mountPath: /etc/prometheus/

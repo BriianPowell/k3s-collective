@@ -39,4 +39,8 @@ spec:
           image: redis:alpine
           ports:
             - containerPort: 6379
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
       restartPolicy: Always

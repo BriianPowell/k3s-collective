@@ -42,7 +42,6 @@ spec:
       containers:
         - name: nextcloud-postgressql-db
           image: postgres:14.5
-          args:
           env:
             - name: POSTGRES_USER
               valueFrom:

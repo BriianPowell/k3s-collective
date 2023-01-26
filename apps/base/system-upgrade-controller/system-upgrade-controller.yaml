@@ -75,6 +75,10 @@ spec:
           image: rancher/system-upgrade-controller:v0.10.0
           imagePullPolicy: IfNotPresent
           name: system-upgrade-controller
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
           volumeMounts:
             - mountPath: /etc/ssl
               name: etc-ssl

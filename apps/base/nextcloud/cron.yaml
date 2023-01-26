@@ -25,6 +25,10 @@ spec:
           image: nextcloud:apache
           command:
             - /cron.sh
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
           volumeMounts:
             - name: nextcloud-storage
               mountPath: /var/www/html
