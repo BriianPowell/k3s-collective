@@ -255,7 +255,7 @@ data:
       - job_name: 'crowdsec' # Security related metrics
         # https://doc.crowdsec.net/docs/observability/prometheus
         static_configs:
-          - targets: ['crowdsec-service.crowdsec']
+          - targets: ['crowdsec-service.crowdsec:8080']
             # labels:
             #   host: sheol
         metric_relabel_configs:
