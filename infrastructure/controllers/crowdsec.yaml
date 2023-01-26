@@ -40,10 +40,10 @@ spec:
       reflector:
         namespaces: ['kube-system']
     agent:
-      # tolerations:
-      #   - key: node-role.kubernetes.io/control-plane
-      #     operator: Equal
-      #     effect: NoSchedule
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          effect: NoSchedule
       # Specify each pod whose logs you want to process
       acquisition:
         # The namespace where the pod is located
