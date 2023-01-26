@@ -95,7 +95,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ### Security
 
-- [ ] CrowdSec - maybe worth looking into
+- [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
 
 ### TBD
 
