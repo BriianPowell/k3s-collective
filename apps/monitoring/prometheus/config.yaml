@@ -253,10 +253,10 @@ data:
           - targets: ['homeassistant.homeassistant.svc.cluster.local:8123']
 
       - job_name: crowdsec # Security related metrics
-        # https://doc.crowdsec.net/Crowdsec/v1/observability/prometheus/
+        # https://doc.crowdsec.net/docs/observability/prometheus
         static_configs:
           - targets:
-              - crowdsec-service.crowdsec:8080
+              - crowdsec-service.crowdsec.svc.cluster.local:8080
             # labels:
             #   host: sheol
         metric_relabel_configs:
