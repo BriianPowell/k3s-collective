@@ -1,78 +1,78 @@
-# ---
-# apiVersion: v1
-# kind: Namespace
-# metadata:
-#   name: crowdsec
-# ---
-# apiVersion: source.toolkit.fluxcd.io/v1beta2
-# kind: HelmRepository
-# metadata:
-#   name: crowdsec
-#   namespace: crowdsec
-# spec:
-#   interval: 1h0m0s
-#   url: https://crowdsecurity.github.io/helm-charts
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: crowdsec
-#   namespace: crowdsec
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: crowdsec
-#       sourceRef:
-#         kind: HelmRepository
-#         name: crowdsec
-#         namespace: crowdsec
-#       version: '>=20.0.0'
-#   values:
-#     container_runtime: containerd
-#     tls:
-#       enabled: true
-#     bouncer:
-#       reflector:
-#         namespaces: ['traefik']
-#     agent:
-#       tolerations:
-#         - key: node-role.kubernetes.io/control-plane
-#           operator: Equal
-#           effect: NoSchedule
-#       # Specify each pod whose logs you want to process
-#       acquisition:
-#         # The namespace where the pod is located
-#         - namespace: traefik
-#           # The pod name
-#           podName: traefik-*
-#           # as in crowdsec configuration, we need to specify the program name to find a matching parser
-#           program: traefik
-#       env:
-#         - name: PARSERS
-#           value: 'crowdsecurity/cri-logs'
-#         - name: COLLECTIONS
-#           value: 'crowdsecurity/traefik'
-#         # When testing, allow bans on private networks
-#         # - name: DISABLE_PARSERS
-#         #   value: 'crowdsecurity/whitelists'
-#       persistentVolume:
-#         config:
-#           enabled: false
-#     lapi:
-#       dashboard:
-#         enabled: false
-#         ingress:
-#           host: crowdsec.powell.place
-#           enabled: true
-#       persistentVolume:
-#         config:
-#           enabled: false
-#       # env:
-#       #   # For an internal test, disable the Online API
-#       #   - name: DISABLE_ONLINE_API
-#       #     value: 'true'
-#     metrics:
-#       enabled: true
-#       serviceMonitor:
-#         enabled: true
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: crowdsec
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: crowdsec
+  namespace: crowdsec
+spec:
+  interval: 1h0m0s
+  url: https://crowdsecurity.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: crowdsec
+  namespace: crowdsec
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: crowdsec
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: crowdsec
+      version: '>=20.0.0'
+  values:
+    container_runtime: containerd
+    tls:
+      enabled: true
+    bouncer:
+      reflector:
+        namespaces: ['traefik']
+    agent:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          effect: NoSchedule
+      # Specify each pod whose logs you want to process
+      acquisition:
+        # The namespace where the pod is located
+        - namespace: traefik
+          # The pod name
+          podName: traefik-*
+          # as in crowdsec configuration, we need to specify the program name to find a matching parser
+          program: traefik
+      env:
+        - name: PARSERS
+          value: 'crowdsecurity/cri-logs'
+        - name: COLLECTIONS
+          value: 'crowdsecurity/traefik'
+        # When testing, allow bans on private networks
+        # - name: DISABLE_PARSERS
+        #   value: 'crowdsecurity/whitelists'
+      persistentVolume:
+        config:
+          enabled: false
+    lapi:
+      dashboard:
+        enabled: false
+        ingress:
+          host: crowdsec.powell.place
+          enabled: true
+      persistentVolume:
+        config:
+          enabled: false
+      # env:
+      #   # For an internal test, disable the Online API
+      #   - name: DISABLE_ONLINE_API
+      #     value: 'true'
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

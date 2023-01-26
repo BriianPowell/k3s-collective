@@ -43,6 +43,8 @@ spec:
       web:
         redirectTo: websecure
       websecure:
+        middlewares:
+          - traefik-bouncer@kubernetescrd
         forwardedHeaders:
           insecure: true
           trustedIPs:
@@ -73,3 +75,13 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
+    experimental:
+      plugins:
+        enabled: true
+    volumes:
+      - name: crowdsec-bouncer-tls
+        mountPath: /etc/traefik/crowdsec-certs/
+        type: secret
+    additionalArguments:
+      - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
+      - '--experimental.plugins.bouncer.version=v1.1.9'
