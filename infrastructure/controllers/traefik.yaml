@@ -44,7 +44,7 @@ spec:
         redirectTo: websecure
       websecure:
         middlewares:
-          - traefik-bouncer@kubernetescrd
+          - kube-system-bouncer@kubernetescrd
         forwardedHeaders:
           insecure: true
           trustedIPs:
