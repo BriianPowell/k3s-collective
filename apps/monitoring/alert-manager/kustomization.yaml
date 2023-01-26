@@ -8,4 +8,3 @@ resources:
   - template.yaml
   - deployment.yaml
   - ingress.yaml
-# TODO: FIGURE OUT CONFIG

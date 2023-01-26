@@ -1,5 +1,6 @@
 #
-# Reference: https://github.com/keycloak/keycloak/discussions/12594
+# Reference:
+# https://github.com/keycloak/keycloak/discussions/12594
 #
 
 apiVersion: v1

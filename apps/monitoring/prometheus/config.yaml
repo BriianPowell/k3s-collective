@@ -1,8 +1,10 @@
-# Docs
+#
+# Reference:
 # https://www.opsramp.com/guides/prometheus-monitoring/prometheus-alerting/
 # https://prometheus.io/docs/introduction/overview/
 # https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus-kubernetes.yml
 #
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
