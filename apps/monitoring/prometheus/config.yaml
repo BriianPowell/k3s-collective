@@ -252,14 +252,14 @@ data:
         static_configs:
           - targets: ['homeassistant.homeassistant.svc.cluster.local:8123']
 
-      - job_name: 'crowdsec' # Security related metrics
-        # https://doc.crowdsec.net/docs/observability/prometheus
-        static_configs:
-          - targets: ['crowdsec-service.crowdsec:8080']
-            # labels:
-            #   host: sheol
-        metric_relabel_configs:
-          # Only keep data that is used in graphs to reduce size
-          - source_labels: [__name__]
-            regex: cs_.+
-            action: keep
+      # - job_name: 'crowdsec' # Security related metrics
+      #   # https://doc.crowdsec.net/docs/observability/prometheus
+      #   static_configs:
+      #     - targets: ['crowdsec-service.crowdsec:8080']
+      #       # labels:
+      #       #   host: sheol
+      #   metric_relabel_configs:
+      #     # Only keep data that is used in graphs to reduce size
+      #     - source_labels: [__name__]
+      #       regex: cs_.+
+      #       action: keep
