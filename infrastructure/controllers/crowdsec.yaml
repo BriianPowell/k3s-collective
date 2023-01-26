@@ -27,7 +27,7 @@ spec:
         kind: HelmRepository
         name: crowdsec
         namespace: crowdsec
-      version: '>=20.0.0'
+      version: '>=0.8.5'
   values:
     container_runtime: containerd
     tls:
