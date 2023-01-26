@@ -77,7 +77,8 @@ kubectl apply -f basic-auth-sealed.yaml
 
 - [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
 - [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
-- [x] [Kubed](https://appscode.com/products/kubed/v0.12.0/welcome/) - NO LONGER USED
+- [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
+- [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
 - [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://www.home-assistant.io/)
