@@ -19,7 +19,7 @@ metadata:
   name: reflector
   namespace: reflector
 spec:
-  interval: 5m
+  interval: 1h0m0s
   chart:
     spec:
       chart: reflector
@@ -29,3 +29,4 @@ spec:
         name: reflector
         namespace: reflector
       interval: 12h
+  values:

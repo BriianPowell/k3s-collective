@@ -6,3 +6,4 @@ resources:
   - ingress.yaml
   - cert.yaml
   - tls-store.yaml
+  - middleware.yaml
