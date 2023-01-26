@@ -78,6 +78,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
 - [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
+- [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
 - [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
 - [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
@@ -91,7 +92,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [alertmanager](https://github.com/prometheus/alertmanager)
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [ ] Graylog 
+- [ ] [Graylog](https://github.com/Graylog2/graylog2-server)
 
 ### Security
 
