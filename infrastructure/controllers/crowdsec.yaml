@@ -38,7 +38,7 @@ spec:
             - kube-system
     bouncer:
       reflector:
-        namespaces: ['traefik']
+        namespaces: ['kube-system']
     agent:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -47,7 +47,7 @@ spec:
       # Specify each pod whose logs you want to process
       acquisition:
         # The namespace where the pod is located
-        - namespace: traefik
+        - namespace: kube-system
           # The pod name
           podName: traefik-*
           # as in crowdsec configuration, we need to specify the program name to find a matching parser
