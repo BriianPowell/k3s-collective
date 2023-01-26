@@ -255,7 +255,7 @@ data:
       - job_name: 'crowdsec' # Security related metrics
         # https://doc.crowdsec.net/docs/observability/prometheus
         static_configs:
-          - targets: ['crowdsec-lapi.crowdsec.svc.cluster.local:8080']
+          - targets: ['crowdsec-service.crowdsec']
             # labels:
             #   host: sheol
         metric_relabel_configs:
