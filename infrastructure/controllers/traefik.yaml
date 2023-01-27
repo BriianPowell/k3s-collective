@@ -85,3 +85,7 @@ spec:
     additionalArguments:
       - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
       - '--experimental.plugins.bouncer.version=v1.1.9'
+    resources:
+      limits:
+        cpu: 300m
+        memory: 150Mi

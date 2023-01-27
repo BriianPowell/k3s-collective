@@ -31,3 +31,7 @@ spec:
       interval: 12h
   values:
     installCRDs: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 200Mi

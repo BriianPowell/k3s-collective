@@ -39,6 +39,10 @@ spec:
         existingClaim: valheim-pvc
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 7Gi
     env:
       SERVER_NAME: 'The Neighborhood'
       WORLD_NAME: 'The Neighborhood of Make-Believe'

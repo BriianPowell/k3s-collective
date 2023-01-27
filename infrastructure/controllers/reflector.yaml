@@ -30,3 +30,7 @@ spec:
         namespace: reflector
       interval: 12h
   values:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 200Mi
