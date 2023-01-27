@@ -45,7 +45,7 @@ spec:
               hostPort: 8123
           resources:
             limits:
-              cpu: 300m
+              cpu: 750m
               memory: 1Gi
       securityContext:
         privileged: true
