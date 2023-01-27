@@ -44,6 +44,9 @@ spec:
               containerPort: 8123
               hostPort: 8123
           resources:
+            requests:
+              cpu: 100m
+              memory: 300Mi
             limits:
               cpu: 750m
               memory: 1Gi
