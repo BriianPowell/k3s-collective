@@ -47,8 +47,8 @@ spec:
             limits:
               cpu: 300m
               memory: 1Gi
-          securityContext:
-            privileged: true
+      securityContext:
+        privileged: true
       volumes:
         - name: ha-storage
           persistentVolumeClaim:
