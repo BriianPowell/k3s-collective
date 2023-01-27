@@ -120,8 +120,8 @@ spec:
             requests:
               memory: 150Mi
             limits:
-              cpu: 300m
-              memory: 500Mi
+              cpu: 500m
+              memory: 750Mi
           volumeMounts:
             - name: nextcloud-storage
               mountPath: /var/www/html
