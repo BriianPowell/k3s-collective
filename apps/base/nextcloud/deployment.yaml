@@ -120,7 +120,7 @@ spec:
             requests:
               memory: 150Mi
             limits:
-              cpu: 500m
+              cpu: 1000m
               memory: 750Mi
           volumeMounts:
             - name: nextcloud-storage
