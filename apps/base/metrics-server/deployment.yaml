@@ -1,3 +1,8 @@
+#
+# Reference:
+# https://github.com/k3s-io/k3s/issues/1968#issuecomment-680219642
+#
+
 apiVersion: v1
 kind: Service
 metadata:
