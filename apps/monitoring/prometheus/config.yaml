@@ -249,7 +249,7 @@ data:
         scrape_interval: 60s
         metrics_path: /api/prometheus
         authorization:
-          credentials: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmMTc5Mzg2NjY2MTU0ZTJlOGMxZTQyMTgzYTJiODllYyIsImlhdCI6MTY3MzcyOTE1MCwiZXhwIjoxOTg5MDg5MTUwfQ.SY2lvF6JvA-bUeN9rIQlggzIPRXJQKVvvIUGgeT28X0
+          credentials: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOTdjNjQyYjIxNDc0Y2E1YTM1ZWE3MzZiM2I3OWQwZiIsImlhdCI6MTY3NTEyMzIwMCwiZXhwIjoxOTkwNDgzMjAwfQ.xupSImjxalRf3bBY6XSxHJX7s2PlqCqIBuGpc4mv2ts
         scheme: http
         static_configs:
           - targets: ['homeassistant.homeassistant.svc.cluster.local:8123']
