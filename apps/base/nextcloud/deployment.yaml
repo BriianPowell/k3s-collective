@@ -144,7 +144,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10T
+      storage: 5T
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -155,7 +155,7 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 10T
+    storage: 5T
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
