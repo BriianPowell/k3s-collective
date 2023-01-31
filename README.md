@@ -98,6 +98,11 @@ kubectl apply -f basic-auth-sealed.yaml
 
 - [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
 
+### Games
+
+- [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
+- [ ] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
+
 ### TBD
 
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
