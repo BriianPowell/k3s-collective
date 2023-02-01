@@ -101,7 +101,7 @@ kubectl apply -f basic-auth-sealed.yaml
 ### Games
 
 - [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
-- [ ] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
+- [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
 
 ### TBD
 

@@ -1,3 +1,8 @@
+#
+# Reference:
+# https://github.com/gilesknap/k3s-minecraft
+#
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -41,7 +46,7 @@ spec:
     #   node-role.kubernetes.io/master: 'true'
     resources:
       requests:
-        cpu: 500m
+        cpu: 250m
         memory: 1Gi
       limits:
         cpu: 2000m
