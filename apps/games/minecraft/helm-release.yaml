@@ -62,9 +62,12 @@ spec:
       motd: "Welcome to BooG's Place!"
       serviceType: NodePort
       nodePort: 30100
+      overrideServerProperties: true
+      # downloadModpackUrl:
+      # resourcePackUrl:
+      # resourcePackSha:
     extraEnv:
       ENABLE_ROLLING_LOGS: true
-      OVERRIDE_SERVER_PROPERTIES: true
       FORCE_WORLD_COPY: false
 ---
 apiVersion: v1
