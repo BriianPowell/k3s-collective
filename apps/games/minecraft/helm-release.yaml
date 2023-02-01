@@ -41,7 +41,7 @@ spec:
     #   node-role.kubernetes.io/master: 'true'
     resources:
       requests:
-        cpu: 1000m
+        cpu: 2000m
         memory: 1Gi
       limits:
         cpu: 2000m
@@ -96,3 +96,20 @@ spec:
               operator: In
               values:
                 - sheol
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: minecraft-ingress
+  namespace: minecraft
+  labels:
+    game: minecraft
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`minecraft.powell.place`)
+      kind: Rule
+      services:
+        - name: minecraft-server-minecraft
+          port: 25565
