@@ -16,10 +16,10 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: valheim-server
-  namespace: valheim
+  name: minecraft-server
+  namespace: minecraft
   labels:
-    game: valheim
+    game: minecraft
     tier: backend
 spec:
   interval: 1h0m0s
@@ -42,11 +42,10 @@ spec:
     minecraftServer:
       eula: true
       type: PAPER
-      paperDownloadUrl: https://papermc.io/api/v2/projects/paper/version_group/1.19.3/builds
+      paperDownloadUrl: https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/386/downloads/paper-1.19.3-386.jar
       difficulty: hard
       ops: anguiish
       motd: "Welcome to BooG's Place!"
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
