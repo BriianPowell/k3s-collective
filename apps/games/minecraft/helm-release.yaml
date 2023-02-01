@@ -41,11 +41,11 @@ spec:
     #   node-role.kubernetes.io/master: 'true'
     resources:
       requests:
-        cpu: 2000m
+        cpu: 500m
         memory: 1Gi
       limits:
         cpu: 2000m
-        memory: 8Gi
+        memory: 3Gi
     minecraftServer:
       eula: true
       type: PAPER
@@ -53,6 +53,12 @@ spec:
       difficulty: hard
       ops: anguiish
       motd: "Welcome to BooG's Place!"
+      serviceType: NodePort
+      nodePort: 25565
+    extraEnv:
+      ENABLE_ROLLING_LOGS: true
+      OVERRIDE_SERVER_PROPERTIES: true
+      FORCE_WORLD_COPY: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -96,20 +102,3 @@ spec:
               operator: In
               values:
                 - sheol
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: minecraft-ingress
-  namespace: minecraft
-  labels:
-    game: minecraft
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`minecraft.powell.place`)
-      kind: Rule
-      services:
-        - name: minecraft-server-minecraft
-          port: 25565
