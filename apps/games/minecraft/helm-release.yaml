@@ -39,6 +39,13 @@ spec:
         existingClaim: minecraft-pvc
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1000m
+        memory: 8Gi
     minecraftServer:
       eula: true
       type: PAPER
