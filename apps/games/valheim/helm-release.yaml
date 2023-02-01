@@ -40,6 +40,8 @@ spec:
     # nodeSelector:
     #   node-role.kubernetes.io/master: 'true'
     resources:
+      requests:
+        cpu: 500m
       limits:
         cpu: 1000m
         memory: 7Gi

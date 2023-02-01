@@ -26,6 +26,9 @@ spec:
           command:
             - /cron.sh
           resources:
+            requests:
+              cpu: 10m
+              memory: 15Mi
             limits:
               cpu: 300m
               memory: 500Mi

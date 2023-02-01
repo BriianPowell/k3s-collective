@@ -58,6 +58,9 @@ spec:
             - containerPort: 8081
               name: telemetry
           resources:
+            requests:
+              cpu: 10m
+              memory: 15Mi
             limits:
               cpu: 300m
               memory: 500Mi

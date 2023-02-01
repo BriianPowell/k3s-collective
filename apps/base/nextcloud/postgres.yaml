@@ -63,8 +63,11 @@ spec:
           ports:
             - containerPort: 5432
           resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
             limits:
-              cpu: 300m
+              cpu: 150m
               memory: 500Mi
           volumeMounts:
             - name: postgres-data
