@@ -51,10 +51,12 @@ spec:
       type: PAPER
       paperDownloadUrl: https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/386/downloads/paper-1.19.3-386.jar
       difficulty: hard
+      forcegameMode: true
+      viewDistance: 25
       ops: anguiish
       motd: "Welcome to BooG's Place!"
       serviceType: NodePort
-      nodePort: 25565
+      nodePort: 30100
     extraEnv:
       ENABLE_ROLLING_LOGS: true
       OVERRIDE_SERVER_PROPERTIES: true
