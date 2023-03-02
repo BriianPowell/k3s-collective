@@ -48,20 +48,17 @@ spec:
         existingClaim: wiki-js-pvc
         size: 15G
       postgresqlDatabase:
-        valueFrom:
-          secretKeyRef:
-            name: wiki-js-secrets
-            key: PG_DB
+        secretKeyRef:
+          name: wiki-js-secrets
+          key: PG_DB
       postgresqlUser:
-        valueFrom:
-          secretKeyRef:
-            name: wiki-js-secrets
-            key: PG_USER
+        secretKeyRef:
+          name: wiki-js-secrets
+          key: PG_USER
       postgresqlPassword:
-        valueFrom:
-          secretKeyRef:
-            name: wiki-js-secrets
-            key: PG_PASS
+        secretKeyRef:
+          name: wiki-js-secrets
+          key: PG_PASS
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
