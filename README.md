@@ -84,6 +84,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://www.home-assistant.io/)
 - [x] [Nextcloud](https://github.com/nextcloud/server)
+- [x] [Wiki.js](https://js.wiki/)
 
 ### Monitoring & Logging
 
