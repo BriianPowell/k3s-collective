@@ -38,9 +38,7 @@ spec:
         memory: 200Mi
     ingress:
       enabled: true
-      hosts:
-        - host: wiki.powell.place
-          paths: /
+      hosts: [{ 'host': 'wiki.powell.place', 'paths': ['/'] }]
     prostgres:
       enabled: true
       persistence:
