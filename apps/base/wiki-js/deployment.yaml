@@ -49,17 +49,17 @@ spec:
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secret
+                  name: wiki-js-secrets
                   key: PG_DB
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secret
+                  name: wiki-js-secrets
                   key: PG_USER
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secret
+                  name: wiki-js-secrets
                   key: PG_PASS
             - name: HA_ACTIVE
               value: '1'
