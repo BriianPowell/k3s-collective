@@ -40,7 +40,7 @@ spec:
         component: postgressql-db
     spec:
       containers:
-        - name: nextcloud-postgressql-db
+        - name: wiki-js-postgressql-db
           image: postgres:14.5
           env:
             - name: POSTGRES_USER
