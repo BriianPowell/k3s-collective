@@ -34,11 +34,13 @@ spec:
         cpu: 10m
         memory: 50Mi
       limits:
-        cpu: 100m
-        memory: 200Mi
+        cpu: 2000m
+        memory: 500Mi
     ingress:
       enabled: true
-      hosts: [{ 'host': 'wiki.powell.place', 'paths': ['/'] }]
+      hosts:
+        - host: wiki.powell.place
+          paths: /
     prostgres:
       enabled: true
       persistence:
