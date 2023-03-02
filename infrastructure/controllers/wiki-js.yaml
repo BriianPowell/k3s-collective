@@ -39,7 +39,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - wiki.powell.place/
+        - host: wiki.powell.place
     prostgres:
       enabled: true
       persistence:
