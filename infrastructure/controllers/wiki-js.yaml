@@ -44,23 +44,101 @@ spec:
             - path: '/'
               pathType: Prefix
     prostgres:
-      enabled: true
-      persistence:
-        enabled: true
-        existingClaim: wiki-js-pvc
-        size: 15G
+      enabled: false
       postgresqlDatabase:
-        secretKeyRef:
-          name: wiki-js-secrets
-          key: PG_DB
+        valueFrom:
+          secretKeyRef:
+            name: wiki-js-secrets
+            key: PG_DB
+      postgresqlHost: wiki-js-postgres-db
       postgresqlUser:
-        secretKeyRef:
-          name: wiki-js-secrets
-          key: PG_USER
-      postgresqlPassword:
-        secretKeyRef:
-          name: wiki-js-secrets
-          key: PG_PASS
+        valueFrom:
+          secretKeyRef:
+            name: wiki-js-secrets
+            key: PG_USER
+      existingSecret: wiki-js-secrets
+      existingSecretKey: PG_PASS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wiki-js-postgres-db
+  namespace: wiki
+  labels:
+    app: wiki-js
+    component: postgressql
+spec:
+  selector:
+    app: wiki-js
+    component: postgressql-db
+  type: NodePort
+  ports:
+    - name: pgql
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+      nodePort: 31432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wiki-js-postgressql-db
+  namespace: wiki
+  labels:
+    app: wiki-js
+    component: postgressql
+spec:
+  serviceName: wiki-js-postgressql-db-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiki-js
+      component: postgressql-db
+  template:
+    metadata:
+      labels:
+        app: wiki-js
+        component: postgressql-db
+    spec:
+      containers:
+        - name: wiki-js-postgressql-db
+          image: postgres:14.5
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-js-secrets
+                  key: PG_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-js-secrets
+                  key: PG_PASS
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-js-secrets
+                  key: PG_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata #/data/pgdata
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              cpu: 10m
+              memory: 50Mi
+            limits:
+              cpu: 150m
+              memory: 500Mi
+          volumeMounts:
+            - name: wiki-js-data
+              mountPath: /var/lib/postgresql/data
+              subPath: pgdata
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: wiki-js-data
+          persistentVolumeClaim:
+            claimName: wiki-js-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
