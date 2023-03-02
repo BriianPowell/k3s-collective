@@ -42,8 +42,11 @@ spec:
         - host: wiki.powell.place
           paths: /
     prostgres:
-      enabled: false
-      postgresqlHost: wiki-js-postgres-db
+      enabled: true
+      persistence:
+        enabled: true
+        existingClaim: wiki-js-pvc
+        size: 15G
       postgresqlDatabase:
         valueFrom:
           secretKeyRef:
@@ -61,83 +64,6 @@ spec:
             key: PG_PASS
 ---
 apiVersion: v1
-kind: Service
-metadata:
-  name: wiki-js-postgres-db
-  namespace: wiki
-  labels:
-    app: wiki-js
-spec:
-  selector:
-    app: wiki-js-postgressql-db
-  type: NodePort
-  ports:
-    - name: pgql
-      port: 5432
-      protocol: TCP
-      targetPort: pgql
-      nodePort: 30009
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: wiki-js-postgressql-db
-  namespace: wiki
-  labels:
-    app: wiki-js
-spec:
-  serviceName: wiki-js-postgres-db
-  replicas: 1
-  selector:
-    matchLabels:
-      app: wiki-js-postgressql-db
-  template:
-    metadata:
-      labels:
-        app: wiki-js-postgressql-db
-    spec:
-      containers:
-        - name: wiki-js-postgressql-db
-          image: postgres:14.5
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: wiki-js-secrets
-                  key: PG_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: wiki-js-secrets
-                  key: PG_PASS
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: wiki-js-secrets
-                  key: PG_DB
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata #/data/pgdata
-          ports:
-            - name: pgql
-              containerPort: 5432
-          resources:
-            requests:
-              cpu: 10m
-              memory: 300Mi
-            limits:
-              cpu: 2000m
-              memory: 500Mi
-          volumeMounts:
-            - name: wiki-js-storage
-              mountPath: /var/lib/postgresql/data
-              subPath: pgdata
-      terminationGracePeriodSeconds: 60
-  volumes:
-    - name: wiki-js-storage
-      persistentVolumeClaim:
-        claimName: nextcloud-pvc
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wiki-js-pvc
@@ -150,7 +76,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100G
+      storage: 15G
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -161,7 +87,7 @@ metadata:
     type: local
 spec:
   capacity:
-    storage: 100G
+    storage: 15G
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
