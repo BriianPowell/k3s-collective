@@ -40,7 +40,8 @@ spec:
       enabled: true
       hosts:
         - host: wiki.powell.place
-          path: '/'
+      paths:
+        - path: '/'
     prostgres:
       enabled: true
       persistence:
