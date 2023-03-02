@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wiki-js-https
+  namespace: wiki
+  labels:
+    app: wiki-js
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wiki.powell.place`)
+      kind: Rule
+      services:
+        - name: wiki-js
+          port: 80
