@@ -8,7 +8,7 @@ metadata:
     component: app
 spec:
   selector:
-    component: app
+    app: wiki-js
   type: ClusterIP
   ports:
     - name: http
