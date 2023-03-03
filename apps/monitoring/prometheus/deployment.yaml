@@ -1,25 +1,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: prometheus
-  namespace: monitoring
-  labels:
-    app: prometheus
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '9090'
-spec:
-  selector:
-    app: prometheus
-  type: NodePort
-  ports:
-    - port: 8080
-      targetPort: 9090
-      nodePort: 30000
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: prometheus-operator
   namespace: monitoring
   labels:
@@ -27,6 +8,28 @@ metadata:
     app.kubernetes.io/name: prometheus-operator
     app.kubernetes.io/version: 0.63.0
     app: prometheus
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9090'
+spec:
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+  clusterIP: none
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: 0.63.0
+  name: prometheus-operator
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -44,44 +47,30 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-        - name: prometheus-operator
-          image: prometheus-operator/prometheus-operator:v0.63.0
+        - args:
             - --kubelet-service=kube-system/kubelet
             - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.63.0
+          image: quay.io/prometheus-operator/prometheus-operator:v0.63.0
+          name: prometheus-operator
           ports:
             - containerPort: 8080
               name: http
           resources:
-            requests:
-              cpu: 20m
-              memory: 500Mi
             limits:
               cpu: 200m
-              memory: 1Gi
-          volumeMounts:
-            - name: prometheus-config-volume
-              mountPath: /etc/prometheus/
-            - name: prometheus-storage-volume
-              mountPath: /prometheus/
-      volumes:
-        - name: prometheus-config-volume
-          configMap:
-            defaultMode: 420
-            name: prometheus-server-conf
-        - name: prometheus-storage-volume
-          persistentVolumeClaim:
-            claimName: prometheus-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus-pvc
-  namespace: monitoring
-  labels:
-    app: prometheus
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+      nodeSelector:
+        kubernetes.io/os: linux
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      serviceAccountName: prometheus-operator
