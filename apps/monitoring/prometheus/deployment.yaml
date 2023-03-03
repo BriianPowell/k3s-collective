@@ -45,7 +45,7 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: prometheus-operator
-          image: quay.io/prometheus-operator/prometheus-operator:v0.63.0
+          image: prometheus-operator/prometheus-operator:v0.63.0
             - --kubelet-service=kube-system/kubelet
             - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.63.0
           ports:
