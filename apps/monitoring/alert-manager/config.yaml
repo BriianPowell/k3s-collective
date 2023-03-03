@@ -22,13 +22,13 @@ spec:
           key: SMTP_PASS
     smtp_smarthost: smtp.mail.me.com:587
     smtp_require_tls: true
-  templates:
-    - '/etc/alertmanager/*.tmpl'
+  # templates:
+  #   - '/etc/alertmanager/*.tmpl'
   route:
     receiver: alert-emailer
-    group_by: ['alertname', 'priority']
-    group_wait: 30s
-    repeat_interval: 10m
+    groupBy: ['alertname', 'priority']
+    groupWait: 30s
+    repeatInterval: 10m
     # routes:
     #   - receiver: slack_demo
     #   # Send severity=slack alerts to slack.
