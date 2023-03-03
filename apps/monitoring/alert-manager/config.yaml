@@ -6,22 +6,14 @@ metadata:
 spec:
   global:
     smtp_from:
-      valueFrom:
-        secretKeyRef:
-          name: alertmanager-secrets
-          key: SMTP_FROM
+
     smtp_auth_username:
-      valueFrom:
-        secretKeyRef:
-          name: alertmanager-secrets
-          key: SMTP_USER
+
     smtp_auth_password:
       valueFrom:
         secretKeyRef:
           name: alertmanager-secrets
           key: SMTP_PASS
-    smtp_smarthost: smtp.mail.me.com:587
-    smtp_require_tls: true
   # templates:
   #   - '/etc/alertmanager/*.tmpl'
   route:
@@ -40,7 +32,22 @@ spec:
     - name: alert-emailer
       email_configs:
         - to: brian@powell.place
-          send_resolved: true
+          from:
+            valueFrom:
+              secretKeyRef:
+                name: alertmanager-secrets
+                key: SMTP_FROM
+          sendResolved: true
+          requireTLS: true
+          smarthost: smtp.mail.me.com:587
+          authPassword:
+            key: SMTP_PASS
+            name: alertmanager-secrets
+          authUsername:
+            valueFrom:
+              secretKeyRef:
+                name: alertmanager-secrets
+                key: SMTP_USER
   # - name: slack_demo
   #   slack_configs:
   #   - api_url: https://hooks.slack.com/services/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sz4Qk
