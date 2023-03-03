@@ -6,7 +6,8 @@ metadata:
 spec:
   replicas: 1
   externalUrl: 'https://alertmanager.powell.place'
-  alertmanagerConfiguration: alertmanager-config
+  alertmanagerConfiguration:
+    - alertmanager-config
   containers:
     - name: alertmanager
       ports:
