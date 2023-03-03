@@ -28,8 +28,9 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
     app.kubernetes.io/version: 0.63.0
+    app: prometheus
   name: prometheus-operator
-  namespace: default
+  namespace: monitoring
 spec:
   replicas: 1
   selector:
