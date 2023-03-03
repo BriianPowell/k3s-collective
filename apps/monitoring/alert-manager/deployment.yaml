@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  name: alertmanager
+  namespace: monitoring
+spec:
+  replicas: 1
+  externalUrl: 'https://alertmanager.powell.place'
+  ports:
+    - name: http
+      containerPort: 9093
+  resources:
+    requests:
+      cpu: 10m
+      memory: 20Mi
+    limits:
+      cpu: 250m
+      memory: 500Mi
