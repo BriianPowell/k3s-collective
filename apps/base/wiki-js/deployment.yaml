@@ -1,3 +1,9 @@
+#
+# Reference:
+# https://github.com/requarks/wiki-docs
+# https://github.com/Requarks/wiki/blob/main/dev/helm/values.yaml
+#
+
 apiVersion: v1
 kind: Service
 metadata:

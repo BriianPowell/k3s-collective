@@ -93,7 +93,8 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [alertmanager](https://github.com/prometheus/alertmanager)
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [ ] [Graylog](https://github.com/Graylog2/graylog2-server)
+- [ ] [Loki](https://grafana.com/docs/loki/latest/)
+- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 
 ### Security
 
