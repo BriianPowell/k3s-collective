@@ -28,7 +28,7 @@ spec:
     #     repeat_interval: 1m
   receivers:
     - name: alert-emailer
-      email_configs:
+      emailConfigs:
         - to: brian@powell.place
           from:
             valueFrom:
