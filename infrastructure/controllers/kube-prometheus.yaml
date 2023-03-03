@@ -29,3 +29,11 @@ spec:
         name: prometheus-community
         namespace: monitoring
       interval: 12h
+  values:
+    namespaceOverride: monitoring
+    grafana:
+      namespaceOverride: monitoring
+    kube-state-metrics:
+      namespaceOverride: kube-system
+    prometheus-node-exporter:
+      namespaceOverride: monitoring
