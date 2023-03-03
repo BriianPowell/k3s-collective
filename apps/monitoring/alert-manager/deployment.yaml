@@ -5,14 +5,24 @@ metadata:
   namespace: monitoring
 spec:
   replicas: 1
+  alertManagerConfiguration:
+    name: alertmanager-config
   externalUrl: 'https://alertmanager.powell.place'
-  ports:
-    - name: http
-      containerPort: 9093
-  resources:
-    requests:
-      cpu: 10m
-      memory: 20Mi
-    limits:
-      cpu: 250m
-      memory: 500Mi
+  containers:
+    ports:
+      - name: http
+        containerPort: 9093
+    resources:
+      requests:
+        cpu: 10m
+        memory: 20Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
+    volumeMounts:
+      - name: templates-volume
+        mountPath: /etc/alertmanager-templates
+  volumes:
+    - name: templates-volume
+      configMap:
+        name: alertmanager-templates
