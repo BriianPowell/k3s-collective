@@ -6,13 +6,10 @@ metadata:
 spec:
   replicas: 1
   externalUrl: 'https://alertmanager.powell.place'
-  alertmanagerConfiguration:
-    name: alertmanager-config
+  serviceAccountName: alertmanager
+  configSecret: alertmanager-secrets
   containers:
     - name: alertmanager
-      ports:
-        - name: http
-          containerPort: 9093
       resources:
         requests:
           cpu: 10m
