@@ -6,6 +6,3 @@ commonLabels:
 
 resources:
   - template.yaml
-  - config.yaml
-  - deployment.yaml
-  - ingress.yaml

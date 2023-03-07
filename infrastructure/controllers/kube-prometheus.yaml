@@ -30,8 +30,55 @@ spec:
         namespace: monitoring
       interval: 12h
   values:
-    nameOverride: ''
+    nameOverride: collective
     namespaceOverride: monitoring
+    alertmanager:
+      serviceAccount:
+        name: alertmanager
+      config:
+        smtp_smarthost: smtp.mail.me.com:587
+        smtp_require_tls: true
+        smtp_from:
+          secretKeyRef:
+            name: alertmanager-secrets
+            key: SMTP_FROM
+        smtp_auth_username:
+          secretKeyRef:
+            name: alertmanager-secrets
+            key: SMTP_USER
+        smtp_auth_password:
+          secretKeyRef:
+            name: alertmanager-secrets
+            key: SMTP_PASS
+        templates:
+          - '/etc/alertmanager/*.tmpl'
+      route:
+        receiver: alert-emailer
+        group_by: ['alertname', 'priority']
+        group_wait: 30s
+        repeat_interval: 10m
+      receivers:
+        - name: alert-emailer
+          email_configs:
+            - to: brian@powell.place
+              send_resolved: true
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - alertmanager.powell.place
+        paths:
+          - /
+      alertmanagerSpec:
+        replicats: 1
+        externalUrl: 'https://alertmanager.powell.place'
+        volumes:
+          - name: templates-volume
+            configMap:
+              name: alertmanager-templates
+        volumeMounts:
+          - name: templates-volume
+            mountPath: /etc/alertmanager-templates
     grafana:
       namespaceOverride: monitoring
     kube-state-metrics:
