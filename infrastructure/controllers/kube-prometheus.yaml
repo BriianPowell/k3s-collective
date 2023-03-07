@@ -34,8 +34,8 @@ spec:
     namespaceOverride: monitoring
     alertmanager:
       enabled: false
-      serviceAccount:
-        name: alertmanager
+      # serviceAccount:
+      #   name: alertmanager
       # config:
       #   smtp_smarthost: smtp.mail.me.com:587
       #   smtp_require_tls: true
