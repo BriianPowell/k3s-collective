@@ -33,7 +33,7 @@ spec:
     nameOverride: collective
     namespaceOverride: monitoring
     alertmanager:
-      deploy: false
+      enabled: false
       # serviceAccount:
       #   name: alertmanager
       # config:
