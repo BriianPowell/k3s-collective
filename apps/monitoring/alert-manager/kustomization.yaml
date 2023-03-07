@@ -7,3 +7,4 @@ commonLabels:
 resources:
   - template.yaml
   - ingress.yaml
+  - deployment.yaml
