@@ -47,6 +47,65 @@ spec:
       enabled: true
       accessModes:
         - ReadWriteOnce
+      size: 10G
+      existingClaim: grafana-pvc
+    admin:
+      existingSecret: grafana-secrets
+      userKey: USER
+      passwordKey: PASS
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
+            access: proxy
+            editable: true
+            orgId: 1
+            version: 1
+            isDefault: true
+    dashboards: {} # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+    grafana.ini:
+      auth:
+        diable_login_form: true
+        disable_signout_menu: false
+      auth.generic_oauth:
+        enabled: true
+        name: Keycloak
+        allow_sign_up: false
+        api_url:
+          secretKeyRef:
+            name: grafana-secrets
+            key: API_URL
+        auth_url:
+          secretKeyRef:
+            name: grafana-secrets
+            key: AUTH_URL
+        token_url:
+          secretKeyRef:
+            name: grafana-secrets
+            key: TOKEN_URL
+        client_id:
+          secretKeyRef:
+            name: grafana-secrets
+            key: CLIENT_ID
+        client_secret:
+          secretKeyRef:
+            name: grafana-secrets
+            key: CLIENT_SECRET
+        role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
+        scopes: profile,email,roles
+      server:
+        root_url: https://grafana.powell.place
+      users:
+        allow_org_create: true
+        allow_sign_up: false
+        auto_assign_org: true
+        auto_assign_org_role: Admin
+        default_theme: dark
+        login_hint: email or username
+        verify_email_enabled: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -60,4 +119,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
