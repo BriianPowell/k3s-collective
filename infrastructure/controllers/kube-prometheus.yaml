@@ -98,5 +98,5 @@ spec:
       namespaceOverride: monitoring
     prometheusOperator:
       enabled: true
-    Prometheus:
+    prometheus:
       enabled: true
