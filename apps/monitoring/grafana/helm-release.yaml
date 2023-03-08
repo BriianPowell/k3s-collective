@@ -73,7 +73,7 @@ spec:
       auth.generic_oauth:
         enabled: true
         name: Keycloak
-        allow_sign_up: false
+        allow_sign_up: true
         api_url:
           secretKeyRef:
             name: grafana-secrets
