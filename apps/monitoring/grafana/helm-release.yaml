@@ -84,6 +84,7 @@ spec:
       auth:
         diable_login_form: true
         disable_signout_menu: false
+        signout_redirect_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
       auth.generic_oauth:
         enabled: true
         name: Keycloak
