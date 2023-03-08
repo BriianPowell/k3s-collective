@@ -79,24 +79,17 @@ spec:
       grafana_net:
         url: https://grafana.net
       server:
-        domain: powell.place
         root_url: https://grafana.powell.place
       auth:
         diable_login_form: true
         disable_signout_menu: false
-        signout_redirect_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
+        signout_redirect_url: '' # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
       auth.generic_oauth:
         enabled: true
         name: Keycloak
         allow_sign_up: true
-        client_id:
-          secretKeyRef:
-            name: grafana-secrets
-            key: CLIENT_ID
-        client_secret:
-          secretKeyRef:
-            name: grafana-secrets
-            key: CLIENT_SECRET
+        client_id: grafana
+        client_secret: NsNzT5498qynvAxVS8pnVodnymOlcT9K
         scopes: openid email profile offline_access roles
         email_attribute_path: email
         login_attribute_path: username
