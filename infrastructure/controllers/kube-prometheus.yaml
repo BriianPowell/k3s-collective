@@ -32,10 +32,6 @@ spec:
   values:
     nameOverride: collective
     namespaceOverride: monitoring
-    defaultRules:
-      rules:
-        kubeSchedulerAlerting: false
-        kubeSchedulerRecording: false
     alertmanager:
       enabled: false
     grafana:
@@ -64,20 +60,43 @@ spec:
     kubelet:
       enabled: true
     kubeControllerManager:
-      enabled: false
+      enabled: true
+      endpoints: ['10.0.0.10']
+      service:
+        enabled: true
+        port: 10257
+        targetPort: 10257
+      serviceMonitor:
+        enabled: true
+        https: true
     coreDns:
       enabled: true
     kubeDns:
       enabled: false
     kubeEtcd:
-      enabled: false
+      enabled: true
     kubeScheduler:
-      enabled: false
+      enabled: true
+      endpoints: ['10.0.0.10']
+      service:
+        enabled: true
+        port: 10259
+        targetPort: 10259
+      serviceMonitor:
+        enabled: true
+        https: true
     kubeProxy:
-      enabled: false
-    Prometheus:
-      enabled: false
+      enabled: true
+      endpoints: ['10.0.0.10']
+      service:
+        enabled: true
+        port: 10249
+        targetPort: 10249
     kube-state-metrics:
       namespaceOverride: kube-system
     prometheus-node-exporter:
       namespaceOverride: monitoring
+    prometheusOperator:
+      enabled: true
+    Prometheus:
+      enabled: true
