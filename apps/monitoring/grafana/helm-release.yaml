@@ -53,6 +53,9 @@ spec:
       existingSecret: grafana-secrets
       userKey: USER
       passwordKey: PASS
+    envFromSecrets:
+      - name: grafana-secrets
+        optional: false
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -83,20 +86,20 @@ spec:
       auth:
         diable_login_form: true
         disable_signout_menu: false
-        signout_redirect_url: '' # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
+        # signout_redirect_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
       auth.generic_oauth:
         enabled: true
         name: Keycloak
         allow_sign_up: true
-        client_id: grafana
-        client_secret: NsNzT5498qynvAxVS8pnVodnymOlcT9K
+        client_id: ${CLIENT_ID}
+        client_secret: ${CLIENT_SECRET}
         scopes: openid email profile offline_access roles
         email_attribute_path: email
         login_attribute_path: username
         name_attribute_path: full_name
-        auth_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/auth
-        token_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/token
-        api_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/userinfo
+        auth_url: ${AUTH_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/auth
+        token_url: ${TOKEN_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/token
+        api_url: ${API_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/userinfo
         role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
       users:
         allow_org_create: true
