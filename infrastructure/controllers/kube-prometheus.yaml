@@ -76,7 +76,7 @@ spec:
     kubeEtcd:
       enabled: true
     kubeScheduler:
-      enabled: false
+      enabled: true
       endpoints: ['10.0.0.10']
       service:
         enabled: true
@@ -86,7 +86,7 @@ spec:
         enabled: true
         https: true
     kubeProxy:
-      enabled: false
+      enabled: true
       endpoints: ['10.0.0.10']
       service:
         enabled: true

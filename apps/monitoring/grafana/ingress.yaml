@@ -12,5 +12,5 @@ spec:
     - match: Host(`grafana.powell.place`)
       kind: Rule
       services:
-        - name: kube-prometheus-grafana
+        - name: grafana
           port: 80
