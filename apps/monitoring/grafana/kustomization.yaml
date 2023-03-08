@@ -5,6 +5,5 @@ commonLabels:
   app: grafana
 
 resources:
-  # - data-sources.yaml
   - helm-release.yaml
   - ingress.yaml

@@ -84,8 +84,9 @@ spec:
       server:
         root_url: https://grafana.powell.place
       auth:
-        diable_login_form: true
+        disable_login_form: true
         disable_signout_menu: false
+        auto_login: true
         # signout_redirect_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
       auth.generic_oauth:
         enabled: true
@@ -97,9 +98,9 @@ spec:
         email_attribute_path: email
         login_attribute_path: username
         name_attribute_path: full_name
-        auth_url: $__env{AUTH_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/auth
-        token_url: $__env{TOKEN_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/token
-        api_url: $__env{API_URL} # https://keycloak.powell.place/realms/inferno/protocol/openid-connect/userinfo
+        auth_url: $__env{AUTH_URL}
+        token_url: $__env{TOKEN_URL}
+        api_url: $__env{API_URL}
         role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
       users:
         allow_org_create: true
