@@ -60,7 +60,7 @@ spec:
     kubelet:
       enabled: true
     kubeControllerManager:
-      enabled: true
+      enabled: false
       endpoints: ['10.0.0.10']
       service:
         enabled: true
@@ -76,7 +76,7 @@ spec:
     kubeEtcd:
       enabled: true
     kubeScheduler:
-      enabled: true
+      enabled: false
       endpoints: ['10.0.0.10']
       service:
         enabled: true
@@ -86,7 +86,7 @@ spec:
         enabled: true
         https: true
     kubeProxy:
-      enabled: true
+      enabled: false
       endpoints: ['10.0.0.10']
       service:
         enabled: true
