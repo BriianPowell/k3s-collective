@@ -97,10 +97,8 @@ spec:
             namespace: monitoring
             port: 9093
             scheme: http
-        ruleSelector:
-          matchLabels:
-            app: prometheus
-            release: kube-prometheus
+        ruleNamespaceSelector:
+          any: true
         resources:
           requests:
             cpu: 10m
