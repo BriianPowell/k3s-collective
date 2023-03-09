@@ -30,31 +30,12 @@ spec:
         namespace: monitoring
       interval: 12h
   values:
-    fullnameOverride: collective
+    fullnameOverride: monitor
     namespaceOverride: monitoring
     alertmanager:
       enabled: false
     grafana:
       enabled: false
-      # namespaceOverride: monitoring
-      # defaultDashboardsTimezone: pst
-      # sidecar:
-      #   datasources:
-      #     enabled: false
-      # additionalDataSources:
-      #   - name: prometheus
-      #     type: prometheus
-      #     access: proxy
-      #     editable: false
-      #     orgId: 1
-      #     url: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
-      #     version: 1
-      # extraConfigmapMounts:
-      #   - name: grafana-config
-      #     mountPath: /etc/grafana
-      #     secret:
-      #       secretName: grafana-config-secret
-      #     readOnly: true
     kubeApiServer:
       enabled: true
     kubelet:
