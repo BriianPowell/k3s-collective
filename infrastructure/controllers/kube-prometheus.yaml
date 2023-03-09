@@ -30,7 +30,7 @@ spec:
         namespace: monitoring
       interval: 12h
   values:
-    nameOverride: collective
+    fullnameOverride: collective
     namespaceOverride: monitoring
     alertmanager:
       enabled: false
@@ -96,7 +96,27 @@ spec:
       namespaceOverride: kube-system
     prometheus-node-exporter:
       namespaceOverride: monitoring
+      # extraArgs:
+      #   - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+      #   - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+      #   - --collector.netclass.ignored-devices=^(veth.*)$
     prometheusOperator:
       enabled: true
     prometheus:
       enabled: true
+      prometheusSpec:
+        externalUrl: https://prometheus.powell.place
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
