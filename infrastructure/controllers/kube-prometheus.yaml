@@ -1,3 +1,8 @@
+#
+# Reference:
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+#
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -87,6 +92,11 @@ spec:
       enabled: true
       prometheusSpec:
         externalUrl: https://prometheus.powell.place
+        alertingEndpoints:
+          - name: alertmanager-operated
+            namespace: monitoring
+            port: 9093
+            scheme: http
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
