@@ -6,3 +6,4 @@ commonLabels:
 
 resources:
   - ingress.yaml
+  - rules.yaml

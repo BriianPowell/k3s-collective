@@ -1,0 +1,71 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-rules
+  namespace: monitoring
+spec:
+  groups:
+    - name: Deployment Groups
+      rules:
+        - alert: Deployment at 0 Replicas
+          expr: sum(kube_deployment_status_replicas{pod_template_hash=""}) by (deployment,namespace)  < 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Deployment {{$labels.deployment}} is currently having no pods running
+    - name: Pods
+      rules:
+        - alert: High Pod Memory
+          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!~"kube-system|valheim|minecraft"}) by (namespace,container,pod) > 1200000000
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2GB)
+        - alert: High Game Pod Memory
+          expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server|minecraft-server-minecraft", namespace=~"valheim|minecraft"}) by (namespace,container,pod) > 7000000000
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 5GB)
+        - alert: Container Restarted
+          expr: sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[1m])) by (pod,namespace,container) > 0
+          for: 0m
+          labels:
+            severity: warn
+          annotations:
+            summary: Container {{$labels.container}} in {{$labels.pod}} in {{$labels.namespace}} was restarted
+        - alert: Too Many Container Restarts
+          expr: sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[15m])) by (pod,namespace,container) > 5
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: Container named {{$labels.container}} in {{$labels.pod}} in {{$labels.namespace}} was restarted
+    - name: Nodes
+      rules:
+        # https://stackoverflow.com/questions/69281327/why-container-memory-usage-is-doubled-in-cadvisor-metrics/69282328#69282328
+        # https://stackoverflow.com/questions/54866777/count-k8s-cluster-cpu-memory-usage-with-prometheus
+        - alert: High Node Memory Usage
+          expr: (sum(container_memory_usage_bytes{container!=""}) by (kubernetes_io_hostname) / sum (machine_memory_bytes{}) by (kubernetes_io_hostname)) * 100 > 80
+          for: 5m
+          labels:
+            severity: warn
+          annotations:
+            summary: Node {{$labels.kubernetes_io_hostname}} has more than 80% memory used
+        - alert: High Node CPU Usage
+          expr: (sum(rate(container_cpu_usage_seconds_total{id="/",container!="POD"}[1m])) by (kubernetes_io_hostname) / sum(machine_cpu_cores) by (kubernetes_io_hostname)  * 100) > 80
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Node {{$labels.kubernetes_io_hostname}} has more than 80% allocatable cpu used
+        - alert: High Node Disk Usage
+          expr: (sum(container_fs_usage_bytes{id="/",container!="POD"}) by (kubernetes_io_hostname) / sum(container_fs_limit_bytes{container!="POD",id="/"}) by (kubernetes_io_hostname)) * 100 > 85
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Node {{$labels.kubernetes_io_hostname}} has more than 85% disk used
