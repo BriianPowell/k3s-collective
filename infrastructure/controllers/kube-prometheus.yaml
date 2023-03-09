@@ -97,6 +97,9 @@ spec:
             namespace: monitoring
             port: 9093
             scheme: http
+        ruleSelector:
+          matchLabels:
+            app: prometheus
 # ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim

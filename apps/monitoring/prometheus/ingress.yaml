@@ -3,8 +3,6 @@ kind: IngressRoute
 metadata:
   name: prometheus-dashboard-https
   namespace: monitoring
-  labels:
-    app: prometheus
 spec:
   entryPoints:
     - websecure
