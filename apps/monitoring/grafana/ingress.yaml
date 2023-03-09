@@ -3,8 +3,6 @@ kind: IngressRoute
 metadata:
   name: grafana-dashboard-https
   namespace: monitoring
-  labels:
-    app: grafana
 spec:
   entryPoints:
     - websecure

@@ -3,8 +3,6 @@ kind: ConfigMap
 metadata:
   name: traefik-forward-auth-config
   namespace: kube-system
-  labels:
-    app: traefik-forward-auth
 data:
   INSECURE_COOKIE: 'false'
   COOKIE_DOMAIN: powell.place

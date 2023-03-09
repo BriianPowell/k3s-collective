@@ -3,8 +3,6 @@ kind: ConfigMap
 metadata:
   name: alertmanager-templates
   namespace: monitoring
-  labels:
-    app: alertmanager
   creationTimestamp: null
 data:
   default.tmpl: |

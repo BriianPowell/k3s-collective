@@ -9,8 +9,6 @@ kind: Service
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
-  labels:
-    app: traefik-forward-auth
 spec:
   selector:
     app: traefik-forward-auth
@@ -26,8 +24,6 @@ kind: Deployment
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
-  labels:
-    app: traefik-forward-auth
 spec:
   replicas: 1
   selector:
@@ -36,9 +32,6 @@ spec:
   strategy:
     type: Recreate
   template:
-    metadata:
-      labels:
-        app: traefik-forward-auth
     spec:
       terminationGracePeriodSeconds: 60
       containers:

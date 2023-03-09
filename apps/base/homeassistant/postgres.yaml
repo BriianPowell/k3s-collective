@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: homeassistant-postgres-db
   namespace: homeassistant
-  labels:
-    app: homeassistant
 spec:
   selector:
     app: homeassistant-postgressql-db
@@ -21,8 +19,6 @@ kind: StatefulSet
 metadata:
   name: homeassistant-postgressql-db
   namespace: homeassistant
-  labels:
-    app: homeassistant
 spec:
   serviceName: homeassistant-postgres-db
   replicas: 1
@@ -71,16 +67,52 @@ spec:
               cpu: 150m
               memory: 500Mi
           volumeMounts:
-            - name: postgres-data
+            - name: hass-pg-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
       terminationGracePeriodSeconds: 60
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-      spec:
-        accessModes:
-          - 'ReadWriteOnce'
-        resources:
-          requests:
-            storage: 5Gi
+      volumes:
+        - name: hass-pg-data
+          persistentVolumeClaim:
+            claimName: homeassistant-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homeassistant-pvc
+  namespace: homeassistant
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15G
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: homeassistant-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 15G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: homeassistant-pvc
+    namespace: homeassistant
+  local:
+    path: /mnt/moriyya/hass-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

@@ -3,7 +3,6 @@
 # https://www.crowdsec.net/blog/integrating-crowdsec-kubernetes-tls
 #
 
----
 apiVersion: v1
 kind: Namespace
 metadata:

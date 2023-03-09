@@ -12,8 +12,6 @@ kind: HelmRelease
 metadata:
   name: grafana
   namespace: monitoring
-  labels:
-    app: grafana
 spec:
   interval: 1h0m0s
   chart:

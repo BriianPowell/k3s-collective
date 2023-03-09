@@ -3,7 +3,6 @@
 # https://github.com/gilesknap/k3s-minecraft
 #
 
----
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -14,6 +13,8 @@ kind: HelmRepository
 metadata:
   name: minecraft-server-charts
   namespace: minecraft
+  labels:
+    game: minecraft
 spec:
   interval: 24h
   url: https://itzg.github.io/minecraft-server-charts/

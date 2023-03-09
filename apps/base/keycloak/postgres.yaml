@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: keycloak-postgres-db
   namespace: keycloak
-  labels:
-    app: keycloak
 spec:
   selector:
     app: keycloak-postgressql-db
@@ -65,16 +63,52 @@ spec:
               cpu: 150m
               memory: 500Mi
           volumeMounts:
-            - name: postgres-data
+            - name: keycloak-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
       terminationGracePeriodSeconds: 60
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-      spec:
-        accessModes:
-          - 'ReadWriteOnce'
-        resources:
-          requests:
-            storage: 10Gi
+      volumes:
+        - name: keycloak-data
+          persistentVolumeClaim:
+            claimName: keycloak-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak-pvc
+  namespace: keycloak
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15G
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keycloak-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 15G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: keycloak-pvc
+    namespace: keycloak
+  local:
+    path: /mnt/moriyya/keycloak
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

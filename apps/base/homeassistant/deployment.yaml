@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: homeassistant
   namespace: homeassistant
-  labels:
-    app: homeassistant
 spec:
   selector:
     app: homeassistant
@@ -19,17 +17,12 @@ kind: Deployment
 metadata:
   name: homeassistant
   namespace: homeassistant
-  labels:
-    app: homeassistant
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: homeassistant
   template:
-    metadata:
-      labels:
-        app: homeassistant
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -63,7 +56,6 @@ metadata:
   name: homeassistant-pvc
   namespace: homeassistant
   labels:
-    app: homeassistant
     type: local
 spec:
   accessModes:
@@ -78,7 +70,6 @@ metadata:
   name: homeassistant-pv
   namespace: homeassistant
   labels:
-    app: homeassistant
     type: local
 spec:
   capacity:

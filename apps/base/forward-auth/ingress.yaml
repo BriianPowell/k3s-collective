@@ -3,8 +3,6 @@ kind: IngressRoute
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
-  labels:
-    app: traefik-forward-auth
 spec:
   entryPoints:
     - websecure
@@ -23,8 +21,6 @@ kind: Middleware
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
-  labels:
-    app: traefik-forward-auth
 spec:
   forwardAuth:
     address: http://traefik-forward-auth/
