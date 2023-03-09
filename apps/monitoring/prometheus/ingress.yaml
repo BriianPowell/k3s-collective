@@ -12,7 +12,7 @@ spec:
     - match: Host(`prometheus.powell.place`)
       kind: Rule
       services:
-        - name: prometheus-operated
+        - name: monitor-prometheus
           port: 9090
       middlewares:
         - name: traefik-forward-auth
