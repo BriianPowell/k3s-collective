@@ -37,6 +37,9 @@ spec:
   values:
     fullnameOverride: monitor
     namespaceOverride: monitoring
+    defaultRules:
+      labels:
+        app: prometheus
     alertmanager:
       enabled: false
     grafana:
@@ -97,8 +100,6 @@ spec:
             namespace: monitoring
             port: 9093
             scheme: http
-        ruleNamespaceSelector:
-          any: true
         resources:
           requests:
             cpu: 10m
