@@ -100,6 +100,14 @@ spec:
         ruleSelector:
           matchLabels:
             app: prometheus
+            release: kube-prometheus
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            cpu: 300m
+            memory: 1Gi
 # ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim
