@@ -3,6 +3,8 @@ kind: PrometheusRule
 metadata:
   name: monitor-custom-rules
   namespace: monitoring
+  labels:
+    role: alert-rules
 spec:
   groups:
     - name: Deployment Groups
