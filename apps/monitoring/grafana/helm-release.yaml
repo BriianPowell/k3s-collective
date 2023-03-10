@@ -1,6 +1,10 @@
 #
 # Reference:
+# https://prometheus.io/docs/introduction/overview/
 # https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/keycloak/
+# https://www.opsramp.com/guides/prometheus-monitoring/prometheus-alerting/
+# https://github.com/prometheus/prometheus/blob/main/documentation/examples/prometheus-kubernetes.yml
+# https://grafana.com/blog/2022/03/21/how-relabeling-in-prometheus-works/
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1beta2
