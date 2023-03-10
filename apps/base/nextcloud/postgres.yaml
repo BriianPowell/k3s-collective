@@ -65,16 +65,52 @@ spec:
               cpu: 150m
               memory: 500Mi
           volumeMounts:
-            - name: postgres-data
+            - name: nextcloud-pg-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
       terminationGracePeriodSeconds: 60
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-      spec:
-        accessModes:
-          - 'ReadWriteOnce'
-        resources:
-          requests:
-            storage: 5Gi
+      volumes:
+        - name: nextcloud-pg-data
+          persistentVolumeClaim:
+            claimName: nextcloud-pg-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-pg-pvc
+  namespace: nextcloud
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15G
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-pg-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 15G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: nextcloud-pg-pvc
+    namespace: nextcloud
+  local:
+    path: /mnt/moriyya/nextcloud/pgdata
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
