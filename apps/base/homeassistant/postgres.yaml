@@ -74,12 +74,12 @@ spec:
       volumes:
         - name: homeassistant-data
           persistentVolumeClaim:
-            claimName: homeassistant-pvc
+            claimName: homeassistant-pg-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: homeassistant-pvc
+  name: homeassistant-pg-pvc
   namespace: homeassistant
   labels:
     type: local
@@ -93,7 +93,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: homeassistant-pv
+  name: homeassistant-pg-pv
   labels:
     type: local
 spec:
@@ -104,7 +104,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   claimRef:
-    name: homeassistant-pvc
+    name: homeassistant-pg-pvc
     namespace: homeassistant
   local:
     path: /mnt/moriyya/hass-data
