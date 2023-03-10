@@ -9,13 +9,13 @@ metadata:
   name: metrics-server
   namespace: kube-system
 spec:
+  selector:
+    k8s-app: metrics-server
   ports:
     - name: https
       port: 443
       protocol: TCP
       targetPort: https
-  selector:
-    k8s-app: metrics-server
 ---
 apiVersion: apps/v1
 kind: Deployment
