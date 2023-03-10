@@ -35,9 +35,6 @@ spec:
       containers:
         - name: keycloak-postgressql-db
           image: postgres:14.5
-          args:
-            - sleep
-            - '1000'
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -115,5 +112,3 @@ spec:
               operator: In
               values:
                 - sheol
-# kubectl exec -it -t pod/keycloak-postgressql-db-0 -n keycloak -- /bin/bash
-# pg_resetwal /var/lib/postgresql/data/pgdata
