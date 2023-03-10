@@ -10,7 +10,6 @@ metadata:
   name: wiki-js
   namespace: wiki
   labels:
-    app: wiki-js
     component: app
 spec:
   selector:
@@ -28,17 +27,17 @@ metadata:
   name: wiki-js
   namespace: wiki
   labels:
-    app: wiki-js
+    component: app
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: wiki-js
+      component: app
   template:
     metadata:
       labels:
-        app: wiki-js
+        component: app
     spec:
       serviceAccountName: wiki-js
       containers:

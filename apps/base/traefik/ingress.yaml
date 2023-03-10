@@ -4,7 +4,7 @@ metadata:
   name: traefik-dashboard-https
   namespace: kube-system
   labels:
-    app: traefiksound
+    app: traefik
 spec:
   entryPoints:
     - websecure

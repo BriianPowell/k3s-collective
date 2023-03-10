@@ -4,11 +4,9 @@ metadata:
   name: wiki-js-postgres-db
   namespace: wiki
   labels:
-    app: wiki-js
     component: postgressql
 spec:
   selector:
-    app: wiki-js
     component: postgressql-db
   type: NodePort
   ports:
@@ -24,19 +22,16 @@ metadata:
   name: wiki-js-postgressql-db
   namespace: wiki
   labels:
-    app: wiki-js
     component: postgressql
 spec:
   serviceName: wiki-js-postgressql-db-service
   replicas: 1
   selector:
     matchLabels:
-      app: wiki-js
       component: postgressql-db
   template:
     metadata:
       labels:
-        app: wiki-js
         component: postgressql-db
     spec:
       containers:
@@ -85,7 +80,6 @@ metadata:
   name: wiki-js-pvc
   namespace: wiki
   labels:
-    app: wiki-js
     type: local
 spec:
   accessModes:
@@ -99,7 +93,6 @@ kind: PersistentVolume
 metadata:
   name: wiki-js-pv
   labels:
-    app: wiki-js
     type: local
 spec:
   capacity:
