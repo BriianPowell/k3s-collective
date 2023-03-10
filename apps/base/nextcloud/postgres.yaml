@@ -46,7 +46,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secretsf
+                  name: nextcloud-secrets
                   key: PG_PASS
             - name: POSTGRES_DB
               valueFrom:
