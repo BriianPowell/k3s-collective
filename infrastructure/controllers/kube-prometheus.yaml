@@ -93,6 +93,9 @@ spec:
     prometheus:
       enabled: true
       prometheusSpec:
+        scrapeInterval: '30s'
+        scrapeTimeout: '10s'
+        evaluationInterval: '30s'
         externalUrl: https://prometheus.powell.place
         alertingEndpoints:
           - name: alertmanager-operated
