@@ -37,9 +37,6 @@ spec:
       containers:
         - name: nextcloud-postgressql-db
           image: postgres:14.5
-          args:
-            - pg_resetwal
-            - /var/lib/postgresql/data/pgdata
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -49,7 +46,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud-secretsf
                   key: PG_PASS
             - name: POSTGRES_DB
               valueFrom:
