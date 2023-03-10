@@ -108,6 +108,10 @@ spec:
               value: '1'
             - name: TRUSTED_PROXIES
               value: 10.0.0.0/16 10.42.0.0/24
+            - name: OVERWRITEHOST
+              value: powell.place
+            - name: OVERWRITEPROTOCOL
+              value: https
           ports:
             - name: http
               containerPort: 80
