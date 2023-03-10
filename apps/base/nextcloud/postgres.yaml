@@ -4,11 +4,9 @@ metadata:
   name: nextcloud-postgres-db
   namespace: nextcloud
   labels:
-    app: nextcloud
     component: postgressql
 spec:
   selector:
-    app: nextcloud
     component: postgressql-db
   type: NodePort
   ports:
@@ -24,19 +22,16 @@ metadata:
   name: nextcloud-postgressql-db
   namespace: nextcloud
   labels:
-    app: nextcloud
     component: postgressql
 spec:
   serviceName: nextcloud-postgressql-db-service
   replicas: 1
   selector:
     matchLabels:
-      app: nextcloud
       component: postgressql-db
   template:
     metadata:
       labels:
-        app: nextcloud
         component: postgressql-db
     spec:
       containers:

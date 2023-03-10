@@ -3,8 +3,6 @@ kind: Middleware
 metadata:
   name: nextcloud-headers-middleware
   namespace: nextcloud
-  labels:
-    app: nextcloud
 spec:
   headers:
     stsSeconds: 15552000
@@ -14,8 +12,6 @@ kind: Middleware
 metadata:
   name: nextcloud-redirect-middleware
   namespace: nextcloud
-  labels:
-    app: nextcloud
 spec:
   replacePathRegex:
     regex: ^/.well-known/ca(l|rd)dav

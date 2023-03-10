@@ -5,7 +5,7 @@ metadata:
   namespace: homeassistant
 spec:
   selector:
-    app: homeassistant-postgressql-db
+    component: postgressql-db
   type: NodePort
   ports:
     - name: pgql
@@ -24,11 +24,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: homeassistant-postgressql-db
+      component: postgressql-db
   template:
     metadata:
       labels:
-        app: homeassistant-postgressql-db
+        component: postgressql-db
     spec:
       containers:
         - name: homeassistant-postgressql-db
@@ -67,12 +67,12 @@ spec:
               cpu: 150m
               memory: 500Mi
           volumeMounts:
-            - name: hass-pg-data
+            - name: homeassistant-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
       terminationGracePeriodSeconds: 60
       volumes:
-        - name: hass-pg-data
+        - name: homeassistant-data
           persistentVolumeClaim:
             claimName: homeassistant-pvc
 ---

@@ -11,7 +11,7 @@ metadata:
   namespace: kube-system
 spec:
   selector:
-    app: traefik-forward-auth
+    component: app
   type: ClusterIP
   ports:
     - name: auth-http
@@ -26,12 +26,15 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: traefik-forward-auth
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      component: app
   template:
+    metadata:
+      labels:
+        component: app
     spec:
       terminationGracePeriodSeconds: 60
       containers:

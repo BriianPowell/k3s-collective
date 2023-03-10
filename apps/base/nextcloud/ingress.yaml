@@ -3,8 +3,6 @@ kind: IngressRoute
 metadata:
   name: nextcloud-dashboard-https
   namespace: nextcloud
-  labels:
-    app: nextcloud
 spec:
   entryPoints:
     - websecure

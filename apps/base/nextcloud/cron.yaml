@@ -4,20 +4,17 @@ metadata:
   name: nextcloud-cron
   namespace: nextcloud
   labels:
-    app: nexcloud
     component: cron
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nexcloud
       component: cron
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: nexcloud
         component: cron
     spec:
       containers:

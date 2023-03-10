@@ -5,7 +5,7 @@ metadata:
   namespace: homeassistant
 spec:
   selector:
-    app: homeassistant
+    component: app
   ports:
     - name: http
       port: 8123
@@ -21,8 +21,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: homeassistant
+      component: app
   template:
+    metadata:
+      labels:
+        component: app
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet

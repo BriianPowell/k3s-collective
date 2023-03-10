@@ -11,7 +11,6 @@ metadata:
   name: nextcloud
   namespace: nextcloud
   labels:
-    app: nextcloud
     component: app
 spec:
   selector:
@@ -28,7 +27,6 @@ metadata:
   name: nextcloud
   namespace: nextcloud
   labels:
-    app: nextcloud
     component: app
 spec:
   replicas: 1
@@ -36,12 +34,10 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: nextcloud
       component: app
   template:
     metadata:
       labels:
-        app: nextcloud
         component: app
     spec:
       containers:
@@ -138,7 +134,6 @@ metadata:
   name: nextcloud-pvc
   namespace: nextcloud
   labels:
-    app: nextcloud
     type: local
 spec:
   accessModes:
@@ -152,7 +147,6 @@ kind: PersistentVolume
 metadata:
   name: nextcloud-pv
   labels:
-    app: nextcloud
     type: local
 spec:
   capacity:
