@@ -73,10 +73,7 @@ spec:
       env:
         # For an internal test, disable the Online API
         - name: ENROLL_KEY
-          value:
-            secretKeyRef:
-              name: crowdsec-secrets
-              key: ENROLL_KEY # minimum of 5 chars
+          value: clf8j0jdl0000l5083cpkgk0b
         - name: ENROLL_INSTANCE_NAME
           value: sheol
         - name: ENROLL_TAGS
