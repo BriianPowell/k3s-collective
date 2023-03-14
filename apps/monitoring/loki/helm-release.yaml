@@ -30,7 +30,7 @@ spec:
         enabled: true
         namespace: monitoring
         labels:
-          grafana_dashboard: true
+          grafana_dashboard: '1'
       rules:
         enabled: true
         alerting: true
