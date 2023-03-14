@@ -76,6 +76,9 @@ spec:
             orgId: 1
             version: 1
             isDefault: true
+          - name: Loki
+            type: loki
+            url: http://loki.monitoring.svc:3100
     dashboards: {} # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
     grafana.ini:
       paths:
