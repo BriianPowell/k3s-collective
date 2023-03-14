@@ -19,19 +19,26 @@ spec:
     - name: Pods
       rules:
         - alert: High Pod Memory
-          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!~"kube-system|valheim|minecraft"}) by (namespace,container,pod) > 1200000000
+          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!~"kube-system|valheim|minecraft|monitoring"}) by (namespace,container,pod) > 1200000000
           for: 1m
           labels:
             severity: critical
           annotations:
-            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2GB)
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2G)
+        - alert: High Monitoring Pod Memory
+          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace=~"monitoring"}) by (namespace,container,pod) > 1500000000
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.5G)
         - alert: High Game Pod Memory
           expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server|minecraft-server-minecraft", namespace=~"valheim|minecraft"}) by (namespace,container,pod) > 7000000000
           for: 1m
           labels:
             severity: critical
           annotations:
-            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 5GB)
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 5G)
         - alert: Container Restarted
           expr: sum(increase(kube_pod_container_status_restarts_total{namespace!="kube-system",pod_template_hash=""}[1m])) by (pod,namespace,container) > 0
           for: 0m
