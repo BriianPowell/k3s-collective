@@ -11,8 +11,5 @@ spec:
       app.kubernetes.io/name: alertmanager
       app.kubernetes.io/instance: alertmanager
   endpoints:
-    - honorLabels: true
-      interval: 1m
+    - interval: 30s
       port: web
-      scheme: http
-      scrapeTimeout: 30s
