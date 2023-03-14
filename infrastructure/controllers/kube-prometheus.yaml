@@ -45,10 +45,16 @@ spec:
       enabled: false
     kubeApiServer:
       enabled: true
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     kubelet:
       enabled: true
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     kubeControllerManager:
-      enabled: false
+      enabled: true
       endpoints: ['10.0.0.10']
       service:
         enabled: true
@@ -57,12 +63,20 @@ spec:
       serviceMonitor:
         enabled: true
         https: true
+        additionalLabels:
+          prometheus: monitoring-enabled
     coreDns:
       enabled: true
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     kubeDns:
       enabled: false
     kubeEtcd:
       enabled: true
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     kubeScheduler:
       enabled: true
       endpoints: ['10.0.0.10']
@@ -73,6 +87,8 @@ spec:
       serviceMonitor:
         enabled: true
         https: true
+        additionalLabels:
+          prometheus: monitoring-enabled
     kubeProxy:
       enabled: true
       endpoints: ['10.0.0.10']
@@ -80,8 +96,11 @@ spec:
         enabled: true
         port: 10249
         targetPort: 10249
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     kube-state-metrics:
-      namespaceOverride: kube-system
+      namespaceOverride: monitoring
     prometheus-node-exporter:
       namespaceOverride: monitoring
       # extraArgs:
@@ -90,6 +109,9 @@ spec:
       #   - --collector.netclass.ignored-devices=^(veth.*)$
     prometheusOperator:
       enabled: true
+      serviceMonitor:
+        additionalLabels:
+          prometheus: monitoring-enabled
     prometheus:
       enabled: true
       prometheusSpec:
@@ -106,6 +128,10 @@ spec:
         ruleSelector:
           matchLabels:
             role: alert-rules
+        serviceMonitorNamespaceSelector: {}
+        serviceMonitorSelector:
+          matchLabels:
+            prometheus: monitoring-enabled
         resources:
           requests:
             cpu: 10m

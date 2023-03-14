@@ -8,3 +8,4 @@ resources:
   - template.yaml
   - ingress.yaml
   - deployment.yaml
+  - service-monitor.yaml
