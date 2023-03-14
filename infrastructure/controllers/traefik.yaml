@@ -67,7 +67,7 @@ spec:
         enabled: true
     providers:
       kubernetesCRD:
-        allowCrossNamespace: true # Use Middlewares accross namespaces
+        allowCrossNamespace: true # Use Middlewares across namespaces
       kubernetesIngress:
         publishedService:
           enabled: true

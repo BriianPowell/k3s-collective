@@ -138,7 +138,7 @@ spec:
             memory: 100Mi
           limits:
             cpu: 1000m
-            memory: 1Gi
+            memory: 1.2G
 # ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim

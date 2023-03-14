@@ -40,9 +40,6 @@ spec:
         reflector:
           namespaces:
             - kube-system
-    bouncer:
-      reflector:
-        namespaces: ['kube-system']
     agent:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -70,17 +67,23 @@ spec:
     lapi:
       dashboard:
         enabled: false
-        ingress:
-          host: metabase.powell.place
-          enabled: true
       persistentVolume:
         config:
           enabled: false
-      # env:
-      #   # For an internal test, disable the Online API
-      #   - name: DISABLE_ONLINE_API
-      #     value: 'true'
-    metrics:
-      enabled: true
-      serviceMonitor:
+      env:
+        # For an internal test, disable the Online API
+        - name: ENROLL_KEY
+          value:
+            secretKeyRef:
+              name: crowdsec-secrets
+              key: ENROLL_KEY # minimum of 5 chars
+        - name: ENROLL_INSTANCE_NAME
+          value: sheol
+        - name: ENROLL_TAGS
+          value: 'k3s sheol'
+      metrics:
         enabled: true
+        serviceMonitor:
+          enabled: true
+          labels:
+            prometheus: monitoring-enabled
