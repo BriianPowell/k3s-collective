@@ -8,8 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: alertmanager
-      app.kubernetes.io/instance: alertmanager
+      operated-alertmanager: 'true'
   endpoints:
     - interval: 30s
       port: web
