@@ -80,9 +80,9 @@ spec:
         - name: ENROLL_TAGS
           value: 'k3s'
         - name: DISABLE_ONLINE_API
-          value: false
+          value: 'false'
         - name: DISABLE_LOCAL_API
-          value: false
+          value: 'false'
       metrics:
         enabled: true
         serviceMonitor:
