@@ -1,39 +1,53 @@
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: grafana
-#   namespace: monitoring
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: loki
-#       sourceRef:
-#         kind: HelmRepository
-#         name: grafana
-#         namespace: monitoring
-#       version: '>=6.52.1'
-#   values:
-#     nameOverride: null
-#     test:
-#       enabled: true
-#       prometheusAdderss: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
-#     monitoring:
-#       dashboards:
-#         enabled: true
-#         namespace: monitoring
-#       rules:
-#         enabled: true
-#         alerting: true
-#         namespace: monitoring
-#         labels:
-#           role: alert-rules
-#         additionalGroups: []
-#         # - name: additional-loki-rules
-#         #   rules:
-#         #     - record: job:loki_request_duration_seconds_bucket:sum_rate
-#         #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)
-#         #     - record: job_route:loki_request_duration_seconds_bucket:sum_rate
-#         #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
-#         #     - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
-#         #       expr: sum(rate(container_cpu_usage_seconds_total[1m])) by (node, namespace, pod, container)
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: loki
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: monitoring
+      version: '>=6.52.1'
+  values:
+    nameOverride: null
+    fullnameOverride: null
+    loki:
+      commonConfig:
+        replication_factor: 1
+      storage:
+        type: filesystem
+    test:
+      enabled: true
+      prometheusAddress: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
+    monitoring:
+      dashboards:
+        enabled: true
+        namespace: monitoring
+        labels:
+          grafana_dashboard: true
+      rules:
+        enabled: true
+        alerting: true
+        namespace: monitoring
+        labels:
+          role: alert-rules
+        additionalGroups: []
+        # - name: additional-loki-rules
+        #   rules:
+        #     - record: job:loki_request_duration_seconds_bucket:sum_rate
+        #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)
+        #     - record: job_route:loki_request_duration_seconds_bucket:sum_rate
+        #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
+        #     - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+        #       expr: sum(rate(container_cpu_usage_seconds_total[1m])) by (node, namespace, pod, container)
+      serviceMonitor:
+        enabled: true
+        labels:
+          prometheus: monitoring-enabled
+    minio:
+      enabled: false
