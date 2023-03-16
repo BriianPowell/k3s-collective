@@ -26,7 +26,7 @@ spec:
           annotations:
             summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2G)
         - alert: High Monitoring Pod Memory
-          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace=~"monitoring"}) by (namespace,container,pod) > 1500000000
+          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace=~"monitoring"}) by (namespace,container,pod) > 2000000000
           for: 1m
           labels:
             severity: critical
