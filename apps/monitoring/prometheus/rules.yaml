@@ -31,7 +31,7 @@ spec:
           labels:
             severity: critical
           annotations:
-            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.5G)
+            summary: Pod {{$labels.pod}} is currently utilizing high memory (> 2G)
         - alert: High Game Pod Memory
           expr: sum(container_memory_working_set_bytes{image!="",container=~"valheim-server|minecraft-server-minecraft", namespace=~"valheim|minecraft"}) by (namespace,container,pod) > 7000000000
           for: 1m
