@@ -44,7 +44,7 @@ spec:
       requests:
         cpu: 500m
       limits:
-        cpu: 1000m
+        cpu: 2000m
         memory: 7Gi
     env:
       SERVER_NAME: 'The Neighborhood'
