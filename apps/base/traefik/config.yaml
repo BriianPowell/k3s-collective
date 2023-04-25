@@ -1,3 +1,8 @@
+#
+# Resources:
+# https://github.com/traefik/traefik-helm-chart/issues/187
+#
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
