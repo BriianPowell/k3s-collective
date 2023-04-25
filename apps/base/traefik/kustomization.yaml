@@ -6,7 +6,7 @@ commonLabels:
 
 resources:
   - ingress.yaml
-  - tls-store.yaml
+  # - tls-store.yaml
   - middleware.yaml
   - tls-option.yaml
-  - config.yaml
+  # - config.yaml
