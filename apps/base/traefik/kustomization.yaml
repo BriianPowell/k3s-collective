@@ -1,9 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-system
+commonLabels:
+  app: traefik
 
 resources:
   - ingress.yaml
-  - cert.yaml
   - tls-store.yaml
   - middleware.yaml
+  - tls-option.yaml
+  - config.yaml

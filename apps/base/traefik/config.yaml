@@ -2,9 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: traefik-config
-  labels:
-    name: traefik-config
-  namespace: traefik
+  namespace: kube-system
 data:
   dyn.yaml: |
     # https://doc.traefik.io/traefik/https/tls/
