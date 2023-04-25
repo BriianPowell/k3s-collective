@@ -14,9 +14,14 @@ spec:
       middlewares:
         - name: traefik-forward-auth
           namespace: kube-system
+        - name: security
+          namespace: kube-system
       services:
         - kind: TraefikService
           name: api@internal
   tls:
     store:
       name: default
+    options:
+      name: tlsoptions
+      namespace: kube-system
