@@ -12,3 +12,6 @@ spec:
       services:
         - name: homeassistant
           port: 8123
+      middlewares:
+        - name: security
+          namespace: kube-system
