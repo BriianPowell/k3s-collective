@@ -25,7 +25,12 @@ spec:
     sslRedirect: true
     browserXssFilter: true
     contentTypeNosniff: true
+    ContentSecurityPolicy: "default-src 'self' 'unsafe-inline'"
+    CustomFrameOptionsValue: 'SAMEORIGIN'
+    ReferrerPolicy: 'same-origin'
+    FeaturePolicy: "vibrate 'self'"
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
     stsSeconds: 31536000
+    forceStsHeader: true
