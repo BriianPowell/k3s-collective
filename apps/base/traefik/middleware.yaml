@@ -25,6 +25,7 @@ spec:
     sslRedirect: true
     browserXssFilter: true
     contentTypeNosniff: true
+    #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
     stsSeconds: 31536000
