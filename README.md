@@ -98,12 +98,19 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ### Security
 
-- [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
+- [ ] [CrowdSec](https://github.com/crowdsecurity/crowdsec) - Issues with Traefik Update, need to revisit
 
 ### Games
 
 - [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
 - [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
+
+### HomePage
+
+Need to make a decisions
+
+- [ ] [Homer](https://github.com/bastienwirtz/homer)
+- [ ] [HomePage](https://github.com/benphelps/homepage)
 
 ### TBD
 
