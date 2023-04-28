@@ -15,3 +15,5 @@ spec:
       middlewares:
         - name: traefik-forward-auth
           namespace: kube-system
+        - name: security
+          namespace: kube-system

@@ -12,3 +12,6 @@ spec:
       services:
         - name: grafana
           port: 80
+      middlewares:
+        - name: security
+          namespace: kube-system

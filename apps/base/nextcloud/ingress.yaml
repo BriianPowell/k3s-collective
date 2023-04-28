@@ -17,3 +17,5 @@ spec:
           namespace: nextcloud
         - name: nextcloud-redirect-middleware
           namespace: nextcloud
+        - name: security
+          namespace: kube-system

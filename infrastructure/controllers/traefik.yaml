@@ -44,6 +44,8 @@ spec:
       websecure:
         # middlewares:
         #   - kube-system-bouncer@kubernetescrd
+        tls:
+          options: default
         forwardedHeaders:
           insecure: true
           trustedIPs:
