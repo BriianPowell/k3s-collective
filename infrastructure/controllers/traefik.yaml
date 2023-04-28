@@ -42,8 +42,8 @@ spec:
       web:
         redirectTo: websecure
       websecure:
-        middlewares:
-          - kube-system-bouncer@kubernetescrd
+        # middlewares:
+        #   - kube-system-bouncer@kubernetescrd
         forwardedHeaders:
           insecure: true
           trustedIPs:
@@ -74,9 +74,9 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
-    experimental:
-      plugins:
-        enabled: true
+    # experimental:
+    #   plugins:
+    #     enabled: true
     # volumes:
     #   - name: crowdsec-bouncer-tls
     #     mountPath: /etc/traefik/crowdsec-certs/
