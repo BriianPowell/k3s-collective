@@ -4,88 +4,88 @@
 # https://www.crowdsec.net/blog/how-to-mitigate-security-threats-with-crowdsec-and-traefik
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: crowdsec
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: crowdsec
-  namespace: crowdsec
-spec:
-  interval: 24h
-  url: https://crowdsecurity.github.io/helm-charts
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: crowdsec
-  namespace: crowdsec
-spec:
-  interval: 1h0m0s
-  chart:
-    spec:
-      chart: crowdsec
-      sourceRef:
-        kind: HelmRepository
-        name: crowdsec
-        namespace: crowdsec
-      version: '>=0.8.5'
-  values:
-    container_runtime: containerd
-    tls:
-      enabled: true
-      bouncer:
-        reflector:
-          namespaces:
-            - kube-system
-    agent:
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Equal
-          effect: NoSchedule
-      # Specify each pod whose logs you want to process
-      acquisition:
-        # The namespace where the pod is located
-        - namespace: kube-system
-          # The pod name
-          podName: traefik-*
-          # as in crowdsec configuration, we need to specify the program name to find a matching parser
-          program: traefik
-      env:
-        - name: PARSERS
-          value: 'crowdsecurity/cri-logs'
-        - name: COLLECTIONS
-          value: 'crowdsecurity/traefik'
-        # When testing, allow bans on private networks
-        # - name: DISABLE_PARSERS
-        #   value: 'crowdsecurity/whitelists'
-      persistentVolume:
-        config:
-          enabled: false
-    lapi:
-      dashboard:
-        enabled: false
-      persistentVolume:
-        config:
-          enabled: false
-      env:
-        # For an internal test, disable the Online API
-        - name: ENROLL_KEY
-          value: clf8j0jdl0000l5083cpkgk0b
-        - name: ENROLL_INSTANCE_NAME
-          value: sheol
-        - name: ENROLL_TAGS
-          value: 'k3s'
-        - name: DISABLE_ONLINE_API
-          value: 'false'
-        - name: DISABLE_LOCAL_API
-          value: 'false'
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-          labels:
-            prometheus: monitoring-enabled
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: crowdsec
+# ---
+# apiVersion: source.toolkit.fluxcd.io/v1beta2
+# kind: HelmRepository
+# metadata:
+#   name: crowdsec
+#   namespace: crowdsec
+# spec:
+#   interval: 24h
+#   url: https://crowdsecurity.github.io/helm-charts
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: crowdsec
+#   namespace: crowdsec
+# spec:
+#   interval: 1h0m0s
+#   chart:
+#     spec:
+#       chart: crowdsec
+#       sourceRef:
+#         kind: HelmRepository
+#         name: crowdsec
+#         namespace: crowdsec
+#       version: '>=0.8.5'
+#   values:
+#     container_runtime: containerd
+#     tls:
+#       enabled: true
+#       bouncer:
+#         reflector:
+#           namespaces:
+#             - kube-system
+#     agent:
+#       tolerations:
+#         - key: node-role.kubernetes.io/control-plane
+#           operator: Equal
+#           effect: NoSchedule
+#       # Specify each pod whose logs you want to process
+#       acquisition:
+#         # The namespace where the pod is located
+#         - namespace: kube-system
+#           # The pod name
+#           podName: traefik-*
+#           # as in crowdsec configuration, we need to specify the program name to find a matching parser
+#           program: traefik
+#       env:
+#         - name: PARSERS
+#           value: 'crowdsecurity/cri-logs'
+#         - name: COLLECTIONS
+#           value: 'crowdsecurity/traefik'
+#         # When testing, allow bans on private networks
+#         # - name: DISABLE_PARSERS
+#         #   value: 'crowdsecurity/whitelists'
+#       persistentVolume:
+#         config:
+#           enabled: false
+#     lapi:
+#       dashboard:
+#         enabled: false
+#       persistentVolume:
+#         config:
+#           enabled: false
+#       env:
+#         # For an internal test, disable the Online API
+#         - name: ENROLL_KEY
+#           value: clf8j0jdl0000l5083cpkgk0b
+#         - name: ENROLL_INSTANCE_NAME
+#           value: sheol
+#         - name: ENROLL_TAGS
+#           value: 'k3s'
+#         - name: DISABLE_ONLINE_API
+#           value: 'false'
+#         - name: DISABLE_LOCAL_API
+#           value: 'false'
+#       metrics:
+#         enabled: true
+#         serviceMonitor:
+#           enabled: true
+#           labels:
+#             prometheus: monitoring-enabled

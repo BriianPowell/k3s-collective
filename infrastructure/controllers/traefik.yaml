@@ -77,24 +77,17 @@ spec:
     experimental:
       plugins:
         enabled: true
-    volumes:
-      - name: crowdsec-bouncer-tls
-        mountPath: /etc/traefik/crowdsec-certs/
-        type: secret
-      # - name: wildcard-powell-place-secret
-      #   mountPath: '/certs'
-      #   type: secret
-      # - name: traefik-config
-      #   mountPath: '/config'
-      #   type: configMap
+    # volumes:
+    #   - name: crowdsec-bouncer-tls
+    #     mountPath: /etc/traefik/crowdsec-certs/
+    #     type: secret
     tlsStore:
       default:
         defaultCertificate:
           secretName: wildcard-powell-place-secret
-    additionalArguments:
-      # - '--providers.file.filename=/config/dyn.yaml'
-      - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
-      - '--experimental.plugins.bouncer.version=v1.1.9'
+    # additionalArguments:
+    #   - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
+    #   - '--experimental.plugins.bouncer.version=v1.1.9'
     resources:
       requests:
         cpu: 10m
