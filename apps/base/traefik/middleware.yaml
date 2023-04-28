@@ -25,9 +25,7 @@ spec:
     sslRedirect: true
     browserXssFilter: true
     contentTypeNosniff: true
-    referrerPolicy: same-origin
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
     stsSeconds: 31536000
-    forceSTSHeader: true
