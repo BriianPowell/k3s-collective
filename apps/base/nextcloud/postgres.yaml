@@ -105,7 +105,7 @@ spec:
     name: nextcloud-pg-pvc
     namespace: nextcloud
   local:
-    path: /mnt/moriyya/nextcloud/pgdata
+    path: /mnt/moriyya/nextcloud-postgres
   nodeAffinity:
     required:
       nodeSelectorTerms:
