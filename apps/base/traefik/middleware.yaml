@@ -21,10 +21,10 @@ metadata:
   namespace: kube-system
 spec:
   headers:
-    frameDeny: true
-    sslRedirect: true
     browserXssFilter: true
     contentTypeNosniff: true
+    frameDeny: true
+    sslRedirect: true
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
