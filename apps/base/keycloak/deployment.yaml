@@ -60,16 +60,16 @@ spec:
           image: quay.io/keycloak/keycloak:19.0.1
           args: ['start']
           env:
-            # - name: KEYCLOAK_ADMIN
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: keycloak-secrets
-            #       key: KC_ADMN
-            # - name: KEYCLOAK_ADMIN_PASSWORD
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: keycloak-secrets
-            #       key: KC_PASS
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secrets
+                  key: KC_ADMN
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secrets
+                  key: KC_PASS
             - name: KC_PROXY
               value: edge
             - name: KC_HOSTNAME
