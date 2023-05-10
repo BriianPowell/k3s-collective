@@ -55,7 +55,7 @@ spec:
           prometheus: monitoring-enabled
     kubeControllerManager:
       enabled: true
-      endpoints: ['10.0.0.10']
+      endpoints: ['10.0.2.10']
       service:
         enabled: true
         port: 10257
@@ -79,7 +79,7 @@ spec:
           prometheus: monitoring-enabled
     kubeScheduler:
       enabled: true
-      endpoints: ['10.0.0.10']
+      endpoints: ['10.0.2.10']
       service:
         enabled: true
         port: 10259
@@ -91,7 +91,7 @@ spec:
           prometheus: monitoring-enabled
     kubeProxy:
       enabled: true
-      endpoints: ['10.0.0.10']
+      endpoints: ['10.0.2.10']
       service:
         enabled: true
         port: 10249
