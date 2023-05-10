@@ -43,7 +43,7 @@ spec:
       containers:
         - name: nextcloud
           image: nextcloud:stable-apache
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: TIMEZONE
               value: America/Los Angeles
