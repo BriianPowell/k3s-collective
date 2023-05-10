@@ -12,6 +12,6 @@ spec:
       services:
         - name: wiki-js
           port: 80
-      middlewares:
-        - name: security
-          namespace: kube-system
+      # middlewares:
+      #   - name: security
+      #     namespace: kube-system
