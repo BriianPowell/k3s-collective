@@ -24,7 +24,7 @@ spec:
         type: filesystem
     test:
       enabled: true
-      prometheusAddress: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
+      prometheusAddress: http://prometheus-operated.monitoring.svc:9090
     monitoring:
       dashboards:
         enabled: true
