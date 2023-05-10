@@ -13,5 +13,5 @@ spec:
         - name: keycloak
           port: 8080
       middlewares:
-        - name: security
+        - name: security-no-frame-deny
           namespace: kube-system
