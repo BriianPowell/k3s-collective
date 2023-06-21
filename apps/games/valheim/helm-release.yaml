@@ -46,6 +46,8 @@ spec:
       limits:
         cpu: 2000m
         memory: 7Gi
+    controller:
+      replicas: 0
     env:
       SERVER_NAME: 'The Neighborhood'
       WORLD_NAME: 'The Neighborhood of Make-Believe'

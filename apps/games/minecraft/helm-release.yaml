@@ -38,6 +38,7 @@ spec:
         namespace: minecraft
       version: '>=4.7.0 <5.0.0'
   values:
+    replicaCount: 0 # adjust to
     persistence:
       dataDir:
         enabled: true
