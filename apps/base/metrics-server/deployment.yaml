@@ -39,7 +39,7 @@ spec:
       labels:
         k8s-app: metrics-server
     spec:
-      # hostNetwork: true
+      hostNetwork: true
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
