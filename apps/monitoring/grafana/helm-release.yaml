@@ -129,17 +129,17 @@ spec:
         default_theme: system
         login_hint: email or username
         verify_email_enabled: false
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: grafana-pvc
-#   namespace: monitoring
-#   labels:
-#     app: grafana
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: monitoring
+  labels:
+    app: grafana
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
