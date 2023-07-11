@@ -112,6 +112,15 @@ spec:
       serviceMonitor:
         additionalLabels:
           prometheus: monitoring-enabled
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
     prometheus:
       enabled: true
       prometheusSpec:
@@ -132,6 +141,15 @@ spec:
         serviceMonitorSelector:
           matchLabels:
             prometheus: monitoring-enabled
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - abaddon
         resources:
           requests:
             cpu: 100m
