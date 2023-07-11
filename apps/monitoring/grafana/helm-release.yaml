@@ -44,10 +44,6 @@ spec:
       relabelings: []
       targetLabels: []
     resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
         cpu: 250m
         memory: 500Mi
     nodeSelector:
