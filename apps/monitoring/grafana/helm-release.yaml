@@ -46,12 +46,11 @@ spec:
     resources:
         cpu: 250m
         memory: 500Mi
-    nodeSelector:
-      kubernetes.io/hostname: abaddon
     affinity:
       nodeAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
+        - weight: 100
+          preference:
             - matchExpressions:
                 - key: kubernetes.io/hostname
                   operator: In
