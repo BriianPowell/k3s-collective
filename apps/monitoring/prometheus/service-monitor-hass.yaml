@@ -9,9 +9,6 @@ spec:
   selector:
     matchLabels:
       monitor: homeassistant
-  namespaceSelector:
-    matchNames:
-      - homeassistant
   endpoints:
     - authorization:
         credentials:
