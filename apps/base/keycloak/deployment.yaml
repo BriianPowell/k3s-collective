@@ -8,8 +8,6 @@ kind: Service
 metadata:
   name: keycloak-headless
   namespace: keycloak
-  labels:
-    monitor: keycloak
 spec:
   selector:
     component: app
@@ -31,10 +29,8 @@ kind: Service
 metadata:
   name: keycloak
   namespace: keycloak
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '8080'
-spec:
+  labels:
+    monitor: keycloak
   selector:
     component: app
   ports:
