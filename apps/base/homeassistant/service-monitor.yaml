@@ -12,7 +12,7 @@ spec:
   endpoints:
     - interval: 30s
       path: /api/prometheus
-      # scheme: https
+      scheme: http
       port: http
       authorization:
         credentials:
