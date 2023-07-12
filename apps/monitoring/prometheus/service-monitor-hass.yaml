@@ -10,11 +10,11 @@ spec:
     matchLabels:
       monitor: homeassistant
   endpoints:
-    - interval: 30s
-      path: /api/prometheus
-      scheme: http
-      port: http
-      authorization:
+    - authorization:
         credentials:
           key: HASSTOKEN
           name: prometheus-secrets
+      interval: 30s
+      path: /api/prometheus
+      # port: http
+      scheme: http
