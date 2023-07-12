@@ -19,5 +19,5 @@ spec:
           name: prometheus-secrets
       interval: 30s
       path: /api/prometheus
-      # port: http
+      port: http
       scheme: http
