@@ -16,5 +16,5 @@ spec:
       port: http
       authorization:
         credentials:
-          key: TOKEN
-          name: homeassistant-secrets
+          key: HASSTOKEN
+          name: prometheus-secrets
