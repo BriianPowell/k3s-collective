@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: keycloak
+  namespace: monitoring
+  labels:
+    prometheus: monitoring-enabled
+spec:
+  selector:
+    matchLabels:
+      monitor: keycloak
+  namespaceSelector:
+    matchNames:
+      - keycloak
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      port: http
+      scheme: http

@@ -8,6 +8,8 @@ kind: Service
 metadata:
   name: keycloak-headless
   namespace: keycloak
+  labels:
+    monitor: keycloak
 spec:
   selector:
     component: app
