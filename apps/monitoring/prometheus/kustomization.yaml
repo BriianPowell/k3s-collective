@@ -8,3 +8,4 @@ resources:
   - ingress.yaml
   - rules.yaml
   - service-monitor-hass.yaml
+  - service-monitor-keycloak.yaml
