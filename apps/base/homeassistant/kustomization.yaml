@@ -9,3 +9,4 @@ resources:
   - postgres.yaml
   - deployment.yaml
   - ingress.yaml
+  - service-monitor.yaml
