@@ -10,10 +10,11 @@ spec:
     matchLabels:
       monitor: homeassistant
   endpoints:
-    - interval: 60s
+    - interval: 30s
       path: /api/prometheus
       # scheme: https
-      targetPort: 8123
-      bearerTokenSecret:
-        key: TOKEN
-        name: homeassistant-secrets
+      port: http
+      authorization:
+        credentials:
+          key: TOKEN
+          name: homeassistant-secrets
