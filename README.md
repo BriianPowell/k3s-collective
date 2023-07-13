@@ -80,10 +80,9 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
 - [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
 - [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
-- [x] [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://www.home-assistant.io/)
-- [x] [Nextcloud](https://github.com/nextcloud/server)
+- [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
 - [x] [Wiki.js](https://js.wiki/)
 
 ### Monitoring & Logging
