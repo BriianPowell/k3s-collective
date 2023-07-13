@@ -4,5 +4,4 @@ namespace: system-upgrade
 
 resources:
   - deployment.yaml
-  # - crd.yaml
-  # - plan.yaml
+  - plan.yaml
