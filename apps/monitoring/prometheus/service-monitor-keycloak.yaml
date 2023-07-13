@@ -16,3 +16,7 @@ spec:
     - interval: 30s
       path: /metrics
       port: http
+      metricRelabelings:
+       - sourceLabels: [ __name__ ]
+         targetLabel: __name__
+         replacement: keycloak_$1
