@@ -63,11 +63,11 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: NEXTCLOUD_SERVER
-              value: http://nextcloud.nextcloud.svc:80
+              value: https://nextcloud.powell.place
             - name: NEXTCLOUD_LISTEN_ADDRESS
               value: :9205
             - name: NEXTCLOUD_TIMEOUT
-              value: 5s
+              value: 15s
             - name: NEXTCLOUD_TLS_SKIP_VERIFY
               value: 'false'
             - name: NEXTCLOUD_AUTH_TOKEN
