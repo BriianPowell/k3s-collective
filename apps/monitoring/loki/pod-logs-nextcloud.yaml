@@ -1,0 +1,15 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name:
+  namespace: monitoring
+  labels:
+    grafana: logs-enabled
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: app
+  namespaceSelector:
+    matchNames:
+      - nextcloud
