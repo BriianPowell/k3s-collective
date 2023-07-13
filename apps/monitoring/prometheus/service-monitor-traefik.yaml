@@ -14,3 +14,4 @@ spec:
       - kube-system
   endpoints:
     - interval: 30s
+      targetPort: 9100

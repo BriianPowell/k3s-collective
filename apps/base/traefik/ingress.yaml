@@ -19,25 +19,25 @@ spec:
       services:
         - kind: TraefikService
           name: api@internal
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: traefik-metrics-https
-  namespace: kube-system
-  labels:
-    app: traefik
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`metrics.powell.place`)
-      kind: Rule
-      middlewares:
-        # - name: traefik-forward-auth
-        #   namespace: kube-system
-        - name: security
-          namespace: kube-system
-      services:
-        - kind: TraefikService
-          name: prometheus@internal
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: traefik-metrics-https
+#   namespace: kube-system
+#   labels:
+#     app: traefik
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`metrics.powell.place`)
+#       kind: Rule
+#       middlewares:
+#         # - name: traefik-forward-auth
+#         #   namespace: kube-system
+#         - name: security
+#           namespace: kube-system
+#       services:
+#         - kind: TraefikService
+#           name: prometheus@internal
