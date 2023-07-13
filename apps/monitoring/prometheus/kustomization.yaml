@@ -10,3 +10,4 @@ resources:
   - service-monitor-hass.yaml
   - service-monitor-keycloak.yaml
   - service-monitor-nextcloud.yaml
+  - service-monitor-traefik.yaml

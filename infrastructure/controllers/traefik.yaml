@@ -37,6 +37,8 @@ spec:
         operator: Exists
         effect: NoSchedule
     service:
+      labels:
+        monitor: traefik
       ipFamilyPolicy: PreferDualStack
     ports:
       web:
