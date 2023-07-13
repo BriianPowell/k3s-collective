@@ -9,3 +9,4 @@ resources:
   - rules.yaml
   - service-monitor-hass.yaml
   - service-monitor-keycloak.yaml
+  - service-monitor-nextcloud.yaml
