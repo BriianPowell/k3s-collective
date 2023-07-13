@@ -64,8 +64,8 @@ spec:
               cpu: 10m
               memory: 300Mi
             limits:
-              cpu: 150m
-              memory: 500Mi
+              cpu: 500m
+              memory: 1000Mi
           volumeMounts:
             - name: homeassistant-data
               mountPath: /var/lib/postgresql/data
