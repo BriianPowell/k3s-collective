@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.powell.place`)
+    - match: Host(`traefik.powell.place`) || PathPrefix('/dashboard')
       kind: Rule
       middlewares:
         - name: traefik-forward-auth
@@ -31,13 +31,13 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.powell.place`) || PathPrefix('metrics')
+    - match: Host(`metrics.powell.place`) || PathPrefix('/metrics')
       kind: Rule
-      # middlewares:
-      #   - name: traefik-forward-auth
-      #     namespace: kube-system
-      #   - name: security
-      #     namespace: kube-system
+      middlewares:
+        # - name: traefik-forward-auth
+        #   namespace: kube-system
+        - name: security
+          namespace: kube-system
       services:
         - kind: TraefikService
           name: prometheus@internal
