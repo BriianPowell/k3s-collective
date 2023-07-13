@@ -6,6 +6,7 @@ metadata:
 spec:
   headers:
     stsSeconds: 15552000
+    customFrameOptionsValue: 'sameorigin'
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
