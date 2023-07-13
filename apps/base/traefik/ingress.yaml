@@ -31,7 +31,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.powell.place`) && PathPrefix('/metrics')
+    - match: Host(`metrics.powell.place`)
       kind: Rule
       # middlewares:
       #   - name: traefik-forward-auth
