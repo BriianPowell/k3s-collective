@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nextcloud
+  namespace: monitoring
+  labels:
+    prometheus: monitoring-enabled
+spec:
+  selector:
+    matchLabels:
+      monitor: nextcloud
+  namespaceSelector:
+    matchNames:
+      - nextcloud
+  endpoints:
+    - interval: 30s
+      port: metrics
