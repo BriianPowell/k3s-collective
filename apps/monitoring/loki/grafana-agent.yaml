@@ -1,0 +1,16 @@
+# apiVersion: monitoring.grafana.com/v1alpha1
+# kind: GrafanaAgent
+# metadata:
+#   name: grafana-agent
+#   namespace: monitoring
+#   labels:
+# spec:
+#   affinity:
+#     nodeAffinity:
+#       requiredDuringSchedulingIgnoredDuringExecution:
+#         nodeSelectorTerms:
+#         - matchExpressions:
+#           - key: kubernetes.io/hostname
+#             operator: In
+#             values:
+#             - abaddon
