@@ -1,16 +1,33 @@
-# apiVersion: monitoring.grafana.com/v1alpha1
-# kind: GrafanaAgent
-# metadata:
-#   name: grafana-agent
-#   namespace: monitoring
-#   labels:
-# spec:
-#   affinity:
-#     nodeAffinity:
-#       requiredDuringSchedulingIgnoredDuringExecution:
-#         nodeSelectorTerms:
-#         - matchExpressions:
-#           - key: kubernetes.io/hostname
-#             operator: In
-#             values:
-#             - abaddon
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: GrafanaAgent
+metadata:
+  name: grafana-agent
+  namespace: monitoring
+  labels:
+    app: grafan-agent
+    component: operator
+spec:
+  image: grafana/agent:v0.34.3
+  integrations:
+    selector:
+      matchLabels:
+        agent: grafana-agent-integrations
+  logLevel: info
+  serviceAccountName: loki-grafana-agent
+  metrics:
+    instanceSelector:
+      matchLabels:
+        app.kubernetes.io/name: loki
+  logs:
+    instanceSelector:
+      matchLabels:
+        app.kubernetes.io/name: loki
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - abaddon

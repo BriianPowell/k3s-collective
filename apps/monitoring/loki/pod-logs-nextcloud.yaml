@@ -4,7 +4,7 @@ metadata:
   name: nextcloud
   namespace: monitoring
   labels:
-    grafana: logs-enabled
+    loki: logs-enabled
 spec:
   selector:
     matchLabels:
