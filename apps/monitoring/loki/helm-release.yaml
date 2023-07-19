@@ -1,128 +1,128 @@
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: loki
-#   namespace: monitoring
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: loki
-#       sourceRef:
-#         kind: HelmRepository
-#         name: grafana
-#         namespace: monitoring
-#       version: '>=5.5.0 <6.0.0'
-#   values:
-#     nameOverride: null
-#     fullnameOverride: null
-#     clusterLabelOverride: collective
-#     loki:
-#       auth_enabled: false
-#       commonConfig:
-#         replication_factor: 1
-#       storage:
-#         type: filesystem
-#     test:
-#       enabled: true
-#       prometheusAddress: http://prometheus-operated.monitoring.svc:9090
-#     monitoring:
-#       dashboards:
-#         enabled: true
-#         namespace: monitoring
-#         labels:
-#           grafana_dashboard: '1'
-#       rules:
-#         enabled: true
-#         alerting: true
-#         namespace: monitoring
-#         labels:
-#           role: alert-rules
-#         additionalGroups: []
-#         # - name: additional-loki-rules
-#         #   rules:
-#         #     - record: job:loki_request_duration_seconds_bucket:sum_rate
-#         #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)
-#         #     - record: job_route:loki_request_duration_seconds_bucket:sum_rate
-#         #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
-#         #     - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
-#         #       expr: sum(rate(container_cpu_usage_seconds_total[1m])) by (node, namespace, pod, container)
-#       serviceMonitor:
-#         enabled: true
-#         labels:
-#           prometheus: monitoring-enabled
-#     write:
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     tableManager:
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     read:
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     backend:
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     singleBinary:
-#       replicas: 1
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     gateway:
-#       nodeSelector:
-#         kubernetes.io/hostname: abaddon
-#       affinity: |
-#         nodeAffinity:
-#           requiredDuringSchedulingIgnoredDuringExecution:
-#             nodeSelectorTerms:
-#             - matchExpressions:
-#               - key: kubernetes.io/hostname
-#                 operator: In
-#                 values:
-#                 - abaddon
-#     minio:
-#       enabled: false
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: loki
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: monitoring
+      version: '>=5.5.0 <6.0.0'
+  values:
+    nameOverride: null
+    fullnameOverride: null
+    clusterLabelOverride: collective
+    loki:
+      auth_enabled: false
+      commonConfig:
+        replication_factor: 1
+      storage:
+        type: filesystem
+    test:
+      enabled: true
+      prometheusAddress: http://prometheus-operated.monitoring.svc:9090
+    monitoring:
+      dashboards:
+        enabled: true
+        namespace: monitoring
+        labels:
+          grafana_dashboard: '1'
+      rules:
+        enabled: true
+        alerting: true
+        namespace: monitoring
+        labels:
+          role: alert-rules
+        additionalGroups: []
+        # - name: additional-loki-rules
+        #   rules:
+        #     - record: job:loki_request_duration_seconds_bucket:sum_rate
+        #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)
+        #     - record: job_route:loki_request_duration_seconds_bucket:sum_rate
+        #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
+        #     - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
+        #       expr: sum(rate(container_cpu_usage_seconds_total[1m])) by (node, namespace, pod, container)
+      serviceMonitor:
+        enabled: true
+        labels:
+          prometheus: monitoring-enabled
+    write:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    tableManager:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    read:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    backend:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    singleBinary:
+      replicas: 1
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    gateway:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - abaddon
+    minio:
+      enabled: false
