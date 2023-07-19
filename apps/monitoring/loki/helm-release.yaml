@@ -52,8 +52,6 @@ spec:
         labels:
           prometheus: monitoring-enabled
     write:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -64,8 +62,6 @@ spec:
                 values:
                 - abaddon
     tableManager:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -76,8 +72,6 @@ spec:
                 values:
                 - abaddon
     read:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -88,8 +82,6 @@ spec:
                 values:
                 - abaddon
     backend:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -101,8 +93,6 @@ spec:
                 - abaddon
     singleBinary:
       replicas: 1
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -113,8 +103,6 @@ spec:
                 values:
                 - abaddon
     gateway:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
