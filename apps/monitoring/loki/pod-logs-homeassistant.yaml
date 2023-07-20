@@ -1,7 +1,7 @@
 apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
-  name: homeassistant
+  name: homeassistant-app
   namespace: monitoring
   labels:
     app.kubernetes.io/instance: loki
@@ -11,6 +11,23 @@ spec:
     matchLabels:
       app: homeassistant
       component: app
+  namespaceSelector:
+    matchNames:
+      - homeassistant
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: homeassistant-db
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: homeassistant
+      component: postgressql-db
   namespaceSelector:
     matchNames:
       - homeassistant
