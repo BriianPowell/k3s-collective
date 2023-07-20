@@ -16,7 +16,7 @@ spec:
   values:
     nameOverride: null
     fullnameOverride: null
-    clusterLabelOverride: collective
+    clusterLabelOverride: null
     loki:
       auth_enabled: false
       commonConfig:
