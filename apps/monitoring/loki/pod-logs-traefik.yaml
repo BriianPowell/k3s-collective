@@ -18,7 +18,7 @@ spec:
 apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
-  name: forward-auth
+  name: traefik
   namespace: monitoring
   labels:
     app.kubernetes.io/instance: loki
