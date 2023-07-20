@@ -1,16 +1,16 @@
-# apiVersion: monitoring.grafana.com/v1alpha1
-# kind: PodLogs
-# metadata:
-#   name: homeassistant
-#   namespace: monitoring
-#   labels:
-#     app.kubernetes.io/instance: loki
-#     app.kubernetes.io/name: loki
-# spec:
-#   selector:
-#     matchLabels:
-#       app: homeassistant
-#       component: app
-#   namespaceSelector:
-#     matchNames:
-#       - homeassistant
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: homeassistant
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: homeassistant
+      component: app
+  namespaceSelector:
+    matchNames:
+      - homeassistant

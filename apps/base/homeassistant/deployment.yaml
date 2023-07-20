@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: homeassistant
   namespace: homeassistant
-  labels:
-    monitor: homeassistant
 spec:
   selector:
     component: app
