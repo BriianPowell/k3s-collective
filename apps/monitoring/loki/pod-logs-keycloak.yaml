@@ -1,0 +1,33 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: keycloak-app
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+      component: app
+  namespaceSelector:
+    matchNames:
+      - keycloak
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: keycloak-db
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+      component: postgressql-db
+  namespaceSelector:
+    matchNames:
+      - keycloak

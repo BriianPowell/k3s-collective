@@ -1,7 +1,7 @@
 apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
-  name: nextcloud
+  name: nextcloud-app
   namespace: monitoring
   labels:
     app.kubernetes.io/instance: loki
@@ -11,6 +11,57 @@ spec:
     matchLabels:
       app: nextcloud
       component: app
+  namespaceSelector:
+    matchNames:
+      - nextcloud
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: nextcloud-cron
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: cron
+  namespaceSelector:
+    matchNames:
+      - nextcloud
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: nextcloud-redis
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: redis
+  namespaceSelector:
+    matchNames:
+      - nextcloud
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: nextcloud-db
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+      component: postgressql-db
   namespaceSelector:
     matchNames:
       - nextcloud
