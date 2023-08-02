@@ -30,6 +30,9 @@ spec:
       interval: 12h
   values:
     installCRDs: true
+    prometheus:
+      servicemonitor:
+        enabled: true
     resources:
       requests:
         cpu: 10m
