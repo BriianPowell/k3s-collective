@@ -88,4 +88,4 @@
 #         serviceMonitor:
 #           enabled: true
 #           labels:
-#             prometheus: monitoring-enabled
+#             monitoring: prometheus-operator

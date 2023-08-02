@@ -50,7 +50,7 @@ spec:
       serviceMonitor:
         enabled: true
         labels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     write:
       affinity: |
         nodeAffinity:

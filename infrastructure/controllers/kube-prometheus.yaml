@@ -47,12 +47,12 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kubelet:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kubeControllerManager:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -64,19 +64,19 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     coreDns:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kubeDns:
       enabled: false
     kubeEtcd:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kubeScheduler:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -88,7 +88,7 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kubeProxy:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -98,7 +98,7 @@ spec:
         targetPort: 10249
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
     kube-state-metrics:
       namespaceOverride: monitoring
     prometheus-node-exporter:
@@ -111,7 +111,7 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          prometheus: monitoring-enabled
+          monitoring: prometheus-operator
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -140,7 +140,7 @@ spec:
         serviceMonitorNamespaceSelector: {}
         serviceMonitorSelector:
           matchLabels:
-            prometheus: monitoring-enabled
+            monitoring: prometheus-operator
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

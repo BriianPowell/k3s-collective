@@ -4,7 +4,7 @@ metadata:
   name: homeassistant
   namespace: monitoring
   labels:
-    prometheus: monitoring-enabled
+    monitoring: prometheus-operator
 spec:
   selector:
     matchLabels:
