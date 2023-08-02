@@ -33,6 +33,8 @@ spec:
     prometheus:
       servicemonitor:
         enabled: true
+        labels:
+          prometheus: monitoring-enabled
     resources:
       requests:
         cpu: 10m
