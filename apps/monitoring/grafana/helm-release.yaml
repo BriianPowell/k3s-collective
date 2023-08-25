@@ -103,17 +103,17 @@ spec:
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       logs:
         cert-manager:
-          file: dashboards/cert-manager.json
+          file: dashboards/logs/cert-manager.json
         home-assistant:
-          file: dashboards/home-assistant.json
+          file: dashboards/logs/home-assistant.json
         keycloak:
-          file: dashboards/keycloak.json
+          file: dashboards/logs/keycloak.json
         nextcloud:
-          file: dashboards/nextcloud.json
+          file: dashboards/logs/nextcloud.json
         traefik:
-          file: dashboards/traefik.json
+          file: dashboards/logs/traefik.json
         wiki-js:
-          file: dashboards/wiki-js.json
+          file: dashboards/logs/wiki-js.json
 
     grafana.ini:
       paths:
