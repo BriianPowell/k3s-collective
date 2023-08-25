@@ -112,9 +112,8 @@ spec:
           file: dashboards/logs/nextcloud.json
         traefik:
           file: dashboards/logs/traefik.json
-        # wiki-js:
-        #   file: dashboards/logs/wiki-js.json
-
+        wiki-js:
+          file: dashboards/logs/wiki-js.json
     grafana.ini:
       paths:
         data: /var/lib/grafana/
