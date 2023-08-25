@@ -113,8 +113,6 @@ spec:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/traefik.json"
         wiki-js:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/wiki-js.json"
-    # dashboardsConfigMaps:
-    #   logs: grafana-dashboards-logs
     grafana.ini:
       paths:
         data: /var/lib/grafana/
