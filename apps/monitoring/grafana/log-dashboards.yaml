@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-log-dashboards
+  name: grafana-dashboards-logs
   namespace: monitoring
 data:
   cert-manager.json: |

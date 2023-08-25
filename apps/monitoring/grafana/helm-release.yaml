@@ -100,8 +100,8 @@ spec:
           options:
             path: /var/lib/grafana/dashboards/logs
     dashboards: {} # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
-    dashboardConfigMaps:
-      logs: grafana-log-dashboards
+    dashboardsConfigMaps:
+      logs: grafana-dashboards-logs
     grafana.ini:
       paths:
         data: /var/lib/grafana/
