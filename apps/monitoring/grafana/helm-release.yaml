@@ -98,7 +98,7 @@ spec:
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/logs
+            path: /var/lib/grafana/dashboards
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       logs:
         cert-manager:
