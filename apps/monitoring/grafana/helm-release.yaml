@@ -91,29 +91,28 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: 'logs'
+        - name: logs
           orgId: 1
-          folder: 'Logs'
+          folder: Logs
           type: file
           disableDeletion: false
           editable: true
           options:
-            path:
-              /var/lib/grafana/dashboards/logs
+            path: /var/lib/grafana/dashboards/logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       logs:
         cert-manager:
-          file: dashboards/logs/cert-manager.json
+          file: ./dashboards/logs/cert-manager.json
         home-assistant:
-          file: dashboards/logs/home-assistant.json
+          file: ./dashboards/logs/home-assistant.json
         keycloak:
-          file: dashboards/logs/keycloak.json
+          file: ./dashboards/logs/keycloak.json
         nextcloud:
-          file: dashboards/logs/nextcloud.json
+          file: ./dashboards/logs/nextcloud.json
         traefik:
-          file: dashboards/logs/traefik.json
+          file: ./dashboards/logs/traefik.json
         wiki-js:
-          file: dashboards/logs/wiki-js.json
+          file: ./dashboards/logs/wiki-js.json
     grafana.ini:
       paths:
         data: /var/lib/grafana/
