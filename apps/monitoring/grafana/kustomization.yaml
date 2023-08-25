@@ -7,4 +7,4 @@ commonLabels:
 resources:
   - helm-release.yaml
   - ingress.yaml
-  - dashboards-logs.yaml
+# - dashboards-logs.yaml
