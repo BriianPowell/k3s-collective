@@ -87,32 +87,32 @@ spec:
             access: proxy
             orgid: 1
             version: 1
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-        - name: logs
-          orgId: 1
-          folder: Logs
-          type: file
-          disableDeletion: false
-          editable: true
-          options:
-            path: /var/lib/grafana/dashboards/logs
-    dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
-      logs:
-        cert-manager:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/cert-manager.json
-        home-assistant:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/home-assistant.json
-        keycloak:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/keycloak.json
-        nextcloud:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/nextcloud.json
-        traefik:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/traefik.json
-        wiki-js:
-          file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/wiki-js.json
+    # dashboardProviders:
+    #   dashboardproviders.yaml:
+    #     apiVersion: 1
+    #     providers:
+    #     - name: logs
+    #       orgId: 1
+    #       folder: Logs
+    #       type: file
+    #       disableDeletion: false
+    #       editable: true
+    #       options:
+    #         path: /var/lib/grafana/dashboards/logs
+    # dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+    #   logs:
+    #     cert-manager:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/cert-manager.json
+    #     home-assistant:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/home-assistant.json
+    #     keycloak:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/keycloak.json
+    #     nextcloud:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/nextcloud.json
+    #     traefik:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/traefik.json
+    #     wiki-js:
+    #       file: https://github.com/BriianPowell/grafana-dashboards/blob/0c57ffa83626ece5f0564bc6705070026cd0052b/dashboards/logs/wiki-js.json
     # dashboardsConfigMaps:
     #   logs: grafana-dashboards-logs
     grafana.ini:
