@@ -87,7 +87,34 @@ spec:
             access: proxy
             orgid: 1
             version: 1
-    dashboards: {} # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+        - name: 'logs'
+          orgId: 1
+          folder: 'Logs'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path:
+              /var/lib/grafana/dashboards/logs
+    dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+      logs:
+        cert-manager:
+          file: dashboards/cert-manager.json
+        home-assistant:
+          file: dashboards/home-assistant.json
+        keycloak:
+          file: dashboards/keycloak.json
+        nextcloud:
+          file: dashboards/nextcloud.json
+        traefik:
+          file: dashboards/traefik.json
+        wiki-js:
+          file: dashboards/wiki-js.json
+
     grafana.ini:
       paths:
         data: /var/lib/grafana/
