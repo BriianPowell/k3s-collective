@@ -21,7 +21,7 @@ spec:
         kind: HelmRepository
         name: nvidia
         namespace: kube-system
-      version: '>=0.14.1 <0.14.1'
+      version: '>=0.14.1 <0.14.2'
   values:
     migStrategy: "none"
     failonInitError: true
