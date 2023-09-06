@@ -26,3 +26,5 @@ spec:
     migStrategy: "none"
     failonInitError: true
     nvidiaDriverRoot: "/"
+    nodeSelector:
+      kubernetes.io/hostname: sheol
