@@ -1,0 +1,28 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: nvidia
+  namespace: kube-system
+spec:
+  interval: 24h
+  url: https://nvidia.github.io/k8s-device-plugin
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nvidia-device-plugin
+  namespace: kube-system
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: nvidia-device-plugin
+      sourceRef:
+        kind: HelmRepository
+        name: nvidia
+        namespace: kube-system
+      version: '>=0.14.1 <0.14.1'
+  values:
+    migStrategy: "none"
+    failonInitError: true
+    nvidiaDriverRoot: "/"
