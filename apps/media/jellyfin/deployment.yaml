@@ -1,117 +1,117 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: jellyfin-tcp
-  namespace: jellyfin
-  labels:
-    component: app
-spec:
-  selector:
-    component: app
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8096
-      targetPort: http-tcp
-      protocol: TCP
-    - name: https
-      port: 8920
-      targetPort: https-tcp
-      protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: jellyfin-udp
-  namespace: jellyfin
-  labels:
-    component: app
-spec:
-  selector:
-    component: app
-  type: ClusterIP
-  ports:
-    - name: dlna
-      port: 1900
-      targetPort: dlna-udp
-      protocol: UDP
-    - name: discovery
-      port: 7359
-      targetPort: discovery-udp
-      protocol: UDP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: jellyfin
-  namespace: jellyfin
-  labels:
-    component: app
-spec:
-  replicas: 1
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-      component: app
-  template:
-    metadata:
-      labels:
-        component: app
-    spec:
-      containers:
-        - name: jellyfin
-          image: lscr.io/linuxserver/jellyfin:latest
-          imagePullPolicy: IfNotPresent
-          env:
-            # - name: JELLYFIN_PublishedServerUrl
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: jellyfin-secrets
-            #       key: SERVER_URL
-            - name: PGID
-              value: "1000"
-            - name: PUID
-              value: "1000"
-            - name: TZ
-              value: America/Los Angeles
-          securityContext:
-            privileged: true
-          ports:
-            - name: http-tcp
-              containerPort: 8096
-              protocol: TCP
-            - name: https-tcp
-              containerPort: 8920
-              protocol: TCP
-            - name: dlna-udp
-              containerPort: 1900
-              protocol: UDP
-            - name: discovery-udp
-              containerPort: 7359
-              protocol: UDP
-          resources: {}
-            # requests:
-            #   cpu: 10m
-            #   memory: 150Mi
-            # limits:
-            #   cpu: 2000m
-            #   memory: 4Gi
-          stdin: true
-          tty: true
-          volumeMounts:
-            - name: jellyfin-config
-              mountpath: /config
-            - name: jellyfin-data
-              mountpath: /data
-          #   - mountPath: /home/jellyfin
-          #     name: jellyfin-volume
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      volumes:
-        - name: jellyfin-config
-          persistentVolumeClaim:
-            claimName: jellyfin-config-pvc
-        - name: jellyfin-data
-          persistentVolumeClaim:
-            claimName: jellyfin-data-pvc
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: jellyfin-tcp
+#   namespace: jellyfin
+#   labels:
+#     component: app
+# spec:
+#   selector:
+#     component: app
+#   type: ClusterIP
+#   ports:
+#     - name: http
+#       port: 8096
+#       targetPort: http-tcp
+#       protocol: TCP
+#     - name: https
+#       port: 8920
+#       targetPort: https-tcp
+#       protocol: TCP
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: jellyfin-udp
+#   namespace: jellyfin
+#   labels:
+#     component: app
+# spec:
+#   selector:
+#     component: app
+#   type: ClusterIP
+#   ports:
+#     - name: dlna
+#       port: 1900
+#       targetPort: dlna-udp
+#       protocol: UDP
+#     - name: discovery
+#       port: 7359
+#       targetPort: discovery-udp
+#       protocol: UDP
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: jellyfin
+#   namespace: jellyfin
+#   labels:
+#     component: app
+# spec:
+#   replicas: 1
+#   strategy:
+#     type: Recreate
+#   selector:
+#     matchLabels:
+#       component: app
+#   template:
+#     metadata:
+#       labels:
+#         component: app
+#     spec:
+#       containers:
+#         - name: jellyfin
+#           image: lscr.io/linuxserver/jellyfin:latest
+#           imagePullPolicy: IfNotPresent
+#           env:
+#             # - name: JELLYFIN_PublishedServerUrl
+#             #   valueFrom:
+#             #     secretKeyRef:
+#             #       name: jellyfin-secrets
+#             #       key: SERVER_URL
+#             - name: PGID
+#               value: "1000"
+#             - name: PUID
+#               value: "1000"
+#             - name: TZ
+#               value: America/Los Angeles
+#           securityContext:
+#             privileged: true
+#           ports:
+#             - name: http-tcp
+#               containerPort: 8096
+#               protocol: TCP
+#             - name: https-tcp
+#               containerPort: 8920
+#               protocol: TCP
+#             - name: dlna-udp
+#               containerPort: 1900
+#               protocol: UDP
+#             - name: discovery-udp
+#               containerPort: 7359
+#               protocol: UDP
+#           resources: {}
+#             # requests:
+#             #   cpu: 10m
+#             #   memory: 150Mi
+#             # limits:
+#             #   cpu: 2000m
+#             #   memory: 4Gi
+#           stdin: true
+#           tty: true
+#           volumeMounts:
+#             - name: jellyfin-config
+#               mountpath: /config
+#             - name: jellyfin-data
+#               mountpath: /data
+#           #   - mountPath: /home/jellyfin
+#           #     name: jellyfin-volume
+#       dnsPolicy: ClusterFirst
+#       restartPolicy: Always
+#       volumes:
+#         - name: jellyfin-config
+#           persistentVolumeClaim:
+#             claimName: jellyfin-config-pvc
+#         - name: jellyfin-data
+#           persistentVolumeClaim:
+#             claimName: jellyfin-data-pvc
