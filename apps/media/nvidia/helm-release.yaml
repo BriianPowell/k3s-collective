@@ -23,8 +23,5 @@ spec:
         namespace: kube-system
       version: '>=0.14.1 <0.14.2'
   values:
-    migStrategy: "none"
-    failonInitError: true
-    nvidiaDriverRoot: "/"
     nodeSelector:
       kubernetes.io/hostname: sheol
