@@ -60,9 +60,9 @@ spec:
           resources:
             requests:
               cpu: 10m
-              memory: 50Mi
+              memory: 100Mi
             limits:
-              cpu: 150m
+              cpu: 2000m
               memory: 500Mi
           volumeMounts:
             - name: wiki-js-data
