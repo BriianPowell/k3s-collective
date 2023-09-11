@@ -1,14 +1,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: crowdsec-service
+  name: crowdsec-agent-service
   namespace: crowdsec
   labels:
     monitoring: prometheus-operator
 spec:
   selector:
     matchLabels:
-      app: crowdsec-service
+      app: crowdsec-agent-service
   namespaceSelector:
     matchNames:
       - crowdsec
