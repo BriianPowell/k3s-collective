@@ -12,10 +12,10 @@ spec:
   namespaceSelector:
     matchNames:
       - crowdsec
+  attachMetadata:
+    node: true
   endpoints:
     - port: metrics
-      attachMetadata:
-        node: true
       metricRelabelings:
-       - sourceLabels: [ __meta_kubernetes_pod_node_name ]
-         targetLabel: machine
+        - sourceLabels: [ __meta_kubernetes_pod_node_name ]
+          targetLabel: machine
