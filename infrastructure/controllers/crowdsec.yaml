@@ -62,8 +62,8 @@ spec:
         # When testing, allow bans on private networks
         # - name: DISABLE_PARSERS
         #   value: 'crowdsecurity/whitelists'
-      nodeSelector:
-        node-role.kubernetes.io/master: 'true'
+      # nodeSelector:
+      #   node-role.kubernetes.io/master: 'true'
       persistentVolume:
         config:
           enabled: false
