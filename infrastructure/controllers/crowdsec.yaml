@@ -62,6 +62,8 @@ spec:
         # When testing, allow bans on private networks
         # - name: DISABLE_PARSERS
         #   value: 'crowdsecurity/whitelists'
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'
       persistentVolume:
         config:
           enabled: false
@@ -71,6 +73,8 @@ spec:
       persistentVolume:
         config:
           enabled: false
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'
       env:
         # For an internal test, disable the Online API
         - name: ENROLL_KEY

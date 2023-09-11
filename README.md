@@ -97,7 +97,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ### Security
 
-- [ ] [CrowdSec](https://github.com/crowdsecurity/crowdsec) - Issues with Traefik Update, need to revisit
+- [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
 
 ### Games
 
