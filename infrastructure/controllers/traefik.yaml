@@ -41,8 +41,8 @@ spec:
       web:
         redirectTo: websecure
       websecure:
-        # middlewares:
-        #   - kube-system-bouncer@kubernetescrd
+        middlewares:
+          - kube-system-bouncer@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
@@ -75,13 +75,13 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
-    # experimental:
-    #   plugins:
-    #     enabled: true
-    # volumes:
-    #   - name: crowdsec-bouncer-tls
-    #     mountPath: /etc/traefik/crowdsec-certs/
-    #     type: secret
+    experimental:
+      plugins:
+        enabled: true
+    volumes:
+      - name: crowdsec-bouncer-tls
+        mountPath: /etc/traefik/crowdsec-certs/
+        type: secret
     tlsOptions:
       default:
         minVersion: VersionTLS12
@@ -103,9 +103,9 @@ spec:
       default:
         defaultCertificate:
           secretName: wildcard-powell-place-secret
-    # additionalArguments:
-    #   - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
-    #   - '--experimental.plugins.bouncer.version=v1.1.9'
+    additionalArguments:
+      - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
+      - '--experimental.plugins.bouncer.version=v1.1.14'
     resources:
       requests:
         cpu: 10m
