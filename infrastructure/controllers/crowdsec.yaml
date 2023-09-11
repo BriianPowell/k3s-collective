@@ -42,10 +42,10 @@ spec:
           namespaces:
             - kube-system
     agent:
-      # tolerations:
-      #   - key: node-role.kubernetes.io/control-plane
-      #     operator: Equal
-      #     effect: NoSchedule
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          effect: NoSchedule
       # Specify each pod whose logs you want to process
       acquisition:
         # The namespace where the pod is located
@@ -56,7 +56,7 @@ spec:
           program: traefik
       env:
         - name: PARSERS
-          value: 'crowdsecurity/cri-logs'
+          value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
         - name: COLLECTIONS
           value: 'crowdsecurity/traefik'
         # When testing, allow bans on private networks
