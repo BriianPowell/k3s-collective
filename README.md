@@ -111,10 +111,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ### HomePage
 
-Need to make a decisions
-
-- [ ] [Homer](https://github.com/bastienwirtz/homer)
-- [ ] [HomePage](https://github.com/benphelps/homepage)
+- [x] [HomePage](https://github.com/benphelps/homepage)
 
 ### TBD
 

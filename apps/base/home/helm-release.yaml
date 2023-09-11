@@ -50,12 +50,6 @@ spec:
               href: https://alertmanager.powell.place
               description:
               ping: https://alertmanager.powell.place
-        - Identity:
-          - Keycloak:
-              icon: keycloak
-              href: https://keycloak.powell.place
-              description:
-              ping: https://keycloak.powell.place
         - Tools:
           - Traefik:
               icon: traefik
@@ -77,6 +71,12 @@ spec:
               href: https://wiki.powell.place
               description:
               ping: https://wiki.powell.place
+        - Identity:
+          - Keycloak:
+              icon: keycloak
+              href: https://keycloak.powell.place
+              description:
+              ping: https://keycloak.powell.place
       widgets:
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
@@ -96,6 +96,9 @@ spec:
             target: _blank
       kubernetes:
         mode: cluster
+      settings:
+        title: Home
+        color: stone
     resources:
       requests:
         memory: 10Mi
