@@ -67,6 +67,10 @@ spec:
       persistentVolume:
         config:
           enabled: false
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: false
     lapi:
       dashboard:
         enabled: false
