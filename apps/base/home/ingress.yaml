@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: home-dashboard-https
+  namespace: kube-system
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`home.powell.place`)
+      kind: Rule
+      services:
+        - name: homepage
+          port: 3000
+      middlewares:
+        - name: security
+          namespace: kube-system
