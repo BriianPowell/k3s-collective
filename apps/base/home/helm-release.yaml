@@ -32,34 +32,51 @@ spec:
       name: homepage
       create: true
     config:
+      bookmarks:
       services:
         - Monitoring:
           - Grafana:
+              icon: grafana
               href: https://grafana.powell.place
               description:
+              ping: https://grafana.powell.place
           - Prometheus:
+              icon: prometheus
               href: https://prometheus.powell.place
               description:
+              ping: https://prometheus.powell.place
           - Alert Manager:
+              icon: alertmanager
               href: https://alertmanager.powell.place
               description:
+              ping: https://alertmanager.powell.place
         - Identity:
           - Keycloak:
+              icon: keycloak
               href: https://keycloak.powell.place
               description:
+              ping: https://keycloak.powell.place
         - Tools:
           - Traefik:
+              icon: traefik
               href: https://traefik.powell.place
               description:
+              ping: https://traefik.powell.place
           - Nextcloud:
+              icon: nextcloud
               href: https://nextcloud.powell.place
               description:
+              ping: https://nextcloud.powell.place
           - Home Assistant:
+              icon: home-assistant
               href: https://ha.powell.place
               description:
+              ping: https://ha.powell.place
           - Wiki:
+              icon: https://static.requarks.io/logo/wikijs-full.svg
               href: https://wiki.powell.place
               description:
+              ping: https://wiki.powell.place
       widgets:
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
