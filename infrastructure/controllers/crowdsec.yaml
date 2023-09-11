@@ -67,6 +67,12 @@ spec:
       persistentVolume:
         config:
           enabled: false
+      resources:
+        limits:
+          memory: 1000Mi
+        requests:
+          cpu: 150m
+          memory: 100Mi
       metrics:
         enabled: true
         serviceMonitor:
@@ -91,6 +97,12 @@ spec:
           value: 'false'
         - name: DISABLE_LOCAL_API
           value: 'false'
+      resources:
+        limits:
+          memory: 1000Mi
+        requests:
+          cpu: 150m
+          memory: 100Mi
       metrics:
         enabled: true
         serviceMonitor:
