@@ -98,7 +98,7 @@ spec:
         mode: cluster
       settings:
         title: Home
-        color: stone
+        color: zinc
     resources:
       requests:
         memory: 10Mi
