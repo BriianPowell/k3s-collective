@@ -83,6 +83,12 @@ data:
           description:
           ping: https://alertmanager.powell.place
           target: _blank
+      - Portfolio:
+          icon: https://powell.place/favicon-32x32.png
+          href: https://powell.place
+          description: My personal portfolio website
+          ping: https://powell.place
+          target: _blank
     - Tools:
       - Traefik:
           icon: traefik
