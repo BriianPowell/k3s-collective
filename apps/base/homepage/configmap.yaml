@@ -65,7 +65,7 @@ data:
           ping: https://prometheus.powell.place
           target: _blank
           widget:
-            type: prometheus'
+            type: prometheus
             fields: ["targets_up", "targets_down", "targets_total"]
             url: http://monitor-prometheus.monitoring:9090
       - Alert Manager:
@@ -81,6 +81,11 @@ data:
           description:
           ping: https://traefik.powell.place
           target: _blank
+          widget:
+            type: traefik
+            url: http://traefik.kube-system
+            username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
+            password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
       - Nextcloud:
           icon: nextcloud
           href: https://nextcloud.powell.place

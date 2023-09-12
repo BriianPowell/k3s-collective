@@ -69,6 +69,16 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: GRAFANA_PASS
+            - name: HOMEPAGE_VAR_KEYCLOAK_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: KEYCLOAK_LOGIN
+            - name: HOMEPAGE_VAR_KEYCLOAK_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: KEYCLOAK_PASS
           ports:
             - name: http
               containerPort: 3000
