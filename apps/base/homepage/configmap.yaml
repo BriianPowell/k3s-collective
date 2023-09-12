@@ -60,7 +60,7 @@ data:
           target: _blank
           widget:
             type: prometheus
-            url: https://monitor-prometheus.monitoring:9090
+            url: http://monitor-prometheus.monitoring:9090
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
