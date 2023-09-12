@@ -18,18 +18,18 @@ data:
       hideInternetSearch: false
       hideVisitURL: true
     layout:
-      Monitoring:
-        style: row
-        columns: 3
-      Tools:
-        style: row
-        columns: 2
-      Identity:
-        style: column
-        columns: 1
-      Crypto:
-        style: column
-        columns: 1
+      - Monitoring:
+          style: row
+          columns: 3
+      - Tools:
+          style: row
+          columns: 2
+      - Identity:
+          style: column
+          columns: 1
+      - Crypto:
+          style: column
+          columns: 1
     hideVersion: true
   bookmarks.yaml: |
     - Crypto:
@@ -45,8 +45,10 @@ data:
   services.yaml: |
     - Monitoring:
       - Unifi:
+          icon: https://cdn.icon-icons.com/icons2/2108/PNG/512/ubiquiti_icon_130804.png
           href: https://unifi.ui.com
           description:
+          ping: https://10.0.0.1
           target: _blank
           widget:
             type: unifi
