@@ -33,7 +33,23 @@ spec:
       create: true
     config:
       bookmarks:
+        - Crypto:
+          - Coinbase:
+             - icon: https://companieslogo.com/img/orig/COIN-a63dbab3.png?t=1648737284
+               href: https://www.coinbase.com/
+          - Kraken:
+              - icon: https://kryptoguiden.no/wp-content/uploads/2021/03/kraken_logo.png
+                href: https://pro.kraken.com/
+          - Gemini:
+              - icon: https://www.gemini.com/_next/image?url=%2Fstatic%2Fimages%2Fgemini-hor-light-full-rgb%403x.png&w=128&q=75
+                href: https://www.gemini.com/
       services:
+        - Crypto:
+          - Market:
+            type: coinmarketcap
+            currency: USD # Optional
+            symbols: [BTC, LTC, ETH]
+            key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
         - Monitoring:
           - Grafana:
               icon: grafana
@@ -94,6 +110,7 @@ spec:
         - search:
             provider: duckduckgo
             target: _blank
+
       kubernetes:
         mode: cluster
       settings:
