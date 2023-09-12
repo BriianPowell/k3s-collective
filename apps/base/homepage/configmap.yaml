@@ -11,11 +11,11 @@ data:
   settings.yaml: |
     title: Home
     color: zinc
-    headerstyle: boxed
+    headerStyle: boxed
     quicklaunch:
       searchDescriptions: true
-      hideInternetSearch: true
-      hideVisitURL: true
+      hideInternetSearch: false
+      hideVisitURL: false
   bookmarks.yaml: |
     - Crypto:
       - Coinbase:
