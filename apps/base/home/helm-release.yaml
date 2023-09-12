@@ -49,51 +49,65 @@ spec:
             type: coinmarketcap
             currency: USD # Optional
             symbols: [BTC, LTC, ETH]
-            key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
+            key: ""
         - Monitoring:
           - Grafana:
               icon: grafana
               href: https://grafana.powell.place
               description:
               ping: https://grafana.powell.place
+              target: _blank
           - Prometheus:
               icon: prometheus
               href: https://prometheus.powell.place
               description:
               ping: https://prometheus.powell.place
+              target: _blank
           - Alert Manager:
               icon: alertmanager
               href: https://alertmanager.powell.place
               description:
               ping: https://alertmanager.powell.place
+              target: _blank
         - Tools:
           - Traefik:
               icon: traefik
               href: https://traefik.powell.place
               description:
               ping: https://traefik.powell.place
+              target: _blank
           - Nextcloud:
               icon: nextcloud
               href: https://nextcloud.powell.place
               description:
               ping: https://nextcloud.powell.place
+              target: _blank
           - Home Assistant:
               icon: home-assistant
               href: https://ha.powell.place
               description:
               ping: https://ha.powell.place
+              target: _blank
           - Wiki:
               icon: https://static.requarks.io/logo/wikijs-butterfly.svg
               href: https://wiki.powell.place
               description:
-              ping: https://wiki.powell.place
+              ping: https://wiki.powell.place\
+              target: _blank
         - Identity:
           - Keycloak:
               icon: keycloak
               href: https://keycloak.powell.place
               description:
               ping: https://keycloak.powell.place
+              target: _blank
       widgets:
+        - resources:
+            # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
+            backend: resources
+            expanded: true
+            cpu: true
+            memory: true
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
             cluster:
