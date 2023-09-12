@@ -16,8 +16,6 @@ data:
       searchDescriptions: true
       hideInternetSearch: false
       hideVisitURL: true
-    providers:
-      openweathermap: {{HOMEPAGE_VAR_WEATHER_KEY}}
   bookmarks.yaml: |
     - Crypto:
       - Coinbase:
@@ -121,10 +119,10 @@ data:
     - search:
         provider: duckduckgo
         target: _blank
-    - openweathermap:
+    - openmeteo:
         latitude:
         longitude:
+        timezone: America/Los Angeles
         units: imperial # or metric
-        provider: openweathermap
         cache: 5 # Time in minutes to cache API responses, to stay within limits
   docker.yaml: |
