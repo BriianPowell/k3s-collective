@@ -55,7 +55,7 @@ data:
           widget:
             type: grafana
             url: http://grafana.monitoring:80
-            fields: ["dashboards", "datasources", "totalalerts", "alertstriggered"]
+            fields: ["dashboards", "datasources"] # "totalalerts", "alertstriggered"
             username: {{HOMEPAGE_VAR_GRAFANA_LOGIN}}
             password: {{HOMEPAGE_VAR_GRAFANA_PASS}}
       - Prometheus:
@@ -93,6 +93,11 @@ data:
           description:
           ping: https://nextcloud.powell.place
           target: _blank
+          widget:
+            type: nextcloud
+            fields: ["cpuload", "memoryusage", "freespace", "activeusers", "numfiles", "numshares"]
+            url: https://nextcloud.powell.place
+            key: {{HOMEPAGE_VAR_NEXTCLOUD_TOKEN}}
       - Home Assistant:
           icon: home-assistant
           href: https://ha.powell.place
