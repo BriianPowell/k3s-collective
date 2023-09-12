@@ -77,8 +77,8 @@ data:
             type: prometheus
             fields: ["targets_up", "targets_down", "targets_total"]
             url: http://monitor-prometheus.monitoring:9090
-      - '':
-      - '':
+      - Blank1:
+      - Blank2:
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
