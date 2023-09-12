@@ -144,7 +144,7 @@ data:
           widget:
             type: coinmarketcap
             currency: USD # Optional
-            symbols: [BTC, LTC, ETH]
+            symbols: [BTC, ETH, XCH]
             key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
   widgets.yaml: |
     # - resources:
@@ -154,8 +154,8 @@ data:
     #     cpu: true
     #     memory: true
     # show the kubernetes widget, with the cluster summary and individual nodes
-    - logo:
-        icon: https://powell.place/favicon-32x32.png
+    # - logo:
+    #     icon: https://powell.place/favicon-32x32.png
     - kubernetes:
         cluster:
           show: true
