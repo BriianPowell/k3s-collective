@@ -58,6 +58,9 @@ data:
           description:
           ping: https://prometheus.powell.place
           target: _blank
+          widget:
+            type: prometheus
+            url: https://monitor-prometheus.monitoring:9090
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
