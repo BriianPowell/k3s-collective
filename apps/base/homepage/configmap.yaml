@@ -11,6 +11,11 @@ data:
   settings.yaml: |
     title: Home
     color: zinc
+    headerstyle: boxed
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      hideVisitURL: true
   bookmarks.yaml: |
     - Crypto:
       - Coinbase:
@@ -32,6 +37,15 @@ data:
             symbols: [BTC, LTC, ETH]
             key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
     - Monitoring:
+      - Unifi:
+          href: https://unifi.ui.com
+          description:
+          target: _blank
+          widget:
+            type: unifi
+            url: https://10.0.0.1
+            username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
+            password: {{HOMEPAGE_VAR_UNIFI_PASS}}
       - Grafana:
           icon: grafana
           href: https://grafana.powell.place
@@ -89,10 +103,6 @@ data:
     #     expanded: true
     #     cpu: true
     #     memory: true
-    - unifi_console:
-        url: https://10.0.0.1
-        username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
-        password: {{HOMEPAGE_VAR_UNIFI_PASS}}
     # show the kubernetes widget, with the cluster summary and individual nodes
     - kubernetes:
         cluster:
