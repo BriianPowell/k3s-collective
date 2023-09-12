@@ -26,10 +26,10 @@ data:
           columns: 3
       - Identity:
           style: row
-          columns: 4
+          columns: 3
       - Crypto:
           style: row
-          columns: 4
+          columns: 3
     hideVersion: true
   bookmarks.yaml: |
     - Crypto:
@@ -84,17 +84,6 @@ data:
           ping: https://alertmanager.powell.place
           target: _blank
     - Tools:
-      - Nextcloud:
-          icon: nextcloud
-          href: https://nextcloud.powell.place
-          description:
-          ping: https://nextcloud.powell.place
-          target: _blank
-          widget:
-            type: nextcloud
-            fields: ["cpuload", "memoryusage", "freespace", "activeusers", "numfiles", "numshares"]
-            url: https://nextcloud.powell.place
-            key: {{HOMEPAGE_VAR_NEXTCLOUD_TOKEN}}
       - Traefik:
           icon: traefik
           href: https://traefik.powell.place
@@ -107,6 +96,17 @@ data:
           #   url: https://traefik.powell.place
           #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
           #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
+      - Nextcloud:
+          icon: nextcloud
+          href: https://nextcloud.powell.place
+          description:
+          ping: https://nextcloud.powell.place
+          target: _blank
+          widget:
+            type: nextcloud
+            fields: ["cpuload", "memoryusage", "freespace", "activeusers", "numfiles", "numshares"]
+            url: https://nextcloud.powell.place
+            key: {{HOMEPAGE_VAR_NEXTCLOUD_TOKEN}}
       - Home Assistant:
           icon: home-assistant
           href: https://ha.powell.place
@@ -164,7 +164,7 @@ data:
         provider: duckduckgo
         target: _blank
     - datetime:
-        text_size: xl
+        text_size: 2x1
         format:
           dateStyle: short
           timeStyle: short
