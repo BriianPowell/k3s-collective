@@ -12,23 +12,24 @@ data:
     title: Home
     color: zinc
     headerStyle: boxed
+    cardBlur: sm
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: false
       hideVisitURL: true
     layout:
-      - Monitoring:
-          style: row
-          columns: 3
-      - Tools:
-          style: row
-          colums: 2
-      - Identity:
-          style: column
-          columns: 1
-      - Crypto:
-          style: column
-          columns: 1
+      Monitoring:
+        style: row
+        columns: 3
+      Tools:
+        style: row
+        columns: 2
+      Identity:
+        style: column
+        columns: 1
+      Crypto:
+        style: column
+        columns: 1
     hideVersion: true
   bookmarks.yaml: |
     - Crypto:
@@ -74,6 +75,8 @@ data:
             type: prometheus
             fields: ["targets_up", "targets_down", "targets_total"]
             url: http://monitor-prometheus.monitoring:9090
+      -
+      -
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
