@@ -98,6 +98,12 @@ data:
           description:
           ping: https://ha.powell.place
           target: _blank
+          widget:
+            type: homeassistant
+            fields: ["people_home", "lights_on", "switches_on"]
+            url: http://homeassistant.homeassistant:8123
+            key: {{HOMEPAGE_VAR_HA_TOKEN}}
+            # https://gethomepage.dev/en/services/homeassistant/
       - Wiki:
           icon: https://static.requarks.io/logo/wikijs-butterfly.svg
           href: https://wiki.powell.place

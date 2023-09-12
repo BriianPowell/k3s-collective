@@ -84,6 +84,11 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: NEXTCLOUD_TOKEN
+            - name: HOMEPAGE_VAR_HA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: HA_TOKEN
           ports:
             - name: http
               containerPort: 3000
