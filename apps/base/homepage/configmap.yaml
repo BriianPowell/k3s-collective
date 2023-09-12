@@ -52,6 +52,12 @@ data:
           description:
           ping: https://grafana.powell.place
           target: _blank
+          widget:
+            type: grafana
+            url: http://grafana.monitoring:80
+            fields: ["dashboards", "datasources", "totalalerts", "alertstriggered"]
+            username: {{HOMEPAGE_VAR_GRAFANA_LOGIN}}
+            password: {{HOMEPAGE_VAR_GRAFANA_PASS}}
       - Prometheus:
           icon: prometheus
           href: https://prometheus.powell.place
@@ -59,7 +65,8 @@ data:
           ping: https://prometheus.powell.place
           target: _blank
           widget:
-            type: prometheus
+            type: prometheus'
+            fields: ["targets_up", "targets_down", "targets_total"]
             url: http://monitor-prometheus.monitoring:9090
       - Alert Manager:
           icon: alertmanager

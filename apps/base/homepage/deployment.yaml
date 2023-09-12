@@ -59,11 +59,16 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: UNIFI_PASS
-            # - name: HOMEPAGE_VAR_WEATHER_KEY
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: homepage-secrets
-            #       key: WEATHER_KEY
+            - name: HOMEPAGE_VAR_GRAFANA_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: GRAFANA_LOGIN
+            - name: HOMEPAGE_VAR_GRAFANA_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: GRAFANA_PASS
           ports:
             - name: http
               containerPort: 3000
