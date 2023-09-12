@@ -22,10 +22,13 @@ data:
           columns: 3
       - Tools:
           style: row
+          colums: 2
       - Identity:
-          style: row
+          style: column
+          columns: 1
       - Crypto:
-          style: row
+          style: column
+          columns: 1
     hideVersion: true
   bookmarks.yaml: |
     - Crypto:
