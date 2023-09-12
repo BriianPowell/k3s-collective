@@ -25,10 +25,10 @@ data:
   services.yaml: |
     - Crypto:
       - Market:
-        type: coinmarketcap
-        currency: USD # Optional
-        symbols: [BTC, LTC, ETH]
-        key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
+          type: coinmarketcap
+          currency: USD # Optional
+          symbols: [BTC, LTC, ETH]
+          key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
     - Monitoring:
       - Grafana:
           icon: grafana
@@ -91,7 +91,6 @@ data:
         url: https://10.0.0.1
         username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
         password: {{HOMEPAGE_VAR_UNIFI_PASS}}
-        site: Collective # optional
     # show the kubernetes widget, with the cluster summary and individual nodes
     - kubernetes:
         cluster:
