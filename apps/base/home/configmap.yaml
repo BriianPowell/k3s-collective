@@ -88,7 +88,7 @@ data:
         cpu: true
         memory: true
     - unifi_console:
-        url: https://10.0.0.1/
+        url: http://10.0.0.1/
         username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
         password: {{HOMEPAGE_VAR_UNIFI_PASS}}
         site: Collective # optional
