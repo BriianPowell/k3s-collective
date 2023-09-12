@@ -103,6 +103,8 @@ spec:
       logs:
         cert-manager:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/cert-manager.json"
+        crowdsec:
+          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/crowdsec.json"
         home-assistant:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/home-assistant.json"
         homepage:
