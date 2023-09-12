@@ -11,5 +11,4 @@ resources:
   - service-monitor-keycloak.yaml
   - service-monitor-nextcloud.yaml
   - service-monitor-traefik.yaml
-  - service-monitor-crowdsec-service.yaml
-  - service-monitor-crowdsec-agent.yaml
+  - service-monitor-crowdsec.yaml
