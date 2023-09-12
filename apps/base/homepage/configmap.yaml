@@ -15,7 +15,9 @@ data:
     quicklaunch:
       searchDescriptions: true
       hideInternetSearch: false
-      hideVisitURL: false
+      hideVisitURL: true
+    providers:
+      openweathermap: {{HOMEPAGE_VAR_WEATHER_KEY}}
   bookmarks.yaml: |
     - Crypto:
       - Coinbase:
@@ -124,6 +126,5 @@ data:
         longitude:
         units: imperial # or metric
         provider: openweathermap
-        apiKey: {{HOMEPAGE_VAR_WEATHER_KEY}} # required only if not using provider, this reveals api key in requests
         cache: 5 # Time in minutes to cache API responses, to stay within limits
   docker.yaml: |
