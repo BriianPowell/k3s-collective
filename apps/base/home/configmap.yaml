@@ -89,8 +89,8 @@ data:
         memory: true
     - unifi_console:
         url: https://10.0.0.1/
-        username: home
-        password: iQUpv9B_mgy7kN3PVPaf
+        username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
+        password: {{HOMEPAGE_VAR_UNIFI_PASS}}
         site: Collective # optional
     # show the kubernetes widget, with the cluster summary and individual nodes
     - kubernetes:
