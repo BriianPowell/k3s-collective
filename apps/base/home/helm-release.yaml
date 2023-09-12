@@ -108,6 +108,11 @@ spec:
             expanded: true
             cpu: true
             memory: true
+        - unifi_console:
+            url: https://10.0.0.1/
+            username: home
+            password: iQUpv9B_mgy7kN3PVPaf
+            site: Collective # optional
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
             cluster:
@@ -115,7 +120,7 @@ spec:
               cpu: true
               memory: true
               showLabel: true
-              label: "cluster"
+              label: "sheol"
             nodes:
               show: true
               cpu: true
