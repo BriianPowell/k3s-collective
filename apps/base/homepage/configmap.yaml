@@ -54,7 +54,7 @@ data:
           target: _blank
           widget:
             type: grafana
-            url: http://grafana.monitoring:80
+            url: https://grafana.powell.place
             fields: ["dashboards", "datasources", "totalalerts", "alertstriggered"]
             username: {{HOMEPAGE_VAR_GRAFANA_LOGIN}}
             password: {{HOMEPAGE_VAR_GRAFANA_PASS}}
