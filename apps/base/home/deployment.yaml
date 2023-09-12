@@ -4,7 +4,7 @@ metadata:
   name: homepage
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: homepage
+    app: homepage
 spec:
   type: ClusterIP
   ports:
@@ -13,7 +13,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: homepage
+    app: homepage
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,7 +21,7 @@ metadata:
   name: homepage
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: homepage
+    app: homepage
 spec:
   revisionHistoryLimit: 3
   replicas: 1
@@ -29,11 +29,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/name: homepage
+      app: homepage
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: homepage
+        app: homepage
     spec:
       serviceAccountName: homepage
       automountServiceAccountToken: true
