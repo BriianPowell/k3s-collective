@@ -23,13 +23,13 @@ data:
           columns: 3
       - Tools:
           style: row
-          columns: 2
+          columns: 3
       - Identity:
-          style: column
-          columns: 1
+          style: row
+          columns: 4
       - Crypto:
-          style: column
-          columns: 1
+          style: row
+          columns: 4
     hideVersion: true
   bookmarks.yaml: |
     - Crypto:
@@ -44,17 +44,16 @@ data:
             href: https://www.gemini.com/
   services.yaml: |
     - Monitoring:
-      - Unifi:
-          icon: https://cdn.icon-icons.com/icons2/2108/PNG/512/ubiquiti_icon_130804.png
-          href: https://unifi.ui.com
+      - Prometheus:
+          icon: prometheus
+          href: https://prometheus.powell.place
           description:
-          ping: https://10.0.0.1
+          ping: https://prometheus.powell.place
           target: _blank
           widget:
-            type: unifi
-            url: https://10.0.0.1
-            username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
-            password: {{HOMEPAGE_VAR_UNIFI_PASS}}
+            type: prometheus
+            fields: ["targets_up", "targets_down", "targets_total"]
+            url: http://monitor-prometheus.monitoring:9090
       - Grafana:
           icon: grafana
           href: https://grafana.powell.place
@@ -67,18 +66,17 @@ data:
             fields: ["dashboards", "datasources"] # "totalalerts", "alertstriggered"
             username: {{HOMEPAGE_VAR_GRAFANA_LOGIN}}
             password: {{HOMEPAGE_VAR_GRAFANA_PASS}}
-      - Prometheus:
-          icon: prometheus
-          href: https://prometheus.powell.place
+      - Unifi:
+          icon: https://cdn.icon-icons.com/icons2/2108/PNG/512/ubiquiti_icon_130804.png
+          href: https://unifi.ui.com
           description:
-          ping: https://prometheus.powell.place
+          ping: https://10.0.0.1
           target: _blank
           widget:
-            type: prometheus
-            fields: ["targets_up", "targets_down", "targets_total"]
-            url: http://monitor-prometheus.monitoring:9090
-      - Blank1:
-      - Blank2:
+            type: unifi
+            url: https://10.0.0.1
+            username: {{HOMEPAGE_VAR_UNIFI_LOGIN}}
+            password: {{HOMEPAGE_VAR_UNIFI_PASS}}
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
@@ -86,6 +84,18 @@ data:
           ping: https://alertmanager.powell.place
           target: _blank
     - Tools:
+      - Traefik:
+          icon: traefik
+          href: https://traefik.powell.place
+          description:
+          ping: https://traefik.powell.place
+          target: _blank
+          # widget:
+          #   type: traefik
+          #   fields: ["routers", "services", "middleware"]
+          #   url: https://traefik.powell.place
+          #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
+          #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
       - Nextcloud:
           icon: nextcloud
           href: https://nextcloud.powell.place
@@ -115,18 +125,6 @@ data:
           description:
           ping: https://wiki.powell.place\
           target: _blank
-      - Traefik:
-          icon: traefik
-          href: https://traefik.powell.place
-          description:
-          ping: https://traefik.powell.place
-          target: _blank
-          # widget:
-          #   type: traefik
-          #   fields: ["routers", "services", "middleware"]
-          #   url: https://traefik.powell.place
-          #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
-          #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
     - Identity:
       - Keycloak:
           icon: keycloak
