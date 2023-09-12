@@ -105,6 +105,8 @@ spec:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/cert-manager.json"
         home-assistant:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/home-assistant.json"
+        homepage:
+          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/homepage.json"
         keycloak:
           url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/keycloak.json"
         nextcloud:
