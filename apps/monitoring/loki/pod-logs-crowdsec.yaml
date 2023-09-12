@@ -26,7 +26,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crowdsec
+      k8s-app: crowdsec
       type: lapi
   namespaceSelector:
     matchNames:
