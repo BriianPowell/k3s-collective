@@ -16,6 +16,17 @@ data:
       searchDescriptions: true
       hideInternetSearch: false
       hideVisitURL: true
+    layout:
+      - Monitoring:
+          style: row
+          columns: 3
+      - Tools:
+          style: row
+      - Identity:
+          style: row
+      - Crypto:
+          style: row
+    hideVersion: true
   bookmarks.yaml: |
     - Crypto:
       - Coinbase:
@@ -28,14 +39,6 @@ data:
           - icon: https://www.gemini.com/_next/image?url=%2Fstatic%2Fimages%2Fgemini-hor-light-full-rgb%403x.png&w=128&q=75
             href: https://www.gemini.com/
   services.yaml: |
-    - Crypto:
-      - Market:
-          icon: mdi-bitcoin
-          widget:
-            type: coinmarketcap
-            currency: USD # Optional
-            symbols: [BTC, LTC, ETH]
-            key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
     - Monitoring:
       - Unifi:
           href: https://unifi.ui.com
@@ -75,18 +78,6 @@ data:
           ping: https://alertmanager.powell.place
           target: _blank
     - Tools:
-      - Traefik:
-          icon: traefik
-          href: https://traefik.powell.place
-          description:
-          ping: https://traefik.powell.place
-          target: _blank
-          # widget:
-          #   type: traefik
-          #   fields: ["routers", "services", "middleware"]
-          #   url: https://traefik.powell.place
-          #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
-          #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
       - Nextcloud:
           icon: nextcloud
           href: https://nextcloud.powell.place
@@ -110,6 +101,18 @@ data:
           description:
           ping: https://wiki.powell.place\
           target: _blank
+      - Traefik:
+          icon: traefik
+          href: https://traefik.powell.place
+          description:
+          ping: https://traefik.powell.place
+          target: _blank
+          # widget:
+          #   type: traefik
+          #   fields: ["routers", "services", "middleware"]
+          #   url: https://traefik.powell.place
+          #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
+          #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
     - Identity:
       - Keycloak:
           icon: keycloak
@@ -117,6 +120,14 @@ data:
           description:
           ping: https://keycloak.powell.place
           target: _blank
+    - Crypto:
+      - Market:
+          icon: mdi-bitcoin
+          widget:
+            type: coinmarketcap
+            currency: USD # Optional
+            symbols: [BTC, LTC, ETH]
+            key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
   widgets.yaml: |
     # - resources:
     #     # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
