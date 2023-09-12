@@ -93,7 +93,6 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [node_exporter](https://github.com/prometheus/node_exporter)
 - [x] [Loki](https://grafana.com/docs/loki/latest/)
-- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 
 ### Security
 
@@ -107,7 +106,6 @@ kubectl apply -f basic-auth-sealed.yaml
 ### Media
 
 - [ ] Jellyfin
-- [ ] 
 
 ### HomePage
 
@@ -117,6 +115,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
+- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 
 ## References
 
