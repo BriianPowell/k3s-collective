@@ -81,8 +81,10 @@ spec:
       dashboard:
         enabled: false
       persistentVolume:
+        data:
+          existingClaim: crowdsec-data-pvc
         config:
-          enabled: false
+          existingClaim: crowdsec-config-pvc
       nodeSelector:
         node-role.kubernetes.io/master: 'true'
       env:
@@ -110,3 +112,87 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: crowdsec-config-pvc
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: crowdsec-config-pv
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: crowdsec-config-pvc
+    namespace: crowdsec
+  local:
+    path: /mnt/moriyya/crowdsec/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: crowdsec-data-pvc
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: crowdsec-data-pv
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: crowdsec-data-pvc
+    namespace: crowdsec
+  local:
+    path: /mnt/moriyya/crowdsec/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
