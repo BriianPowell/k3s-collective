@@ -64,6 +64,9 @@ spec:
         #   value: 'crowdsecurity/whitelists'
       # nodeSelector:
       #   node-role.kubernetes.io/master: 'true'
+      service:
+        labels:
+          app: crowdsec-agent-service
       persistentVolume:
         config:
           enabled: false
@@ -100,6 +103,9 @@ spec:
           value: 'false'
         - name: DISABLE_LOCAL_API
           value: 'false'
+      service:
+        labels:
+          app: crowdsec-service
       resources:
         limits:
           memory: 1000Mi
