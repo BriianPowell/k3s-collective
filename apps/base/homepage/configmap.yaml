@@ -83,7 +83,8 @@ data:
           target: _blank
           widget:
             type: traefik
-            url: http://traefik.kube-system
+            fields: ["routers", "services", "middleware"]
+            url: https://traefik.powell.place
             username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
             password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
       - Nextcloud:
