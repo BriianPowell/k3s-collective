@@ -5,7 +5,6 @@ metadata:
   namespace: kube-system
   labels:
     app.kubernetes.io/name: homepage
-  annotations:
 spec:
   type: ClusterIP
   ports:
@@ -50,6 +49,16 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: CRYPTO_MARKET
+            - name: HOMEPAGE_VAR_UNIFI_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: UNIFI_LOGIN
+            - name: HOMEPAGE_VAR_UNIFI_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: UNIFI_PASS
           ports:
             - name: http
               containerPort: 3000
