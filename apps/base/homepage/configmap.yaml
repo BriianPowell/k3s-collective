@@ -81,12 +81,12 @@ data:
           description:
           ping: https://traefik.powell.place
           target: _blank
-          widget:
-            type: traefik
-            fields: ["routers", "services", "middleware"]
-            url: https://traefik.powell.place
-            username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
-            password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
+          # widget:
+          #   type: traefik
+          #   fields: ["routers", "services", "middleware"]
+          #   url: https://traefik.powell.place
+          #   username: {{HOMEPAGE_VAR_KEYCLOAK_LOGIN}}
+          #   password: {{HOMEPAGE_VAR_KEYCLOAK_PASS}}
       - Nextcloud:
           icon: nextcloud
           href: https://nextcloud.powell.place
