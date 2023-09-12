@@ -25,10 +25,12 @@ data:
   services.yaml: |
     - Crypto:
       - Market:
-          type: coinmarketcap
-          currency: USD # Optional
-          symbols: [BTC, LTC, ETH]
-          key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
+          icon: mdi-bitcoin
+          widget:
+            type: coinmarketcap
+            currency: USD # Optional
+            symbols: [BTC, LTC, ETH]
+            key: {{HOMEPAGE_VAR_CRYPTO_MARKET}}
     - Monitoring:
       - Grafana:
           icon: grafana
