@@ -5,5 +5,9 @@ commonLabels:
   app: homepage
 
 resources:
-  - helm-release.yaml
+  # - helm-release.yaml
   - ingress.yaml
+  - cluster-role.yaml
+  - secret.yaml
+  - service-account.yaml
+  - deployment.yaml
