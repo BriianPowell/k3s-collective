@@ -75,7 +75,7 @@ spec:
         datasources:
           - name: Prometheus
             type: prometheus
-            url: http://kube-prometheus-collective-prometheus.monitoring.svc:9090
+            url: http://monitor-prometheus.monitoring:9090
             access: proxy
             editable: true
             orgId: 1
@@ -83,7 +83,7 @@ spec:
             isDefault: true
           - name: Loki
             type: loki
-            url: http://loki.monitoring.svc:3100
+            url: http://loki.monitoring:3100
             access: proxy
             orgid: 1
             version: 1
