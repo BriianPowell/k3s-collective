@@ -9,7 +9,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crowdsec-agent-service
+      k8s-app: crowdsec
+      type: agent
   namespaceSelector:
     matchNames:
       - crowdsec
@@ -25,7 +26,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crowdsec-service
+      app: crowdsec
+      type: lapi
   namespaceSelector:
     matchNames:
       - crowdsec
