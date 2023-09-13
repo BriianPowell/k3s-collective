@@ -135,6 +135,10 @@ data:
             custom:
               - template: "{{ ['person.brian', 'person.lauren', 'person.carlos', 'person.nicole'] | select('is_state','home') | list | length }}"
                 label: People Home
+              - template: "{{ ['switch.smartplug_pc', 'switch.smartplug_server', 'switch.smartplug_lauren', 'switch.smartplug_carlos']| select('is_state','on') | list | length }}"
+                label: Switches On
+              - template: "{{states.light|selectattr('state','equalto','on')|list|length}}"
+                label: Lights On
       - Wiki:
           icon: https://static.requarks.io/logo/wikijs-butterfly.svg
           href: https://wiki.powell.place
