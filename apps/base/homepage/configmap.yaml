@@ -42,12 +42,19 @@ data:
       - Gemini:
           - icon: https://www.gemini.com/_next/image?url=%2Fstatic%2Fimages%2Fgemini-hor-light-full-rgb%403x.png&w=128&q=75
             href: https://www.gemini.com/
+    - Code:
+      - Homebrew:
+          - icon: https://brew.sh/assets/img/homebrew.svg
+            href: https://formulae.brew.sh/
+      - NixPkgs:
+          - icon: https://nixos.org/logo/nix-wiki.png
+            href: https://search.nixos.org/packages
   services.yaml: |
     - Monitoring:
       - Prometheus:
           icon: prometheus
           href: https://prometheus.powell.place
-          description: Self-hosted Metrics Server
+          description: Metrics Server
           ping: https://prometheus.powell.place
           target: _blank
           widget:
@@ -57,7 +64,7 @@ data:
       - Grafana:
           icon: grafana
           href: https://grafana.powell.place
-          description: Self-hosted Dashboarding Service
+          description: Dashboarding Service
           ping: https://grafana.powell.place
           target: _blank
           widget:
@@ -80,7 +87,7 @@ data:
       - Alert Manager:
           icon: alertmanager
           href: https://alertmanager.powell.place
-          description: Self-hosted Alerting Manager
+          description: Cluster Alerting Manager
           ping: https://alertmanager.powell.place
           target: _blank
       - Portfolio:
@@ -93,7 +100,7 @@ data:
       - Traefik:
           icon: traefik
           href: https://traefik.powell.place
-          description: Self-hosted Ingress Controller to k3s cluster
+          description: Ingress Controller to k3s cluster
           ping: https://traefik.powell.place
           target: _blank
           # widget:
@@ -105,7 +112,7 @@ data:
       - Nextcloud:
           icon: nextcloud
           href: https://nextcloud.powell.place
-          description: Self-hosted Cloud File Storage
+          description: Cloud File Storage
           ping: https://nextcloud.powell.place
           target: _blank
           widget:
@@ -116,7 +123,7 @@ data:
       - Home Assistant:
           icon: home-assistant
           href: https://ha.powell.place
-          description: Self-hosted Home Automation Platform
+          description: Home Automation Platform
           ping: https://ha.powell.place
           target: _blank
           widget:
@@ -128,14 +135,14 @@ data:
       - Wiki:
           icon: https://static.requarks.io/logo/wikijs-butterfly.svg
           href: https://wiki.powell.place
-          description: Self-hosted Wiki Platform
+          description: Powered by Wiki.js
           ping: https://wiki.powell.place\
           target: _blank
     - Identity:
       - Keycloak:
           icon: keycloak
           href: https://keycloak.powell.place
-          description: Self-hosted Identity Platform for SSO
+          description: Identity Platform for SSO
           ping: https://keycloak.powell.place
           target: _blank
     - Crypto:
