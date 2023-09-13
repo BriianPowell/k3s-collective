@@ -128,10 +128,13 @@ data:
           target: _blank
           widget:
             type: homeassistant
-            fields: ["people_home", "lights_on", "switches_on"]
+            # fields: ["people_home", "lights_on", "switches_on"]
             url: http://homeassistant.homeassistant:8123
             key: {{HOMEPAGE_VAR_HA_TOKEN}}
             # https://gethomepage.dev/en/services/homeassistant/
+            custom:
+              - template: "{{ ['person.brian', 'person.lauren', 'person.carlos', 'person.nicole'] | select('is_state','home') | list | length }}"
+                label: People Home
       - Wiki:
           icon: https://static.requarks.io/logo/wikijs-butterfly.svg
           href: https://wiki.powell.place
