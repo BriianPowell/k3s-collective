@@ -185,6 +185,7 @@ data:
     - search:
         provider: duckduckgo
         target: _blank
+        # focus: true
     # - datetime:
     #     text_size: 2x1
     #     format:
