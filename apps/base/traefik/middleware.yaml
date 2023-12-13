@@ -6,14 +6,16 @@ metadata:
 spec:
   plugin:
     bouncer:
-      enabled: true
+      CrowdsecLapiKey:
+      Enabled: true
+      logLevel: INFO
       crowdsecMode: stream
-      crowdsecLapiScheme: https
+      crowdsecLapiScheme: http
       crowdsecLapiHost: crowdsec-service.crowdsec:8080
-      CrowdsecLapiTlsInsecureVerify: true
-      crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
-      crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
-      crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
+      # CrowdsecLapiTlsInsecureVerify: true
+      # crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
+      # crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
+      # crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -25,7 +27,7 @@ spec:
     browserXssFilter: true
     contentTypeNosniff: true
     frameDeny: true
-    sslRedirect: true
+    # sslRedirect: true - deprecated
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
@@ -40,7 +42,7 @@ spec:
   headers:
     browserXssFilter: true
     contentTypeNosniff: true
-    sslRedirect: true
+    # sslRedirect: true - deprecated
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
