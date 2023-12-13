@@ -6,12 +6,15 @@ metadata:
 spec:
   plugin:
     bouncer:
-      crowdsecLapiKey: TRzd2wfzKi5oNFf9Npr9UQ
+      # crowdsecLapiKey: TRzd2wfzKi5oNFf9Npr9UQ
       enabled: true
       logLevel: INFO
       crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec:8080
-      crowdsecLapiScheme: http
+      crowdsecLapiScheme: https
+      crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
+      crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
+      crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware

@@ -41,6 +41,7 @@ spec:
         reflector:
           namespaces:
             - kube-system
+            - crowdsec
     agent:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
