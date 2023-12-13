@@ -41,8 +41,8 @@ spec:
       web:
         redirectTo: websecure
       websecure:
-        # middlewares:
-        #   - kube-system-bouncer@kubernetescrd
+        middlewares:
+          - kube-system-bouncer@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
@@ -66,6 +66,9 @@ spec:
         level: INFO
       access:
         enabled: true
+        fields:
+          headers:
+            defaultmode: keep
     providers:
       kubernetesCRD:
         allowCrossNamespace: true # Use Middlewares across namespaces
@@ -103,9 +106,9 @@ spec:
       default:
         defaultCertificate:
           secretName: wildcard-powell-place-secret
-    # additionalArguments:
-    #   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-    #   - "--experimental.plugins.bouncer.version=v1.1.16"
+    additionalArguments:
+      - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      - "--experimental.plugins.bouncer.version=v1.1.16"
     resources:
       requests:
         cpu: 10m
