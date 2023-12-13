@@ -10,6 +10,7 @@ spec:
       crowdsecMode: stream
       crowdsecLapiScheme: https
       crowdsecLapiHost: crowdsec-service.crowdsec:8080
+      CrowdsecLapiTlsInsecureVerify: true
       crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
       crowdsecLapiTLSCertificateBouncerFile: /etc/traefik/crowdsec-certs/tls.crt
       crowdsecLapiTLSCertificateBouncerKeyFile: /etc/traefik/crowdsec-certs/tls.key
