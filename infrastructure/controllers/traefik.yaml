@@ -81,10 +81,10 @@ spec:
     experimental:
       plugins:
         enabled: true
-    # volumes:
-    #   - name: crowdsec-bouncer-tls
-    #     mountPath: /etc/traefik/crowdsec-certs/
-    #     type: secret
+    volumes:
+      - name: crowdsec-bouncer-tls
+        mountPath: /etc/traefik/crowdsec-certs/
+        type: secret
     tlsOptions:
       default:
         minVersion: VersionTLS12
