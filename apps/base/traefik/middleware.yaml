@@ -6,7 +6,7 @@ metadata:
 spec:
   plugin:
     bouncer:
-      CrowdsecLapiKey:
+      CrowdsecLapiKey: 1Ym1L6WwAxg4dnCHrveTLA
       Enabled: true
       logLevel: INFO
       crowdsecMode: stream
