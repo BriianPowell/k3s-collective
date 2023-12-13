@@ -32,7 +32,7 @@ spec:
         kind: HelmRepository
         name: crowdsec
         namespace: crowdsec
-      version: ">=0.9.5 <1.0.0"
+      version: '>=0.9.5 <1.0.0'
   values:
     container_runtime: containerd
     tls:
@@ -57,9 +57,9 @@ spec:
           program: traefik
       env:
         - name: PARSERS
-          value: "crowdsecurity/cri-logs crowdsecurity/traefik-logs"
+          value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
         - name: COLLECTIONS
-          value: "crowdsecurity/traefik"
+          value: 'crowdsecurity/traefik'
         # When testing, allow bans on private networks
         # - name: DISABLE_PARSERS
         #   value: 'crowdsecurity/whitelists'
@@ -87,7 +87,7 @@ spec:
         config:
           existingClaim: crowdsec-config-pvc
       nodeSelector:
-        node-role.kubernetes.io/master: "true"
+        node-role.kubernetes.io/master: 'true'
       env:
         # For an internal test, disable the Online API
         - name: ENROLL_KEY
@@ -98,11 +98,11 @@ spec:
         - name: ENROLL_INSTANCE_NAME
           value: sheol
         - name: ENROLL_TAGS
-          value: "k3s"
+          value: 'k3s'
         - name: DISABLE_ONLINE_API
-          value: "false"
+          value: 'false'
         - name: DISABLE_LOCAL_API
-          value: "false"
+          value: 'false'
       resources:
         limits:
           memory: 1000Mi

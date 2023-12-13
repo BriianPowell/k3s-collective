@@ -6,7 +6,7 @@ metadata:
     app: homepage
 rules:
   - apiGroups:
-      - ""
+      - ''
     resources:
       - namespaces
       - pods

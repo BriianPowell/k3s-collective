@@ -110,5 +110,4 @@ spec:
           configMap:
             name: homepage
         - name: logs
-          emptyDir:
-            {}
+          emptyDir: {}

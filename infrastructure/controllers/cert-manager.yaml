@@ -36,7 +36,7 @@ spec:
   values:
     global:
       leaderElection:
-        namespace: "cert-manager"
+        namespace: 'cert-manager'
     installCRDs: true
     resources:
       requests:
@@ -46,9 +46,9 @@ spec:
         cpu: 1000m
         memory: 500Mi
     ingressShim:
-      defaultIssuerName: "letsencrypt"
-      defaultIssuerKind: "ClusterIssuer"
-      defaultIssuerGroup: "cert-manager.io"
+      defaultIssuerName: 'letsencrypt'
+      defaultIssuerKind: 'ClusterIssuer'
+      defaultIssuerGroup: 'cert-manager.io'
     cainjector:
       extraArgs:
         - --leader-elect=false
