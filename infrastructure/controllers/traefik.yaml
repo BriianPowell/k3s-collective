@@ -81,7 +81,9 @@ spec:
         enabled: false
     experimental:
       plugins:
-        enabled: true
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.1.16
     volumes:
       - name: crowdsec-bouncer-tls
         mountPath: /etc/traefik/crowdsec-certs/
@@ -107,9 +109,6 @@ spec:
       default:
         defaultCertificate:
           secretName: wildcard-powell-place-secret
-    additionalArguments:
-      - '--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin'
-      - '--experimental.plugins.bouncer.version=v1.1.16'
     resources:
       requests:
         cpu: 10m
