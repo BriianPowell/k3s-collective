@@ -64,7 +64,7 @@ spec:
             - 10.43.0.0/24 # Kubernetes Subnet
     logs:
       general:
-        level: INFO
+        level: DEBUG
       access:
         enabled: true
         fields:
