@@ -23,6 +23,9 @@ spec:
         namespace: kube-system
       version: '>=26.0.0 <27.0.0'
   values:
+    deployment:
+      additionalVolumes:
+        - name: plugins
     priorityClassName: system-cluster-critical
     tolerations:
       - key: CriticalAddonsOnly
@@ -88,6 +91,9 @@ spec:
       - name: crowdsec-bouncer-tls
         mountPath: /etc/traefik/crowdsec-certs/
         type: secret
+    additionalVolumeMounts:
+      - name: plugins
+        mountPath: /plugins-storage
     tlsOptions:
       default:
         minVersion: VersionTLS12
