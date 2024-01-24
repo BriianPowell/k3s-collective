@@ -23,15 +23,15 @@ spec:
         namespace: kube-system
       version: '>=0.9.0 <1.0.0'
   values:
-    config:
-      map:
-        default:
-          version: v1
-          flags:
-            migStrategy: 'none'
-            failOnInitError: true
-            nvidiaDriverRoot: '/'
-            plugin:
-              passDeviceSpecs: false
-              deviceListStrategy: envvar
-              deviceIDStrategy: uuid
+    # config:
+    #   map:
+    #     default:
+    #       version: v1
+    #       flags:
+    #         migStrategy: 'none'
+    #         failOnInitError: true
+    #         nvidiaDriverRoot: '/'
+    #         plugin:
+    #           passDeviceSpecs: false
+    #           deviceListStrategy: envvar
+    #           deviceIDStrategy: uuid
