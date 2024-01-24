@@ -35,3 +35,12 @@ spec:
               passDeviceSpecs: false
               deviceListStrategy: envvar
               deviceIDStrategy: uuid
+    affinity:
+      nodeAffinity:
+        required:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sheol
