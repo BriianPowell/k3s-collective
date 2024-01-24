@@ -37,10 +37,12 @@ spec:
               deviceIDStrategy: uuid
     affinity:
       nodeAffinity:
-        required:
+        requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
                     - sheol
+    gfd:
+      enabled: true
