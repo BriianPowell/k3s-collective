@@ -21,7 +21,7 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: kube-system
-      version: '>=23.0.0 <24.0.0'
+      version: '>=26.0.0 <27.0.0'
   values:
     priorityClassName: system-cluster-critical
     tolerations:
