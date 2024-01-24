@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   interval: 24h
-  url: https://helm.traefik.io/traefik
+  url: https://traefik.github.io/charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -105,10 +105,10 @@ spec:
         curvePreferences:
           - CurveP521
           - CurveP384
-    # tlsStore:
-    #   default:
-    #     defaultCertificate:
-    #       secretName: wildcard-powell-place-secret
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: wildcard-powell-place-secret
     resources:
       requests:
         cpu: 10m
