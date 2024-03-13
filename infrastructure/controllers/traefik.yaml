@@ -45,8 +45,8 @@ spec:
         redirectTo:
           port: websecure
       websecure:
-        # middlewares:
-        #   - kube-system-bouncer@kubernetescrd
+        middlewares:
+          - kube-system-bouncer@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
