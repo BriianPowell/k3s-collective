@@ -86,7 +86,7 @@ spec:
       plugins:
         bouncer:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-          version: v1.1.16
+          version: v1.2.0
     volumes:
       - name: crowdsec-bouncer-tls
         mountPath: /etc/traefik/crowdsec-certs/
