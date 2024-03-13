@@ -83,10 +83,10 @@ spec:
       dashboard:
         enabled: false
     experimental:
-    plugins:
-      bouncer:
-        moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-        version: v1.2.0
+      plugins:
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.2.0
     volumes:
       - name: crowdsec-bouncer-tls
         mountPath: /etc/traefik/crowdsec-certs/
