@@ -45,8 +45,8 @@ spec:
         redirectTo:
           port: websecure
       websecure:
-        # middlewares:
-        #   - kube-system-bouncer@kubernetescrd
+        middlewares:
+          - kube-system-bouncer@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
@@ -82,15 +82,15 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
-    # experimental:
-    #   plugins:
-    #     bouncer:
-    #       moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-    #       version: v1.2.0
-    # volumes:
-    #   - name: crowdsec-bouncer-tls
-    #     mountPath: /etc/traefik/crowdsec-certs/
-    #     type: secret
+    experimental:
+      plugins:
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.2.0
+    volumes:
+      - name: crowdsec-bouncer-tls
+        mountPath: /etc/traefik/crowdsec-certs/
+        type: secret
     additionalVolumeMounts:
       - name: plugins
         mountPath: /plugins-storage
