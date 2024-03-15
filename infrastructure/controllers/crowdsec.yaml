@@ -9,153 +9,153 @@ kind: Namespace
 metadata:
   name: crowdsec
 ---
-# apiVersion: source.toolkit.fluxcd.io/v1beta2
-# kind: HelmRepository
-# metadata:
-#   name: crowdsec
-#   namespace: crowdsec
-# spec:
-#   interval: 24h
-#   url: https://crowdsecurity.github.io/helm-charts
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: crowdsec
-#   namespace: crowdsec
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: crowdsec
-#       sourceRef:
-#         kind: HelmRepository
-#         name: crowdsec
-#         namespace: crowdsec
-#       version: '>=0.9.5 <1.0.0'
-#   values:
-#     container_runtime: containerd
-#     tls:
-#       enabled: true
-#       bouncer:
-#         reflector:
-#           namespaces:
-#             - kube-system
-#             - crowdsec
-#     agent:
-#       tolerations:
-#         - key: node-role.kubernetes.io/control-plane
-#           operator: Equal
-#           effect: NoSchedule
-#       # Specify each pod whose logs you want to process
-#       acquisition:
-#         # The namespace where the pod is located
-#         - namespace: kube-system
-#           # The pod name
-#           podName: traefik-*
-#           # as in crowdsec configuration, we need to specify the program name to find a matching parser
-#           program: traefik
-#       env:
-#         - name: PARSERS
-#           value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
-#         - name: COLLECTIONS
-#           value: 'crowdsecurity/traefik'
-#         # When testing, allow bans on private networks
-#         # - name: DISABLE_PARSERS
-#         #   value: 'crowdsecurity/whitelists'
-#       # nodeSelector:
-#       #   node-role.kubernetes.io/master: 'true'
-#       persistentVolume:
-#         config:
-#           enabled: false
-#       resources:
-#         limits:
-#           memory: 1000Mi
-#         requests:
-#           cpu: 150m
-#           memory: 100Mi
-#       metrics:
-#         enabled: true
-#         serviceMonitor:
-#           enabled: false
-#     lapi:
-#       dashboard:
-#         enabled: false
-#       persistentVolume:
-#         data:
-#           existingClaim: crowdsec-data-pvc
-#         config:
-#           existingClaim: crowdsec-config-pvc
-#       nodeSelector:
-#         node-role.kubernetes.io/master: 'true'
-#       env:
-#         # For an internal test, disable the Online API
-#         - name: ENROLL_KEY
-#           valueFrom:
-#             secretKeyRef:
-#               name: crowdsec-secrets
-#               key: ENROLL_KEY
-#         - name: ENROLL_INSTANCE_NAME
-#           value: sheol
-#         - name: ENROLL_TAGS
-#           value: 'k3s'
-#         - name: DISABLE_ONLINE_API
-#           value: 'false'
-#         - name: DISABLE_LOCAL_API
-#           value: 'false'
-#       resources:
-#         limits:
-#           memory: 1000Mi
-#         requests:
-#           cpu: 150m
-#           memory: 100Mi
-#       metrics:
-#         enabled: true
-#         serviceMonitor:
-#           enabled: false
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: crowdsec-config-pvc
-#   namespace: crowdsec
-#   labels:
-#     type: local
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 100Mi
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: crowdsec-config-pv
-#   namespace: crowdsec
-#   labels:
-#     type: local
-# spec:
-#   capacity:
-#     storage: 100Mi
-#   volumeMode: Filesystem
-#   accessModes:
-#     - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   claimRef:
-#     name: crowdsec-config-pvc
-#     namespace: crowdsec
-#   local:
-#     path: /mnt/moriyya/crowdsec/config
-#   nodeAffinity:
-#     required:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: kubernetes.io/hostname
-#               operator: In
-#               values:
-#                 - sheol
-# ---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: crowdsec
+  namespace: crowdsec
+spec:
+  interval: 24h
+  url: https://crowdsecurity.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: crowdsec
+  namespace: crowdsec
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: crowdsec
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: crowdsec
+      version: '>=0.9.5 <1.0.0'
+  values:
+    container_runtime: containerd
+    tls:
+      enabled: true
+      bouncer:
+        reflector:
+          namespaces:
+            - kube-system
+            - crowdsec
+    agent:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Equal
+          effect: NoSchedule
+      # Specify each pod whose logs you want to process
+      acquisition:
+        # The namespace where the pod is located
+        - namespace: kube-system
+          # The pod name
+          podName: traefik-*
+          # as in crowdsec configuration, we need to specify the program name to find a matching parser
+          program: traefik
+      env:
+        - name: PARSERS
+          value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
+        - name: COLLECTIONS
+          value: 'crowdsecurity/traefik'
+        # When testing, allow bans on private networks
+        # - name: DISABLE_PARSERS
+        #   value: 'crowdsecurity/whitelists'
+      # nodeSelector:
+      #   node-role.kubernetes.io/master: 'true'
+      persistentVolume:
+        config:
+          enabled: false
+      resources:
+        limits:
+          memory: 1000Mi
+        requests:
+          cpu: 150m
+          memory: 100Mi
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: false
+    lapi:
+      dashboard:
+        enabled: false
+      persistentVolume:
+        data:
+          existingClaim: crowdsec-data-pvc
+        config:
+          existingClaim: crowdsec-config-pvc
+      nodeSelector:
+        node-role.kubernetes.io/master: 'true'
+      env:
+        # For an internal test, disable the Online API
+        - name: ENROLL_KEY
+          valueFrom:
+            secretKeyRef:
+              name: crowdsec-secrets
+              key: ENROLL_KEY
+        - name: ENROLL_INSTANCE_NAME
+          value: sheol
+        - name: ENROLL_TAGS
+          value: 'k3s'
+        - name: DISABLE_ONLINE_API
+          value: 'false'
+        - name: DISABLE_LOCAL_API
+          value: 'false'
+      resources:
+        limits:
+          memory: 1000Mi
+        requests:
+          cpu: 150m
+          memory: 100Mi
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: crowdsec-config-pvc
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: crowdsec-config-pv
+  namespace: crowdsec
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: crowdsec-config-pvc
+    namespace: crowdsec
+  local:
+    path: /mnt/moriyya/crowdsec/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
