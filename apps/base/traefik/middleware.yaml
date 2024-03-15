@@ -29,7 +29,7 @@ spec:
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
-    stsSeconds: 31536000
+    stsSeconds: 15768000
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -44,4 +44,4 @@ spec:
     #HSTS Configuration
     stsIncludeSubdomains: true
     stsPreload: true
-    stsSeconds: 31536000
+    stsSeconds: 15768000
