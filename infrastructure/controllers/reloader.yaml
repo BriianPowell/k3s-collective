@@ -1,0 +1,65 @@
+#
+# Reference:
+# https://github.com/stakater/Reloader/blob/master/README.md
+#
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: reloader
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: reloader
+  namespace: reloader
+spec:
+  interval: 24h
+  url: https://stakater.github.io/stakater-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: reloader
+  namespace: reloader
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: reloader
+      version: '>=1.11.0 <2.0.0'
+      sourceRef:
+        kind: HelmRepository
+        name: reloader
+        namespace: reloader
+      interval: 24h
+  values:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - abaddon
+    reloader:
+      autoReloadAll: false
+      isArgoRollouts: false
+      isOpenshift: false
+      ignoreSecrets: false
+      ignoreConfigMaps: true
+      reloadOnCreate: true
+      syncAfterRestart: false
+      reloadStrategy: default # Set to default, env-vars or annotations
+      ignoreNamespaces: '' # Comma separated list of namespaces to ignore
+      namespaceSelector: 'crowdsec,kube-system' # Comma separated list of k8s label selectors for namespaces selection
+      resourceLabelSelector: '' # Comma separated list of k8s label selectors for configmap/secret selection
+      logFormat: 'json' #json
+      watchGlobally: false
+      # Set to true to enable leadership election allowing you to run multiple replicas
+      enableHA: false
+      # Set to true if you have a pod security policy that enforces readOnlyRootFilesystem
+      readOnlyRootFileSystem: false
+      deployment:
+        replicas: 1
