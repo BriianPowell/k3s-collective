@@ -53,10 +53,10 @@ spec:
       syncAfterRestart: false
       reloadStrategy: default # Set to default, env-vars or annotations
       ignoreNamespaces: '' # Comma separated list of namespaces to ignore
-      namespaceSelector: 'crowdsec,kube-system' # Comma separated list of k8s label selectors for namespaces selection
+      namespaceSelector: 'kubernetes.io/metadata.name=crowdsec,kubernetes.io/metadata.name=kube-system' # Comma separated list of k8s label selectors for namespaces selection
       resourceLabelSelector: '' # Comma separated list of k8s label selectors for configmap/secret selection
       logFormat: 'json' #json
-      watchGlobally: false
+      watchGlobally: true
       # Set to true to enable leadership election allowing you to run multiple replicas
       enableHA: false
       # Set to true if you have a pod security policy that enforces readOnlyRootFilesystem
