@@ -24,6 +24,8 @@ spec:
       version: '>=26.0.0 <27.0.0'
   values:
     deployment:
+      annotations:
+        secret.reloader.stakater.com/reload: crowdsec-bouncer-tls
       additionalVolumes:
         - name: plugins
     priorityClassName: system-cluster-critical
