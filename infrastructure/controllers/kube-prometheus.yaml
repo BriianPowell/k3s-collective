@@ -137,10 +137,14 @@ spec:
         ruleSelector:
           matchLabels:
             role: alert-rules
-        serviceMonitorNamespaceSelector: {}
         serviceMonitorSelector:
           matchLabels:
             monitoring: prometheus-operator
+        serviceMonitorNamespaceSelector: {}
+        podMonitorSelector:
+          matchLabels:
+            monitoring: prometheus-operator
+        podMonitorNamespaceSelector: {}
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

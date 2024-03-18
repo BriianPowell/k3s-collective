@@ -63,3 +63,9 @@ spec:
                       operator: In
                       values:
                         - abaddon
+      podMonitor:
+        enabled: true
+        namespace: monitoring
+        interval: 30s
+        labels:
+          monitoring: prometheus-operator
