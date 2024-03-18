@@ -34,15 +34,6 @@ spec:
         namespace: reloader
       interval: 24h
   values:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - abaddon
     reloader:
       autoReloadAll: false
       isArgoRollouts: false
@@ -63,3 +54,12 @@ spec:
       readOnlyRootFileSystem: false
       deployment:
         replicas: 1
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/hostname
+                      operator: In
+                      values:
+                        - abaddon
