@@ -116,7 +116,7 @@ spec:
     namespace: pihole
     name: pihole-etc-pvc
   local:
-    path: /mnt/moriyya/pihole
+    path: /mnt/moriyya/pihole/etc
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -159,7 +159,7 @@ spec:
     name: pihole-dnsmasq-pvc
     namespace: kube-system
   local:
-    path: /mnt/moriyya/pihole
+    path: /mnt/moriyya/pihole/dnsmasq.d
   nodeAffinity:
     required:
       nodeSelectorTerms:
