@@ -28,11 +28,14 @@ spec:
       version: '>=2.22.0 <3.0.0'
   values:
     serviceWeb:
-      type: ClusterIP
+      loadBalancerIP: 10.0.2.11
+      type: LoadBalancer
     serviceDns:
-      type: ClusterIP
+      loadBalancerIP: 10.0.2.11
+      type: LoadBalancer
     serviceDhcp:
-      type: ClusterIP
+      loadBalancerIP: 10.0.2.11
+      type: LoadBalancer
     #! use an existing secret in a prod env
     adminPassword: 0n4BQ2l7Dbu3ViYgd4wu
     podDnsConfig:
