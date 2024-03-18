@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`pihole.powell.place`)
+    - match: Host(`pihole.powell.place`) && PathPrefix(`/admin`)
       kind: Rule
       services:
         - name: pihole-web
