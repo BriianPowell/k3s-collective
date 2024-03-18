@@ -11,7 +11,7 @@ spec:
       kind: Rule
       services:
         - name: pihole
-          port: 8000
+          port: http
       middlewares:
         - name: security
           namespace: kube-system

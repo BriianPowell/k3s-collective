@@ -19,7 +19,8 @@ spec:
       port: 30053
       targetPort: dns-tcp
       protocol: TCP
-    - port: 30053
+    - name: dns-udp
+      port: 30053
       targetPort: dns-udp
       protocol: UDP
 ---
