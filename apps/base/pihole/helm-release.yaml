@@ -28,8 +28,7 @@ spec:
       version: '>=2.22.0 <3.0.0'
   values:
     serviceWeb:
-      loadBalancerIP: 10.0.2.11
-      type: LoadBalancer
+      type: ClusterIP
     serviceDns:
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
@@ -44,6 +43,9 @@ spec:
       nameservers:
         - 127.0.0.1
         - 1.1.1.1
+    dnsmasq:
+      additionalHostsEntries:
+        - 10.0.0.1    unifi
     persistentVolumeClaim:
       enabled: true
     affinity:
