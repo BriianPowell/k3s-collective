@@ -33,6 +33,8 @@ spec:
       type: ClusterIP
     serviceDhcp:
       type: ClusterIP
+    #! use an existing secret in a prod env
+    adminPassword: 0n4BQ2l7Dbu3ViYgd4wu
     podDnsConfig:
       enabled: true
       policy: None
