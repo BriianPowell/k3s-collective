@@ -39,6 +39,15 @@ spec:
         - 1.1.1.1
     persistentVolumeClaim:
       enabled: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - abaddon
     resources:
       limits:
         cpu: 200m
