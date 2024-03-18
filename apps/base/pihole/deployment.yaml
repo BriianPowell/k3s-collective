@@ -7,18 +7,18 @@ metadata:
 spec:
   selector:
     app: pihole
+  clusterIP: None
+  sessionAffinity: None
+  type: ClusterIP
   ports:
-    - port: 80
+    - port: 8000
       targetPort: 80
-      name: pihole-admin
     - port: 53
       targetPort: 53
       protocol: TCP
-      name: dns-tcp
     - port: 53
       targetPort: 53
       protocol: UDP
-      name: dns-udp
 ---
 apiVersion: apps/v1
 kind: Deployment
