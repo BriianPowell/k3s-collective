@@ -1,0 +1,154 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole
+  namespace: kube-system
+spec:
+  selector:
+    app: pihole
+  ports:
+    - port: 80
+      targetPort: 80
+      name: pihole-admin
+    - port: 53
+      targetPort: 53
+      protocol: TCP
+      name: dns-tcp
+    - port: 53
+      targetPort: 53
+      protocol: UDP
+      name: dns-udp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  namespace: kube-system
+  labels:
+    app: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+        - name: pihole
+          image: pihole/pihole:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: WEBPASSWORD
+              value: secret
+          volumeMounts:
+            - name: pihole-etc-volume
+              mountPath: /etc/pihole
+            - name: pihole-dnsmasq-volume
+              mountPath: /etc/dnsmasq.d
+          resources:
+            requests:
+              cpu: 50m
+              memory: 350Mi
+            limits:
+              cpu: 350m
+              memory: 1Gi
+      volumes:
+        - name: pihole-etc-volume
+          persistentVolumeClaim:
+            claimName: pihole-etc-pvc
+        - name: pihole-dnsmasq-volume
+          persistentVolumeClaim:
+            claimName: pihole-dnsmasq-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pihole-etc-pvc
+  namespace: kube-system
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pihole-etc-pv
+  namespace: kube-system
+  labels:
+    type: local
+    directory: etc
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+    namespace: pihole
+    name: pihole-etc-pvc
+  local:
+    path: /mnt/moriyya/pihole
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pihole-dnsmasq-pvc
+  namespace: kube-system
+  labels:
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pihole-dnsmasq-pv
+  namespace: kube-system
+  labels:
+    type: local
+    directory: dnsmasq.d
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+    name: pihole-dnsmasq-pvc
+    namespace: kube-system
+  local:
+    path: /mnt/moriyya/pihole
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
