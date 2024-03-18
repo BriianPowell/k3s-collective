@@ -28,9 +28,11 @@ spec:
       version: '>=2.22.0 <3.0.0'
   values:
     serviceWeb:
-      type: ClusterIP
+      type: LoadBalancer
     serviceDns:
-      type: ClusterIP
+      type: LoadBalancer
+    serviceDhcp:
+      type: LoadBalancer
     podDnsConfig:
       enabled: true
       policy: None
