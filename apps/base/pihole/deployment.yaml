@@ -113,8 +113,8 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   claimRef:
-    namespace: kube-system
     name: pihole-etc-pvc
+    namespace: kube-system
   local:
     path: /mnt/moriyya/pihole/etc
   nodeAffinity:
