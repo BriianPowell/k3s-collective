@@ -1,17 +1,17 @@
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: pihole-dashboard-https
-  namespace: kube-system
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`pihole.powell.place`)
-      kind: Rule
-      services:
-        - name: pihole
-          port: http
-      middlewares:
-        - name: security
-          namespace: kube-system
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: pihole-dashboard-https
+#   namespace: kube-system
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`pihole.powell.place`)
+#       kind: Rule
+#       services:
+#         - name: pihole
+#           port: http
+#       middlewares:
+#         - name: security
+#           namespace: kube-system
