@@ -52,9 +52,9 @@ spec:
         - 127.0.0.1
         - 1.1.1.1
     dnsmasq:
-      upstreamServers:
-        - server=/mask.icloud.com/
-        - server=/mask-h2.icloud.com/
+      # upstreamServers:
+      #   - server=/mask.icloud.com/
+      #   - server=/mask-h2.icloud.com/
       additionalHostsEntries:
         - 10.0.0.1    unifi
     persistentVolumeClaim:
@@ -69,8 +69,8 @@ spec:
                   values:
                     - abaddon
     extraEnvVars:
-      DNSMASQ_USER: root
       TZ: America/Los_Angeles
+      FTLCONF_BLOCK_ICLOUD_PR: false
     DNS1: 1.1.1.1
     DNS2: 1.0.0.1
     resources:
