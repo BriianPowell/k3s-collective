@@ -38,6 +38,7 @@ spec:
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
     serviceDhcp:
+      enabled: false
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
     #! use an existing secret in a prod env
@@ -66,6 +67,8 @@ spec:
     extraEnvVars:
       DNSMASQ_USER: 'root'
       TZ: 'America/Los_Angeles'
+    DNS1: 1.1.1.1
+    DNS2: 1.0.0.1
     resources:
       limits:
         cpu: 200m
