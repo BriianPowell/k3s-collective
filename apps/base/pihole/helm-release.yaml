@@ -33,16 +33,18 @@ spec:
       version: '>=2.22.0 <3.0.0'
   values:
     serviceWeb:
+      enabled: true
       type: ClusterIP
     serviceDns:
+      enabled: true
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
     serviceDhcp:
       enabled: false
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
-    #! use an existing secret in a prod env
-    adminPassword: 0n4BQ2l7Dbu3ViYgd4wu
+    admin:
+      enabled: false
     podDnsConfig:
       enabled: true
       policy: None
