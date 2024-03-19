@@ -52,6 +52,9 @@ spec:
         - 127.0.0.1
         - 1.1.1.1
     dnsmasq:
+      upstreamServers:
+        - server=/mask.icloud.com/
+        - server=/mask-h2.icloud.com/
       additionalHostsEntries:
         - 10.0.0.1    unifi
     persistentVolumeClaim:
