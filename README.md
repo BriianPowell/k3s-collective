@@ -85,7 +85,7 @@ kubectl apply -f basic-auth-sealed.yaml
 - [x] [HomeAssistant](https://www.home-assistant.io/)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
 - [x] [Wiki.js](https://js.wiki/)
-- [ ] [Pi-hole](https://pi-hole.net/)
+- [x] [Pi-hole](https://pi-hole.net/)
 
 ### Monitoring & Logging
 
