@@ -62,6 +62,10 @@ spec:
                   operator: In
                   values:
                     - abaddon
+
+    extraEnvVars:
+      DNSMASQ_USER: 'root'
+      TZ: 'America/Los_Angeles'
     resources:
       limits:
         cpu: 200m
