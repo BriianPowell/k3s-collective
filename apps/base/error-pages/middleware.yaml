@@ -5,7 +5,8 @@ metadata:
   namespace: kube-system
 spec:
   errors:
-    status: 400-599
+    status:
+      - '400-599'
     query: /{status}.html
     service:
       name: error-pages
