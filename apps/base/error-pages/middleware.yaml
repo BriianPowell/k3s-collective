@@ -6,7 +6,7 @@ metadata:
 spec:
   errors:
     status: 400-599
-    service: error-pages
     query: /{status}.html
-    server:
+    service:
+      name: error-pages
       port: 80
