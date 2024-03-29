@@ -81,6 +81,7 @@ spec:
         cpu: 100m
         memory: 128Mi
     adlists:
+      - https://raw.githubusercontent.com/Sekhan/TheGreatWall/master/TheGreatWall.txt
       - https://hosts-file.net/grm.txt
       - https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/minimalhosts
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/data/KADhosts/hosts
