@@ -51,9 +51,9 @@ spec:
       nameservers:
         - 127.0.0.1
         - 1.1.1.1
-    dnsmasq:
-      upstreamServers:
-        - server=/boog.dmp/10.0.2.1
+    # dnsmasq:
+    #   upstreamServers:
+    #     - server=/boog.dmp/10.0.2.1
     persistentVolumeClaim:
       enabled: true
     affinity:
