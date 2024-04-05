@@ -70,9 +70,8 @@ spec:
                     - abaddon
     extraEnvVars:
       TZ: America/Los_Angeles
-      FTLCONF_BLOCK_ICLOUD_PR: true
-    DNS1: 1.1.1.1
-    DNS2: 1.0.0.1
+    DNS1: '1.1.1.1'
+    DNS2: '1.0.0.1'
     resources:
       limits:
         cpu: 200m
@@ -97,31 +96,16 @@ spec:
       - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt
       - https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/minimalhosts
       - https://v.firebog.net/hosts/static/w3kbl.txt
-      - https://v.firebog.net/hosts/BillStearns.txt
       - https://v.firebog.net/hosts/AdguardDNS.txt
       - https://v.firebog.net/hosts/Easylist.txt
       - https://v.firebog.net/hosts/Easyprivacy.txt
       - https://v.firebog.net/hosts/Prigent-Ads.txt
       - https://v.firebog.net/hosts/Prigent-Malware.txt
-      - https://v.firebog.net/hosts/Prigent-Phishing.txt
-      - https://v.firebog.net/hosts/Shalla-mal.txt
       - https://www.dshield.org/feeds/suspiciousdomains_Low.txt
       - https://www.dshield.org/feeds/suspiciousdomains_Medium.txt
       - https://www.dshield.org/feeds/suspiciousdomains_High.txt
       - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
       - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
-      - https://hosts-file.net/ad_servers.txt
-      - https://hosts-file.net/grm.txt
-      - https://hosts-file.net/exp.txt
-      - https://hosts-file.net/emd.txt
-      - https://hosts-file.net/psh.txt
-      - https://www.squidblacklist.org/downloads/dg-ads.acl
-      - https://www.squidblacklist.org/downloads/dg-malicious.acl
-      - https://ransomwaretracker.abuse.ch/downloads/RW_DOMBL.txt
-      - https://ransomwaretracker.abuse.ch/downloads/CW_C2_DOMBL.txt
-      - https://ransomwaretracker.abuse.ch/downloads/LY_C2_DOMBL.txt
-      - https://ransomwaretracker.abuse.ch/downloads/TC_C2_DOMBL.txt
-      - https://ransomwaretracker.abuse.ch/downloads/TL_C2_DOMBL.txt
       - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
       - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
       - https://zerodot1.gitlab.io/CoinBlockerLists/hosts
@@ -132,12 +116,8 @@ spec:
       - http://winhelp2002.mvps.org/hosts.txt
       - https://adaway.org/hosts.txt
       - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0
-      - https://www.malwaredomainlist.com/hostslist/hosts.txt
-      - https://mirror1.malwaredomains.com/files/justdomains
-      - https://mirror.cedia.org.ec/malwaredomains/immortal_domains.txt
       - https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
       - https://phishing.army/download/phishing_army_blocklist_extended.txt
-      - https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist
     whitelist:
       - 0.client-channel.google.com
       - 1drv.com
@@ -145,13 +125,11 @@ spec:
       - akamaihd.net
       - akamaitechnologies.com
       - akamaized.net
-      - alluremedia.com.au
       - amazonaws.com
       - android.clients.google.com
       - api.ipify.org
       - api.rlje.net
       - app-api.ted.com
-      - app.plex.tv
       - appleid.apple.com
       - apps.skype.com
       - appsbackup-pa.clients6.google.com
@@ -161,7 +139,6 @@ spec:
       - attestation.xboxlive.com
       - ax.phobos.apple.com.edgesuite.net
       - brightcove.net
-      - bufferapp.com
       - c.s-microsoft.com
       - cdn.cloudflare.net
       - cdn.embedly.com
@@ -200,7 +177,6 @@ spec:
       - drift.com
       - driftt.com
       - dynupdate.no-ip.com
-      - ec-ns.sascdn.com
       - ecn.dev.virtualearth.net
       - edge.api.brightcove.com
       - eds.xboxlive.com
@@ -217,7 +193,6 @@ spec:
       - gstatic.com
       - help.ui.xboxlive.com
       - hls.ted.com
-      - i.s-microsoft.com
       - i.ytimg.com
       - i1.ytimg.com
       - imagesak.secureserver.net
@@ -226,14 +201,12 @@ spec:
       - imgs.xkcd.com
       - instantmessaging-pa.googleapis.com
       - intercom.io
-      - j.mp
       - jquery.com
       - jsdelivr.net
       - keystone.mwbsys.com
       - lastfm-img2.akamaized.net
       - licensing.xboxlive.com
       - live.com
-      - login.aliexpress.com
       - login.live.com
       - login.microsoftonline.com
       - manifest.googlevideo.com
@@ -262,7 +235,6 @@ spec:
       - onedrive.live.com
       - outlook.live.com
       - outlook.office365.com
-      - pinterest.com
       - placehold.it
       - placeholdit.imgix.net
       - players.brightcove.net
@@ -278,7 +250,6 @@ spec:
       - res.cloudinary.com
       - s.gateway.messenger.live.com
       - s.marketwatch.com
-      - s.shopify.com
       - s.youtube.com
       - s.ytimg.com
       - s1.wp.com
@@ -289,7 +260,6 @@ spec:
       - secure.brightcove.com
       - secure.surveymonkey.com
       - services.sonarr.tv
-      - sharepoint.com
       - skyhook.sonarr.tv
       - spclient.wg.spotify.com
       - ssl.p.jwpcdn.com
@@ -309,15 +279,11 @@ spec:
       - tvdb2.plex.tv
       - tvthemes.plexapp.com
       - twimg.com
-      - twitter.com
       - ui.skype.com
-      - v.shopify.com
       - video-stats.l.google.com
       - videos.vidible.tv
       - widget-cdn.rpxnow.com
-      - wikipedia.org
       - win10.ipv6.microsoft.com
-      - wordpress.com
       - wp.com
       - ws.audioscrobbler.com
       - www.dataplicity.com
@@ -333,3 +299,16 @@ spec:
       - youtu.be
       - youtube-nocookie.com
       - yt3.ggpht.com
+      - zee.cws.conviva.com
+      - pings.conviva.com
+      - cws.conviva.com
+      - livepassdl.conviva.com
+      - gfwsl.geforce.com
+      - appspot-preview.l.google.com
+      - vidtech.cbsinteractive.com
+      - continuum.dds.microsoft.com
+      - connectivitycheck.gstatic.com
+      - connectivitycheck.android.com
+      - www.msftconnecttest.com
+    # ftl:
+    #   BLOCK_ICLOUD_PR: true
