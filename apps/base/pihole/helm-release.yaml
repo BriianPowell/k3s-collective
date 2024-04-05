@@ -53,8 +53,7 @@ spec:
         - 1.1.1.1
     dnsmasq:
       upstreamServers:
-        - server=10.0.0.1
-        - server=10.0.2.1
+        - server=/boog.dmp/10.0.2.1
     persistentVolumeClaim:
       enabled: true
     affinity:
