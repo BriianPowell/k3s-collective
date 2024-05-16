@@ -55,6 +55,7 @@ spec:
     persistence:
       serverfiles:
         enabled: true
+        type: pvc
         existingClaim: v-rising-pvc
         mountPath: /serverdata/serverfiles
       steamcmd:
