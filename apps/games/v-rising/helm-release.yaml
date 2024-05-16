@@ -16,7 +16,7 @@ spec:
   ref:
     semver: '>=6.0.4'
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: v-rising-server
