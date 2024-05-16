@@ -26,12 +26,10 @@ metadata:
     tier: backend
 spec:
   interval: 1h0m0s
-  chart:
-    spec:
-      chartRef:
-        kind: OCIRepository
-        name: v-rising
-        namespace: v-rising
+  chartRef:
+    kind: OCIRepository
+    name: v-rising
+    namespace: v-rising
   values:
     workload:
       main:
