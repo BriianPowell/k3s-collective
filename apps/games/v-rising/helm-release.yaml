@@ -16,45 +16,45 @@ spec:
   ref:
     semver: '>=6.0.4'
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
-kind: HelmRelease
-metadata:
-  name: v-rising-server
-  namespace: v-rising
-  labels:
-    game: v-rising
-    tier: backend
-spec:
-  interval: 1h0m0s
-  chartRef:
-    kind: OCIRepository
-    name: v-rising
-    namespace: v-rising
-  values:
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              env:
-                USERNAME: ''
-                PASSWRD: ''
-                ENABLE_BEPINEX: ''
-                GAME_ID: '1829350'
-                VALIDATE: true
-                GAME_PARAMS: ''
-                SERVER_NAME: The V Rising Neighborhood
-                WORLD_NAME: world1
-              probes:
-                liveness:
-                  enabled: true
-                readiness:
-                  enabled: false
-                startup:
-                  enabled: false
-    persistence:
-      existingClaim: v-rising-pvc
----
+# apiVersion: helm.toolkit.fluxcd.io/v2beta2
+# kind: HelmRelease
+# metadata:
+#   name: v-rising-server
+#   namespace: v-rising
+#   labels:
+#     game: v-rising
+#     tier: backend
+# spec:
+#   interval: 1h0m0s
+#   chartRef:
+#     kind: OCIRepository
+#     name: v-rising
+#     namespace: v-rising
+#   values:
+#     workload:
+#       main:
+#         podSpec:
+#           containers:
+#             main:
+#               env:
+#                 USERNAME: ''
+#                 PASSWRD: ''
+#                 ENABLE_BEPINEX: ''
+#                 GAME_ID: '1829350'
+#                 VALIDATE: true
+#                 GAME_PARAMS: ''
+#                 SERVER_NAME: The V Rising Neighborhood
+#                 WORLD_NAME: world1
+#               probes:
+#                 liveness:
+#                   enabled: true
+#                 readiness:
+#                   enabled: false
+#                 startup:
+#                   enabled: false
+#     persistence:
+#       existingClaim: v-rising-pvc
+# ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
