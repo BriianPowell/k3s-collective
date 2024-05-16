@@ -53,7 +53,15 @@ spec:
                 startup:
                   enabled: false
     persistence:
-      existingClaim: v-rising-pvc
+      serverfiles:
+        existingClaim: v-rising-pvc
+        targetSelector:
+          main:
+            main:
+              mountPath: /serverdata/serverfiles
+      steamcmd:
+        enabled: true
+        mountPath: /serverdata/steamcmd
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
