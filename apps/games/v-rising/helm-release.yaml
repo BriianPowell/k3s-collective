@@ -13,6 +13,8 @@ metadata:
 spec:
   interval: 24h
   url: oci://tccr.io/truecharts
+  ref:
+    semver: '>=6.0.4'
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -30,7 +32,6 @@ spec:
         kind: OCIRepository
         name: v-rising
         namespace: v-rising
-      version: '>=6.0.4 <7.0.0'
   values:
     workload:
       main:
