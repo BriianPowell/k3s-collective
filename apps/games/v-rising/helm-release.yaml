@@ -47,7 +47,7 @@ spec:
                 WORLD_NAME: world1
               probes:
                 liveness:
-                  enabled: true
+                  enabled: false
                 readiness:
                   enabled: false
                 startup:
