@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: v-rising
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: v-rising
+  namespace: v-rising
+  labels:
+    game: v-rising
+spec:
+  interval: 24h
+  url: oci://tccr.io/truecharts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: v-rising-server
+  namespace: v-rising
+  labels:
+    game: v-rising
+    tier: backend
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: v-rising
+      sourceRef:
+        kind: HelmRepository
+        name: v-rising
+        namespace: v-rising
+      version: '>=6.0.4 <7.0.0'
+  values:
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                USERNAME: ''
+                PASSWRD: ''
+                ENABLE_BEPINEX: ''
+                GAME_ID: '1829350'
+                VALIDATE: true
+                GAME_PARAMS: ''
+                SERVER_NAME: The V Rising Neighborhood
+                WORLD_NAME: world1
+              probes:
+                liveness:
+                  enabled: true
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
+    persistence:
+      existingClaim: v-rising-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: v-rising-pvc
+  namespace: v-rising
+  labels:
+    game: v-rising
+    type: local
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25G
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: v-rising-pv
+  labels:
+    game: v-rising
+    type: local
+spec:
+  capacity:
+    storage: 25G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: v-rising-pvc
+    namespace: v-rising
+  local:
+    path: /mnt/moriyya/v-rising
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
