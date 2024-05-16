@@ -14,7 +14,7 @@ spec:
   interval: 24h
   url: oci://tccr.io/truecharts
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: v-rising-server
@@ -26,8 +26,7 @@ spec:
   interval: 1h0m0s
   chart:
     spec:
-      chart: v-rising
-      sourceRef:
+      chartRef:
         kind: OCIRepository
         name: v-rising
         namespace: v-rising
