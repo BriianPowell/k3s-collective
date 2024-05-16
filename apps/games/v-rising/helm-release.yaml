@@ -12,11 +12,11 @@ metadata:
     game: v-rising
 spec:
   interval: 24h
-  url: oci://tccr.io/truecharts
+  url: oci://tccr.io/truecharts/v-rising
   ref:
     semver: '>=6.0.4'
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: v-rising-server
