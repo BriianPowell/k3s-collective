@@ -30,7 +30,7 @@ spec:
     spec:
       chart: v-rising
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: v-rising
         namespace: v-rising
       version: '>=6.0.4'
