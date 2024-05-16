@@ -54,11 +54,9 @@ spec:
                   enabled: false
     persistence:
       serverfiles:
+        enabled: true
         existingClaim: v-rising-pvc
-        targetSelector:
-          main:
-            main:
-              mountPath: /serverdata/serverfiles
+        mountPath: /serverdata/serverfiles
       steamcmd:
         enabled: true
         mountPath: /serverdata/steamcmd
