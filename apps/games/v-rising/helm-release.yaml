@@ -48,9 +48,9 @@ spec:
         ports:
           query:
             enabled: true
-            port: 9876
+            port: 9877
             protocol: udp
-            targetPort: 9876
+            targetPort: 9877
     workload:
       main:
         podSpec:
