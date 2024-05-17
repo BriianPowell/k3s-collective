@@ -36,7 +36,7 @@ spec:
         type: LoadBalancer
         loadBalancerIP: 10.0.2.10
         ports:
-          main:
+          main-port:
             enabled: true
             port: 9876
             protocol: udp
@@ -46,7 +46,7 @@ spec:
         type: LoadBalancer
         loadBalancerIP: 10.0.2.10
         ports:
-          query:
+          query-port:
             enabled: true
             port: 9877
             protocol: udp
