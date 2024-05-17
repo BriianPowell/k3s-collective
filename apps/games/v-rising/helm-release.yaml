@@ -36,7 +36,7 @@ spec:
         type: LoadBalancer
         loadBalancerIP: 10.0.2.10
         ports:
-          main-port:
+          main:
             enabled: true
             port: 9876
             protocol: udp
@@ -44,9 +44,8 @@ spec:
       query:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: 10.0.2.10
         ports:
-          query-port:
+          query:
             enabled: true
             port: 9877
             protocol: udp
@@ -65,6 +64,10 @@ spec:
                 GAME_PARAMS: ''
                 SERVER_NAME: The V Rising Neighborhood
                 WORLD_NAME: world1
+                VR_HIDEIPADDRESS: true
+                VR_MAX_USERS: 20
+                VR_MAX_ADMINSP: 4
+
               probes:
                 liveness:
                   enabled: false
