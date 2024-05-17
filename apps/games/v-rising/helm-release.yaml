@@ -91,7 +91,7 @@ spec:
                 VR_DIFFICULTY_PRESET: Difficulty_Normal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
                 VR_SAVE_COUNT: 20 # Number of autosaves to keep.
                 VR_SAVE_INTERVAL: 120 # Interval in seconds between each auto save.
-                VR_LAN_MODE: true # Enable LAN mode.
+                VR_LAN_MODE: false # Enable LAN mode.
                 VR_RESET_DAYS_INTERVAL: 0 # Days between scheduled resets/wipes. When the server starts, and is about to load a save file, it checks if it is time to reset and start a new save file. The previous save file is backed up. Defaults to 0, which means the feature is disabled.
                 VR_RCON_ENABLED: false # Enable or disable Rcon functionality.
                 VR_RCON_PORT: 25575 # Rcon TCP port.
