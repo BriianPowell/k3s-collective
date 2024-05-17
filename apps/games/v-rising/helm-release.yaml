@@ -31,6 +31,26 @@ spec:
     name: v-rising
     namespace: v-rising
   values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 10.0.2.10
+        ports:
+          main:
+            enabled: true
+            port: 9876
+            protocol: udp
+            targetPort: 9876
+      query:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: 10.0.2.10
+        ports:
+          query:
+            enabled: true
+            port: 9876
+            protocol: udp
+            targetPort: 9876
     workload:
       main:
         podSpec:
