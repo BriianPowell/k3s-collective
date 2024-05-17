@@ -67,11 +67,16 @@ spec:
                 ENABLE_BEPINEX: ''
                 GAME_ID: '1829350'
                 VALIDATE: true
-                GAME_PARAMS: ''
+                GAME_PARAMS: '-serverName The V Rising Neighborhood '
+                SERVER_NAME: The V Rising Neighborhood
+                WORLD_NAME: world5
                 VR_NAME: The V Rising Neighborhood # Name of the server. The name that shows up in server list.
                 VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
                 VR_SAVE_NAME: world5 # Name of save file/directory. Must be a valid directory name.
                 VR_PASSWORD: #  Set a password or leave empty.
+                  secretKeyRef:
+                    name: v-rising-secrets
+                    key: password
                 VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
                 VR_HIDEIPADDRESS: true # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
                 VR_MAX_USERS: 20 # Max number of concurrent players on server. The maximum number technically supported is 128.

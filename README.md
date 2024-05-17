@@ -104,6 +104,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 - [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
 - [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
+- [x] [V-Rising](https://truecharts.org/charts/stable/v-rising/)
 
 ### Media
 
@@ -111,7 +112,7 @@ kubectl apply -f basic-auth-sealed.yaml
 
 ### HomePage
 
-- [x] [HomePage](https://github.com/benphelps/homepage)
+- [x] **REMOVED**[HomePage](https://github.com/benphelps/homepage)
 
 ### TBD
 
