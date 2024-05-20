@@ -88,7 +88,7 @@ spec:
                 VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
                 VR_LIST_ON_STEAM: true # Register on Steam list server or not.
                 VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
-                VR_DIFFICULTY_PRESET: Difficulty_Normal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
+                VR_DIFFICULTY_PRESET: Difficulty_Brutal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
                 VR_SAVE_COUNT: 20 # Number of autosaves to keep.
                 VR_SAVE_INTERVAL: 120 # Interval in seconds between each auto save.
                 VR_LAN_MODE: false # Enable LAN mode.
