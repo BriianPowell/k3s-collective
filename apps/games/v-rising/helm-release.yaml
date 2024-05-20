@@ -79,7 +79,7 @@ spec:
                     key: password
                     expandObjectName: false
                 VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
-                VR_HIDEIPADDRESS: true # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
+                VR_HIDEIPADDRESS: false # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
                 VR_MAX_USERS: 20 # Max number of concurrent players on server. The maximum number technically supported is 128.
                 VR_MAX_ADMINSP: 4 # Max number of admins to allow connect even when server is full.
                 VR_FPS: 30 # Target FPS for server.
