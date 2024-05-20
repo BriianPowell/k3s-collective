@@ -85,7 +85,7 @@ spec:
                 VR_FPS: 30 # Target FPS for server.
                 VR_LOWER_FPS_WHEN_EMPTY: true # Run the server at a lower framerate target when no players are logged in.
                 VR_LOWER_FPS_WHEN_EMPTY_VALUE: 5 # Set the framerate target for when LowerFPSWhenEmpty is active.
-                VR_LIST_ON_EOS: false # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
+                VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
                 VR_LIST_ON_STEAM: true # Register on Steam list server or not.
                 VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
                 VR_DIFFICULTY_PRESET: Difficulty_Brutal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
