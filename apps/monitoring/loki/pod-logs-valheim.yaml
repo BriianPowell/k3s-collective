@@ -2,7 +2,7 @@
 apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
-  name: v-rising
+  name: valheim
   namespace: monitoring
   labels:
     app.kubernetes.io/instance: loki
@@ -10,8 +10,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: traefik-kube-system
-      app.kubernetes.io/name: traefik
+      app.kubernetes.io/instance: valheim-server
+      app.kubernetes.io/name: valheim
   namespaceSelector:
     matchNames:
       - valheim

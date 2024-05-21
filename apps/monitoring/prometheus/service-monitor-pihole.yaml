@@ -1,0 +1,54 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pihole-web
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      monitor: pihole-web
+  namespaceSelector:
+    matchNames:
+      - kube-system
+  endpoints:
+    - interval: 30s
+      targetPort: 443
+      scheme: https
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pihole-dns
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      monitor: pihole-dns
+  namespaceSelector:
+    matchNames:
+      - kube-system
+  endpoints:
+    - interval: 30s
+      targetPort: 53
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: pihole-dhcp
+#   namespace: monitoring
+#   labels:
+#     monitoring: prometheus-operator
+# spec:
+#   selector:
+#     matchLabels:
+#       monitor: pihole-dhcp
+#   namespaceSelector:
+#     matchNames:
+#       - kube-system
+#   endpoints:
+#     - interval: 30s
+#       targetPort: 67
