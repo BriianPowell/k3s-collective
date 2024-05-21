@@ -116,7 +116,7 @@ spec:
             options:
               path: /var/lib/grafana/dashboards/infrastructure-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
-      application-logs:
+      app-logs:
         home-assistant:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/home-assistant.json'
         keycloak:
