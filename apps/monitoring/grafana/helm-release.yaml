@@ -44,17 +44,17 @@ spec:
       relabelings: []
       targetLabels: []
     resources:
-        cpu: 250m
-        memory: 500Mi
+      cpu: 250m
+      memory: 500Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-              - abaddon
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - abaddon
     persistence:
       type: pvc
       enabled: true
@@ -91,32 +91,54 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: logs
-          orgId: 1
-          folder: Logs
-          type: file
-          disableDeletion: false
-          editable: true
-          options:
-            path: /var/lib/grafana/dashboards/logs
+          - name: app-logs
+            orgId: 1
+            folder: App Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/app-logs
+          - name: game-server-logs
+            orgId: 1
+            folder: Game Server Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/game-server-logs
+          - name: infrastructure-logs
+            orgId: 1
+            folder: Infrastructure Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/infrastructure-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
-      logs:
-        cert-manager:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/cert-manager.json"
-        crowdsec:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/crowdsec.json"
+      application-logs:
         home-assistant:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/home-assistant.json"
-        homepage:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/homepage.json"
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/home-assistant.json'
         keycloak:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/keycloak.json"
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/keycloak.json'
         nextcloud:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/nextcloud.json"
-        traefik:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/traefik.json"
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/nextcloud.json'
         wiki-js:
-          url: "https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/wiki-js.json"
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/wiki-js.json'
+      infrastructure-logs:
+        cert-manager:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/cert-manager.json'
+        crowdsec:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/crowdsec.json'
+        traefik:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/traefik.json'
+      game-server-logs:
+        minecraft:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/minecraft.json'
+        v-rising:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/v-rising.json'
+        valheim:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/valheim.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/
