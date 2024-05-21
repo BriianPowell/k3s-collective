@@ -38,7 +38,7 @@ spec:
         namespace: minecraft
       version: '>=4.7.0 <5.0.0'
   values:
-    replicaCount: 0 # Set replica count to 0 when not in use
+    replicaCount: 1 # Set replica count to 0 when not in use
     persistence:
       dataDir:
         enabled: true
@@ -71,6 +71,8 @@ spec:
     extraEnv:
       ENABLE_ROLLING_LOGS: true
       FORCE_WORLD_COPY: false
+    serviceLabels:
+      monitor: minecraft
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

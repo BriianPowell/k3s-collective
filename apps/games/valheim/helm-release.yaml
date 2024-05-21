@@ -1,3 +1,8 @@
+#
+# Reference:
+# https://artifacthub.io/packages/helm/geek-cookbook/valheim
+#
+
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -47,7 +52,11 @@ spec:
         cpu: 2000m
         memory: 7Gi
     controller:
-      replicas: 0 # Set replica count to 0 when not in use
+      replicas: 1 # Set replica count to 0 when not in use
+    service:
+      main:
+        labels:
+          monitor: valheim
     env:
       SERVER_NAME: 'The Neighborhood'
       WORLD_NAME: 'The Neighborhood of Make-Believe'

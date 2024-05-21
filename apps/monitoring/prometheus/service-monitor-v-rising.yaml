@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: v-rising
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      monitor: v-rising
+  namespaceSelector:
+    matchNames:
+      - v-rising
+  endpoints:
+    - interval: 30s
+      targetPort: 9876

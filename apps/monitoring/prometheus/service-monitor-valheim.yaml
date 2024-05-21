@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: valheim
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      monitor: valheim
+  namespaceSelector:
+    matchNames:
+      - valheim
+  endpoints:
+    - interval: 30s
+      targetPort: 2456

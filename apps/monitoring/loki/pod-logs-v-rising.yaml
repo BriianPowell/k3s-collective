@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: v-rising
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: v-rising-server
+      app.kubernetes.io/name: v-rising
+  namespaceSelector:
+    matchNames:
+      - v-rising
