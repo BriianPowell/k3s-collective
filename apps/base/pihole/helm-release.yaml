@@ -35,20 +35,14 @@ spec:
     serviceWeb:
       enabled: true
       type: ClusterIP
-      extraLabels:
-        monitor: pihole-web
     serviceDns:
       enabled: true
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
-      extraLabels:
-        monitor: pihole-dns
     serviceDhcp:
       enabled: false
       loadBalancerIP: 10.0.2.11
       type: LoadBalancer
-      extraLabels:
-        monitor: pihole-dhcp
     admin:
       enabled: false
     podDnsConfig:
@@ -336,3 +330,6 @@ spec:
       - www.msftconnecttest.com
     # ftl:
     #   BLOCK_ICLOUD_PR: true
+    monitoring:
+      sidecar:
+        enabled: true
