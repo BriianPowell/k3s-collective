@@ -69,12 +69,12 @@ spec:
                 ENABLE_BEPINEX: ''
                 GAME_ID: '1829350'
                 VALIDATE: true
-                GAME_PARAMS: '-serverName The V Rising Neighborhood '
-                SERVER_NAME: The V Rising Neighborhood
+                GAME_PARAMS: '-serverName The Neighborhood '
+                SERVER_NAME: The Neighborhood
+                VR_NAME: The Neighborhood # Name of the server. The name that shows up in server list.
                 WORLD_NAME: world5
-                VR_NAME: The V Rising Neighborhood # Name of the server. The name that shows up in server list.
-                VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
                 VR_SAVE_NAME: world5 # Name of save file/directory. Must be a valid directory name.
+                VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
                 VR_PASSWORD: #  Set a password or leave empty.
                   secretKeyRef:
                     name: v-rising-secrets

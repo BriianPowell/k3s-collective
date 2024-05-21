@@ -61,7 +61,7 @@ spec:
       forcegameMode: true
       viewDistance: 25
       ops: anguiish
-      motd: "Welcome to BooG's Place!"
+      motd: 'Welcome to The Neighborhood!'
       serviceType: NodePort
       nodePort: 30100
       overrideServerProperties: true
