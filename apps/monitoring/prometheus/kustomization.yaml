@@ -10,9 +10,9 @@ resources:
   - service-monitor-crowdsec.yaml
   - service-monitor-hass.yaml
   - service-monitor-keycloak.yaml
-  - service-monitor-minecraft.yaml
+  # - service-monitor-minecraft.yaml
   - service-monitor-nextcloud.yaml
   - service-monitor-pihole.yaml
   - service-monitor-traefik.yaml
-  - service-monitor-v-rising.yaml
-  - service-monitor-valheim.yaml
+  # - service-monitor-v-rising.yaml
+  # - service-monitor-valheim.yaml
