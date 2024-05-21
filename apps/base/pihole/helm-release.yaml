@@ -35,7 +35,7 @@ spec:
     serviceWeb:
       enabled: true
       type: ClusterIP
-      labels:
+      extraLabels:
         monitor: pihole
     serviceDns:
       enabled: true
