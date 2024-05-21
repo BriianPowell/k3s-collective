@@ -35,6 +35,8 @@ spec:
     serviceWeb:
       enabled: true
       type: ClusterIP
+      labels:
+        monitor: pihole
     serviceDns:
       enabled: true
       loadBalancerIP: 10.0.2.11
