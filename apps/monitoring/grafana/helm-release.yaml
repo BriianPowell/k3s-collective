@@ -134,11 +134,13 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/valheim.json'
       infra-logs:
         cert-manager:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/cert-manager.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/cert-manager.json'
         crowdsec:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/crowdsec.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/crowdsec.json'
+        reflector:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reflector.json'
         traefik:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/traefik.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/traefik.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/
