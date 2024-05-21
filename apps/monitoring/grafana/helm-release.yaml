@@ -99,22 +99,22 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/app-logs
-          - name: game-server-logs
+          - name: game-logs
             orgId: 1
-            folder: Game Server Logs
+            folder: Game Logs
             type: file
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/game-server-logs
-          - name: infrastructure-logs
+              path: /var/lib/grafana/dashboards/game-logs
+          - name: infra-logs
             orgId: 1
-            folder: Infrastructure Logs
+            folder: Infra Logs
             type: file
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/infrastructure-logs
+              path: /var/lib/grafana/dashboards/infra-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       app-logs:
         home-assistant:
@@ -125,20 +125,20 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/nextcloud.json'
         wiki-js:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/wiki-js.json'
-      infrastructure-logs:
-        cert-manager:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/cert-manager.json'
-        crowdsec:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/crowdsec.json'
-        traefik:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/traefik.json'
-      game-server-logs:
+      game-logs:
         minecraft:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/minecraft.json'
         v-rising:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/v-rising.json'
         valheim:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/valheim.json'
+      infra-logs:
+        cert-manager:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/cert-manager.json'
+        crowdsec:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/crowdsec.json'
+        traefik:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infrastructure/traefik.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/
