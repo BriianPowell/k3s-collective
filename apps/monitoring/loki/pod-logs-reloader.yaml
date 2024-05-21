@@ -1,0 +1,15 @@
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: reloader
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+spec:
+  selector:
+    matchLabels:
+      app: reloader-reloader
+  namespaceSelector:
+    matchNames:
+      - reloader

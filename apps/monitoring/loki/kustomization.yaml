@@ -13,6 +13,8 @@ resources:
   - pod-logs-minecraft.yaml
   - pod-logs-nextcloud.yaml
   - pod-logs-pihole.yaml
+  - pod-logs-reflector.yaml
+  - pod-logs-reloader.yaml
   - pod-logs-traefik.yaml
   - pod-logs-v-rising.yaml
   - pod-logs-valheim.yaml
