@@ -14,10 +14,10 @@ spec:
       - kube-system
   endpoints:
     - interval: 30s
-      targetPort: http
+      port: http
       scheme: http
     - interval: 30s
-      targetPort: https
+      port: https
       scheme: https
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -36,9 +36,9 @@ spec:
       - kube-system
   endpoints:
     - interval: 30s
-      targetPort: dns
+      port: dns
     - interval: 30s
-      targetPort: dns-udp
+      port: dns-udp
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: ServiceMonitor
