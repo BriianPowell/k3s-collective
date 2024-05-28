@@ -54,6 +54,8 @@ spec:
       readOnlyRootFileSystem: false
       deployment:
         replicas: 1
+        labels:
+          logs: reloader
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:

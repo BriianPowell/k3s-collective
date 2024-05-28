@@ -9,7 +9,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: reloader-reloader
+      logs: reloader
   namespaceSelector:
     matchNames:
       - reloader
