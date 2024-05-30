@@ -70,10 +70,15 @@ spec:
             - name: nextcloud-pg-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
-                  lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "pg_ctl -D /var/lib/postgres/data -w -t 60 -m fast stop"]
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  [
+                    '/bin/sh',
+                    '-c',
+                    'pg_ctl -D /var/lib/postgres/data -w -t 60 -m fast stop',
+                  ]
       terminationGracePeriodSeconds: 60
       volumes:
         - name: nextcloud-pg-data
