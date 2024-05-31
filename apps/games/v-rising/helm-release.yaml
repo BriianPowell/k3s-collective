@@ -84,9 +84,9 @@ spec:
                 VR_HIDEIPADDRESS: false # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
                 VR_MAX_USERS: 40 # Max number of concurrent players on server. The maximum number technically supported is 128.
                 VR_MAX_ADMINSP: 4 # Max number of admins to allow connect even when server is full.
-                VR_FPS: 60 # Target FPS for server.
+                VR_FPS: 30 # Target FPS for server.
                 VR_LOWER_FPS_WHEN_EMPTY: true # Run the server at a lower framerate target when no players are logged in.
-                VR_LOWER_FPS_WHEN_EMPTY_VALUE: 10 # Set the framerate target for when LowerFPSWhenEmpty is active.
+                VR_LOWER_FPS_WHEN_EMPTY_VALUE: 5 # Set the framerate target for when LowerFPSWhenEmpty is active.
                 VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
                 VR_LIST_ON_STEAM: true # Register on Steam list server or not.
                 VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
