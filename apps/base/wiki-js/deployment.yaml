@@ -43,7 +43,7 @@ spec:
       containers:
         - name: wiki-js
           image: requarks/wiki:2
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: DB_TYPE
               value: postgres

@@ -88,7 +88,7 @@ spec:
         #       memory: 250Mi
         - name: nextcloud
           image: nextcloud:stable-apache
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: TIMEZONE
               value: America/Los Angeles
