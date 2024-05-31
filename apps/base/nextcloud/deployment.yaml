@@ -87,7 +87,7 @@ spec:
         #       cpu: 150m
         #       memory: 250Mi
         - name: nextcloud
-          image: nextcloud:stable-apache
+          image: nextcloud:27-apache
           imagePullPolicy: Always
           env:
             - name: TIMEZONE
