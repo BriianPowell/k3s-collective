@@ -69,7 +69,7 @@ spec:
                 ENABLE_BEPINEX: ''
                 GAME_ID: '1829350'
                 VALIDATE: true
-                GAME_PARAMS: '-diag-job-temp-memory-leak-validation -serverName The Neighborhood '
+                GAME_PARAMS: '-serverName The Neighborhood '
                 SERVER_NAME: The Neighborhood
                 VR_NAME: The Neighborhood # Name of the server. The name that shows up in server list.
                 WORLD_NAME: world5
@@ -82,16 +82,16 @@ spec:
                     expandObjectName: false
                 VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
                 VR_HIDEIPADDRESS: false # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
-                VR_MAX_USERS: 20 # Max number of concurrent players on server. The maximum number technically supported is 128.
+                VR_MAX_USERS: 40 # Max number of concurrent players on server. The maximum number technically supported is 128.
                 VR_MAX_ADMINSP: 4 # Max number of admins to allow connect even when server is full.
-                VR_FPS: 30 # Target FPS for server.
+                VR_FPS: 60 # Target FPS for server.
                 VR_LOWER_FPS_WHEN_EMPTY: true # Run the server at a lower framerate target when no players are logged in.
-                VR_LOWER_FPS_WHEN_EMPTY_VALUE: 5 # Set the framerate target for when LowerFPSWhenEmpty is active.
+                VR_LOWER_FPS_WHEN_EMPTY_VALUE: 10 # Set the framerate target for when LowerFPSWhenEmpty is active.
                 VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
                 VR_LIST_ON_STEAM: true # Register on Steam list server or not.
                 VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
                 VR_DIFFICULTY_PRESET: Difficulty_Brutal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
-                VR_SAVE_COUNT: 20 # Number of autosaves to keep.
+                VR_SAVE_COUNT: 10 # Number of autosaves to keep.
                 VR_SAVE_INTERVAL: 120 # Interval in seconds between each auto save.
                 VR_LAN_MODE: false # Enable LAN mode.
                 VR_RESET_DAYS_INTERVAL: 0 # Days between scheduled resets/wipes. When the server starts, and is about to load a save file, it checks if it is time to reset and start a new save file. The previous save file is backed up. Defaults to 0, which means the feature is disabled.
