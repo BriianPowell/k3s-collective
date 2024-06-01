@@ -33,6 +33,8 @@ spec:
       containers:
         - name: homeassistant-postgressql-db
           image: postgres:14.5
+          # command: ['/bin/bash', '-c', '--']
+          # args: ['while true; do sleep 600; done;']
           args:
             - -c
             - max_wal_size=4096
@@ -70,6 +72,13 @@ spec:
             - name: homeassistant-data
               mountPath: /var/lib/postgresql/data
               subPath: pgdata
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  [
+                    '/usr/local/bin/pg_ctl -D /var/lib/postgresql/data/pgdata -w -t 60 -m fast stop',
+                  ]
       terminationGracePeriodSeconds: 60
       volumes:
         - name: homeassistant-data

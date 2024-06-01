@@ -75,9 +75,7 @@ spec:
               exec:
                 command:
                   [
-                    '/bin/sh',
-                    '-c',
-                    'pg_ctl -D /var/lib/postgresql/data/pgdata -w -t 60 -m fast stop',
+                    '/usr/local/bin/pg_ctl -D /var/lib/postgresql/data/pgdata -w -t 60 -m fast stop',
                   ]
       terminationGracePeriodSeconds: 60
       volumes:
