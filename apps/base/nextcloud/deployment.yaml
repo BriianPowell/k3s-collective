@@ -58,34 +58,34 @@ spec:
         component: app
     spec:
       containers:
-        # - name: nextcloud-exporter
-        #   image: ghcr.io/xperimental/nextcloud-exporter:0.6.1
-        #   imagePullPolicy: IfNotPresent
-        #   env:
-        #     - name: NEXTCLOUD_SERVER
-        #       value: https://nextcloud.powell.place
-        #     - name: NEXTCLOUD_LISTEN_ADDRESS
-        #       value: :9205
-        #     - name: NEXTCLOUD_TIMEOUT
-        #       value: 15s
-        #     - name: NEXTCLOUD_TLS_SKIP_VERIFY
-        #       value: 'false'
-        #     - name: NEXTCLOUD_AUTH_TOKEN
-        #       valueFrom:
-        #         secretKeyRef:
-        #           name: nextcloud-secrets
-        #           key: TOKEN
-        #   ports:
-        #     - name: metrics
-        #       containerPort: 9205
-        #       protocol: TCP
-        #   resources:
-        #     requests:
-        #       cpu: 10m
-        #       memory: 150Mi
-        #     limits:
-        #       cpu: 150m
-        #       memory: 250Mi
+        - name: nextcloud-exporter
+          image: ghcr.io/xperimental/nextcloud-exporter:0.6.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NEXTCLOUD_SERVER
+              value: https://nextcloud.powell.place
+            - name: NEXTCLOUD_LISTEN_ADDRESS
+              value: :9205
+            - name: NEXTCLOUD_TIMEOUT
+              value: 15s
+            - name: NEXTCLOUD_TLS_SKIP_VERIFY
+              value: 'false'
+            - name: NEXTCLOUD_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secrets
+                  key: TOKEN
+          ports:
+            - name: metrics
+              containerPort: 9205
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 150Mi
+            limits:
+              cpu: 150m
+              memory: 250Mi
         - name: nextcloud
           image: nextcloud:stable-apache
           imagePullPolicy: Always
