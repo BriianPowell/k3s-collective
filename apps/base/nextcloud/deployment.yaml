@@ -2,8 +2,8 @@
 # Reference:
 # https://github.com/docker-library/docs/blob/master/nextcloud/README.md
 # https://docs.nextcloud.com/server/latest/admin_manual/contents.html
-# https://blog.w3asel.com/2019/10/authenticating-nextcloud-with-keycloak-using-openid-connect/
 # https://github.com/pulsejet/nextcloud-oidc-login
+#
 
 apiVersion: v1
 kind: Service
