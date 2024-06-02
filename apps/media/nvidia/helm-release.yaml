@@ -23,5 +23,6 @@ spec:
         namespace: kube-system
       version: '>=0.14.1 <0.14.2'
   values:
+    runtimeClassName: nvidia
     nodeSelector:
       kubernetes.io/hostname: sheol
