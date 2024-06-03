@@ -5,7 +5,7 @@
 #   namespace: kube-system
 # spec:
 #   restartPolicy: OnFailure
-#   runtimeClassName: nvidia-experimental
+#   runtimeClassName: nvidia
 #   containers:
 #     - name: cuda-vector-add
 #       image: nvidia/cuda:12.0.0-base-ubuntu22.04
@@ -17,23 +17,23 @@
 #           value: all
 #         - name: NVIDIA_DRIVER_CAPABILITIES
 #           value: all
-# # ---
-# # apiVersion: batch/v1
-# # kind: Job
-# # metadata:
-# #   name: test-gpu-job
-# #   namespace: kube-system
-# # spec:
-# #   template:
-# #     spec:
-# #       runtimeClassName: nvidia
-# #       containers:
-# #         - name: nvidia-test
-# #           image: nvidia/cuda:12.0.0-base-ubuntu22.04
-# #           command: ['nvidia-smi']
-# #           resources:
-# #             limits:
-# #               nvidia.com/gpu: 1
-# #       nodeSelector:
-# #         kubernetes.io/hostname: sheol
-# #       restartPolicy: Never
+# ---
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: test-gpu-job
+#   namespace: kube-system
+# spec:
+#   template:
+#     spec:
+#       runtimeClassName: nvidia
+#       containers:
+#         - name: nvidia-test
+#           image: nvidia/cuda:12.0.0-base-ubuntu22.04
+#           command: ['nvidia-smi']
+#           resources:
+#             limits:
+#               nvidia.com/gpu: 1
+#       nodeSelector:
+#         kubernetes.io/hostname: sheol
+#       restartPolicy: Never

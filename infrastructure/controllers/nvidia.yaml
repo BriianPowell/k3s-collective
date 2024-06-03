@@ -51,7 +51,7 @@ spec:
     mofedEnabled: false
     compatWithCPUManager: false
     allowDefaultNamespace: false
-    runtimeClassName: nvidia-experimental
+    runtimeClassName: nvidia
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
