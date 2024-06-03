@@ -1,10 +1,10 @@
 # apiVersion: v1
 # kind: Pod
 # metadata:
-#   name: nbody-gpu-benchmark
+#   name: vectoradd-gpu-benchmark
 #   namespace: kube-system
 # spec:
-#   restartPolicy: OnFailure
+#   restartPolicy: Never
 #   runtimeClassName: nvidia
 #   affinity:
 #     nodeAffinity:
@@ -14,16 +14,22 @@
 #               - key: kubernetes.io/hostname
 #                 operator: In
 #                 values:
-#                   - abaddon
+#                   - sheol
 #   containers:
 #     - name: cuda-container
-#       image: nvcr.io/nvidia/k8s/cuda-sample:nbody
-#       args: ['nbody', '-gpu', '-benchmark']
-#       resources:
-#         limits:
-#           nvidia.com/gpu: 1
+#       image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+#       imagePullPolicy: Always
 #       env:
 #         - name: NVIDIA_VISIBLE_DEVICES
 #           value: all
 #         - name: NVIDIA_DRIVER_CAPABILITIES
 #           value: all
+#       resources:
+#         limits:
+#           cpu: 1000m
+#           memory: 1Gi
+#           # nvidia.com/gpu: 2
+#   tolerations:
+#     - key: nvidia.com/gpu
+#       operator: Exists
+#       effect: NoSchedule
