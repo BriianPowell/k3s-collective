@@ -2,6 +2,4 @@
 # handler: nvidia
 # kind: RuntimeClass
 # metadata:
-#   labels:
-#     app.kubernetes.io/component: gpu-operator
 #   name: nvidia
