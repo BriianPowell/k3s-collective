@@ -21,8 +21,15 @@ spec:
         kind: HelmRepository
         name: nvidia
         namespace: kube-system
-      version: '>=0.14.1 <0.14.2'
+      version: '>=0.15.0 <0.16.0'
   values:
     runtimeClassName: nvidia
-    nodeSelector:
-      kubernetes.io/hostname: sheol
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sheol

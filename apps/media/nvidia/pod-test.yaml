@@ -20,3 +20,7 @@
 #           value: all
 #         - name: NVIDIA_DRIVER_CAPABILITIES
 #           value: all
+#   tolerations:
+#     - key: nvidia.com/gpu
+#       operator: Exists
+#       effect: NoSchedule
