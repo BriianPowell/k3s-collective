@@ -23,6 +23,15 @@ spec:
         namespace: kube-system
       version: '>=0.15.0 <0.16.0'
   values:
+    migStrategy: none
+    failOnInitError: true
+    deviceListStrategy: envvar
+    deviceIDStrategy: uuid
+    nvidiaDriverRoot: '/'
+    gdsEnabled: false
+    mofedEnabled: false
+    compatWithCPUManager: false
+    allowDefaultNamespace: true
     runtimeClassName: nvidia
     affinity:
       nodeAffinity:
