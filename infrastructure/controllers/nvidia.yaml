@@ -62,4 +62,4 @@ spec:
                   values:
                     - sheol
     gfd:
-      enabled: false
+      enabled: true
