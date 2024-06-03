@@ -37,7 +37,7 @@ spec:
           flags:
             migStrategy: 'none'
             failOnInitError: true
-            nvidiaDriverRoot: '/run/current-system/sw/bin/'
+            nvidiaDriverRoot: '/run/current-system/sw/bin'
             plugin:
               passDeviceSpecs: false
               deviceListStrategy: envvar
@@ -46,7 +46,7 @@ spec:
     failOnInitError: true
     deviceListStrategy: envvar
     deviceIDStrategy: uuid
-    nvidiaDriverRoot: '/run/current-system/sw/bin/'
+    nvidiaDriverRoot: '/run/current-system/sw/bin'
     gdsEnabled: false
     mofedEnabled: false
     compatWithCPUManager: false
