@@ -52,14 +52,16 @@ spec:
     compatWithCPUManager: false
     allowDefaultNamespace: false
     runtimeClassName: nvidia
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - sheol
+    nodeSelector:
+      kubernetes.io/hostname: sheol
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #         - matchExpressions:
+    #             - key: kubernetes.io/hostname
+    #               operator: In
+    #               values:
+    #                 - sheol
     gfd:
       enabled: true

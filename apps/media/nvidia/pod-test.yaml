@@ -6,6 +6,15 @@
 # spec:
 #   restartPolicy: OnFailure
 #   runtimeClassName: nvidia
+#   affinity:
+#     nodeAffinity:
+#       requiredDuringSchedulingIgnoredDuringExecution:
+#         nodeSelectorTerms:
+#           - matchExpressions:
+#               - key: kubernetes.io/hostname
+#                 operator: In
+#                 values:
+#                   - abaddon
 #   containers:
 #     - name: cuda-container
 #       image: nvcr.io/nvidia/k8s/cuda-sample:nbody
