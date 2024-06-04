@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
         - name: nextcloud-exporter
-          image: ghcr.io/xperimental/nextcloud-exporter:0.6.1
+          image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
           imagePullPolicy: IfNotPresent
           env:
             - name: NEXTCLOUD_SERVER

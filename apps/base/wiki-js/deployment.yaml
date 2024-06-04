@@ -42,7 +42,7 @@ spec:
       serviceAccountName: wiki-js
       containers:
         - name: wiki-js
-          image: requarks/wiki:2
+          image: requarks/wiki:latest
           imagePullPolicy: Always
           env:
             - name: DB_TYPE
