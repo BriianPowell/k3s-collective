@@ -1,4 +1,4 @@
-# Strong Arm Collective
+# k3s-collective
 
 Collection of all of my kubernetes resources created for my k3s cluster, hosted on a 2 nodes in my home office.
 
