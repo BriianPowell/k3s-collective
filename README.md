@@ -1,8 +1,13 @@
-# k3s-collective
+# Strong Arm Collective
 
-Collection of helm charts and deployment definitions for my k3s cluster
+Collection of all of my kubernetes resources created for my k3s cluster, hosted on a 2 nodes in my home office.
 
-## Install Flux into your Cluster
+| Name    | CPU      | GPU        |
+| ------- | -------- | ---------- |
+| Sheol   | i7-6700k | RTX-3080   |
+| Abaddon | i5-6600T | Integrated |
+
+## FluxCD Installation
 
 **Will need to create a GitHub Personal Access Token**
 
@@ -16,7 +21,58 @@ flux bootstrap github \
   --private
 ```
 
-## To Use Secrets
+## Infrastructure
+
+### Base
+
+- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
+- [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
+- [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
+- [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
+- [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
+- [x] [Reloader](https://github.com/stakater/Reloader)
+- [x] [Keycloak](https://github.com/keycloak/keycloak)
+- [x] [HomeAssistant](https://www.home-assistant.io/)
+- [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
+- [x] [Wiki.js](https://js.wiki/)
+- [x] [Pi-hole](https://pi-hole.net/)
+
+### Monitoring & Logging
+
+- [x] [Prometheus](https://prometheus.io/)
+- [x] [Grafana](https://github.com/grafana/grafana)
+- [x] [alertmanager](https://github.com/prometheus/alertmanager)
+- [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
+- [x] [node_exporter](https://github.com/prometheus/node_exporter)
+- [x] [Loki](https://grafana.com/docs/loki/latest/)
+
+### Security
+
+- [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
+
+### Games
+
+- [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
+- [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
+- [x] [V-Rising](https://truecharts.org/charts/stable/v-rising/)
+
+### Media
+
+- [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
+- [ ] Jellyfin OR Plex (Haven't Decided Yet!)
+- [ ] Sonarr
+- [ ] Lidarr
+- [ ] Radarr
+- [ ] Readarr
+- [ ] Deluge OR Transmission
+
+### TBD
+
+- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
+- [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
+- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
+
+## Secrets Management
 
 1. Register Helm Repo
 
@@ -71,63 +127,9 @@ kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
 kubectl apply -f basic-auth-sealed.yaml
 ```
 
-## Infrastructure
-
-### Base
-
-- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
-- [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
-- [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
-- [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
-- [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
-- [x] [Reloader](https://github.com/stakater/Reloader)
-- [x] [Keycloak](https://github.com/keycloak/keycloak)
-- [x] [HomeAssistant](https://www.home-assistant.io/)
-- [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
-- [x] [Wiki.js](https://js.wiki/)
-- [x] [Pi-hole](https://pi-hole.net/)
-
-### Monitoring & Logging
-
-- [x] [Prometheus](https://prometheus.io/)
-- [x] [Grafana](https://github.com/grafana/grafana)
-- [x] [alertmanager](https://github.com/prometheus/alertmanager)
-- [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
-- [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [x] [Loki](https://grafana.com/docs/loki/latest/)
-
-### Security
-
-- [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
-
-### Games
-
-- [x] [Valheim](https://artifacthub.io/packages/helm/geek-cookbook/valheim)
-- [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
-- [x] [V-Rising](https://truecharts.org/charts/stable/v-rising/)
-
-### Media
-
-- [ ] Jellyfin
-
-### HomePage
-
-- [x] **REMOVED**[HomePage](https://github.com/benphelps/homepage)
-
-### TBD
-
-- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
-- [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
-- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
-
 ## References
 
-- <https://stackoverflow.com/questions/60528376/traefik-redirect-from-one-host-to-another>
-- <https://community.traefik.io/t/cant-route-to-other-ip-port-on-subnet/11152/2>
-- <https://kubernetes.io/docs/reference/kubectl/cheatsheet/>
-- <https://github.com/cert-manager/cert-manager>
-- <https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/>
-- <https://github.com/fluxcd/flux2-kustomize-helm-example>
+All references I've used to create this project are listed as comments within each of their respective projects. In many cases I had to utilize several sources to create a working deployment file for my needs. If anyone has any questons or would like to reach out about the way I've done things, I'd be more than happy to talk about this project :grin:
 
 ## Debugging
 
