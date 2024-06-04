@@ -17,6 +17,7 @@ spec:
     nameOverride: null
     fullnameOverride: null
     clusterLabelOverride: null
+    deploymentMode: SingleBinary
     loki:
       auth_enabled: false
       commonConfig:
