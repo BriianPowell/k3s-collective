@@ -1,3 +1,7 @@
+#
+# Apply this pod to your cluster to test if the GPU detection with nvidia-device-plugin is working.
+#
+
 # apiVersion: v1
 # kind: Pod
 # metadata:
@@ -28,7 +32,7 @@
 #         limits:
 #           cpu: 1000m
 #           memory: 1Gi
-#           # nvidia.com/gpu: 2
+#           nvidia.com/gpu: 1
 #   tolerations:
 #     - key: nvidia.com/gpu
 #       operator: Exists
