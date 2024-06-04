@@ -37,6 +37,7 @@ spec:
       containers:
         - name: nextcloud-redis
           image: redis:alpine
+          imagePullPolicy: Always
           ports:
             - containerPort: 6379
           resources:

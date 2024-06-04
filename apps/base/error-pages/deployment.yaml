@@ -43,7 +43,7 @@ spec:
       containers:
         - name: error-pages
           image: ghcr.io/tarampampam/error-pages:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: TEMPLATE_NAME
               value: lost-in-space
