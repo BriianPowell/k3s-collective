@@ -53,6 +53,7 @@ spec:
         labels:
           monitoring: prometheus-operator
     write:
+      replicas: 0
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -73,6 +74,7 @@ spec:
                 values:
                 - abaddon
     read:
+      replicas: 0
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -83,6 +85,7 @@ spec:
                 values:
                 - abaddon
     backend:
+      replicas: 0
       affinity: |
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
