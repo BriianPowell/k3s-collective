@@ -1,0 +1,38 @@
+#
+# References:
+# https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/values.yaml
+#
+
+# apiVersion: source.toolkit.fluxcd.io/v1beta2
+# kind: HelmRepository
+# metadata:
+#   name: plex-inc
+#   namespace: media
+#   labels:
+#     media: plex
+# spec:
+#   interval: 24h
+#   url: https://k8s-at-home.com/charts/
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: plex-server
+#   namespace: media
+#   labels:
+#     media: plex
+#     tier: frontend
+# spec:
+#   interval: 1h0m0s
+#   chart:
+#     spec:
+#       chart: plex
+#       sourceRef:
+#         kind: HelmRepository
+#         name: plex-inc
+#         namespace: media
+#       version: '>=0.3.0 <0.4.0'
+#   values:
+#     ingress:
+#       enabled: false
+#     pms:
