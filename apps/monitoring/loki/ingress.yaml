@@ -10,8 +10,8 @@ spec:
     - match: Host(`loki.powell.place`)
       kind: Rule
       services:
-        - name: loki
-          port: 3100
+        - name: loki-gateway
+          port: 80
       middlewares:
         - name: security
           namespace: kube-system
