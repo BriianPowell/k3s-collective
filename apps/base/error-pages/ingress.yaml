@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: HostRegexp(`^.+\.powell\.place$`) && PathRegex(`.*`)
+    - match: HostRegexp(`.+`)
       kind: Rule
       priority: 10
       services:
