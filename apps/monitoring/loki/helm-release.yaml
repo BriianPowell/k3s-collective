@@ -42,19 +42,19 @@ spec:
     test:
       enabled: true
       prometheusAddress: http://prometheus-operated.monitoring.svc:9090
-    monitoring:
-      dashboards:
-        enabled: true
-        namespace: monitoring
-        labels:
-          grafana_dashboard: '1'
-      rules:
-        enabled: true
-        alerting: true
-        namespace: monitoring
-        labels:
-          role: alert-rules
-        additionalGroups: []
+    # monitoring:
+    #   dashboards:
+    #     enabled: true
+    #     namespace: monitoring
+    #     labels:
+    #       grafana_dashboard: '1'
+    #   rules:
+    #     enabled: true
+    #     alerting: true
+    #     namespace: monitoring
+    #     labels:
+    #       role: alert-rules
+    #     additionalGroups: []
         # - name: additional-loki-rules
         #   rules:
         #     - record: job:loki_request_duration_seconds_bucket:sum_rate
@@ -63,10 +63,10 @@ spec:
         #       expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)
         #     - record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate
         #       expr: sum(rate(container_cpu_usage_seconds_total[1m])) by (node, namespace, pod, container)
-      serviceMonitor:
-        enabled: true
-        labels:
-          monitoring: prometheus-operator
+      # serviceMonitor:
+      #   enabled: true
+      #   labels:
+      #     monitoring: prometheus-operator
     write:
       replicas: 0
       nodeSelector:
