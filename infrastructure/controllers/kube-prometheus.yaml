@@ -147,15 +147,12 @@ spec:
           matchLabels:
             monitoring: prometheus-operator
         podMonitorNamespaceSelector: {}
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: kubernetes.io/hostname
-                      operator: In
-                      values:
-                        - abaddon
+        # scrapeConfigSelector:
+        #   matchLabels:
+        #     scrape: prometheus-operator
+        # scrapeConfigNamespaceSelector: {}
+        nodeSelector:
+          kubernetes.io/hostname: abaddon
         resources:
           requests:
             cpu: 100m
