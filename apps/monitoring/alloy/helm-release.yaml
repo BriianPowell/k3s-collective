@@ -1,34 +1,34 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: alloy
-  namespace: monitoring
-spec:
-  interval: 1h0m0s
-  timeout: 10m
-  chart:
-    spec:
-      chart: alloy
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
-        namespace: monitoring
-      version: '>=0.1.0 <1.0.0'
-  values:
-    alloy:
-      configMap:
-        content: |-
-          discovery.kubernetes "services" {
-            role = "service"
-          }
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: alloy
+#   namespace: monitoring
+# spec:
+#   interval: 1h0m0s
+#   timeout: 10m
+#   chart:
+#     spec:
+#       chart: alloy
+#       sourceRef:
+#         kind: HelmRepository
+#         name: grafana
+#         namespace: monitoring
+#       version: '>=0.1.0 <1.0.0'
+#   values:
+#     alloy:
+#       configMap:
+#         content: |-
+#           discovery.kubernetes "services" {
+#             role = "service"
+#           }
 
-          loki.source.kubernetes "service" {
-            targets = discovery.kubernetes.service.targets
-            forward_to = [loki.write.local.receiver]
-          }
+#           loki.source.kubernetes "service" {
+#             targets = discovery.kubernetes.service.targets
+#             forward_to = [loki.write.local.receiver]
+#           }
 
-          loki.write "local" {
-            endpoint {
-              url = "http://loki.monitoring:3100/loki/api/v1/push"
-            }
-          }
+#           loki.write "local" {
+#             endpoint {
+#               url = "http://loki.monitoring:3100/loki/api/v1/push"
+#             }
+#           }
