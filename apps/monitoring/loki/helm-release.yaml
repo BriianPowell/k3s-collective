@@ -91,5 +91,7 @@ spec:
       replicas: 1
       nodeSelector:
         kubernetes.io/hostname: abaddon
+      service:
+        port: 8080
     minio:
       enabled: false
