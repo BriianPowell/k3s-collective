@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`loki.powell.place`)
+    - match: Host(`alloy.powell.place`)
       kind: Rule
       services:
         - name: alloy
