@@ -49,6 +49,7 @@ spec:
       websecure:
         middlewares:
           - kube-system-bouncer@kubernetescrd
+          - kube-system-error-pages@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
