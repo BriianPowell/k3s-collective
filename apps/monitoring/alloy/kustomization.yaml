@@ -5,5 +5,5 @@ commonLabels:
   app: alloy
 
 resources:
-  # - helm-release.yaml
+  - helm-release.yaml
   - ingress.yaml
