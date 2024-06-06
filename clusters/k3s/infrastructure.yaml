@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1h
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 1m0s
   prune: true
   sourceRef:
@@ -24,7 +24,7 @@ spec:
     - name: infra-controllers
   interval: 1h0m0s
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 1m0s
   prune: true
   sourceRef:

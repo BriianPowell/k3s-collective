@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 10m0s
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 2m0s
   prune: true
   dependsOn:
@@ -24,7 +24,7 @@ metadata:
 spec:
   interval: 10m0s
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 2m0s
   prune: true
   dependsOn:
@@ -42,7 +42,7 @@ metadata:
 spec:
   interval: 10m0s
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 2m0s
   prune: true
   dependsOn:
@@ -60,7 +60,7 @@ metadata:
 spec:
   interval: 10m0s
   wait: true
-  timeout: 5m0s
+  timeout: 10m0s
   retryInterval: 2m0s
   prune: true
   dependsOn:
