@@ -87,7 +87,5 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: abaddon
     gateway:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
     minio:
       enabled: false
