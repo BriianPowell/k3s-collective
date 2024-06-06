@@ -9,7 +9,7 @@ spec:
   routes:
     - match: HostRegexp(`{host:.+}`)
       kind: Rule
-      priority: 10
+      # priority: 10
       services:
         - name: error-pages
           port: 80
