@@ -31,15 +31,8 @@ spec:
       labels:
         app: error-pages
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - abaddon
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
       containers:
         - name: error-pages
           image: ghcr.io/tarampampam/error-pages:latest

@@ -64,25 +64,25 @@ spec:
     write:
       replicas: 0
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     tableManager:
       affinity:
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     read:
       replicas: 0
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     backend:
       replicas: 0
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     singleBinary:
       replicas: 1
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     gateway:
       nodeSelector:
-            kubernetes.io/hostname: abaddon
+        kubernetes.io/hostname: abaddon
     minio:
       enabled: false
