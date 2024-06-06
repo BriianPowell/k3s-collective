@@ -63,67 +63,26 @@ spec:
           monitoring: prometheus-operator
     write:
       replicas: 0
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     tableManager:
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     read:
       replicas: 0
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     backend:
       replicas: 0
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     singleBinary:
       replicas: 1
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     gateway:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - abaddon
+      nodeSelector:
+            kubernetes.io/hostname: abaddon
     minio:
       enabled: false
