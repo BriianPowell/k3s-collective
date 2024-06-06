@@ -89,5 +89,7 @@ spec:
     gateway:
       enabled: true
       replicas: 1
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
     minio:
       enabled: false
