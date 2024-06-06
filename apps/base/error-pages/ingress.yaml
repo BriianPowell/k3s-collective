@@ -9,10 +9,11 @@ spec:
   routes:
     - match: HostRegexp(`{host:.+}`)
       kind: Rule
-      # priority: 10
+      priority: 10
       services:
-        - name: error-pages
-          port: 80
+        - kind: Service
+          name: error-pages
+          port: http
       middlewares:
         - name: error-pages
           namespace: kube-system
