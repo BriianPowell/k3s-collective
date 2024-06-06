@@ -23,7 +23,7 @@ spec:
           }
 
           loki.source.kubernetes "service" {
-            targets = discovery.kubernetes.serivce.targets
+            targets = discovery.kubernetes.service.targets
             forward_to = [loki.write.local.receiver]
           }
 
