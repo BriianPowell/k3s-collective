@@ -17,7 +17,7 @@ spec:
   values:
     alloy:
       configMap:
-        content:
+        content: |-
           discovery.kubernetes "pods" {
             role = "pod"
           }
