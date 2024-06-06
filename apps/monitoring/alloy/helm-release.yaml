@@ -18,12 +18,12 @@ spec:
     alloy:
       configMap:
         content: |-
-          discovery.kubernetes "pods" {
-            role = "pod"
+          discovery.kubernetes "services" {
+            role = "service"
           }
 
-          loki.source.kubernetes "pods" {
-            targets = discovery.kubernetes.pods.targets
+          loki.source.kubernetes "service" {
+            targets = discovery.kubernetes.serivce.targets
             forward_to = [loki.write.local.receiver]
           }
 
