@@ -9,7 +9,7 @@ data:
       role = "pod"
     }
 
-    loki.source.kubernetes "service" {
+    loki.source.kubernetes "pod" {
       targets = discovery.kubernetes.pods.targets
       forward_to = [loki.write.local.receiver]
     }
