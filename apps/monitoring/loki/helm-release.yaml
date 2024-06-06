@@ -25,8 +25,8 @@ spec:
       storage:
         type: filesystem
       schemaConfig:
-        configs:
-          - from: 2024-05-05
+        configs: # https://grafana.com/docs/loki/latest/operations/storage/schema/
+          - from: 2024-05-05 #YYYY-MM-DD
             store: tsdb
             object_store: filesystem
             schema: v13
@@ -63,7 +63,7 @@ spec:
           monitoring: prometheus-operator
     write:
       replicas: 0
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -73,7 +73,7 @@ spec:
                 values:
                 - abaddon
     tableManager:
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -84,7 +84,7 @@ spec:
                 - abaddon
     read:
       replicas: 0
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -95,7 +95,7 @@ spec:
                 - abaddon
     backend:
       replicas: 0
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -106,7 +106,7 @@ spec:
                 - abaddon
     singleBinary:
       replicas: 1
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -116,7 +116,7 @@ spec:
                 values:
                 - abaddon
     gateway:
-      affinity: |
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
