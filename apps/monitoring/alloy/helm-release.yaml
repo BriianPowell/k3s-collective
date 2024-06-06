@@ -17,18 +17,6 @@ spec:
   values:
     alloy:
       configMap:
-        content: |-
-          discovery.kubernetes "services" {
-            role = "service"
-          }
-
-          loki.source.kubernetes "service" {
-            targets = discovery.kubernetes.services.targets
-            forward_to = [loki.write.local.receiver]
-          }
-
-          loki.write "local" {
-            endpoint {
-              url = "http://loki.monitoring:3100/loki/api/v1/push"
-            }
-          }
+        create: false
+        name: alloy-config
+        key: config.content

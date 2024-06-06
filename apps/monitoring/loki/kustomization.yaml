@@ -6,7 +6,7 @@ commonLabels:
 
 resources:
   - helm-release.yaml
-  - ingress.yaml
+  # - ingress.yaml
   # - pod-logs-cert-manager.yaml
   # - pod-logs-crowdsec.yaml
   # - pod-logs-homeassistant.yaml
