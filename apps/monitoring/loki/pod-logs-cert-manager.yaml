@@ -12,8 +12,8 @@ spec:
       app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: controller
   namespaceSelector:
-    matchNames:
-      - cert-manager
+    matchLabels:
+      kubernetes.io/metadata.name: cert-manager
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -29,8 +29,8 @@ spec:
       app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: cainjector
   namespaceSelector:
-    matchNames:
-      - cert-manager
+    matchLabels:
+      kubernetes.io/metadata.name: cert-manager
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -46,5 +46,5 @@ spec:
       app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: webhook
   namespaceSelector:
-    matchNames:
-      - cert-manager
+    matchLabels:
+      kubernetes.io/metadata.name: cert-manager

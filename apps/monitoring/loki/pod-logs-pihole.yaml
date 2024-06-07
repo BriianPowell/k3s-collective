@@ -11,5 +11,5 @@ spec:
     matchLabels:
       app: pihole
   namespaceSelector:
-    matchNames:
-      - kube-system
+    matchLabels:
+      kubernetes.io/metadata.name: kube-system

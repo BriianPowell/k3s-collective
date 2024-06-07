@@ -12,5 +12,5 @@ spec:
       app.kubernetes.io/instance: minecraft-server-minecraft
       app.kubernetes.io/name: minecraft
   namespaceSelector:
-    matchNames:
-      - minecraft
+    matchLabels:
+      kubernetes.io/metadata.name: minecraft

@@ -12,8 +12,8 @@ spec:
       app: keycloak
       component: app
   namespaceSelector:
-    matchNames:
-      - keycloak
+    matchLabels:
+      kubernetes.io/metadata.name: keycloak
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -29,5 +29,5 @@ spec:
       app: keycloak
       component: postgressql-db
   namespaceSelector:
-    matchNames:
-      - keycloak
+    matchLabels:
+      kubernetes.io/metadata.name: keycloak

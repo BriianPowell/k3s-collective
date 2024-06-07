@@ -13,5 +13,5 @@ spec:
       app.kubernetes.io/instance: v-rising-server
       app.kubernetes.io/name: v-rising
   namespaceSelector:
-    matchNames:
-      - v-rising
+    matchLabels:
+      kubernetes.io/metadata.name: v-rising

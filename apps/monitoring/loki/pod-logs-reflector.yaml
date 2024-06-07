@@ -12,5 +12,5 @@ spec:
       app.kubernetes.io/name: reflector
       app.kubernetes.io/instance: reflector
   namespaceSelector:
-    matchNames:
-      - reflector
+    matchLabels:
+      kubernetes.io/metadata.name: reflector

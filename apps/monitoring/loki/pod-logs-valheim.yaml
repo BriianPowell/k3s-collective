@@ -13,5 +13,5 @@ spec:
       app.kubernetes.io/instance: valheim-server
       app.kubernetes.io/name: valheim
   namespaceSelector:
-    matchNames:
-      - valheim
+    matchLabels:
+      kubernetes.io/metadata.name: valheim

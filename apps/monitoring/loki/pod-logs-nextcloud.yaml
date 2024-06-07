@@ -12,8 +12,8 @@ spec:
       app: nextcloud
       component: app
   namespaceSelector:
-    matchNames:
-      - nextcloud
+    matchLabels:
+      kubernetes.io/metadata.name: nextcloud
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -29,8 +29,8 @@ spec:
       app: nextcloud
       component: cron
   namespaceSelector:
-    matchNames:
-      - nextcloud
+    matchLabels:
+      kubernetes.io/metadata.name: nextcloud
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -46,8 +46,8 @@ spec:
       app: nextcloud
       component: redis
   namespaceSelector:
-    matchNames:
-      - nextcloud
+    matchLabels:
+      kubernetes.io/metadata.name: nextcloud
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -63,5 +63,5 @@ spec:
       app: nextcloud
       component: postgressql-db
   namespaceSelector:
-    matchNames:
-      - nextcloud
+    matchLabels:
+      kubernetes.io/metadata.name: nextcloud

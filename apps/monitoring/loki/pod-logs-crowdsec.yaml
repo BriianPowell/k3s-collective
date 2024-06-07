@@ -12,8 +12,8 @@ spec:
       k8s-app: crowdsec
       type: agent
   namespaceSelector:
-    matchNames:
-      - crowdsec
+    matchLabels:
+      kubernetes.io/metadata.name: crowdsec
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -29,5 +29,5 @@ spec:
       k8s-app: crowdsec
       type: lapi
   namespaceSelector:
-    matchNames:
-      - crowdsec
+    matchLabels:
+      kubernetes.io/metadata.name: crowdsec

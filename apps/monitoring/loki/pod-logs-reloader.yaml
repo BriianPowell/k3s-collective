@@ -11,5 +11,5 @@ spec:
     matchLabels:
       logs: reloader
   namespaceSelector:
-    matchNames:
-      - reloader
+    matchLabels:
+      kubernetes.io/metadata.name: reloader

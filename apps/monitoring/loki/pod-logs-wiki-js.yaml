@@ -12,8 +12,8 @@ spec:
       app: wiki-js
       component: app
   namespaceSelector:
-    matchNames:
-      - wiki
+    matchLabels:
+      kubernetes.io/metadata.name: wiki
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
@@ -29,5 +29,5 @@ spec:
       app: wiki-js
       component: postgressql-db
   namespaceSelector:
-    matchNames:
-      - wiki
+    matchLabels:
+      kubernetes.io/metadata.name: wiki
