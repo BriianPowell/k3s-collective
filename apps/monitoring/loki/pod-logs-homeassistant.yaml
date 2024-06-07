@@ -1,4 +1,4 @@
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: homeassistant-app
@@ -15,7 +15,7 @@ spec:
     matchNames:
       - homeassistant
 ---
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: homeassistant-db

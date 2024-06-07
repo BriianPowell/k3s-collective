@@ -46,15 +46,8 @@ spec:
     resources:
       cpu: 250m
       memory: 500Mi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - abaddon
+    nodeSelector:
+      kubernetes.io/hostname: abaddon
     persistence:
       type: pvc
       enabled: true

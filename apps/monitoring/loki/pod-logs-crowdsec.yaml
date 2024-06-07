@@ -1,4 +1,4 @@
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: crowdsec-agent-service
@@ -15,7 +15,7 @@ spec:
     matchNames:
       - crowdsec
 ---
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: crowdsec-service
