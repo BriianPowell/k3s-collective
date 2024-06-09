@@ -39,6 +39,9 @@ spec:
             index:
               prefix: index_
               period: 24h
+      limits_config:
+        ingrestion_rate_mb: 1024
+        ingestion_burst_size_mb: 1024
     test:
       enabled: true
       prometheusAddress: http://prometheus-operated.monitoring.svc:9090
@@ -89,7 +92,5 @@ spec:
     gateway:
       enabled: true
       replicas: 1
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
     minio:
       enabled: false
