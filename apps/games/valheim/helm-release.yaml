@@ -3,11 +3,6 @@
 # https://artifacthub.io/packages/helm/geek-cookbook/valheim
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: valheim
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:

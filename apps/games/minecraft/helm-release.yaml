@@ -3,11 +3,6 @@
 # https://github.com/gilesknap/k3s-minecraft
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: minecraft
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
