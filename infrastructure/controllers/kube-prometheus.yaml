@@ -114,15 +114,17 @@ spec:
       serviceMonitor:
         additionalLabels:
           monitoring: prometheus-operator
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - abaddon
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #         - matchExpressions:
+      #             - key: kubernetes.io/hostname
+      #               operator: In
+      #               values:
+      #                 - abaddon
     prometheus:
       enabled: true
       prometheusSpec:

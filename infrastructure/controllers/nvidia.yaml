@@ -54,14 +54,5 @@ spec:
     runtimeClassName: nvidia
     nodeSelector:
       kubernetes.io/hostname: sheol
-    # affinity:
-    #   nodeAffinity:
-    #     requiredDuringSchedulingIgnoredDuringExecution:
-    #       nodeSelectorTerms:
-    #         - matchExpressions:
-    #             - key: kubernetes.io/hostname
-    #               operator: In
-    #               values:
-    #                 - sheol
     gfd:
       enabled: false

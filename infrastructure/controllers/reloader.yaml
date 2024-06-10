@@ -56,15 +56,8 @@ spec:
         replicas: 1
         labels:
           logs: reloader
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: kubernetes.io/hostname
-                      operator: In
-                      values:
-                        - abaddon
+        nodeSelector:
+          kubernetes.io/hostname: abaddon
       podMonitor:
         enabled: true
         namespace: monitoring
