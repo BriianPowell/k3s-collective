@@ -4,7 +4,8 @@ metadata:
   name: homeassistant-postgres-db
   namespace: homeassistant
   labels:
-    app.kubernetes.io/component: database
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: homeassistant-postgres-db
 spec:
   selector:
     component: postgressql-db

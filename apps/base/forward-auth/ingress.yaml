@@ -19,7 +19,7 @@ spec:
           namespace: kube-system
       services:
         - name: traefik-forward-auth
-          port: 80
+          port: auth-http
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware

@@ -11,9 +11,9 @@ resources:
   - serviceMonitor-crowdsec.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml
-  - serviceMonitor-minecraft.yaml
+  # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-pihole.yaml
   - serviceMonitor-traefik.yaml
-  - serviceMonitor-v-rising.yaml
-  - serviceMonitor-valheim.yaml
+  # - serviceMonitor-v-rising.yaml
+  # - serviceMonitor-valheim.yaml
