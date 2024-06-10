@@ -104,7 +104,6 @@ spec:
       namespaceOverride: monitoring
     prometheus-node-exporter:
       namespaceOverride: monitoring
-
       # extraArgs:
       #   - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
       #   - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
@@ -116,15 +115,6 @@ spec:
           monitoring: prometheus-operator
       nodeSelector:
         kubernetes.io/hostname: abaddon
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #         - matchExpressions:
-      #             - key: kubernetes.io/hostname
-      #               operator: In
-      #               values:
-      #                 - abaddon
     prometheus:
       enabled: true
       prometheusSpec:
