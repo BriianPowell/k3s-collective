@@ -4,7 +4,7 @@ metadata:
   name: system:aggregated-metrics-reader
   labels:
     app.kubernetes.io/component: cluster-role
-    app.kubernetes.io/name: metrics-server
+    app.kubernetes.io/name: system_aggregated-metrics-reader
     rbac.authorization.k8s.io/aggregate-to-admin: 'true'
     rbac.authorization.k8s.io/aggregate-to-edit: 'true'
     rbac.authorization.k8s.io/aggregate-to-view: 'true'
@@ -42,7 +42,7 @@ metadata:
   name: system:metrics-server
   labels:
     app.kubernetes.io/component: cluster-role
-    app.kubernetes.io/name: system:metrics-server
+    app.kubernetes.io/name: system_metrics-server
 rules:
   - apiGroups:
       - ''
@@ -66,7 +66,7 @@ metadata:
   name: metrics-server:system:auth-delegator
   labels:
     app.kubernetes.io/component: cluster-role-binding
-    app.kubernetes.io/name: metrics-server:system:auth-delegator
+    app.kubernetes.io/name: metrics-server_system_auth-delegator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -82,7 +82,7 @@ metadata:
   name: system:metrics-server
   labels:
     app.kubernetes.io/component: cluster-role-binding
-    app.kubernetes.io/name: system:metrics-server
+    app.kubernetes.io/name: system_metrics-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
