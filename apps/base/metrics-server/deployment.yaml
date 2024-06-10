@@ -6,13 +6,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    k8s-app: metrics-server
   name: metrics-server
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: metrics-server
 spec:
   selector:
-    k8s-app: metrics-server
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: metrics-server
   ports:
     - name: https
       port: 443
@@ -22,22 +24,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    k8s-app: metrics-server
   name: metrics-server
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: metrics-server
 spec:
   replicas: 2
   selector:
     matchLabels:
-      k8s-app: metrics-server
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: metrics-server
   strategy:
     rollingUpdate:
       maxUnavailable: 1
   template:
     metadata:
       labels:
-        k8s-app: metrics-server
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: metrics-server
     spec:
       hostNetwork: true
       affinity:
@@ -45,20 +50,21 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  k8s-app: metrics-server
+                  app.kubernetes.io/component: app
+                  app.kubernetes.io/name: metrics-server
               namespaces:
                 - kube-system
               topologyKey: kubernetes.io/hostname
       containers:
-        - args:
+        - name: metrics-server
+          image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
+          imagePullPolicy: IfNotPresent
+          args:
             - --cert-dir=/tmp
             - --secure-port=4443
             - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
             - --kubelet-use-node-status-port
             - --metric-resolution=15s
-            # - --kubelet-insecure-tls
-          image: registry.k8s.io/metrics-server/metrics-server:v0.7.0
-          imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -66,7 +72,6 @@ spec:
               port: https
               scheme: HTTPS
             periodSeconds: 10
-          name: metrics-server
           ports:
             - containerPort: 4443
               name: https
@@ -107,18 +112,23 @@ kind: PodDisruptionBudget
 metadata:
   name: metrics-server
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: pod-disruption-budget
+    app.kubernetes.io/name: metrics-server
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      k8s-app: metrics-server
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: metrics-server
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
 metadata:
-  labels:
-    k8s-app: metrics-server
   name: v1beta1.metrics.k8s.io
+  labels:
+    app.kubernetes.io/component: api-service
+    app.kubernetes.io/name: v1beta1.metrics.k8s.io
 spec:
   group: metrics.k8s.io
   groupPriorityMinimum: 100
