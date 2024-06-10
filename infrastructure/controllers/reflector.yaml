@@ -17,12 +17,11 @@ spec:
   chart:
     spec:
       chart: reflector
-      version: '>=7.0.0 <8.0.0'
       sourceRef:
         kind: HelmRepository
         name: reflector
         namespace: reflector
-      interval: 12h
+      version: '>=7.0.0 <8.0.0'
   values:
     resources:
       requests:

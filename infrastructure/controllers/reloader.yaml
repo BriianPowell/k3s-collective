@@ -22,12 +22,11 @@ spec:
   chart:
     spec:
       chart: reloader
-      version: '>=1.0.0 <2.0.0'
       sourceRef:
         kind: HelmRepository
         name: reloader
         namespace: reloader
-      interval: 24h
+      version: '>=1.0.0 <2.0.0'
   values:
     reloader:
       autoReloadAll: false

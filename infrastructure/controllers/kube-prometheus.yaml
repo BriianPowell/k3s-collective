@@ -22,12 +22,11 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: '>=60.0.0 <70.0.0'
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
         namespace: monitoring
-      interval: 12h
+      version: '>=60.0.0 <70.0.0'
   values:
     fullnameOverride: monitor
     namespaceOverride: monitoring
