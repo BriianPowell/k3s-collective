@@ -8,13 +8,14 @@ metadata:
     app.kubernetes.io/name: homeassistant-pgsql
 spec:
   selector:
-    component: postgressql-db
+    app.kubernetes.io/component: database
+    app.kubernetes.io/name: homeassistant-pgsql
   type: NodePort
   ports:
-    - name: pgql
+    - name: pgsql
       port: 5432
       protocol: TCP
-      targetPort: pgql
+      targetPort: pgsql
       nodePort: 30008
 ---
 apiVersion: apps/v1
@@ -67,7 +68,7 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata #/data/pgdata
           ports:
-            - name: pgql
+            - name: pgsql
               containerPort: 5432
           resources:
             requests:
