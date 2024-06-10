@@ -5,9 +5,12 @@ metadata:
   namespace: homeassistant
   labels:
     monitor: homeassistant
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: homeassistant
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: homeassistant
   ports:
     - name: http
       port: 8123
@@ -19,15 +22,20 @@ kind: Deployment
 metadata:
   name: homeassistant
   namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: homeassistant
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: homeassistant
   template:
     metadata:
       labels:
-        component: app
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: homeassistant
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
@@ -63,6 +71,8 @@ metadata:
   namespace: homeassistant
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: homeassistant-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -77,6 +87,8 @@ metadata:
   namespace: homeassistant
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: homeassistant-pv
 spec:
   capacity:
     storage: 100Mi
