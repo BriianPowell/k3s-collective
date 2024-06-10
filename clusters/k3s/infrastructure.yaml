@@ -20,13 +20,13 @@ metadata:
   name: infra-controllers
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infra-namespaces
   interval: 1h0m0s
   wait: true
   timeout: 5m0s
   retryInterval: 1m0s
   prune: true
-  dependsOn:
-    - name: infra-namespaces
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -45,8 +45,6 @@ spec:
   timeout: 5m0s
   retryInterval: 1m0s
   prune: true
-  dependsOn:
-    - name: infra-namespaces
   sourceRef:
     kind: GitRepository
     name: flux-system
