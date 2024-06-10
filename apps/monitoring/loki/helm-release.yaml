@@ -65,7 +65,7 @@ spec:
       # serviceMonitor:
       #   enabled: true
       #   labels:
-      #     monitoring: prometheus-operator
+      #     monitored-by: prometheus
     write:
       replicas: 0
       nodeSelector:

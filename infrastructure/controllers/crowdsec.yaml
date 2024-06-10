@@ -4,11 +4,6 @@
 # https://www.crowdsec.net/blog/how-to-mitigate-security-threats-with-crowdsec-and-traefik
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: crowdsec
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:

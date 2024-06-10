@@ -1,6 +1,22 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: infra-namespaces
+  namespace: flux-system
+spec:
+  interval: 1h0m0s
+  wait: true
+  timeout: 5m0s
+  retryInterval: 1m0s
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./infrastructure/namespaces
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: infra-controllers
   namespace: flux-system
 spec:
@@ -9,6 +25,8 @@ spec:
   timeout: 5m0s
   retryInterval: 1m0s
   prune: true
+  dependsOn:
+    - name: infra-namespaces
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -27,6 +45,8 @@ spec:
   timeout: 5m0s
   retryInterval: 1m0s
   prune: true
+  dependsOn:
+    - name: infra-namespaces
   sourceRef:
     kind: GitRepository
     name: flux-system

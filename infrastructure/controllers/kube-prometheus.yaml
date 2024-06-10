@@ -3,11 +3,6 @@
 # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: monitoring
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
@@ -27,7 +22,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: '>=59.0.0 <70.0.0'
+      version: '>=60.0.0 <70.0.0'
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -47,12 +42,12 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kubelet:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kubeControllerManager:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -64,19 +59,19 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     coreDns:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kubeDns:
       enabled: false
     kubeEtcd:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kubeScheduler:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -88,7 +83,7 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kubeProxy:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -98,7 +93,7 @@ spec:
         targetPort: 10249
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
     kube-state-metrics:
       namespaceOverride: monitoring
     prometheus-node-exporter:
@@ -111,7 +106,7 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus
       nodeSelector:
         kubernetes.io/hostname: abaddon
     prometheus:
@@ -132,11 +127,11 @@ spec:
             role: alert-rules
         serviceMonitorSelector:
           matchLabels:
-            monitoring: prometheus-operator
+            monitored-by: prometheus
         serviceMonitorNamespaceSelector: {}
         podMonitorSelector:
           matchLabels:
-            monitoring: prometheus-operator
+            monitored-by: prometheus
         podMonitorNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:

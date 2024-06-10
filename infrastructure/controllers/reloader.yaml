@@ -3,11 +3,6 @@
 # https://github.com/stakater/Reloader/blob/master/README.md
 #
 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: reloader
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
@@ -63,4 +58,4 @@ spec:
         namespace: monitoring
         interval: 30s
         labels:
-          monitoring: prometheus-operator
+          monitored-by: prometheus

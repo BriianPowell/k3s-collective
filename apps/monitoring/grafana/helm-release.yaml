@@ -36,7 +36,7 @@ spec:
       enabled: true
       path: /metrics
       labels:
-        monitoring: prometheus-operator
+        monitored-by: prometheus
       interval: 1m
       scheme: http
       tlsConfig: {}

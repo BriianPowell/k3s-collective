@@ -4,7 +4,7 @@ metadata:
   name: crowdsec-agent-service
   namespace: crowdsec
   labels:
-    monitoring: prometheus-operator
+    monitored-by: prometheus
 spec:
   selector:
     matchLabels:
@@ -26,7 +26,7 @@ metadata:
   name: crowdsec-service
   namespace: crowdsec
   labels:
-    monitoring: prometheus-operator
+    monitored-by: prometheus
 spec:
   selector:
     matchLabels:

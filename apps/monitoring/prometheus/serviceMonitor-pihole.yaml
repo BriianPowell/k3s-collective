@@ -4,7 +4,7 @@ metadata:
   name: pihole
   namespace: monitoring
   labels:
-    monitoring: prometheus-operator
+    monitored-by: prometheus
 spec:
   selector:
     matchLabels:
