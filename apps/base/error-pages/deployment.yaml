@@ -5,7 +5,8 @@ metadata:
   namespace: kube-system
 spec:
   selector:
-    app: error-pages
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: error-pages
   ports:
     - name: http
       port: 80
@@ -18,18 +19,21 @@ metadata:
   name: error-pages
   namespace: kube-system
   labels:
-    app: error-pages
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: error-pages
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: error-pages
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: error-pages
   template:
     metadata:
       labels:
-        app: error-pages
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: error-pages
     spec:
       nodeSelector:
         kubernetes.io/hostname: abaddon

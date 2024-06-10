@@ -3,6 +3,9 @@ kind: Middleware
 metadata:
   name: error-pages
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: error-pages
 spec:
   errors:
     status:
