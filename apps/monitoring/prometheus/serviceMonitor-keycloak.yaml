@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      monitor: keycloak
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: keycloak
   namespaceSelector:
     matchNames:
       - keycloak
