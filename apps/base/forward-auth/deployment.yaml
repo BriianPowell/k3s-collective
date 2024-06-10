@@ -56,17 +56,17 @@ spec:
             - name: AUTH_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: AUTH_HOST
             - name: URL_PATH
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: URL_PATH
             - name: DEFAULT_PROVIDER
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: DEFAULT_PROVIDER
             # - name: DOMAIN
             #   valueFrom:
@@ -76,17 +76,17 @@ spec:
             - name: COOKIE_DOMAIN
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: COOKIE_DOMAIN
             - name: INSECURE_COOKIE
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: INSECURE_COOKIE
             - name: PROVIDERS_OIDC_ISSUER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: traefik-forward-auth-config
+                  name: traefik-forward-auth
                   key: PROVIDERS_OIDC_ISSUER_URL
             - name: PROVIDERS_OIDC_CLIENT_ID
               valueFrom:
