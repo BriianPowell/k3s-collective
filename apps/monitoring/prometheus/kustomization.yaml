@@ -6,13 +6,14 @@ commonLabels:
 
 resources:
   - ingress.yaml
+  - podMonitor.yaml
   - rules.yaml
-  - service-monitor-crowdsec.yaml
-  - service-monitor-hass.yaml
-  - service-monitor-keycloak.yaml
-  # - service-monitor-minecraft.yaml
-  - service-monitor-nextcloud.yaml
-  - service-monitor-pihole.yaml
-  - service-monitor-traefik.yaml
-  # - service-monitor-v-rising.yaml
-  # - service-monitor-valheim.yaml
+  - serviceMonitor-crowdsec.yaml
+  - serviceMonitor-hass.yaml
+  - serviceMonitor-keycloak.yaml
+  - serviceMonitor-minecraft.yaml
+  - serviceMonitor-nextcloud.yaml
+  - serviceMonitor-pihole.yaml
+  - serviceMonitor-traefik.yaml
+  - serviceMonitor-v-rising.yaml
+  - serviceMonitor-valheim.yaml
