@@ -4,7 +4,7 @@ metadata:
   name: crowdsec-agent-service
   namespace: crowdsec
   labels:
-    monitoring: prometheus-operator
+    app.kubernetes.io/component: monitoring
 spec:
   selector:
     matchLabels:
@@ -26,7 +26,7 @@ metadata:
   name: crowdsec-service
   namespace: crowdsec
   labels:
-    monitoring: prometheus-operator
+    app.kubernetes.io/component: monitoring
 spec:
   selector:
     matchLabels:

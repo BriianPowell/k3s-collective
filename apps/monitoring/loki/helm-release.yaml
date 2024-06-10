@@ -66,7 +66,7 @@ spec:
       # serviceMonitor:
       #   enabled: true
       #   labels:
-      #     monitoring: prometheus-operator
+      #     app.kubernetes.io/component: monitoring
     write:
       replicas: 0
       nodeSelector:

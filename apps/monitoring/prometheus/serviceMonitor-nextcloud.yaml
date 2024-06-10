@@ -4,7 +4,7 @@ metadata:
   name: nextcloud
   namespace: monitoring
   labels:
-    monitoring: prometheus-operator
+    app.kubernetes.io/component: monitoring
 spec:
   selector:
     matchLabels:
