@@ -63,4 +63,4 @@ spec:
         namespace: monitoring
         interval: 30s
         labels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator

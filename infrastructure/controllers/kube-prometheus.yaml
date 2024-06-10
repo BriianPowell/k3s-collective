@@ -48,12 +48,12 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kubelet:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kubeControllerManager:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -65,19 +65,19 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     coreDns:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kubeDns:
       enabled: false
     kubeEtcd:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kubeScheduler:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -89,7 +89,7 @@ spec:
         enabled: true
         https: true
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kubeProxy:
       enabled: true
       endpoints: ['10.0.2.10']
@@ -99,7 +99,7 @@ spec:
         targetPort: 10249
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
     kube-state-metrics:
       namespaceOverride: monitoring
     prometheus-node-exporter:
@@ -112,7 +112,7 @@ spec:
       enabled: true
       serviceMonitor:
         additionalLabels:
-          app.kubernetes.io/component: monitoring
+          monitoring: prometheus-operator
       nodeSelector:
         kubernetes.io/hostname: abaddon
     prometheus:
@@ -133,11 +133,11 @@ spec:
             role: alert-rules
         serviceMonitorSelector:
           matchLabels:
-            app.kubernetes.io/component: monitoring
+            monitoring: prometheus-operator
         serviceMonitorNamespaceSelector: {}
         podMonitorSelector:
           matchLabels:
-            app.kubernetes.io/component: monitoring
+            monitoring: prometheus-operator
         podMonitorNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
