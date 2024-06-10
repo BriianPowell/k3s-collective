@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: homeassistant-postgres-db
+  name: homeassistant-pgsql
   namespace: homeassistant
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: homeassistant-postgres-db
+    app.kubernetes.io/name: homeassistant-pgsql
 spec:
   selector:
     component: postgressql-db
@@ -20,18 +20,23 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: homeassistant-postgressql-db
+  name: homeassistant-pgsql
   namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/name: homeassistant-pgsql
 spec:
-  serviceName: homeassistant-postgres-db
+  serviceName: homeassistant-pgsql
   replicas: 1
   selector:
     matchLabels:
-      component: postgressql-db
+      app.kubernetes.io/component: database
+      app.kubernetes.io/name: homeassistant-pgsql
   template:
     metadata:
       labels:
-        component: postgressql-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/name: homeassistant-pgsql
     spec:
       containers:
         - name: homeassistant-postgressql-db
@@ -95,6 +100,8 @@ metadata:
   namespace: homeassistant
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: homeassistant-pg-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -108,6 +115,8 @@ metadata:
   name: homeassistant-pg-pv
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: homeassistant-pg-pv
 spec:
   capacity:
     storage: 15G

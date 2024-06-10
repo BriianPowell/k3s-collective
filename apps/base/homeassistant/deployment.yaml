@@ -4,7 +4,6 @@ metadata:
   name: homeassistant
   namespace: homeassistant
   labels:
-    monitor: homeassistant
     app.kubernetes.io/component: service
     app.kubernetes.io/name: homeassistant
 spec:
