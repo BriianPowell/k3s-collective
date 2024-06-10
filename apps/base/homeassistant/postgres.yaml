@@ -40,7 +40,7 @@ spec:
         app.kubernetes.io/name: homeassistant-pgsql
     spec:
       containers:
-        - name: homeassistant-postgressql-db
+        - name: homeassistant-postgresql-db
           image: postgres:14.5
           # command: ['/bin/bash', '-c', '--']
           # args: ['while true; do sleep 600; done;']
