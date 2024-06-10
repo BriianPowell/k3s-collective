@@ -1,8 +1,7 @@
 #
 # Reference:
 # https://grafana.com/docs/alloy/latest/reference/components/loki.source.podlogs/#usage
-
-
+#
 
 apiVersion: v1
 kind: ConfigMap
