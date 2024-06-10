@@ -8,9 +8,13 @@ kind: Service
 metadata:
   name: keycloak-headless
   namespace: keycloak
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: keycloak-headless
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: keycloak
   clusterIP: None
   sessionAffinity: None
   type: ClusterIP
@@ -30,29 +34,37 @@ metadata:
   name: keycloak
   namespace: keycloak
   labels:
-    monitor: keycloak
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: keycloak
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: keycloak
   ports:
     - name: http
       port: 8080
-      targetPort: 8080
+      protocol: TCP
+      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: keycloak
   namespace: keycloak
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: keycloak
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: keycloak
   template:
     metadata:
       labels:
-        component: app
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: keycloak
     spec:
       containers:
         - name: keycloak

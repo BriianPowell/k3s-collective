@@ -3,6 +3,9 @@ kind: IngressRoute
 metadata:
   name: keycloak-dashboard-https
   namespace: keycloak
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: keycloak-dashboard-https
 spec:
   entryPoints:
     - websecure
@@ -11,7 +14,7 @@ spec:
       kind: Rule
       services:
         - name: keycloak
-          port: 8080
+          port: http
       middlewares:
         - name: security-no-frame-deny
           namespace: kube-system

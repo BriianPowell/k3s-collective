@@ -1,36 +1,42 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: keycloak-postgres-db
+  name: keycloak-pgsql
   namespace: keycloak
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: keycloak-pgsql
 spec:
   selector:
-    component: postgressql-db
+    app.kubernetes.io/component: database
+    app.kubernetes.io/name: keycloak-pgsql
   type: NodePort
   ports:
-    - name: pgql
+    - name: pgsqlql
       port: 5432
       protocol: TCP
-      targetPort: 5432
+      targetPort: pgsql
       nodePort: 30007
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: keycloak-postgressql-db
+  name: keycloak-pgsql
   namespace: keycloak
   labels:
     app: keycloak
 spec:
-  serviceName: keycloak-postgressql-db-service
+  serviceName: keycloak-pgsql
   replicas: 1
   selector:
     matchLabels:
-      component: postgressql-db
+      app.kubernetes.io/component: database
+      app.kubernetes.io/name: keycloak-pgsql
   template:
     metadata:
       labels:
-        component: postgressql-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/name: keycloak-pgsql
     spec:
       containers:
         - name: keycloak-postgressql-db
@@ -56,7 +62,8 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata #/data/pgdata
           ports:
-            - containerPort: 5432
+            - name: pgsql
+              containerPort: 5432
           resources:
             requests:
               cpu: 10m
@@ -88,6 +95,8 @@ metadata:
   namespace: keycloak
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: keycloak-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -101,6 +110,9 @@ metadata:
   name: keycloak-pv
   labels:
     type: local
+    labels:
+      app.kubernetes.io/component: storage-volume
+      app.kubernetes.io/name: keycloak-pv
 spec:
   capacity:
     storage: 15G
