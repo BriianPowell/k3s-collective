@@ -39,7 +39,7 @@ spec:
         app.kubernetes.io/name: keycloak-pgsql
     spec:
       containers:
-        - name: keycloak-postgressql-db
+        - name: keycloak-postgresql-db
           image: postgres:14.5
           # command: ['/bin/bash', '-c', '--']
           # args: ['while true; do sleep 600; done;']
