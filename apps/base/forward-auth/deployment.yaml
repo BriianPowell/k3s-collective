@@ -9,9 +9,13 @@ kind: Service
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: treafik-forward-auth
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: traefik-forward-auth
   type: ClusterIP
   ports:
     - name: auth-http
@@ -24,17 +28,22 @@ kind: Deployment
 metadata:
   name: traefik-forward-auth
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: traefik-forward-auth
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: traefik-forward-auth
   template:
     metadata:
       labels:
-        component: app
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: traefik-forward-auth
     spec:
       terminationGracePeriodSeconds: 60
       containers:
