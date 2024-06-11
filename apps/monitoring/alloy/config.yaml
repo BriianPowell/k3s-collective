@@ -6,8 +6,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: alloy-config
+  name: alloy
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/name: alloy
 data:
   config.content: |
     loki.source.podlogs "collective" {

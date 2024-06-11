@@ -17,5 +17,5 @@ spec:
     alloy:
       configMap:
         create: false
-        name: alloy-config
+        name: alloy
         key: config.content

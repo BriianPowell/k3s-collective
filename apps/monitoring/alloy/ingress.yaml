@@ -3,6 +3,9 @@ kind: IngressRoute
 metadata:
   name: alloy-dashboard-https
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: alloy-dashboard-https
 spec:
   entryPoints:
     - websecure
