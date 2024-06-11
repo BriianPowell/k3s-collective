@@ -53,23 +53,23 @@ spec:
             - name: DB_TYPE
               value: postgres
             - name: DB_HOST
-              value: wiki-js-postgres-db
+              value: wiki-js-pgsql
             - name: DB_PORT
               value: '5432'
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secrets
+                  name: wiki-js
                   key: PG_DB
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secrets
+                  name: wiki-js
                   key: PG_USER
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-secrets
+                  name: wiki-js
                   key: PG_PASS
             - name: HA_ACTIVE
               value: '1'
