@@ -4,18 +4,21 @@ metadata:
   name: nextcloud-cron
   namespace: nextcloud
   labels:
-    component: cron
+    app.kubernetes.io/component: cron
+    app.kubernetes.io/name: nextcloud-cron
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: cron
+      app.kubernetes.io/component: cron
+      app.kubernetes.io/name: nextcloud-cron
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        component: cron
+        app.kubernetes.io/component: cron
+        app.kubernetes.io/name: nextcloud-cron
     spec:
       containers:
         - name: cron

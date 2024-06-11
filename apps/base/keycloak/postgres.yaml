@@ -24,7 +24,8 @@ metadata:
   name: keycloak-pgsql
   namespace: keycloak
   labels:
-    app: keycloak
+    app.kubernetes.io/component: database
+    app.kubernetes.io/name: keycloak-pgsql
 spec:
   serviceName: keycloak-pgsql
   replicas: 1

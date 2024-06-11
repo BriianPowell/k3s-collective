@@ -11,10 +11,12 @@ metadata:
   name: nextcloud
   namespace: nextcloud
   labels:
-    component: app
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: nextcloud
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: nextcloud
   ports:
     - name: http
       port: 80
@@ -27,11 +29,12 @@ metadata:
   name: nextcloud-exporter
   namespace: nextcloud
   labels:
-    component: app
-    monitor: nextcloud
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: nextcloud-exporter
 spec:
   selector:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: nextcloud
   ports:
     - name: metrics
       port: 9205
@@ -44,18 +47,21 @@ metadata:
   name: nextcloud
   namespace: nextcloud
   labels:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: nextcloud
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: nextcloud
   template:
     metadata:
       labels:
-        component: app
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: nextcloud
     spec:
       containers:
         - name: nextcloud-exporter
@@ -73,7 +79,7 @@ spec:
             - name: NEXTCLOUD_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: TOKEN
           ports:
             - name: metrics
@@ -97,34 +103,34 @@ spec:
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: PG_DB
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: PG_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: PG_PASS
             - name: POSTGRES_HOST
-              value: nextcloud-postgres-db
+              value: nextcloud-pgsql
             - name: NEXTCLOUD_ADMIN_USER
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: ADMIN_USER
             - name: NEXTCLOUD_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: ADMIN_PASS
             - name: NEXTCLOUD_TRUSTED_DOMAINS
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: DOMAIN
             - name: REDIS_HOST
               value: nextcloud-redis
@@ -137,17 +143,17 @@ spec:
             - name: SMTP_NAME
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: SMTP_NAME
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: SMTP_PASSWORD
             - name: MAIL_FROM_ADDRESS
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud-secrets
+                  name: nextcloud
                   key: MAIL_FROM_ADDRESS
             - name: APACHE_DISABLE_REWRITE_IP
               value: '1'
@@ -184,6 +190,8 @@ metadata:
   namespace: nextcloud
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: nextcloud-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -197,6 +205,8 @@ metadata:
   name: nextcloud-pv
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: nextcloud-pv
 spec:
   capacity:
     storage: 5T

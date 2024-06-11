@@ -4,14 +4,17 @@ metadata:
   name: nextcloud-redis
   namespace: nextcloud
   labels:
-    app: nextcloud
-    component: redis
+    app.kubernetes.io/component: service
+    app.kubernetnes.io/name: nextcloud-redis
 spec:
   selector:
-    component: redis
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: nextcloud-redis
   type: NodePort
   ports:
-    - port: 6379
+    - name: redis
+      port: 6379
+      targetPort: redis
       nodePort: 31379
 ---
 apiVersion: apps/v1
@@ -20,26 +23,27 @@ metadata:
   name: nextcloud-redis
   namespace: nextcloud
   labels:
-    app: nextcloud
-    component: redis
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: nextcloud-redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nextcloud
-      component: redis
+      app.kubernetes.io/component: redis
+      app.kubernetes.io/name: nextcloud-redis
   template:
     metadata:
       labels:
-        app: nextcloud
-        component: redis
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/name: nextcloud-redis
     spec:
       containers:
         - name: nextcloud-redis
           image: redis:alpine
           imagePullPolicy: Always
           ports:
-            - containerPort: 6379
+            - name: redis
+              containerPort: 6379
           resources:
             requests:
               cpu: 10m

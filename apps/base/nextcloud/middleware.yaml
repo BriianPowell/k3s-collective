@@ -3,6 +3,9 @@ kind: Middleware
 metadata:
   name: nextcloud-headers-middleware
   namespace: nextcloud
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: nextcloud-headers-middleware
 spec:
   headers:
     stsSeconds: 15552000
@@ -13,6 +16,9 @@ kind: Middleware
 metadata:
   name: nextcloud-redirect-middleware
   namespace: nextcloud
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: nextcloud-redirect-middleware
 spec:
   replacePathRegex:
     regex: ^/.well-known/ca(l|rd)dav
