@@ -9,8 +9,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: homeassistant
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: homeassistant
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: homeassistant
@@ -26,8 +26,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: homeassistant
-      component: postgressql-db
+      app.kubernetes.io/component: database
+      app.kubernetes.io/name: homeassistant-pgsql
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: homeassistant

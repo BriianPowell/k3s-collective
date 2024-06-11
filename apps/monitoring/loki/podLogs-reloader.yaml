@@ -9,8 +9,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: reloader-reloader
-      logs: reloader
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: reloader
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: reloader

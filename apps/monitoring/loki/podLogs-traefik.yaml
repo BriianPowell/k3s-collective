@@ -9,8 +9,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: traefik-forward-auth
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: traefik-forward-auth
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: kube-system
