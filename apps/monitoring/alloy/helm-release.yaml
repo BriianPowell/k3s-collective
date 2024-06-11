@@ -19,3 +19,7 @@ spec:
         create: false
         name: alloy
         key: config.content
+    controller:
+      podLabel:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: alloy
