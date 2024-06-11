@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      monitor: traefik
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: traefik
   namespaceSelector:
     matchNames:
       - kube-system

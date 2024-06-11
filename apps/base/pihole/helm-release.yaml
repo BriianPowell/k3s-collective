@@ -8,8 +8,6 @@ kind: HelmRepository
 metadata:
   name: pihole
   namespace: kube-system
-  labels:
-    app: pihole
 spec:
   interval: 24h
   url: https://mojo2600.github.io/pihole-kubernetes/
@@ -19,8 +17,6 @@ kind: HelmRelease
 metadata:
   name: pihole
   namespace: kube-system
-  labels:
-    app: pihole
 spec:
   interval: 1h0m0s
   chart:

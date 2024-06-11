@@ -31,6 +31,10 @@ spec:
         secret.reloader.stakater.com/reload: crowdsec-bouncer-tls
       additionalVolumes:
         - name: plugins
+      labels:
+        app.kubernetes.io/component: deployment
+      podLabels:
+        app.kubernetes.io/component: pod
     priorityClassName: system-cluster-critical
     tolerations:
       - key: CriticalAddonsOnly
@@ -43,7 +47,7 @@ spec:
         effect: NoSchedule
     service:
       labels:
-        monitor: traefik
+        app.kubernetes.io/component: service
       ipFamilyPolicy: PreferDualStack
     ports:
       web:
