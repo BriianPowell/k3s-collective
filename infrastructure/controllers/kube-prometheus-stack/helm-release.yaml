@@ -1,0 +1,171 @@
+#
+# Reference:
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+#
+
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: prometheus-community
+  namespace: monitoring
+spec:
+  interval: 24h
+  url: https://prometheus-community.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus
+  namespace: monitoring
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: monitoring
+      version: '>=60.0.0 <70.0.0'
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  driftDetection:
+    mode: enabled
+    ignore:
+      # Ignore "validated" annotation which is not inserted during install
+      - paths: [ "/metadata/annotations/prometheus-operator-validated" ]
+        target:
+          kind: PrometheusRule
+  valuesFrom:
+  - kind: ConfigMap
+    name: flux-kube-state-metrics-config
+    valuesKey: kube-state-metrics-config.yaml
+  values:
+    fullnameOverride: monitor
+    namespaceOverride: monitoring
+    defaultRules:
+      labels:
+        role: alert-rules
+    alertmanager:
+      enabled: false
+    grafana:
+      enabled: false
+    kubeApiServer:
+      enabled: true
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+    kubeControllerManager:
+      enabled: true
+      endpoints: ['10.0.2.10']
+      service:
+        enabled: true
+        port: 10257
+        targetPort: 10257
+      serviceMonitor:
+        enabled: true
+        https: true
+        additionalLabels:
+          monitored-by: prometheus
+    coreDns:
+      enabled: true
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+    kubeDns:
+      enabled: false
+    kubeEtcd:
+      enabled: true
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+    kubeScheduler:
+      enabled: true
+      endpoints: ['10.0.2.10']
+      service:
+        enabled: true
+        port: 10259
+        targetPort: 10259
+      serviceMonitor:
+        enabled: true
+        https: true
+        additionalLabels:
+          monitored-by: prometheus
+    kubeProxy:
+      enabled: true
+      endpoints: ['10.0.2.10']
+      service:
+        enabled: true
+        port: 10249
+        targetPort: 10249
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+    prometheus-node-exporter:
+      namespaceOverride: monitoring
+      # extraArgs:
+      #   - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+      #   - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+      #   - --collector.netclass.ignored-devices=^(veth.*)$
+    prometheusOperator:
+      enabled: true
+      serviceMonitor:
+        additionalLabels:
+          monitored-by: prometheus
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+    prometheus:
+      enabled: true
+      prometheusSpec:
+        scrapeInterval: '30s'
+        scrapeTimeout: '10s'
+        evaluationInterval: '30s'
+        externalUrl: https://prometheus.powell.place
+        alertingEndpoints:
+          - name: alertmanager-operated
+            namespace: monitoring
+            port: 9093
+            scheme: http
+        ruleNamespaceSelector: {}
+        ruleSelector:
+          matchLabels:
+            role: alert-rules
+        serviceMonitorSelector:
+          matchLabels:
+            monitored-by: prometheus
+        serviceMonitorNamespaceSelector: {}
+        podMonitorSelector:
+          matchLabels:
+            monitored-by: prometheus
+        podMonitorNamespaceSelector: {}
+        # scrapeConfigSelector:
+        #   matchLabels:
+        #     scrape: prometheus-operator
+        # scrapeConfigNamespaceSelector: {}
+        nodeSelector:
+          kubernetes.io/hostname: abaddon
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: prometheus-pvc
+#   namespace: monitoring
+#   labels:
+#     app: prometheus
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
