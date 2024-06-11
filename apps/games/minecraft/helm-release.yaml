@@ -75,8 +75,9 @@ metadata:
   name: minecraft-pvc
   namespace: minecraft
   labels:
-    game: minecraft
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: minecraft
 spec:
   accessModes:
     - ReadWriteOnce
@@ -89,8 +90,9 @@ kind: PersistentVolume
 metadata:
   name: minecraft-pv
   labels:
-    game: minecraft
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: minecraft
 spec:
   capacity:
     storage: 25G

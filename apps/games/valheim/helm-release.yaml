@@ -170,8 +170,9 @@ metadata:
   name: valheim-pvc
   namespace: valheim
   labels:
-    game: valheim
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: valheim
 spec:
   accessModes:
     - ReadWriteOnce
@@ -184,8 +185,9 @@ kind: PersistentVolume
 metadata:
   name: valheim-pv
   labels:
-    game: valheim
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: valheim
 spec:
   capacity:
     storage: 25G
