@@ -38,6 +38,13 @@ spec:
             - kube-system
             - crowdsec
     agent:
+      podLabels:
+        app.kubernetes.io/component: agent
+        app.kubernetes.io/name: crowdsec-agent
+      service:
+        labels:
+          app.kubernetes.io/component: service
+          app.kubernetes.io/name: crowdsec-agent
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Equal
@@ -74,6 +81,13 @@ spec:
         serviceMonitor:
           enabled: false
     lapi:
+      podLabels:
+        app.kubernetes.io/component: lapi
+        app.kubernetes.io/name: crowdsec-lapi
+      service:
+        labels:
+          app.kubernetes.io/component: service
+          app.kubernetes.io/name: crowdsec-lapi
       dashboard:
         enabled: false
       persistentVolume:
@@ -116,6 +130,8 @@ metadata:
   namespace: crowdsec
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: crowdsec-config-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -130,6 +146,8 @@ metadata:
   namespace: crowdsec
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: crowdsec-config-pv
 spec:
   capacity:
     storage: 100Mi
@@ -158,6 +176,8 @@ metadata:
   namespace: crowdsec
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: crowdsec-data-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -172,6 +192,8 @@ metadata:
   namespace: crowdsec
   labels:
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: crowdsec-data-pv
 spec:
   capacity:
     storage: 1Gi

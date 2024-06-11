@@ -51,7 +51,7 @@ spec:
     service:
       main:
         labels:
-          monitor: valheim
+          app.kubernetes.io/component: service
     env:
       SERVER_NAME: 'The Neighborhood'
       WORLD_NAME: 'The Neighborhood of Make-Believe'

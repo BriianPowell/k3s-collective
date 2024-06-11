@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crowdsec-agent-service
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: crowdsec-agent
   namespaceSelector:
     matchNames:
       - crowdsec
@@ -30,7 +31,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crowdsec-service
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: crowdsec-lapi
   namespaceSelector:
     matchNames:
       - crowdsec

@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      monitor: nextcloud
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: nextcloud-exporter
   namespaceSelector:
     matchNames:
       - nextcloud

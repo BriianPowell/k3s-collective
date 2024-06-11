@@ -9,8 +9,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: wiki-js
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: wiki-js
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: wiki
@@ -26,8 +26,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: wiki-js
-      component: postgressql-db
+      app.kubernetes.io/component: database
+      app.kubernetes.io/name: wiki-js
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: wiki

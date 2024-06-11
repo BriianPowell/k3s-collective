@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      monitor: valheim
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: valheim
   namespaceSelector:
     matchNames:
       - valheim

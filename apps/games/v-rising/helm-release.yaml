@@ -43,7 +43,7 @@ spec:
             protocol: udp
             targetPort: 9876
         labels:
-          monitor: v-rising
+          app.kubernetes.io/component: service
       query:
         enabled: true
         type: LoadBalancer

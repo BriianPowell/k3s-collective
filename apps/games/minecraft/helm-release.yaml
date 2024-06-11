@@ -67,7 +67,9 @@ spec:
       ENABLE_ROLLING_LOGS: true
       FORCE_WORLD_COPY: false
     serviceLabels:
-      monitor: minecraft
+      app.kubernetes.io/component: service
+    podlabels:
+      app.kubernetes.io/component: app
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
