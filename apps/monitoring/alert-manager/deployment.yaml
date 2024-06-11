@@ -6,7 +6,7 @@ metadata:
 spec:
   replicas: 1
   externalUrl: 'https://alertmanager.powell.place'
-  configSecret: alertmanager-secrets
+  configSecret: alertmanager
   containers:
     - name: alertmanager
       resources:

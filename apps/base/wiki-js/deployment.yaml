@@ -10,10 +10,12 @@ metadata:
   name: wiki-js
   namespace: wiki
   labels:
-    component: app
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: wiki-js
 spec:
   selector:
-    app: wiki-js
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: wiki-js
   type: ClusterIP
   ports:
     - name: http
@@ -27,17 +29,20 @@ metadata:
   name: wiki-js
   namespace: wiki
   labels:
-    component: app
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: wiki-js
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: wiki-js
   template:
     metadata:
       labels:
-        component: app
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: wiki-js
     spec:
       serviceAccountName: wiki-js
       containers:

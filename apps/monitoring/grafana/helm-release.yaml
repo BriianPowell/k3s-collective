@@ -56,11 +56,11 @@ spec:
       size: 10G
       existingClaim: grafana-pvc
     admin:
-      existingSecret: grafana-secrets
+      existingSecret: grafana
       userKey: USER
       passwordKey: PASS
     envFromSecrets:
-      - name: grafana-secrets
+      - name: grafana
         optional: false
     datasources:
       datasources.yaml:

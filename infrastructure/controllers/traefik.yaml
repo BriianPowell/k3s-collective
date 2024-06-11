@@ -120,7 +120,7 @@ spec:
     tlsStore:
       default:
         defaultCertificate:
-          secretName: wildcard-powell-place-secret
+          secretName: wildcard-powell-place
     resources:
       requests:
         cpu: 10m

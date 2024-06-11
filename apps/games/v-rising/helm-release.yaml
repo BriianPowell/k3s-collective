@@ -73,7 +73,7 @@ spec:
                 VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
                 VR_PASSWORD: #  Set a password or leave empty.
                   secretKeyRef:
-                    name: v-rising-secrets
+                    name: v-rising
                     key: password
                     expandObjectName: false
                 VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
@@ -117,8 +117,9 @@ metadata:
   name: v-rising-pvc
   namespace: v-rising
   labels:
-    game: v-rising
     type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: v-rising
 spec:
   accessModes:
     - ReadWriteOnce
@@ -131,8 +132,9 @@ kind: PersistentVolume
 metadata:
   name: v-rising-pv
   labels:
-    game: v-rising
     type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: v-rising
 spec:
   capacity:
     storage: 25G

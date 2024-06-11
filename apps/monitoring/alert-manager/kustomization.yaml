@@ -5,7 +5,7 @@ commonLabels:
   app: alertmanager
 
 resources:
-  - template.yaml
-  - ingress.yaml
   - deployment.yaml
+  - ingress.yaml
   - service-monitor.yaml
+  - template.yaml

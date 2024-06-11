@@ -47,17 +47,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_PASS
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_DB
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata #/data/pgdata

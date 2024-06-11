@@ -75,19 +75,19 @@ spec:
             # - name: KEYCLOAK_ADMIN
             #   valueFrom:
             #     secretKeyRef:
-            #       name: keycloak-secrets
+            #       name: keycloak
             #       key: KC_ADMN
             # - name: KEYCLOAK_ADMIN_PASSWORD
             #   valueFrom:
             #     secretKeyRef:
-            #       name: keycloak-secrets
+            #       name: keycloak
             #       key: KC_PASS
             - name: KC_PROXY
               value: edge
             - name: KC_HOSTNAME
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: DOMAIN
             - name: KC_HEALTH_ENABLED
               value: 'true'
@@ -102,19 +102,19 @@ spec:
             - name: KC_DB_URL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_DB
             - name: KC_DB_URL_PORT
               value: '5432'
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_USER
             - name: KC_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-secrets
+                  name: keycloak
                   key: PG_PASS
           ports:
             - name: http

@@ -57,7 +57,7 @@ spec:
       WORLD_NAME: 'The Neighborhood of Make-Believe'
       SERVER_PASS:
         secretKeyRef:
-          name: valheim-secrets
+          name: valheim
           key: password # minimum of 5 chars
 
       # BEPINEX: 'true'
