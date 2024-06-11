@@ -2,10 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 commonLabels:
-  app: alertmanager
+  app.kubernetes.io/part-of: alert-manager
 
 resources:
   - deployment.yaml
   - ingress.yaml
-  - service-monitor.yaml
   - template.yaml

@@ -4,6 +4,9 @@ metadata:
   name: alertmanager-templates
   namespace: monitoring
   creationTimestamp: null
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/name: alertmanager-templates
 data:
   default.tmpl: |
     {{ define "__alertmanager" }}AlertManager{{ end }}

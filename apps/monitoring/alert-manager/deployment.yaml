@@ -3,6 +3,9 @@ kind: Alertmanager
 metadata:
   name: alertmanager
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: alertmanager
 spec:
   replicas: 1
   externalUrl: 'https://alertmanager.powell.place'

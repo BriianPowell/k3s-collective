@@ -56,4 +56,4 @@ spec:
           value: https://acme-v02.api.letsencrypt.org/directory
       target:
         kind: ClusterIssuer
-        name: letsencrypt
+        name: lets-encrypt
