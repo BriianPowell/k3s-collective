@@ -4,7 +4,7 @@ metadata:
   name: lets-encrypt
   labels:
     app.kubernetes.io/component: cluster-issuer
-    app.kubernetes.io/name: letsencrypt
+    app.kubernetes.io/name: lets-encrypt
     app.kubernetes.io/part-of: cert-manager
 spec:
   acme:
@@ -27,6 +27,10 @@ kind: Certificate
 metadata:
   name: wildcard-powell-place
   namespace: cert-manager
+  labels:
+    app.kubernetes.io/component: certificate
+    app.kubernetes.io/name: wildcard-powell-place
+    app.kubernetes.io/part-of: cert-manager
 spec:
   secretName: wildcard-powell-place
   secretTemplate:
