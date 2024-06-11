@@ -55,13 +55,38 @@
 
 ### Helm Controller
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Kustomize Controller
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
 
 ### Notification Controller
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Sealed Secrets Controller
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Source Controller
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
 
 ## Game Logs
 
@@ -88,7 +113,14 @@
 
 ## Infrastructure Logs
 
-### Cert-Manager
+### Core DNS
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
+### Cert Manager
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
@@ -97,12 +129,12 @@
 | Webhook           | ✅   |       |
 | Grafana Dashboard | ✅   |       |
 
-## Cloudnative-PG
+### CloudnativePG
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | Manager           | ❌   |       |
-| Grafana Dashboard | ✅   |       |
+| Grafana Dashboard | ❌   |       |
 
 ### Crowdsec
 
@@ -112,7 +144,14 @@
 | Agent             | ✅   |       |
 | Grafana Dashboard | ✅   |       |
 
-### Nvidia-Device-Plugin
+### Local Path Provisioner
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
+### Nvidia Device Plugin
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
@@ -145,16 +184,60 @@
 
 ### Alert Manager
 
-### Loki
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
 
 ### Alloy
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Grafana
 
-### Prometheus
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
 
 ### kube-state-metrics
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Node Exporter
 
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
+### Loki
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Canary            | ❌   |       |
+| Chunks Cache      | ❌   |       |
+| Gateway           | ❌   |       |
+| Results Cache     | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
+### Prometheus
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
+
 ### Prometheus Operator
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ❌   |       |
+| Grafana Dashboard | ❌   |       |
