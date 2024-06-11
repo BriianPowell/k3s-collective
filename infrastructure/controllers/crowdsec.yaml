@@ -32,7 +32,7 @@ spec:
     container_runtime: containerd
     tls:
       enabled: true
-      bouncer:
+      crowdsec-bouncer:
         reflector:
           namespaces:
             - kube-system

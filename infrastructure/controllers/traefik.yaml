@@ -48,7 +48,7 @@ spec:
           port: websecure
       websecure:
         middlewares:
-          - kube-system-bouncer@kubernetescrd
+          - kube-system-crowdsec-bouncer@kubernetescrd
         tls:
           options: default
         forwardedHeaders:
@@ -86,7 +86,7 @@ spec:
         enabled: false
     experimental:
       plugins:
-        bouncer:
+        crowdsec-bouncer:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
           version: v1.2.0
     volumes:
