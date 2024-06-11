@@ -6,8 +6,8 @@ commonLabels:
 
 resources:
   - cron.yaml
-  - redis.yaml
-  - postgres.yaml
   - deployment.yaml
-  - middleware.yaml
   - ingress.yaml
+  - middleware.yaml
+  - postgres.yaml
+  - redis.yaml
