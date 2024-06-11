@@ -19,14 +19,14 @@ spec:
         create: false
         name: alloy
         key: config.content
-    serviceAccount:
-      additionalLabels:
-        app.kubernetes.io/component: service-account
-        app.kubernetes.io/name: alloy
-    controller:
-      podLabel:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: alloy
+    # serviceAccount:
+    #   additionalLabels:
+    #     app.kubernetes.io/component: service-account
+    #     app.kubernetes.io/name: alloy
+    # controller:
+    #   podLabel:
+    #     app.kubernetes.io/component: app
+    #     app.kubernetes.io/name: alloy
     serviceMonitor:
       enabled: true
       additionalLabels:
