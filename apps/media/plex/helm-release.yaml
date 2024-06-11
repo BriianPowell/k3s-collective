@@ -3,7 +3,7 @@
 # https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/values.yaml
 #
 
-# apiVersion: source.toolkit.fluxcd.io/v1beta2
+# apiVersion: source.toolkit.fluxcd.io/v1
 # kind: HelmRepository
 # metadata:
 #   name: plex-inc
@@ -14,7 +14,7 @@
 #   interval: 24h
 #   url: https://k8s-at-home.com/charts/
 # ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# apiVersion: helm.toolkit.fluxcd.io/v2
 # kind: HelmRelease
 # metadata:
 #   name: plex-server
