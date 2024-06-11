@@ -117,10 +117,10 @@ spec:
         curvePreferences:
           - CurveP521
           - CurveP384
-    tlsStore:
-      default:
-        defaultCertificate:
-          secretName: wildcard-powell-place
+    # tlsStore:
+    #   default:
+    #     defaultCertificate:
+    #       secretName: wildcard-powell-place
     resources:
       requests:
         cpu: 10m
