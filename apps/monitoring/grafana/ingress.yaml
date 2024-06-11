@@ -3,6 +3,9 @@ kind: IngressRoute
 metadata:
   name: grafana-dashboard-https
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: grafana-dashboard-https
 spec:
   entryPoints:
     - websecure
@@ -11,7 +14,7 @@ spec:
       kind: Rule
       services:
         - name: grafana
-          port: 80
+          port: service
       middlewares:
         - name: security
           namespace: kube-system

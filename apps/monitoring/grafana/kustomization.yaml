@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 commonLabels:
-  app: grafana
+  app.kubernetes.io/part-of: grafana
 
 resources:
+  - crds.yaml
   - helm-release.yaml
   - ingress.yaml
-  - crds.yaml
