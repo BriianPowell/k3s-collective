@@ -4,6 +4,8 @@ metadata:
   name: monitor-custom-rules
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: prometheus-rule
+    app.kubernetes.io/name: monitor-custom-rules
     role: alert-rules
 spec:
   groups:

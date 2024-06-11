@@ -4,6 +4,8 @@ metadata:
   name: traefik
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: traefik
     monitored-by: prometheus
 spec:
   selector:

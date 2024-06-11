@@ -4,6 +4,8 @@ metadata:
   name: v-rising
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: v-rising
     monitored-by: prometheus
 spec:
   selector:

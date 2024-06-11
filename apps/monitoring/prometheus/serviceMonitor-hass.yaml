@@ -4,6 +4,8 @@ metadata:
   name: homeassistant
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: homeassistant
     monitored-by: prometheus
 spec:
   selector:

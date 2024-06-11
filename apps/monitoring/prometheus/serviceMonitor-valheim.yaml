@@ -4,6 +4,8 @@ metadata:
   name: valheim
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: valheim
     monitored-by: prometheus
 spec:
   selector:

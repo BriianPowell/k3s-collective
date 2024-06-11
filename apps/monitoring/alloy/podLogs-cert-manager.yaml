@@ -4,13 +4,13 @@ metadata:
   name: cert-manager-controller
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: cert-manager-controller
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: cert-manager
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: cert-manager
@@ -21,13 +21,13 @@ metadata:
   name: cert-manager-cainjector
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: cert-manager-cainjector
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: cainjector
+      app.kubernetes.io/instance: cert-manager
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: cert-manager
@@ -38,13 +38,13 @@ metadata:
   name: cert-manager-webhook
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: cert-manager-webhook
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: cert-manager
       app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: cert-manager

@@ -14,7 +14,7 @@ spec:
       kind: Rule
       services:
         - name: alloy
-          port: 12345
+          port: http-metrics
       middlewares:
         - name: security
           namespace: kube-system

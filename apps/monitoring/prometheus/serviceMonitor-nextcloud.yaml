@@ -4,6 +4,8 @@ metadata:
   name: nextcloud
   namespace: monitoring
   labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: nextcloud
     monitored-by: prometheus
 spec:
   selector:
