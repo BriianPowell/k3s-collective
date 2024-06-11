@@ -4,8 +4,8 @@ metadata:
   name: reflector
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: reflector
 spec:
   selector:
     matchLabels:

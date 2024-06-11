@@ -4,13 +4,13 @@ metadata:
   name: nextcloud-app
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: nextcloud-app
 spec:
   selector:
     matchLabels:
-      app: nextcloud
-      component: app
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: nextcloud
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: nextcloud
@@ -21,13 +21,13 @@ metadata:
   name: nextcloud-cron
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: nextcloud-cron
 spec:
   selector:
     matchLabels:
-      app: nextcloud
-      component: cron
+      app.kubernetes.io/component: cron
+      app.kubernetes.io/name: nextcloud-cron
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: nextcloud
@@ -38,13 +38,13 @@ metadata:
   name: nextcloud-redis
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: nextcloud-redis
 spec:
   selector:
     matchLabels:
-      app: nextcloud
-      component: redis
+      app.kubernetes.io/component: redis
+      app.kubernetes.io/name: nextcloud-redis
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: nextcloud
@@ -55,13 +55,13 @@ metadata:
   name: nextcloud-db
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: nextcloud-db
 spec:
   selector:
     matchLabels:
-      app: nextcloud
-      component: postgressql-db
+      app.kubernetes.io/component: database
+      app.kubernetes.io/name: nextcloud-pgsql
   namespaceSelector:
     matchLabels:
       kubernetes.io/metadata.name: nextcloud

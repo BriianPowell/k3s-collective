@@ -4,8 +4,8 @@ metadata:
   name: keycloak-app
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: keycloak-app
 spec:
   selector:
     matchLabels:
@@ -21,8 +21,8 @@ metadata:
   name: keycloak-db
   namespace: monitoring
   labels:
-    app.kubernetes.io/instance: loki
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/component: pod-logs
+    app.kubernetes.io/name: keycloak-db
 spec:
   selector:
     matchLabels:
