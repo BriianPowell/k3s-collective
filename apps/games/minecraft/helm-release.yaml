@@ -3,7 +3,7 @@
 # https://github.com/gilesknap/k3s-minecraft
 #
 
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: minecraft-server-charts
@@ -14,7 +14,7 @@ spec:
   interval: 24h
   url: https://itzg.github.io/minecraft-server-charts/
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: minecraft-server
