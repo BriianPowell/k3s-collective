@@ -49,9 +49,14 @@ spec:
       deployment:
         replicas: 1
         labels:
-          logs: reloader
+          app.kubernetes.io/component: app
+          app.kuberenetes.io/name: reloader
         nodeSelector:
           kubernetes.io/hostname: abaddon
+      serviceAccount:
+        labels:
+          app.kubernetes.io/component: service-account
+          app.kubernetes.io/name: reloader
       podMonitor:
         enabled: true
         namespace: monitoring
