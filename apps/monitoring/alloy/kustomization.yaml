@@ -10,10 +10,12 @@ resources:
   - config.yaml
   - podLogs-cert-manager.yaml
   - podLogs-crowdsec.yaml
+  - podLogs-error-pages.yaml
   - podLogs-homeassistant.yaml
   - podLogs-keycloak.yaml
   - podLogs-minecraft.yaml
   - podLogs-nextcloud.yaml
+  - podLogs-nvidia.yaml
   - podLogs-pihole.yaml
   - podLogs-reflector.yaml
   - podLogs-reloader.yaml
