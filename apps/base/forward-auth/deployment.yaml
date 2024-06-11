@@ -71,7 +71,7 @@ spec:
             # - name: DOMAIN
             #   valueFrom:
             #     configMapKeyRef:
-            #       name: traefik-forward-auth-config
+            #       name: traefik-forward-auth
             #       key: DOMAINS
             - name: COOKIE_DOMAIN
               valueFrom:
