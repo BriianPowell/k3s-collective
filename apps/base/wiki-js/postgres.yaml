@@ -63,7 +63,8 @@ spec:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata #/data/pgdata
           ports:
-            - containerPort: 5432
+            - name: pgsql
+              containerPort: 5432
           resources:
             requests:
               cpu: 10m

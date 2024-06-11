@@ -25,3 +25,6 @@ spec:
         name: alertmanager-templates
   nodeSelector:
     kubernetes.io/hostname: abaddon
+  podMetadata:
+    labels:
+      app.kubernetes.io/component: app
