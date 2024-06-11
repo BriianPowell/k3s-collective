@@ -17,7 +17,7 @@ spec:
     - authorization:
         credentials:
           key: HASSTOKEN
-          name: prometheus-secrets
+          name: prometheus
       interval: 30s
       path: /api/prometheus
       port: http
