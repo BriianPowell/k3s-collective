@@ -4,7 +4,7 @@
 # https://www.crowdsec.net/blog/how-to-mitigate-security-threats-with-crowdsec-and-traefik
 #
 
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: crowdsec
@@ -13,7 +13,7 @@ spec:
   interval: 24h
   url: https://crowdsecurity.github.io/helm-charts
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: crowdsec
