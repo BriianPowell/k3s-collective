@@ -8,7 +8,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      monitor: pihole
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: pihole-web
   namespaceSelector:
     matchNames:
       - kube-system
