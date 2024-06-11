@@ -21,26 +21,26 @@ spec:
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-token
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: wildcard-powell-place
-  namespace: cert-manager
-spec:
-  secretName: wildcard-powell-place
-  secretTemplate:
-    annotations:
-      reflector.v1.k8s.emberstack.com/reflection-allowed: 'true'
-      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: 'true'
-      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: 'kube-system'
-      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: 'kube-system'
-  issuerRef:
-    name: lets-encrypt
-    kind: ClusterIssuer
-  commonName: powell.place
-  dnsNames:
-    - powell.place
-    - '*.powell.place'
-  privateKey:
-    rotationPolicy: Always
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: wildcard-powell-place
+#   namespace: cert-manager
+# spec:
+#   secretName: wildcard-powell-place
+#   secretTemplate:
+#     annotations:
+#       reflector.v1.k8s.emberstack.com/reflection-allowed: 'true'
+#       reflector.v1.k8s.emberstack.com/reflection-auto-enabled: 'true'
+#       reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: 'kube-system'
+#       reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: 'kube-system'
+#   issuerRef:
+#     name: lets-encrypt
+#     kind: ClusterIssuer
+#   commonName: powell.place
+#   dnsNames:
+#     - powell.place
+#     - '*.powell.place'
+#   privateKey:
+#     rotationPolicy: Always
