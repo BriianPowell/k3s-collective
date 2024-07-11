@@ -110,6 +110,8 @@ spec:
               path: /var/lib/grafana/dashboards/infra-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       app-logs:
+        error-pages:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/error-pages.json'
         home-assistant:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/home-assistant.json'
         keycloak:
@@ -136,6 +138,8 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reflector.json'
         reloader:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reloader.json'
+        flux-system:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/flux-system.json'
         traefik:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/traefik.json'
     grafana.ini:

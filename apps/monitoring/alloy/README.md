@@ -7,7 +7,7 @@
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Home Assistant
 
@@ -57,28 +57,28 @@
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Kustomize Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Notification Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Sealed Secrets Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Source Controller

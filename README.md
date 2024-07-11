@@ -36,6 +36,7 @@ flux bootstrap github \
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
 - [x] [Wiki.js](https://js.wiki/)
 - [x] [Pi-hole](https://pi-hole.net/)
+- [ ] [Cloudnative-PG]()
 
 ### Monitoring & Logging
 
