@@ -13,6 +13,7 @@ metadata:
     game: v-rising
 spec:
   interval: 24h
+  timeout: 5m
   url: oci://tccr.io/truecharts/v-rising
   ref:
     semver: '>= 6.0.4'
