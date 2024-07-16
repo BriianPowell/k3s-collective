@@ -4,19 +4,19 @@
 # https://github.com/StunlockStudios/vrising-dedicated-server-instructions/blob/master/1.0.x/INSTRUCTIONS.md
 #
 
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
 metadata:
   name: v-rising
   namespace: v-rising
   labels:
     game: v-rising
 spec:
+  type: oci
   interval: 24h
-  timeout: 5m
   url: oci://tccr.io/truecharts/v-rising
-  ref:
-    semver: '>= 6.0.4'
+  # ref:
+  #   semver: '>= 6.0.4'
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease

@@ -17,8 +17,9 @@ flux bootstrap github \
   --repository=k3s-collective \
   --branch=master \
   --path=clusters/k3s \
-  --personal \
-  --private
+  --personal=true \
+  --private=false
+  # --reconcile # use if repository already exists
 ```
 
 ## Infrastructure
