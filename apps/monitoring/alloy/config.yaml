@@ -26,7 +26,7 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
-    discorvery.kubernetes "crowdsec_pods" {
+    discovery.kubernetes "crowdsec_pods" {
       role = "pod"
 
       namespaces {
