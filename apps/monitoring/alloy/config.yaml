@@ -13,7 +13,29 @@ metadata:
     app.kubernetes.io/name: alloy
 data:
   config.content: |
-    loki.source.podlogs "collective" {
+    discovery.kubernetes "cert_manager_pods" {
+      role = "pod"
+
+      namespaces {
+        names = ["cert-manager"]
+      }
+    }
+
+    loki.source.kubernetes "cert_manager_pods" {
+      targets = discovery.kubernetes.cert_manager_pods.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    discorvery.kubernetes "crowdsec_pods" {
+      role = "pod"
+
+      namespaces {
+        names = ["crowdsec"]
+      }
+    }
+
+    loki.source.kubernetes "crowdsec_pods" {
+      targets = discovery.kubernetes.crowdsec_pods.targets
       forward_to = [loki.write.local.receiver]
     }
 
@@ -23,16 +45,11 @@ data:
       }
     }
 
-# discovery.kubernetes "pods" {
-#   role = "pod"
 
-#   selectors {
-#     role = "pod"
-#     label = "app.kubernetes.io/name"
-#   }
-# }
 
-# loki.source.kubernetes "pod" {
-#   targets = discovery.kubernetes.pods.targets
+
+
+
+# loki.source.podlogs "collective" {
 #   forward_to = [loki.write.local.receiver]
 # }
