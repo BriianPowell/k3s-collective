@@ -8,18 +8,18 @@ resources:
   - helm-release.yaml
   - ingress.yaml
   - config.yaml
-  - podLogs-cert-manager.yaml
-  - podLogs-crowdsec.yaml
-  - podLogs-error-pages.yaml
-  - podLogs-homeassistant.yaml
-  - podLogs-keycloak.yaml
-  - podLogs-minecraft.yaml
-  - podLogs-nextcloud.yaml
-  - podLogs-nvidia.yaml
-  - podLogs-pihole.yaml
-  - podLogs-reflector.yaml
-  - podLogs-reloader.yaml
-  - podLogs-traefik.yaml
-  - podLogs-v-rising.yaml
-  - podLogs-valheim.yaml
-  - podLogs-wiki-js.yaml
+  # - podLogs-cert-manager.yaml
+  # - podLogs-crowdsec.yaml
+  # - podLogs-error-pages.yaml
+  # - podLogs-homeassistant.yaml
+  # - podLogs-keycloak.yaml
+  # - podLogs-minecraft.yaml
+  # - podLogs-nextcloud.yaml
+  # - podLogs-nvidia.yaml
+  # - podLogs-pihole.yaml
+  # - podLogs-reflector.yaml
+  # - podLogs-reloader.yaml
+  # - podLogs-traefik.yaml
+  # - podLogs-v-rising.yaml
+  # - podLogs-valheim.yaml
+  # - podLogs-wiki-js.yaml
