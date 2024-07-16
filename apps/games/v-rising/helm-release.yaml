@@ -28,10 +28,15 @@ metadata:
     tier: backend
 spec:
   interval: 1h0m0s
-  chartRef:
-    kind: OCIRepository
-    name: v-rising
-    namespace: v-rising
+  chart:
+    spec:
+      chart: v-rising
+      sourceRef:
+        kind: HelmRepository
+        name: v-rising
+        namespace: v-rising
+      version: '>= 6.0.4'
+
   values:
     service:
       main:
