@@ -4,112 +4,112 @@
 # https://github.com/StunlockStudios/vrising-dedicated-server-instructions/blob/master/1.0.x/INSTRUCTIONS.md
 #
 
-# apiVersion: source.toolkit.fluxcd.io/v1beta2
-# kind: OCIRepository
-# metadata:
-#   name: v-rising
-#   namespace: v-rising
-#   labels:
-#     game: v-rising
-# spec:
-#   interval: 24h
-#   url: oci://tccr.io/truecharts/v-rising
-#   ref:
-#     semver: '>= 6.0.4'
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: v-rising-server
-#   namespace: v-rising
-#   labels:
-#     game: v-rising
-#     tier: backend
-# spec:
-#   interval: 1h0m0s
-#   chartRef:
-#     kind: OCIRepository
-#     name: v-rising
-#     namespace: v-rising
-#   values:
-#     service:
-#       main:
-#         type: LoadBalancer
-#         loadBalancerIP: 10.0.2.10
-#         ports:
-#           main:
-#             enabled: true
-#             port: 9876
-#             protocol: udp
-#             targetPort: 9876
-#         labels:
-#           app.kubernetes.io/component: service
-#       query:
-#         enabled: true
-#         type: LoadBalancer
-#         ports:
-#           query:
-#             enabled: true
-#             port: 9877
-#             protocol: udp
-#             targetPort: 9877
-#     workload:
-#       main:
-#         replicas: 1
-#         podSpec:
-#           containers:
-#             main:
-#               env:
-#                 USERNAME: ''
-#                 PASSWRD: ''
-#                 ENABLE_BEPINEX: ''
-#                 GAME_ID: '1829350'
-#                 VALIDATE: true
-#                 GAME_PARAMS: '-serverName The Neighborhood '
-#                 SERVER_NAME: The Neighborhood
-#                 VR_NAME: The Neighborhood # Name of the server. The name that shows up in server list.
-#                 WORLD_NAME: world5
-#                 VR_SAVE_NAME: world5 # Name of save file/directory. Must be a valid directory name.
-#                 VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
-#                 VR_PASSWORD: #  Set a password or leave empty.
-#                   secretKeyRef:
-#                     name: v-rising
-#                     key: password
-#                     expandObjectName: false
-#                 VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
-#                 VR_HIDEIPADDRESS: false # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
-#                 VR_MAX_USERS: 40 # Max number of concurrent players on server. The maximum number technically supported is 128.
-#                 VR_MAX_ADMINSP: 4 # Max number of admins to allow connect even when server is full.
-#                 VR_FPS: 30 # Target FPS for server.
-#                 VR_LOWER_FPS_WHEN_EMPTY: true # Run the server at a lower framerate target when no players are logged in.
-#                 VR_LOWER_FPS_WHEN_EMPTY_VALUE: 5 # Set the framerate target for when LowerFPSWhenEmpty is active.
-#                 VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
-#                 VR_LIST_ON_STEAM: true # Register on Steam list server or not.
-#                 VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
-#                 VR_DIFFICULTY_PRESET: Difficulty_Brutal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
-#                 VR_SAVE_COUNT: 10 # Number of autosaves to keep.
-#                 VR_SAVE_INTERVAL: 120 # Interval in seconds between each auto save.
-#                 VR_LAN_MODE: false # Enable LAN mode.
-#                 VR_RESET_DAYS_INTERVAL: 0 # Days between scheduled resets/wipes. When the server starts, and is about to load a save file, it checks if it is time to reset and start a new save file. The previous save file is backed up. Defaults to 0, which means the feature is disabled.
-#                 VR_RCON_ENABLED: false # Enable or disable Rcon functionality.
-#                 VR_RCON_PORT: 25575 # Rcon TCP port.
-#                 VR_RCON_PASSWORD: '' # Password to access RCON.
-#               probes:
-#                 liveness:
-#                   enabled: false
-#                 readiness:
-#                   enabled: false
-#                 startup:
-#                   enabled: false
-#     persistence:
-#       serverfiles:
-#         enabled: true
-#         type: pvc
-#         existingClaim: v-rising-pvc
-#         mountPath: /serverdata/serverfiles
-#       steamcmd:
-#         enabled: true
-#         mountPath: /serverdata/steamcmd
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: v-rising
+  namespace: v-rising
+  labels:
+    game: v-rising
+spec:
+  interval: 24h
+  url: oci://tccr.io/truecharts/v-rising
+  ref:
+    semver: '>= 6.0.4'
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: v-rising-server
+  namespace: v-rising
+  labels:
+    game: v-rising
+    tier: backend
+spec:
+  interval: 1h0m0s
+  chartRef:
+    kind: OCIRepository
+    name: v-rising
+    namespace: v-rising
+  values:
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 10.0.2.10
+        ports:
+          main:
+            enabled: true
+            port: 9876
+            protocol: udp
+            targetPort: 9876
+        labels:
+          app.kubernetes.io/component: service
+      query:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          query:
+            enabled: true
+            port: 9877
+            protocol: udp
+            targetPort: 9877
+    workload:
+      main:
+        replicas: 1
+        podSpec:
+          containers:
+            main:
+              env:
+                USERNAME: ''
+                PASSWRD: ''
+                ENABLE_BEPINEX: ''
+                GAME_ID: '1829350'
+                VALIDATE: true
+                GAME_PARAMS: '-serverName The Neighborhood '
+                SERVER_NAME: The Neighborhood
+                VR_NAME: The Neighborhood # Name of the server. The name that shows up in server list.
+                WORLD_NAME: world5
+                VR_SAVE_NAME: world5 # Name of save file/directory. Must be a valid directory name.
+                VR_DESCRIPTION: So you want to suck some blood? # Short server description. Shows up in details panel of server list when entry is selected. Also printed in chat when connecting
+                VR_PASSWORD: #  Set a password or leave empty.
+                  secretKeyRef:
+                    name: v-rising
+                    key: password
+                    expandObjectName: false
+                VR_SECURE: true # Enable VAC protection on server. VAC banned clients will not be able to connect.
+                VR_HIDEIPADDRESS: false # When listing server on EOS server list, the IP address will not be shown/advertised. Players will connect via relay servers.
+                VR_MAX_USERS: 40 # Max number of concurrent players on server. The maximum number technically supported is 128.
+                VR_MAX_ADMINSP: 4 # Max number of admins to allow connect even when server is full.
+                VR_FPS: 30 # Target FPS for server.
+                VR_LOWER_FPS_WHEN_EMPTY: true # Run the server at a lower framerate target when no players are logged in.
+                VR_LOWER_FPS_WHEN_EMPTY_VALUE: 5 # Set the framerate target for when LowerFPSWhenEmpty is active.
+                VR_LIST_ON_EOS: true # Register on EOS list server or not. The client looks for servers here by default, due to additional features available.
+                VR_LIST_ON_STEAM: true # Register on Steam list server or not.
+                VR_PRESET: StandardPvP #  Load a ServerGameSettings preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameSettingPresets folder.
+                VR_DIFFICULTY_PRESET: Difficulty_Brutal # Load a GameDifficulty preset. These presets can be found in the VRisingServer_Data/StreamingAssets/GameDifficultyPresets folder.
+                VR_SAVE_COUNT: 10 # Number of autosaves to keep.
+                VR_SAVE_INTERVAL: 120 # Interval in seconds between each auto save.
+                VR_LAN_MODE: false # Enable LAN mode.
+                VR_RESET_DAYS_INTERVAL: 0 # Days between scheduled resets/wipes. When the server starts, and is about to load a save file, it checks if it is time to reset and start a new save file. The previous save file is backed up. Defaults to 0, which means the feature is disabled.
+                VR_RCON_ENABLED: false # Enable or disable Rcon functionality.
+                VR_RCON_PORT: 25575 # Rcon TCP port.
+                VR_RCON_PASSWORD: '' # Password to access RCON.
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
+    persistence:
+      serverfiles:
+        enabled: true
+        type: pvc
+        existingClaim: v-rising-pvc
+        mountPath: /serverdata/serverfiles
+      steamcmd:
+        enabled: true
+        mountPath: /serverdata/steamcmd
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
