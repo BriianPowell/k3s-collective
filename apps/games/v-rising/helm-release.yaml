@@ -7,14 +7,14 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: v-rising
-  namespace: v-rising
+  name: truecharts
+  namespace: kube-system
   labels:
     game: v-rising
 spec:
   type: oci
   interval: 24h
-  url: oci://tccr.io/truecharts/v-rising
+  url: oci://tccr.io/truecharts
 ---
 apiVersion: source.toolkit.fluxcd/v1
 kind: HelmChart
@@ -28,8 +28,8 @@ spec:
   chart: v-rising
   sourceRef:
     kind: HelmRepository
-    name: v-rising
-    namespace: v-rising
+    name: truecharts
+    namespace: kube-system
   version: '>= 6.0.4'
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
