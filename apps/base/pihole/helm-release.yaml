@@ -27,7 +27,7 @@ spec:
         name: pihole
         namespace: kube-system
       version: '>=2.22.0 <3.0.0'
-  values:
+  values: # https://github.com/MoJo2600/pihole-kubernetes/blob/main/example/values.yaml
     serviceWeb:
       enabled: true
       type: ClusterIP
@@ -78,7 +78,6 @@ spec:
         cpu: 100m
         memory: 128Mi
     adlists:
-      # https://github.com/MoJo2600/pihole-kubernetes/blob/main/example/values.yaml
       - https://hosts-file.net/grm.txt
       - https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/minimalhosts
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/data/KADhosts/hosts
@@ -399,6 +398,23 @@ spec:
       - www.ow.ly
       - amzn.to
       - amzn.com
+      # honey
+      - joinhoney.com*$document
+      - joinhoney.com*$elemhide
+      - joinhoney.com^*
+      - joinhoney.com^*$~third-party
+      - honey.io^*
+      # rakuten
+      - rakuten.com*$document
+      - rakuten.com*$elemhide
+      - datadoghq-browser-agent.com*$domain=rakuten.com
+      - datadoghq.com*$domain=rakuten.com
+      - segment.com*$domain=rakuten.com
+      - optimizely.com*$domain=rakuten.com
+      - rakuten.com^*
+      - rakuten.com^*$~third-party
+      # googleadservices
+      # - googleadservices.com
     # ftl:
     #   BLOCK_ICLOUD_PR: true
     monitoring:
