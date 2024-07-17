@@ -113,11 +113,20 @@
 
 ## Infrastructure Logs
 
-### Core DNS
+### Kube-System
+
+#### Core DNS
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
+| Grafana Dashboard | ❌   |       |
+
+#### Local Path Provisioner
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Cert Manager
@@ -133,7 +142,7 @@
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| Manager           | ❌   |       |
+| Manager           | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Crowdsec
@@ -143,13 +152,6 @@
 | LAPI              | ✅   |       |
 | Agent             | ✅   |       |
 | Grafana Dashboard | ✅   |       |
-
-### Local Path Provisioner
-
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ❌   |       |
-| Grafana Dashboard | ❌   |       |
 
 ### Nvidia Device Plugin
 

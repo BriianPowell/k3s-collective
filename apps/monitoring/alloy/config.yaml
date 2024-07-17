@@ -525,6 +525,64 @@ data:
     }
 
     // ========================================
+    // Kube-System
+    // CoreDNS
+    discovery.kubernetes "core_dns" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "k8s-app=kube-dns"
+      }
+    }
+
+    loki.source.kubernetes "core_dns" {
+      targets = discovery.kubernetes.core_dns.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Local Path Provisioner
+    discovery.kubernetes "local_path_provisioner" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=local-path-provisioner"
+      }
+    }
+
+    loki.source.kubernetes "local_path_provisioner" {
+      targets = discovery.kubernetes.local_path_provisioner.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // CloudNative PG
+    // Application
+    discovery.kubernetes "cloudnative_pg" {
+      role = "pod"
+
+      namespaces {
+        names = ["cnpg-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=cnpg"
+      }
+    }
+
+    loki.source.kubernetes "cloudnative_pg" {
+      targets = discovery.kubernetes.cloudnative_pg.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Minecraft Server
     discovery.kubernetes "minecraft_server" {
       role = "pod"
