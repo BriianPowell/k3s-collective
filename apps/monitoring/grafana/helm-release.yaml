@@ -114,6 +114,8 @@ spec:
             type: file
             disableDeletion: false
             editable: true
+            options:
+              path: /var/lib/grafana/dashboards/monitoring-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       app-logs:
         error-pages:

@@ -138,12 +138,12 @@
 | Webhook           | ✅   |       |
 | Grafana Dashboard | ✅   |       |
 
-### CloudnativePG
+### CloudNative PG
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | Manager           | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Crowdsec
 
