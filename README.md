@@ -33,20 +33,21 @@ flux bootstrap github \
 - [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
 - [x] [Reloader](https://github.com/stakater/Reloader)
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
-- [x] [HomeAssistant](https://www.home-assistant.io/)
+- [x] [HomeAssistant](https://github.com/home-assistant)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
-- [x] [Wiki.js](https://js.wiki/)
-- [x] [Pi-hole](https://pi-hole.net/)
-- [ ] [Cloudnative-PG]()
+- [x] [Wiki.js](https://github.com/requarks/wiki)
+- [x] [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
+- [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
 
 ### Monitoring & Logging
 
-- [x] [Prometheus](https://prometheus.io/)
+- [x] [Prometheus](https://github.com/prometheus/prometheus)
 - [x] [Grafana](https://github.com/grafana/grafana)
-- [x] [alertmanager](https://github.com/prometheus/alertmanager)
-- [x] [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics)
-- [x] [node_exporter](https://github.com/prometheus/node_exporter)
-- [x] [Loki](https://grafana.com/docs/loki/latest/)
+- [x] [Alert Manager](https://github.com/prometheus/alertmanager)
+- [x] [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics)
+- [x] [Node Exporter](https://github.com/prometheus/node_exporter)
+- [x] [Loki](https://github.com/grafana/loki)
+- [x] [Alloy](https://github.com/grafana/alloy)
 
 ### Security
 
