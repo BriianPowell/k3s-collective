@@ -202,6 +202,44 @@ data:
     }
 
     // ========================================
+    // Home Assistant
+    // Application
+    discovery.kubernetes "homeassistant_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["homeassistant"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=app"
+      }
+    }
+
+    loki.source.kubernetes "homeassistant_app" {
+      targets = discovery.kubernetes.homeassistant_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Database
+    discovery.kubernetes "homeassistant_db" {
+      role = "pod"
+
+      namespaces {
+        names = ["homeassistant"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=database"
+      }
+    }
+
+    loki.source.kubernetes "homeassistant_db" {
+      targets = discovery.kubernetes.homeassistant_db.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
     loki.write "local" {
