@@ -108,6 +108,12 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/infra-logs
+          - name: monitoring-logs
+            orgId: 1
+            folder: Monitoring Logs
+            type: file
+            disableDeletion: false
+            editable: true
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       app-logs:
         error-pages:
@@ -148,6 +154,21 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reloader.json'
         traefik:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/traefik.json'
+      monitoring-logs:
+        alert-manager:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/alert-manager.json'
+        alloy:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/alloy.json'
+        grafana:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/grafana.json'
+        kube-state-metrics:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/kube-state-metrics.json'
+        loki:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/loki.json'
+        node-exporter:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/node-exporter.json'
+        prometheus:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/prometheus.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/

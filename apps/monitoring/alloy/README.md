@@ -189,35 +189,28 @@
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Alloy
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Grafana
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### kube-state-metrics
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
-
-### Node Exporter
-
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Loki
 
@@ -228,18 +221,26 @@
 | Chunks Cache      | ✅   |       |
 | Gateway           | ✅   |       |
 | Results Cache     | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
+
+### Node Exporter
+
+| Service           | Logs | Notes |
+| ----------------- | ---- | ----- |
+| App               | ✅   |       |
+| Grafana Dashboard | ✅   |       |
+
 
 ### Prometheus
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Prometheus Operator
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
