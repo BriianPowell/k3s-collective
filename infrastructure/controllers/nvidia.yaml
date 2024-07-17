@@ -42,11 +42,6 @@ spec:
               passDeviceSpecs: false
               deviceListStrategy: envvar
               deviceIDStrategy: uuid
-    migStrategy: none
-    failOnInitError: true
-    deviceListStrategy: envvar
-    deviceIDStrategy: uuid
-    nvidiaDriverRoot: '/' #'/run/current-system/sw/bin'
     gdsEnabled: false
     mofedEnabled: false
     compatWithCPUManager: false
