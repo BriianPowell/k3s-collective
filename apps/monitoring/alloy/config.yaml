@@ -108,6 +108,100 @@ data:
     }
 
     // ========================================
+    // Error Pages
+    // Application
+    discovery.kubernetes "error_pages" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=error-pages"
+      }
+    }
+
+    loki.source.kubernetes "error_pages" {
+      targets = discovery.kubernetes.error_pages.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Flux System
+    // Helm Controller
+    discovery.kubernetes "flux_system_helm_controller" {
+      role = "pod"
+
+      namespaces {
+        names = ["flux-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=helm-controller"
+      }
+    }
+
+    loki.source.kubernetes "flux_system_helm_controller" {
+      targets = discovery.kubernetes.flux_system_helm_controller.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Kustomize Controller
+    discovery.kubernetes "flux_system_kustomize_controller" {
+      role = "pod"
+
+      namespaces {
+        names = ["flux-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=kustomize-controller"
+      }
+    }
+
+    loki.source.kubernetes "flux_system_kustomize_controller" {
+      targets = discovery.kubernetes.flux_system_kustomize_controller.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Notification Controller
+    discovery.kubernetes "flux_system_notification_controller" {
+      role = "pod"
+
+      namespaces {
+        names = ["flux-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=notification-controller"
+      }
+    }
+
+    loki.source.kubernetes "flux_system_notification_controller" {
+      targets = discovery.kubernetes.flux_system_notification_controller.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Sealed Secrets Controller
+    discovery.kubernetes "flux_system_sealed_secrets_controller" {
+      role = "pod"
+
+      namespaces {
+        names = ["flux-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=sealed-secrets-controller"
+      }
+    }
+
+    loki.source.kubernetes "flux_system_sealed_secrets_controller" {
+      targets = discovery.kubernetes.flux_system_sealed_secrets_controller.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
     loki.write "local" {
