@@ -5,6 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: grafana
 
 resources:
-  - crds.yaml
   - helm-release.yaml
   - ingress.yaml
