@@ -120,14 +120,14 @@
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 #### Local Path Provisioner
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Cert Manager
 
@@ -188,58 +188,58 @@
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Alloy
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Grafana
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### kube-state-metrics
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Node Exporter
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Loki
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
-| Canary            | ❌   |       |
-| Chunks Cache      | ❌   |       |
-| Gateway           | ❌   |       |
-| Results Cache     | ❌   |       |
+| App               | ✅   |       |
+| Canary            | ✅   |       |
+| Chunks Cache      | ✅   |       |
+| Gateway           | ✅   |       |
+| Results Cache     | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Prometheus
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |
 
 ### Prometheus Operator
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
+| App               | ✅   |       |
 | Grafana Dashboard | ❌   |       |

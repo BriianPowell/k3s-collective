@@ -640,6 +640,226 @@ data:
     }
 
     // ========================================
+    // Monitoring Logs
+    // ========================================
+
+    // Alert Manager
+    discovery.kubernetes "alert_manager" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=alertmanager"
+      }
+    }
+
+    loki.source.kubernetes "alert_manager" {
+      targets = discovery.kubernetes.alert_manager.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Alloy
+    discovery.kubernetes "alloy" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=alloy"
+      }
+    }
+
+    loki.source.kubernetes "alloy" {
+      targets = discovery.kubernetes.alloy.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Grafana
+    discovery.kubernetes "grafana" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=grafana"
+      }
+    }
+
+    loki.source.kubernetes "grafana" {
+      targets = discovery.kubernetes.grafana.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Kube State Metrics
+    discovery.kubernetes "kube_state_metrics" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=kube-state-metrics"
+      }
+    }
+
+    loki.source.kubernetes "kube_state_metrics" {
+      targets = discovery.kubernetes.kube_state_metrics.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Node Exporter
+    discovery.kubernetes "node_exporter" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=prometheus-node-exporter"
+      }
+    }
+
+    loki.source.kubernetes "node_exporter" {
+      targets = discovery.kubernetes.node_exporter.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Loki Application
+    discovery.kubernetes "loki_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=single-binary"
+      }
+    }
+
+    loki.source.kubernetes "loki_app" {
+      targets = discovery.kubernetes.loki_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Loki Canary
+    discovery.kubernetes "loki_canary" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=canary"
+      }
+    }
+
+    loki.source.kubernetes "loki_canary" {
+      targets = discovery.kubernetes.loki_canary.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Loki Chunks Cache
+    discovery.kubernetes "loki_chunks_cache" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=memcached-chunks-cache"
+      }
+    }
+
+    loki.source.kubernetes "loki_chunks_cache" {
+      targets = discovery.kubernetes.loki_chunks_cache.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Loki Gateway
+    discovery.kubernetes "loki_gateway" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=gateway"
+      }
+    }
+
+    loki.source.kubernetes "loki_gateway" {
+      targets = discovery.kubernetes.loki_gateway.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Loki Results Cache
+    discovery.kubernetes "loki_results_cache" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=memcached-results-cache"
+      }
+    }
+
+    loki.source.kubernetes "loki_results_cache" {
+      targets = discovery.kubernetes.loki_results_cache.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Prometheus
+    discovery.kubernetes "prometheus {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=monitor-prometheus"
+      }
+    }
+
+    loki.source.kubernetes "prometheus" {
+      targets = discovery.kubernetes.prometheus.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Prometheus Operator
+    discovery.kubernetes "prometheus_operator" {
+      role = "pod"
+
+      namespaces {
+        names = ["monitoring"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=prometheus-operator"
+      }
+    }
+
+    loki.source.kubernetes "prometheus_operator" {
+      targets = discovery.kubernetes.prometheus_operator.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
     loki.write "local" {

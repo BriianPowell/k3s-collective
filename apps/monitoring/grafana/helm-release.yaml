@@ -132,6 +132,8 @@ spec:
       infra-logs:
         cert-manager:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/cert-manager.json'
+        cloudnative-pg:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/cloudnative-pg.json'
         crowdsec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/crowdsec.json'
         flux-system:
