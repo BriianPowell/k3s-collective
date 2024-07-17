@@ -149,11 +149,9 @@ spec:
           volumeMounts:
             - name: nextcloud-storage
               mountPath: /var/www/html
-      initContainers:
         - name: nextcloud-exporter
           image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           env:
             - name: NEXTCLOUD_SERVER
               value: https://nextcloud.powell.place
