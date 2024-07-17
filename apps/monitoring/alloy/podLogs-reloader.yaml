@@ -1,16 +1,16 @@
-apiVersion: monitoring.grafana.com/v1alpha2
-kind: PodLogs
-metadata:
-  name: reloader
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/component: pod-logs
-    app.kubernetes.io/name: reloader
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: app
-      app.kubernetes.io/name: reloader
-  namespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: reloader
+# apiVersion: monitoring.grafana.com/v1alpha2
+# kind: PodLogs
+# metadata:
+#   name: reloader
+#   namespace: monitoring
+#   labels:
+#     app.kubernetes.io/component: pod-logs
+#     app.kubernetes.io/name: reloader
+# spec:
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/component: app
+#       app.kubernetes.io/name: reloader
+#   namespaceSelector:
+#     matchLabels:
+#       kubernetes.io/metadata.name: reloader

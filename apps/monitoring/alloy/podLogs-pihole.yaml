@@ -1,15 +1,15 @@
-apiVersion: monitoring.grafana.com/v1alpha2
-kind: PodLogs
-metadata:
-  name: pihole
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/component: pod-logs
-    app.kubernetes.io/name: pihole
-spec:
-  selector:
-    matchLabels:
-      app: pihole
-  namespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: kube-system
+# apiVersion: monitoring.grafana.com/v1alpha2
+# kind: PodLogs
+# metadata:
+#   name: pihole
+#   namespace: monitoring
+#   labels:
+#     app.kubernetes.io/component: pod-logs
+#     app.kubernetes.io/name: pihole
+# spec:
+#   selector:
+#     matchLabels:
+#       app: pihole
+#   namespaceSelector:
+#     matchLabels:
+#       kubernetes.io/metadata.name: kube-system

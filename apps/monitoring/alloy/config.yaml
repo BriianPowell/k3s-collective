@@ -278,6 +278,292 @@ data:
     }
 
     // ========================================
+    // NextCloud
+    // Application
+    discovery.kubernetes "nextcloud_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["nextcloud"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=app"
+      }
+    }
+
+    loki.source.kubernetes "nextcloud_app" {
+      targets = discovery.kubernetes.nextcloud_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Exporter
+    // Need to implement
+
+    // Cron
+    discovery.kubernetes "nextcloud_cron" {
+      role = "pod"
+
+      namespaces {
+        names = ["nextcloud"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=cron"
+      }
+    }
+
+    loki.source.kubernetes "nextcloud_cron" {
+      targets = discovery.kubernetes.nextcloud_cron.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Redis
+    discovery.kubernetes "nextcloud_redis" {
+      role = "pod"
+
+      namespaces {
+        names = ["nextcloud"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=redis"
+      }
+    }
+
+    loki.source.kubernetes "nextcloud_redis" {
+      targets = discovery.kubernetes.nextcloud_redis.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Database
+    discovery.kubernetes "nextcloud_db" {
+      role = "pod"
+
+      namespaces {
+        names = ["nextcloud"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=database"
+      }
+    }
+
+    loki.source.kubernetes "nextcloud_db" {
+      targets = discovery.kubernetes.nextcloud_db.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Nvidia Device Plugin
+    discovery.kubernetes "nvidia_device_plugin" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=nvidia-device-plugin"
+      }
+    }
+
+    loki.source.kubernetes "nvidia_device_plugin" {
+      targets = discovery.kubernetes.nvidia_device_plugin.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Pihole
+    discovery.kubernetes "pihole" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=pihole"
+      }
+    }
+
+    loki.source.kubernetes "pihole" {
+      targets = discovery.kubernetes.pihole.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Reflector
+    discovery.kubernetes "reflector" {
+      role = "pod"
+
+      namespaces {
+        names = ["reflector"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=reflector"
+      }
+    }
+
+    loki.source.kubernetes "reflector" {
+      targets = discovery.kubernetes.reflector.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Reloader
+    discovery.kubernetes "reloader" {
+      role = "pod"
+
+      namespaces {
+        names = ["reloader"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=app"
+      }
+    }
+
+    loki.source.kubernetes "reloader" {
+      targets = discovery.kubernetes.reloader.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Traefik
+    // Forward Auth
+    discovery.kubernetes "traefik_forward_auth" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=traefik-forward-auth"
+      }
+    }
+
+    loki.source.kubernetes "traefik_forward_auth" {
+      targets = discovery.kubernetes.traefik_forward_auth.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Application
+    discovery.kubernetes "traefik_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=traefik"
+      }
+    }
+
+    loki.source.kubernetes "traefik_app" {
+      targets = discovery.kubernetes.traefik_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Wiki-JS
+    // Application
+    discovery.kubernetes "wiki_js_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["wiki"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=app"
+      }
+    }
+
+    loki.source.kubernetes "wiki_js_app" {
+      targets = discovery.kubernetes.wiki_js_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Database
+    discovery.kubernetes "wiki_js_db" {
+      role = "pod"
+
+      namespaces {
+        names = ["wiki"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=database"
+      }
+    }
+
+    loki.source.kubernetes "wiki_js_db" {
+      targets = discovery.kubernetes.wiki_js_db.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Minecraft Server
+    discovery.kubernetes "minecraft_server" {
+      role = "pod"
+
+      namespaces {
+        names = ["minecraft"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=minecraft-server-minecraft"
+      }
+    }
+
+    loki.source.kubernetes "minecraft_server" {
+      targets = discovery.kubernetes.minecraft_server.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Valheim Server
+    discovery.kubernetes "valheim_server" {
+      role = "pod"
+
+      namespaces {
+        names = ["valheim"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=valheim-server"
+      }
+    }
+
+    loki.source.kubernetes "valheim_server" {
+      targets = discovery.kubernetes.valheim_server.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // V-Rising Server
+    discovery.kubernetes "v_rising_server" {
+      role = "pod"
+
+      namespaces {
+        names = ["v-rising"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/instance=v-rising-server"
+      }
+    }
+
+    loki.source.kubernetes "v_rising_server" {
+      targets = discovery.kubernetes.v_rising_server.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
     loki.write "local" {

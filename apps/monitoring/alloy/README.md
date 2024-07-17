@@ -156,7 +156,7 @@
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Reflector
 

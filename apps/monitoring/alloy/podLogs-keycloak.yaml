@@ -1,33 +1,33 @@
-apiVersion: monitoring.grafana.com/v1alpha2
-kind: PodLogs
-metadata:
-  name: keycloak-app
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/component: pod-logs
-    app.kubernetes.io/name: keycloak-app
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: app
-      app.kubernetes.io/name: keycloak
-  namespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: keycloak
----
-apiVersion: monitoring.grafana.com/v1alpha2
-kind: PodLogs
-metadata:
-  name: keycloak-db
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/component: pod-logs
-    app.kubernetes.io/name: keycloak-db
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: database
-      app.kubernetes.io/name: keycloak-pgsql
-  namespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: keycloak
+# apiVersion: monitoring.grafana.com/v1alpha2
+# kind: PodLogs
+# metadata:
+#   name: keycloak-app
+#   namespace: monitoring
+#   labels:
+#     app.kubernetes.io/component: pod-logs
+#     app.kubernetes.io/name: keycloak-app
+# spec:
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/component: app
+#       app.kubernetes.io/name: keycloak
+#   namespaceSelector:
+#     matchLabels:
+#       kubernetes.io/metadata.name: keycloak
+# ---
+# apiVersion: monitoring.grafana.com/v1alpha2
+# kind: PodLogs
+# metadata:
+#   name: keycloak-db
+#   namespace: monitoring
+#   labels:
+#     app.kubernetes.io/component: pod-logs
+#     app.kubernetes.io/name: keycloak-db
+# spec:
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/component: database
+#       app.kubernetes.io/name: keycloak-pgsql
+#   namespaceSelector:
+#     matchLabels:
+#       kubernetes.io/metadata.name: keycloak
