@@ -13,43 +13,113 @@ metadata:
     app.kubernetes.io/name: alloy
 data:
   config.content: |
-    discovery.kubernetes "cert_manager_pods" {
+    // ========================================
+    // Cert Manager
+    // Controller
+    discovery.kubernetes "cert_manager_controller" {
       role = "pod"
 
       namespaces {
         names = ["cert-manager"]
       }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=controller"
+      }
     }
 
-    loki.source.kubernetes "cert_manager_pods" {
-      targets = discovery.kubernetes.cert_manager_pods.targets
+    loki.source.kubernetes "cert_manager_controller" {
+      targets = discovery.kubernetes.cert_manager_controller.targets
       forward_to = [loki.write.local.receiver]
     }
 
-    discovery.kubernetes "crowdsec_pods" {
+    // CaInjector
+    discovery.kubernetes "cert_manager_cainjector" {
+      role = "pod"
+
+      namespaces {
+        names = ["cert-manager"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=cainjector"
+      }
+    }
+
+    loki.source.kubernetes "cert_manager_cainjector" {
+      targets = discovery.kubernetes.cert_manager_cainjector.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Webhook
+    discovery.kubernetes "cert_manager_webhook" {
+      role = "pod"
+
+      namespaces {
+        names = ["cert-manager"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=webhook"
+      }
+    }
+
+    loki.source.kubernetes "cert_manager_webhook" {
+      targets = discovery.kubernetes.cert_manager_webhook.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // CrowdSec
+    // Agent Service
+    discovery.kubernetes "crowdsec_agent" {
       role = "pod"
 
       namespaces {
         names = ["crowdsec"]
       }
+      selectors {
+        role = "pod"
+        label = "type=agent"
+      }
     }
 
-    loki.source.kubernetes "crowdsec_pods" {
-      targets = discovery.kubernetes.crowdsec_pods.targets
+    loki.source.kubernetes "crowdsec_agent" {
+      targets = discovery.kubernetes.crowdsec_agent.targets
       forward_to = [loki.write.local.receiver]
     }
 
+    // LAPI Service
+    discovery.kubernetes "crowdsec_lapi" {
+      role = "pod"
+
+      namespaces {
+        names = ["crowdsec"]
+      }
+      selectors {
+        role = "pod"
+        label = "type=lapi"
+      }
+    }
+
+    loki.source.kubernetes "crowdsec_lapi" {
+      targets = discovery.kubernetes.crowdsec_lapi.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
+    // Loki Write Source
+    // ========================================
     loki.write "local" {
       endpoint {
         url = "http://loki.monitoring:3100/loki/api/v1/push"
       }
     }
 
-
-
-
-
-
-# loki.source.podlogs "collective" {
-#   forward_to = [loki.write.local.receiver]
-# }
+    // ========================================
+    // Configuration Blocks
+    // ========================================
+    logging {
+      level = "info"
+      format = "logfmt"
+    }
