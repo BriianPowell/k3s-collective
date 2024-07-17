@@ -58,35 +58,35 @@
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Kustomize Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Notification Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Sealed Secrets Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
 | App               | ✅   |       |
-| Grafana Dashboard | ❌   |       |
+| Grafana Dashboard | ✅   |       |
 
 ### Source Controller
 
 | Service           | Logs | Notes |
 | ----------------- | ---- | ----- |
-| App               | ❌   |       |
-| Grafana Dashboard | ❌   |       |
+| App               | ✅   |       |
+| Grafana Dashboard | ✅   |       |
 
 ## Game Logs
 

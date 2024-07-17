@@ -192,7 +192,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app=sealed-secrets-controller"
+        label = "app.kubernetes.io/instance=sealed-secrets-controller"
       }
     }
 
