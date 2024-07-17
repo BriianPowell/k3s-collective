@@ -136,6 +136,8 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/crowdsec.json'
         flux-system:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/flux-system.json'
+        kube-system:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/kube-system.json'
         nvidia-device-plugin:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/nvidia-device-plugin.json'
         reflector:

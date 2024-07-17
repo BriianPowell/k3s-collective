@@ -30,7 +30,7 @@
 | Service           | Logs | Notes                                                      |
 | ----------------- | ---- | ---------------------------------------------------------- |
 | App               | ✅   |                                                            |
-| Exporter          | ❌   | Can't figure out how to get the exporter logs from the pod |
+| Exporter          | ❌   | Can't figure out how to get the exporter logs from the pod  |
 | cron              | ✅   |                                                            |
 | redis             | ✅   |                                                            |
 | postgres          | ✅   |                                                            |
