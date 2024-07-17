@@ -824,7 +824,7 @@ data:
     }
 
     // Prometheus
-    discovery.kubernetes "prometheus {
+    discovery.kubernetes "prometheus" {
       role = "pod"
 
       namespaces {
