@@ -201,6 +201,24 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
+    // Source Controller
+    discovery.kubernetes "flux_system_source_controller" {
+      role = "pod"
+
+      namespaces {
+        names = ["flux-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app=source-controller"
+      }
+    }
+
+    loki.source.kubernetes "flux_system_source_controller" {
+      targets = discovery.kubernetes.flux_system_source_controller.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
     // ========================================
     // Home Assistant
     // Application
