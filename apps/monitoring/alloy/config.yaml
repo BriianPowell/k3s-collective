@@ -240,6 +240,44 @@ data:
     }
 
     // ========================================
+    // KeyCloak
+    // Application
+    discovery.kubernetes "keycloak_app" {
+      role = "pod"
+
+      namespaces {
+        names = ["keycloak"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=app"
+      }
+    }
+
+    loki.source.kubernetes "keycloak_app" {
+      targets = discovery.kubernetes.keycloak_app.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Database
+    discovery.kubernetes "keycloak_db" {
+      role = "pod"
+
+      namespaces {
+        names = ["keycloak"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/component=database"
+      }
+    }
+
+    loki.source.kubernetes "keycloak_db" {
+      targets = discovery.kubernetes.keycloak_db.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
     loki.write "local" {
