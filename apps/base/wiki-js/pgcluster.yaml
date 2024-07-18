@@ -20,7 +20,7 @@ spec:
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: wiki-js-pv
+      volumeName: wiki-js
       accessModes:
         - ReadWriteOnce
       resources:
@@ -35,3 +35,29 @@ spec:
       password:
         name: wiki-js
         key: PG_PASS
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: wiki-js
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: wiki-js
+spec:
+  capacity:
+    storage: 15G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/moriyya/wiki
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
