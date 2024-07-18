@@ -4,7 +4,8 @@ metadata:
   name: flux-system
   namespace: monitoring
   labels:
-    app.kubernetes.io/name: flux
+    app.kubernetes.io/component: pod-monitor
+    app.kubernetes.io/name: flux-system
     monitored-by: prometheus
 spec:
   namespaceSelector:

@@ -6,6 +6,7 @@ commonLabels:
 
 resources:
   - ingress.yaml
+  - podMonitor-cnpg.yaml
   - podMonitor-fluxcd.yaml
   - rules.yaml
   - serviceMonitor-alertmanager.yaml
