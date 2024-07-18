@@ -137,12 +137,14 @@ spec:
         ruleSelector:
           matchLabels:
             role: alert-rules
+        serviceMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelector: {}
           # matchLabels:
           #   monitored-by: prometheus
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
+        podMonitorSelectorNilUsesHelmValues: false
         podMonitorSelector: {}
           # matchLabels:
           #   monitored-by: prometheus
