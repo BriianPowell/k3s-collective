@@ -38,6 +38,7 @@ flux bootstrap github \
 - [x] [Wiki.js](https://github.com/requarks/wiki)
 - [x] [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
 - [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
+- [x] [Error Pages](https://github.com/tarampampam/error-pages)
 
 ### Monitoring & Logging
 

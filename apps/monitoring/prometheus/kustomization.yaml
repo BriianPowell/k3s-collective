@@ -15,6 +15,7 @@ resources:
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-pihole.yaml
+  - serviceMonitor-sealed-secrets.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
   # - serviceMonitor-valheim.yaml
