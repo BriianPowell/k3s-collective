@@ -29,7 +29,7 @@ spec:
         requests:
           storage: 15Gi
   externalClusters:
-    - name: hass-pg
+    - name: keycloak-pg
       connectionParameters:
         host: keycloak-pgsql
         user: root
