@@ -4,3 +4,4 @@ metadata:
   name: cnpg-system
   labels:
     app.kubernetes.io/component: postgres-operator
+    monitored-by: prometheus
