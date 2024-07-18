@@ -7,4 +7,5 @@ commonLabels:
 resources:
   - deployment.yaml
   - ingress.yaml
+  - pgcluster.yaml
   - postgres.yaml

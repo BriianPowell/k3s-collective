@@ -1,0 +1,66 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: homeassistant-pgcluster
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: pgcluster
+    app.kubernetes.io/name: homeassistant-pgcluster
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: recorder
+      owner: hass
+      import:
+        type: microservice
+        databases:
+          - recorder
+        source:
+          externalCluster: hass-pg
+  storage:
+    size: 15Gi
+    pvcTemplate:
+      storageClassName: local-path
+      volumeName: hass-pg-pv
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 15Gi
+  externalClusters:
+    - name: hass-pg
+      connectionParameters:
+        host: homeassistant-pgsql
+        user: root
+        dbname: recorder
+      password:
+        name: homeassistant
+        key: PG_PASS
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hass-pg-pv
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: hass-pg-pv
+spec:
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  local:
+    path: /mnt/moriyya/homeassistant
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
