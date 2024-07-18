@@ -26,7 +26,7 @@
 | Infra                | Service Monitor | Supported                               |
 | -------------------- | --------------- | --------------------------------------- |
 | Cert Manager         | ✅              | Supported by helm chart                 |
-| CloudNativePG        | ❓              | Unsure if supported                     |
+| CloudNativePG        | ✅              | Supported through PodMonitor API spec   |
 | CrowdSec             | ✅              | Created though API spec                 |
 | Kube APIServer       | ✅              | Supported by helm chart                 |
 | Kube CoreDNS         | ✅              | Supported by helm chart                 |
