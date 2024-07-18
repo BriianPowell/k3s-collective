@@ -49,3 +49,10 @@
 | Loki                  | ❓              | Unsure if supported       |
 | Node Exporter         | ✅              | Supported from helm chart |
 | Prometheus + Operator | ✅              | Supported from helm chart |
+
+| PG Clusters            | Pod Monitor | Supported                  |
+| ---------------------- | ----------- | -------------------------- |
+| HomeAssistant Postgres | ✅          | Supported through CPNG API |
+| Keycloak Postgres      | ✅          | Supported through CNPG API |
+| Nextcloud Postgres     | ✅          | Supported through CNPG API |
+| Wiki.Js Postgres       | ✅          | Supported through CNPG API |
