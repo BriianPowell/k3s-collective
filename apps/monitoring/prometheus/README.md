@@ -36,7 +36,7 @@
 | Kube Scheduler       | ✅              | Supported by helm chart                 |
 | Kubelet              | ✅              | Supported by helm chart                 |
 | Nvidia Device Plugin | ❓              | Unsure if supported                     |
-| Reflector            | ❓              | Unsure if supported                     |
+| Reflector            | ❌              | Not supported                           |
 | Reloader             | ✅              | PodMonitor supported through helm chart |
 | Traefik              | ✅              | Created through API Spec                |
 
