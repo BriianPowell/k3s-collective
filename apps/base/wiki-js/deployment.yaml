@@ -53,30 +53,24 @@ spec:
             - name: DB_TYPE
               value: postgres
             - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: wiki-js-pgcluster-app
-                  key: host
+              value: wiki-js-pgsql
             - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: wiki-js-pgcluster-app
-                  key: port
+              value: '5432'
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-pgcluster-app
-                  key: dbname
+                  name: wiki-js
+                  key: PG_DB
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-pgcluster-app
-                  key: user
+                  name: wiki-js
+                  key: PG_USER
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js-pgcluster-app
-                  key: password
+                  name: wiki-js
+                  key: PG_PASS
             - name: HA_ACTIVE
               value: '1'
           ports:
