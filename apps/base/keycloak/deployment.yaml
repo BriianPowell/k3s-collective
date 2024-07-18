@@ -117,7 +117,7 @@ spec:
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: keycloak-pgluster-app
+                  name: keycloak-pgcluster-app
                   key: username
             - name: KC_DB_PASSWORD
               valueFrom:
