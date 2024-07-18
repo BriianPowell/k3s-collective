@@ -9,5 +9,6 @@ resources:
   - deployment.yaml
   - ingress.yaml
   - middleware.yaml
+  - pgcluster.yaml
   - postgres.yaml
   - redis.yaml

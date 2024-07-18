@@ -75,20 +75,24 @@ spec:
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud
-                  key: PG_DB
+                  name: nextcloud-pgcluster-app
+                  key: dbname
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud
-                  key: PG_USER
+                  name: nextcloud-pgcluster-app
+                  key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud
-                  key: PG_PASS
+                  name: nextcloud-pgcluster-app
+                  key: password
             - name: POSTGRES_HOST
-              value: nextcloud-pgsql
+              # value: nextcloud-pgsql
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-pgcluster-app
+                  key: host
             - name: NEXTCLOUD_ADMIN_USER
               valueFrom:
                 secretKeyRef:

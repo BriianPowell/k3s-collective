@@ -1,61 +1,61 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: keycloak-pgcluster
-  namespace: keycloak
+  name: nextcloud-pgcluster
+  namespace: nextcloud
   labels:
     app.kubernetes.io/component: pgcluster
-    app.kubernetes.io/name: keycloak-pgcluster
+    app.kubernetes.io/name: nextcloud-pgcluster
 spec:
   instances: 1
   bootstrap:
     initdb:
-      database: keycloak
-      owner: keycloak
-      # import:
-      #   type: microservice
-      #   databases:
-      #     - keycloak
-      #   source:
-      #     externalCluster: keycloak-pg
+      database: nextcloud
+      owner: nextcloud
+      import:
+        type: microservice
+        databases:
+          - nextcloud
+        source:
+          externalCluster: nextcloud-pg
   storage:
-    size: 15Gi
+    size: 30Gi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: keycloak-pg-pv
+      volumeName: nextcloud-pg
       accessModes:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 15Gi
-  # externalClusters:
-  #   - name: keycloak-pg
-  #     connectionParameters:
-  #       host: keycloak-pgsql
-  #       user: root
-  #       dbname: keycloak
-  #     password:
-  #       name: keycloak
-  #       key: PG_PASS
+          storage: 30Gi
+  externalClusters:
+    - name: nextcloud-pg
+      connectionParameters:
+        host: nextcloud-pgsql
+        user: root
+        dbname: nextcloud
+      password:
+        name: nextcloud
+        key: PG_PASS
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: keycloak-pg-pv
+  name: nextcloud-pg
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: keycloak-pg-pv
+    app.kubernetes.io/name: nextcloud-pg
 spec:
   capacity:
-    storage: 15Gi
+    storage: 30Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   local:
-    path: /mnt/moriyya/keycloak-postgres
+    path: /mnt/moriyya/nextcloud-pg
   nodeAffinity:
     required:
       nodeSelectorTerms:
