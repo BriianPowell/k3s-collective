@@ -12,12 +12,12 @@ spec:
     initdb:
       database: recorder
       owner: hass
-      import:
-        type: microservice
-        databases:
-          - recorder
-        source:
-          externalCluster: hass-pg
+      # import:
+      #   type: microservice
+      #   databases:
+      #     - recorder
+      #   source:
+      #     externalCluster: hass-pg
   storage:
     size: 15Gi
     pvcTemplate:
@@ -28,15 +28,15 @@ spec:
       resources:
         requests:
           storage: 15Gi
-  externalClusters:
-    - name: hass-pg
-      connectionParameters:
-        host: homeassistant-pgsql
-        user: root
-        dbname: recorder
-      password:
-        name: homeassistant
-        key: PG_PASS
+  # externalClusters:
+  #   - name: hass-pg
+  #     connectionParameters:
+  #       host: homeassistant-pgsql
+  #       user: root
+  #       dbname: recorder
+  #     password:
+  #       name: homeassistant
+  #       key: PG_PASS
 ---
 apiVersion: v1
 kind: PersistentVolume
