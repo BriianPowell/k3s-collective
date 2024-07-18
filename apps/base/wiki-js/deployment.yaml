@@ -32,6 +32,7 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: wiki-js
 spec:
+  pause: true
   replicas: 1
   revisionHistoryLimit: 10
   selector:
