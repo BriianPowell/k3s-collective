@@ -53,7 +53,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   local:
-    path: /mnt/moriyya/wiki
+    path: /mnt/moriyya/wiki-js
   nodeAffinity:
     required:
       nodeSelectorTerms:
