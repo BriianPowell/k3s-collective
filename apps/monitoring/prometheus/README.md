@@ -15,13 +15,13 @@
 | Valheim   | ❌              | Created but not supported |
 | V-Rising  | ❌              | Created but not supported |
 
-| Flux                      | Service Monitor | Supported                                                                          |
-| ------------------------- | --------------- | ---------------------------------------------------------------------------------- |
-| Helm Controller           | ✅              | Supported through PodMonitor API spec                                              |
-| Kustomize Controller      | ✅              | Supported through PodMonitor API spec                                              |
-| Notification Controller   | ✅              | Supported through PodMonitor API spec                                              |
-| Sealed Secrets Controller | ✅              | Supported through PodMonitor API spec, ServiceMonitor through helm chart is busted |
-| Source Controller         | ✅              | Supported through PodMonitor API spec                                              |
+| Flux                      | Service Monitor | Supported                                                                                  |
+| ------------------------- | --------------- | ------------------------------------------------------------------------------------------ |
+| Helm Controller           | ✅              | Supported through PodMonitor API spec                                                      |
+| Kustomize Controller      | ✅              | Supported through PodMonitor API spec                                                      |
+| Notification Controller   | ✅              | Supported through PodMonitor API spec                                                      |
+| Sealed Secrets Controller | ❌              | Connection refused error when setting up PodMonitor or ServiceMonitor, I think it's bugged |
+| Source Controller         | ✅              | Supported through PodMonitor API spec                                                      |
 
 | Infra                | Service Monitor | Supported                               |
 | -------------------- | --------------- | --------------------------------------- |
