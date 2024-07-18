@@ -6,6 +6,7 @@ commonLabels:
 
 resources:
   - ingress.yaml
+  - pgcluster.yaml
   - postgres.yaml
   - service-account.yaml
   - deployment.yaml

@@ -1,0 +1,37 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: wiki-js-pgcluster
+  namespace: wiki
+  labels:
+    app.kubernetes.io/component: pgcluster
+    app.kubernetes.io/name: wiki-js-pgcluster
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      import:
+        type: microservice
+        databases:
+          - wiki
+        source:
+          externalCluster: wiki-pg
+  storage:
+    size: 15Gi
+    pvcTemplate:
+      storageClassName: local-path
+      volumeName: wiki-js-pv
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 15Gi
+  externalClusters:
+    - name: wiki-pg
+      connectionParameters:
+        host: wiki-js-pgsql
+        user: root
+        dbname: wiki
+      password:
+        name: wiki-js
+        key: PG_PASS
