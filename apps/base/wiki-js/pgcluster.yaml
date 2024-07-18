@@ -10,6 +10,7 @@ spec:
   instances: 1
   bootstrap:
     initdb:
+      database: wiki
       import:
         type: microservice
         databases:

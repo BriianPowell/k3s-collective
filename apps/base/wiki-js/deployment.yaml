@@ -54,9 +54,15 @@ spec:
             - name: DB_TYPE
               value: postgres
             - name: DB_HOST
-              value: wiki-js-pgsql
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-js-pgcluster-app
+                  key: host
             - name: DB_PORT
-              value: '5432'
+              valueFrom:
+                secretKeyRef:
+                  name: wiki-js-pgcluster-app
+                  key: port
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
