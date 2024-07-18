@@ -8,6 +8,7 @@ resources:
   - ingress.yaml
   - podMonitor-cnpg.yaml
   - podMonitor-fluxcd.yaml
+  - podMonitor-sealed-secrets.yaml
   - rules.yaml
   - serviceMonitor-alertmanager.yaml
   - serviceMonitor-crowdsec.yaml
