@@ -32,7 +32,6 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: wiki-js
 spec:
-  pause: true
   replicas: 1
   revisionHistoryLimit: 10
   selector:
@@ -66,18 +65,18 @@ spec:
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js
-                  key: PG_DB
+                  name: wiki-js-pgcluster-app
+                  key: dbname
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js
-                  key: PG_USER
+                  name: wiki-js-pgcluster-app
+                  key: user
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: wiki-js
-                  key: PG_PASS
+                  name: wiki-js-pgcluster-app
+                  key: password
             - name: HA_ACTIVE
               value: '1'
           ports:
