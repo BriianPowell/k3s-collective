@@ -4,3 +4,4 @@ metadata:
   name: keycloak
   labels:
     app.kubernetes.io/component: identity
+    monitored-by: prometheus

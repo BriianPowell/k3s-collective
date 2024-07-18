@@ -4,3 +4,4 @@ metadata:
   name: wiki
   labels:
     app.kubernetes.io/component: wikipedia
+    monitored-by: prometheus

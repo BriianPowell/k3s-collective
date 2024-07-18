@@ -4,3 +4,4 @@ metadata:
   name: homeassistant
   labels:
     app.kubernetes.io/component: home-automation
+    monitored-by: prometheus

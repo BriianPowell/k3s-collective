@@ -5,3 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/component: monitoring
     pod-security.kubernetes.io/enforce: privileged
+    monitored-by: prometheus

@@ -4,3 +4,4 @@ metadata:
   name: nextcloud
   labels:
     app.kubernetes.io/component: blob-storage
+    monitored-by: prometheus

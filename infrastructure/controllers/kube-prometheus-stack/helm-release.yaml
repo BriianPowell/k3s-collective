@@ -141,10 +141,12 @@ spec:
           matchLabels:
             monitored-by: prometheus
         serviceMonitorNamespaceSelector: {}
-        podMonitorSelector:
+        podMonitorSelector: {}
+          # matchLabels:
+          #   monitored-by: prometheus
+        podMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        podMonitorNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
         #     scrape: prometheus-operator
