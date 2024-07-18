@@ -30,3 +30,9 @@ spec:
       limits:
         cpu: 100m
         memory: 200Mi
+    podMonitor:
+      enabled: true
+      namespace: monitoring
+      interval: 30s
+      labels:
+        monitored-by: prometheus
