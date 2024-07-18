@@ -44,7 +44,7 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /config
-              name: ha-storage
+              name: hass-storage
           ports:
             - name: http
               containerPort: 8123
@@ -59,7 +59,7 @@ spec:
       securityContext:
         privileged: true
       volumes:
-        - name: ha-storage
+        - name: hass-storage
           persistentVolumeClaim:
             claimName: homeassistant-pvc
 ---

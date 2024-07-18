@@ -1,0 +1,66 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-pgcluster
+  namespace: keycloak
+  labels:
+    app.kubernetes.io/component: pgcluster
+    app.kubernetes.io/name: keycloak-pgcluster
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: keycloak
+      import:
+        type: microservice
+        databases:
+          - keycloak
+        source:
+          externalCluster: keycloak-pg
+  storage:
+    size: 15Gi
+    pvcTemplate:
+      storageClassName: local-path
+      volumeName: keycloak-pg-pv
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 15Gi
+  externalClusters:
+    - name: hass-pg
+      connectionParameters:
+        host: keycloak-pgsql
+        user: root
+        dbname: keycloak
+      password:
+        name: keycloak
+        key: PG_PASS
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keycloak-pg-pv
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: keycloak-pg-pv
+spec:
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  local:
+    path: /mnt/moriyya/keycloak-postgres
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
