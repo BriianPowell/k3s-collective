@@ -28,6 +28,8 @@ spec:
       resources:
         requests:
           storage: 30Gi
+  monitoring:
+    enablePodMonitor: true
   # externalClusters:
   #   - name: nextcloud-pg
   #     connectionParameters:
