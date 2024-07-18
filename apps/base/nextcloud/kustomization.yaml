@@ -10,5 +10,5 @@ resources:
   - ingress.yaml
   - middleware.yaml
   - pgcluster.yaml
-  - postgres.yaml
+  # - postgres.yaml
   - redis.yaml

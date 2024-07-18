@@ -363,7 +363,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/component=database"
+        label = "cnpg.io/instanceName=nextcloud-pgcluster-1"
       }
     }
 

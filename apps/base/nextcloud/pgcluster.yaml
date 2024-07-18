@@ -12,12 +12,12 @@ spec:
     initdb:
       database: nextcloud
       owner: nextcloud
-      import:
-        type: microservice
-        databases:
-          - nextcloud
-        source:
-          externalCluster: nextcloud-pg
+      # import:
+      #   type: microservice
+      #   databases:
+      #     - nextcloud
+      #   source:
+      #     externalCluster: nextcloud-pg
   storage:
     size: 30Gi
     pvcTemplate:
@@ -28,15 +28,15 @@ spec:
       resources:
         requests:
           storage: 30Gi
-  externalClusters:
-    - name: nextcloud-pg
-      connectionParameters:
-        host: nextcloud-pgsql
-        user: root
-        dbname: nextcloud
-      password:
-        name: nextcloud
-        key: PG_PASS
+  # externalClusters:
+  #   - name: nextcloud-pg
+  #     connectionParameters:
+  #       host: nextcloud-pgsql
+  #       user: root
+  #       dbname: nextcloud
+  #     password:
+  #       name: nextcloud
+  #       key: PG_PASS
 ---
 apiVersion: v1
 kind: PersistentVolume
