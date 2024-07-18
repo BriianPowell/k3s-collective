@@ -248,7 +248,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/component=database"
+        label = "cnpg.io/instanceName=homeassistant-pgcluster-1"
       }
     }
 
@@ -286,7 +286,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/component=database"
+        label = "cnpg.io/instanceName=keycloak-pgcluster-1"
       }
     }
 
@@ -515,7 +515,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/component=database"
+        label = "cnpg.io/instanceName=wiki-js-pgcluster-1"
       }
     }
 
