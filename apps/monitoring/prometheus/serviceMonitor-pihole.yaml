@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/component: service-monitor
     app.kubernetes.io/name: pihole
-    monitored-by: prometheus
 spec:
   selector:
     matchLabels:

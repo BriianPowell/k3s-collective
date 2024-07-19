@@ -3,6 +3,9 @@ kind: HelmRelease
 metadata:
   name: alloy
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: alloy
 spec:
   interval: 1h0m0s
   chart:

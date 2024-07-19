@@ -8,6 +8,9 @@ kind: HelmRepository
 metadata:
   name: cert-manager
   namespace: cert-manager
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: cert-manager
 spec:
   interval: 24h
   url: https://charts.jetstack.io
@@ -17,6 +20,9 @@ kind: HelmRelease
 metadata:
   name: cert-manager
   namespace: cert-manager
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: cert-manager
 spec:
   interval: 1h0m0s
   chart:

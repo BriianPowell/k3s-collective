@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/component: service-monitor
     app.kubernetes.io/name: crowdsec-agent-service
-    monitored-by: prometheus
 spec:
   selector:
     matchLabels:
@@ -31,7 +30,6 @@ metadata:
   labels:
     app.kubernetes.io/component: service-monitor
     app.kubernetes.io/name: crowdsec-lapi
-    monitored-by: prometheus
 spec:
   selector:
     matchLabels:

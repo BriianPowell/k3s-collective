@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/component: pod-monitor
     app.kubernetes.io/name: flux-system
-    monitored-by: prometheus
 spec:
   namespaceSelector:
     matchNames:

@@ -9,6 +9,9 @@ kind: HelmRepository
 metadata:
   name: cloudnative-pg
   namespace: cnpg-system
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: cloudnative-pg
 spec:
   interval: 24h
   url: https://cloudnative-pg.github.io/charts
@@ -18,6 +21,9 @@ kind: HelmRelease
 metadata:
   name: cnpg
   namespace: cnpg-system
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: cloudnative-pg
 spec:
   interval: 1h0m0s
   chart:

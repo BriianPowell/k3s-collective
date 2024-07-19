@@ -3,6 +3,9 @@ kind: HelmRepository
 metadata:
   name: reflector
   namespace: reflector
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: reflector
 spec:
   interval: 24h
   url: https://emberstack.github.io/helm-charts
@@ -12,6 +15,9 @@ kind: HelmRelease
 metadata:
   name: reflector
   namespace: reflector
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: reflector
 spec:
   interval: 1h0m0s
   chart:

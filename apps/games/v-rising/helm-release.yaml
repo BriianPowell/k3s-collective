@@ -10,6 +10,8 @@ metadata:
   name: truecharts
   namespace: v-rising
   labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: truecharts
     game: v-rising
 spec:
   type: oci
@@ -22,6 +24,8 @@ metadata:
   name: v-rising
   namespace: v-rising
   labels:
+    app.kubernetes.io/component: helm-chart
+    app.kubernetes.io/name: v-rising
     game: v-rising
 spec:
   interval: 5m
@@ -37,6 +41,8 @@ metadata:
   name: v-rising-server
   namespace: v-rising
   labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: v-rising
     game: v-rising
     tier: backend
 spec:

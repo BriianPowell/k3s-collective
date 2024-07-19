@@ -9,6 +9,9 @@ kind: HelmRepository
 metadata:
   name: crowdsec
   namespace: crowdsec
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: crowdsec
 spec:
   interval: 24h
   url: https://crowdsecurity.github.io/helm-charts
@@ -18,6 +21,9 @@ kind: HelmRelease
 metadata:
   name: crowdsec
   namespace: crowdsec
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: crowdsec
 spec:
   interval: 1h0m0s
   chart:

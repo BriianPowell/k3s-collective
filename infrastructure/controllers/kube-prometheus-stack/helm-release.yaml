@@ -8,6 +8,9 @@ kind: HelmRepository
 metadata:
   name: prometheus-community
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: prometheus-community
 spec:
   interval: 24h
   url: https://prometheus-community.github.io/helm-charts
@@ -17,6 +20,9 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: kube-prometheus
 spec:
   interval: 1h0m0s
   chart:
@@ -133,24 +139,21 @@ spec:
             namespace: monitoring
             port: 9093
             scheme: http
-        ruleNamespaceSelector: {}
-        ruleSelector:
+        ruleSelectorNilUsesHelmValues: false
+        ruleNamespaceSelector:
           matchLabels:
-            role: alert-rules
+            monitored-by: prometheus
+        ruleSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-          # matchLabels:
-          #   monitored-by: prometheus
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
+        serviceMonitorSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-          # matchLabels:
-          #   monitored-by: prometheus
         podMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
+        podMonitorSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
         #     scrape: prometheus-operator

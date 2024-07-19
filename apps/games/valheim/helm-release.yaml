@@ -7,9 +7,12 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: k8s-at-home
-  namespace: valheim
+  namespace: kube-system
   labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: k8s-at-home
     game: valheim
+    app: deluge
 spec:
   interval: 24h
   url: https://k8s-at-home.com/charts/
@@ -20,6 +23,8 @@ metadata:
   name: valheim-server
   namespace: valheim
   labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: valheim
     game: valheim
     tier: backend
 spec:
@@ -30,7 +35,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
-        namespace: valheim
+        namespace: kube-system
       version: '>=4.4.0 <5.0.0'
   values:
     persistence:

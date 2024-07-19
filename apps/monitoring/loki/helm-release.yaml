@@ -8,6 +8,9 @@ kind: HelmRelease
 metadata:
   name: loki
   namespace: monitoring
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: loki
 spec:
   interval: 1h0m0s
   chart:

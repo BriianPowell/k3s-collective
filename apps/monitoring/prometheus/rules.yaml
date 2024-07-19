@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/component: prometheus-rule
     app.kubernetes.io/name: monitor-custom-rules
-    role: alert-rules
 spec:
   groups:
     - name: Deployment Groups
@@ -85,10 +84,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: cnpg-default-rules
+  namespace: monitoring
   labels:
     app.kubernetes.io/component: prometheus-rule
     app.kubernetes.io/name: cnpg-default-rules
-    role: alert-rules
 spec:
   groups:
   - name: cnpg-default.rules

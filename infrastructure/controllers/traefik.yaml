@@ -3,6 +3,9 @@ kind: HelmRepository
 metadata:
   name: traefik
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: traefik
 spec:
   interval: 24h
   url: https://traefik.github.io/charts
@@ -12,6 +15,9 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: traefik
 spec:
   interval: 1h0m0s
   timeout: 10m0s

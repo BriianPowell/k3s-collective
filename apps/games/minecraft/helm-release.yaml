@@ -9,6 +9,8 @@ metadata:
   name: minecraft-server-charts
   namespace: minecraft
   labels:
+    app.kubernetes.io/component: helm-repository
+    app.kubernetes.io/name: minecraft-server-charts
     game: minecraft
 spec:
   interval: 24h
@@ -20,6 +22,8 @@ metadata:
   name: minecraft-server
   namespace: minecraft
   labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: minecraft
     game: minecraft
     tier: backend
 spec:
