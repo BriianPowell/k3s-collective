@@ -1,0 +1,93 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: atuin
+  namespace: atuin
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: atuin
+spec:
+  selector:
+    io.kompose.service: atuin
+  ports:
+    - name: atuin
+      port: 8888
+      targetPort: atuin
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atuin
+  namespace: atuin
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: atuin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: atuin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: atuin
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: atuin
+          image: ghcr.io/atuinsh/atuin:latest
+          imagePullPolicy: Always
+          args:
+            - server
+            - start
+          env:
+            - name: ATUIN_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: atuin-pgcluster-app
+                  key: uri
+                  optional: false
+            - name: ATUIN_HOST
+              value: 0.0.0.0
+            - name: ATUIN_PORT
+              value: "8888"
+            - name: ATUIN_OPEN_REGISTRATION
+              value: "true"
+          ports:
+            - name: atuin
+              containerPort: 8888
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          volumeMounts:
+            - mountPath: /config
+              name: atuin-pvc
+      volumes:
+        - name: atuin-pvm
+          persistentVolumeClaim:
+            claimName: atuin-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: atuin-pvc
+  namespace: atuin
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: atuin-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi

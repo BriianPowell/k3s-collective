@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: atuin-ingress-https
+  namespace: atuin
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: atuin
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`atuin.powell.place`)
+      kind: Rule
+      services:
+        - name: atuin
+          port: atuin
