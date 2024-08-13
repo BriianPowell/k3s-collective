@@ -22,7 +22,7 @@ spec:
       resources:
         requests:
           storage: 300Mi
-  afftinity:
+  affinity:
     nodeSelector:
       kubernetes.io/hostname: abaddon
   monitoring:
