@@ -53,7 +53,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   local:
-    path: /mnt/atuin
+    path: /atuin
   nodeAffinity:
     required:
       nodeSelectorTerms:
