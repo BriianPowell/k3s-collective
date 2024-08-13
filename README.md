@@ -26,6 +26,7 @@ flux bootstrap github \
 
 ### Base
 
+- [x] [Atuin Self Hosted](https://github.com/atuinsh/atuin)
 - [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik)
 - [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
