@@ -9,7 +9,8 @@ metadata:
     app.kubernetes.io/name: atuin
 spec:
   selector:
-    io.kompose.service: atuin
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: atuin
   ports:
     - name: atuin
       port: 8888
