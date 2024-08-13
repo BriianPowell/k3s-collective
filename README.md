@@ -15,10 +15,10 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 flux bootstrap github \
   --owner=BriianPowell \
   --repository=k3s-collective \
-  --branch=master \
+  --branch=main \
   --path=clusters/k3s \
   --personal=true \
-  --private=false
+  --private=false #\
   # --reconcile # use if repository already exists
 ```
 
