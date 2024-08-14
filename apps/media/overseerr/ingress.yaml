@@ -16,5 +16,5 @@ spec:
         - name: security
           namespace: kube-system
       services:
-        - name: overseer
+        - name: overseerr
           port: http
