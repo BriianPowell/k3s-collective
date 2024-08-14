@@ -120,10 +120,6 @@ spec:
               value: debug
             - name: DELUGE_ENABLE_WEBUI_PASSWORD
               value: 'yes'
-            - name: VPN_INPUT_PORTS
-              value: '1234'
-            - name: VPN_OUTPUT_PORTS
-              value: '5678'
             - name: DEBUG
               value: 'false'
             - name: UMASK
