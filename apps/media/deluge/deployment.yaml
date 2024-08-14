@@ -67,14 +67,6 @@ spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        # sysctls:
-        #   - name: net.ipv4.conf.all.src_valid_mark
-        #     value: "1"
-        privileged: true
       containers:
         - name: arch-delugevpn
           image: ghcr.io/binhex/arch-delugevpn:latest
@@ -157,6 +149,14 @@ spec:
           #     port: http
           #   initialDelaySeconds: 3
           #   periodSeconds: 3
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
+            # sysctls:
+            #   - name: net.ipv4.conf.all.src_valid_mark
+            #     value: "1"
+            privileged: true
           volumeMounts:
             - name: tz
               mountPath: /etc/localtime
