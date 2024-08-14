@@ -70,7 +70,7 @@ flux bootstrap github \
 - [ ] Lidarr - Music Collection Manager
 - [ ] Prowlarr
 - [ ] Overseerr
-- [ ] Deluge
+- [ ] [Deluge](https://github.com/binhex/arch-delugevpn)
 
 ### TBD
 
