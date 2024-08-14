@@ -71,9 +71,9 @@ spec:
         runAsUser: 0
         runAsGroup: 0
         fsGroup: 0
-        sysctls:
-          - name: net.ipv4.conf.all.src_valid_mark
-            value: "1"
+        # sysctls:
+        #   - name: net.ipv4.conf.all.src_valid_mark
+        #     value: "1"
         privileged: true
       containers:
         - name: arch-delugevpn
