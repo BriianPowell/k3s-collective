@@ -65,11 +65,12 @@ flux bootstrap github \
 
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 - [ ] Jellyfin OR Plex (Haven't Decided Yet!)
-- [ ] Sonarr
-- [ ] Lidarr
 - [ ] Radarr
-- [ ] Readarr
-- [ ] Deluge OR Transmission
+- [ ] Sonarr
+- [ ] Lidarr - Music Collection Manager
+- [ ] Prowlarr
+- [ ] Overseerr
+- [ ] Deluge
 
 ### TBD
 
