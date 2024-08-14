@@ -143,12 +143,23 @@ spec:
             - name: vpn-udp
               containerPort: 58946
               protocol: UDP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 3
-            periodSeconds: 3
+          readinessProbe:
+            exec:
+              command:
+                - curl
+                - -sL
+                - --fail
+                - http://localhost:8112
+                - '&&'
+                - curl
+                - -sL
+                - --fail
+                - https://google.com
+                - '||'
+                - exit
+                - 1
+            initialDelaySeconds: 5
+            periodSeconds: 5
           volumeMounts:
             - name: tz
               mountPath: /etc/localtime
