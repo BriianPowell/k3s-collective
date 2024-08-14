@@ -67,6 +67,14 @@ spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        sysctls:
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: "1"
+        privileged: true
       containers:
         - name: arch-delugevpn
           image: ghcr.io/binhex/arch-delugevpn:latest
@@ -87,7 +95,7 @@ spec:
             - name: VPN_PROV
               value: pia
             - name: VPN_CLIENT
-              value: openvpn
+              value: wiregaurd
             - name: ENABLE_STARTUP_SCRIPTS
               value: 'no'
             - name: ENABLE_PRIVOXY
@@ -121,9 +129,9 @@ spec:
             - name: UMASK
               value: '000'
             - name: PUID
-              value: '1'
+              value: '0'
             - name: PGID
-              value: '1'
+              value: '0'
           ports:
             - name: http
               containerPort: 8112
@@ -143,12 +151,12 @@ spec:
             - name: vpn-udp
               containerPort: 58946
               protocol: UDP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 3
-            periodSeconds: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 3
           volumeMounts:
             - name: tz
               mountPath: /etc/localtime
