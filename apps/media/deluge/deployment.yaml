@@ -17,7 +17,7 @@ spec:
     app.kubernetes.io/name: deluge
   type: ClusterIP
   ports:
-    - name: web
+    - name: http
       port: 8112
       protocol: TCP
       targetPort: http
