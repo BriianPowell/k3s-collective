@@ -111,7 +111,7 @@ spec:
             - name: DELUGE_WEB_LOG_LEVEL
               value: debug
             - name: DELUGE_ENABLE_WEBUI_PASSWORD
-              value: 'yes'
+              value: 'no'
             # - name: VPN_INPUT_PORTS
             #   value: '1234'
             # - name: VPN_OUTPUT_PORTS
@@ -143,12 +143,12 @@ spec:
             - name: vpn-udp
               containerPort: 58946
               protocol: UDP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   initialDelaySeconds: 3
-          #   periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 3
           securityContext:
             runAsUser: 0
             runAsGroup: 0
