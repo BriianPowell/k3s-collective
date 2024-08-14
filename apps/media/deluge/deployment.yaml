@@ -95,7 +95,7 @@ spec:
             - name: VPN_PROV
               value: pia
             - name: VPN_CLIENT
-              value: wiregaurd
+              value: wireguard
             - name: ENABLE_STARTUP_SCRIPTS
               value: 'no'
             - name: ENABLE_PRIVOXY
