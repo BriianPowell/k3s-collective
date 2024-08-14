@@ -121,9 +121,9 @@ spec:
             - name: UMASK
               value: '000'
             - name: PUID
-              value: '0'
+              value: '1'
             - name: PGID
-              value: '0'
+              value: '1'
           ports:
             - name: http
               containerPort: 8112
