@@ -46,9 +46,8 @@ spec:
           nvidia.com/gpu: 1
     runtimeClassName: nvidia
     service:
-      type: NodePort
+      type: ClusterIP
       port: 32400
-      nodePort: 32400
     nodeSelector:
       kubernetes.io/hostname: sheol
     # tolerations:
@@ -56,7 +55,7 @@ spec:
     #     operator: Exists
     #     effect: NoSchedule
     extraEnv:
-      PLEX_CLAIM: claim-y9QhWVfUGn22TSEPczbU
+      # PLEX_CLAIM: claim-y9QhWVfUGn22TSEPczbU
       HOSTNAME: PlexServer
       TZ: 'America/Los_Angeles'
       PLEX_UPDATE_CHANNEL: '5'
