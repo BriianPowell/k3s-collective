@@ -44,28 +44,32 @@ spec:
       resources:
         limits:
           nvidia.com/gpu: 1
-      runtimeClassName: nvidia
-      service:
-        type: ClusterIP
-        port: 32400
-      nodeSelector:
-        kubernetes.io/hostname: sheol
-      extraEnv:
-        PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
-        HOSTNAME:
-        TZ: 'America/Los_Angeles'
-        PLEX_UID: '0'
-        PLEX_GID: '0'
-        ALLOWED_NETWORKS: '10.0.0.0/16'
-      extraVolumeMounts:
-        - name: data
-          mountPath: /data
-          existingClaim: media-data-pvc
-          readOnly: false
-        - name: transcode
-          mountPath: /transcode
-          existingClaim: transcode-pvc
-          readOnly: false
+    runtimeClassName: nvidia
+    service:
+      type: ClusterIP
+      port: 32400
+    nodeSelector:
+      kubernetes.io/hostname: sheol
+    # tolerations:
+    #   - key: nvidia.com/gpu
+    #     operator: Exists
+    #     effect: NoSchedule
+    extraEnv:
+      PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
+      HOSTNAME:
+      TZ: 'America/Los_Angeles'
+      PLEX_UID: '0'
+      PLEX_GID: '0'
+      ALLOWED_NETWORKS: '10.0.0.0/16'
+    extraVolumeMounts:
+      - name: data
+        mountPath: /data
+        existingClaim: media-data-pvc
+        readOnly: false
+      - name: transcode
+        mountPath: /transcode
+        existingClaim: transcode-pvc
+        readOnly: false
 
 ---
 apiVersion: v1
