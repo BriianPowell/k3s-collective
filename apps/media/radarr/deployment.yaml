@@ -69,6 +69,9 @@ spec:
             - name: deluge-pvc
               mountPath: /downloads
               subPath: data
+            - name: media-data-pvc
+              mountPath: /movies
+              subPath: movies
       volumes:
         - name: radarr-pvc
           persistentVolumeClaim:
@@ -76,6 +79,9 @@ spec:
         - name: deluge-pvc
           persistentVolumeClaim:
             claimName: deluge-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
