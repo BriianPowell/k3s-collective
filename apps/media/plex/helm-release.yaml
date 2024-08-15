@@ -64,8 +64,10 @@ spec:
     extraVolumeMounts:
       - name: data
         mountPath: /data
+        readOnly: false
       - name: transcode
         mountPath: /transcodes
+        readOnly: false
     extraVolumes:
       - name: data
         persistentVolumeClaim:
