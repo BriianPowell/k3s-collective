@@ -51,7 +51,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: sheol
       extraEnv:
-        PLEX_CLAIM: claim
+        PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
         HOSTNAME:
         TZ: 'America/Los_Angeles'
         PLEX_UID: '0'
