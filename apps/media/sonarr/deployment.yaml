@@ -118,7 +118,7 @@ spec:
     name: radarr-pvc
     namespace: media
   local:
-    path: /mnt/moriyya/media/radarr
+    path: /mnt/moriyya/media/sonarr
   nodeAffinity:
     required:
       nodeSelectorTerms:
