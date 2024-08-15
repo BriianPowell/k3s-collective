@@ -54,7 +54,7 @@ spec:
         key: claim
     timezone: 'America/Los_Angeles'
     service:
-      type: LoadBalancer
+      type: ClusterIP # LoadBalancer
       port: 32400
     proxy:
       enabled: false
