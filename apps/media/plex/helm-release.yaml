@@ -56,6 +56,7 @@ spec:
     #     operator: Exists
     #     effect: NoSchedule
     extraEnv:
+      PLEX_CLAIM: claim-y9QhWVfUGn22TSEPczbU
       HOSTNAME: PlexServer
       TZ: 'America/Los_Angeles'
       PLEX_UPDATE_CHANNEL: '5'
@@ -70,7 +71,6 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: media-data-pvc
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
