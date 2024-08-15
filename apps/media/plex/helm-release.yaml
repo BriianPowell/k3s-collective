@@ -64,12 +64,15 @@ spec:
     extraVolumeMounts:
       - name: data
         mountPath: /data
-        existingClaim: media-data-pvc
-        readOnly: false
       - name: transcode
-        mountPath: /transcode
-        existingClaim: transcode-pvc
-        readOnly: false
+        mountPath: /transcodes
+    extraVolumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: media-data-pvc
+      - name: transcode
+        persistentVolumeClaim:
+          claimName: transcode-pvc
 
 ---
 apiVersion: v1
