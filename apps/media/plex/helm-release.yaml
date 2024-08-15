@@ -5,23 +5,21 @@
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
+kind: HelmRepository
 metadata:
-  name: plex-media-server
+  name: plex
   namespace: media
   labels:
     app.kubernetes.io/component: git-repository
-    app.kubernetes.io/name: plex-media-server
+    app.kubernetes.io/name: plex
 spec:
   interval: 24h
   url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
-  ref:
-    branch: master
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex-server
+  name: plex-media-server
   namespace: media
   labels:
     app.kubernetes.io/component: helm-release
@@ -30,10 +28,10 @@ spec:
   interval: 1h0m0s
   chart:
     spec:
-      chart: plex
+      chart: plex-media-server
       sourceRef:
         kind: HelmRepository
-        name: plex-media-server
+        name: plex
         namespace: media
       version: '>=0.4.0 <1.0.0'
   values:
