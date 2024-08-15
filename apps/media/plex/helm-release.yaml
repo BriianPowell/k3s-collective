@@ -10,7 +10,7 @@ metadata:
   name: plex
   namespace: media
   labels:
-    app.kubernetes.io/component: git-repository
+    app.kubernetes.io/component: helm-repository
     app.kubernetes.io/name: plex
 spec:
   interval: 24h
