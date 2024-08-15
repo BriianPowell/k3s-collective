@@ -15,8 +15,6 @@ spec:
       middlewares:
         - name: security
           namespace: kube-system
-        - name: traefik-forward-auth
-          namespace: kube-system
       services:
         - name: deluge
           port: http
