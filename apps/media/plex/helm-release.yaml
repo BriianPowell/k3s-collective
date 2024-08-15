@@ -29,12 +29,13 @@ metadata:
 spec:
   interval: 1h0m0s
   chart:
-    chart: plex
-    sourceRef:
-      kind: HelmRepository
-      name: plex-media-server
-      namespace: media
-    version: '>=0.4.0 <1.0.0'
+    spec:
+      chart: plex
+      sourceRef:
+        kind: HelmRepository
+        name: plex-media-server
+        namespace: media
+      version: '>=0.4.0 <1.0.0'
   values:
     ingress:
       enabled: false
