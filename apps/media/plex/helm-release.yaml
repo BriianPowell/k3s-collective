@@ -65,16 +65,16 @@ spec:
       - name: data
         mountPath: /data
         readOnly: false
-      - name: transcode
-        mountPath: /transcodes
-        readOnly: false
+      # - name: transcode
+      #   mountPath: /transcode
+      #   readOnly: false
     extraVolumes:
       - name: data
         persistentVolumeClaim:
           claimName: media-data-pvc
-      - name: transcode
-        persistentVolumeClaim:
-          claimName: transcode-pvc
+      # - name: transcode
+      #   persistentVolumeClaim:
+      #     claimName: transcode-pvc
 
 ---
 apiVersion: v1
@@ -168,52 +168,52 @@ spec:
               operator: In
               values:
                 - sheol
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: transcode-pvc
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: transcode-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 50Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: transcode-pv
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: transcode-pv
-spec:
-  capacity:
-    storage: 50Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: transcode-pvc
-    namespace: media
-  local:
-    path: /mnt/moriyya/media/data/temp
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - sheol
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: transcode-pvc
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume-claim
+#     app.kubernetes.io/name: transcode-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 50Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: transcode-pv
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume
+#     app.kubernetes.io/name: transcode-pv
+# spec:
+#   capacity:
+#     storage: 50Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   claimRef:
+#     name: transcode-pvc
+#     namespace: media
+#   local:
+#     path: /mnt/moriyya/media/temp
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/hostname
+#               operator: In
+#               values:
+#                 - sheol
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
