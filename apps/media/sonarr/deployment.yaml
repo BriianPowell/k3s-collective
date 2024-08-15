@@ -1,35 +1,35 @@
 #
 # Reference:
-# https://docs.linuxserver.io/images/docker-radarr/
+# https://docs.linuxserver.io/images/docker-sonarr/
 #
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: radarr
+  name: sonarr
   namespace: media
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: radarr
+    app.kubernetes.io/name: sonarr
 spec:
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: radarr
+    app.kubernetes.io/name: sonarr
   type: ClusterIP
   ports:
     - name: http
-      port: 7878
+      port: 8989
       protocol: TCP
       targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: radarr
+  name: sonarr
   namespace: media
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: radarr
+    app.kubernetes.io/name: sonarr
 spec:
   replicas: 1
   strategy:
@@ -37,19 +37,19 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: radarr
+      app.kubernetes.io/name: sonarr
   template:
     metadata:
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: radarr
+        app.kubernetes.io/name: sonarr
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
       containers:
-        - name: radarr
-          image: lscr.io/linuxserver/radarr:latest
+        - name: sonarr
+          image: lscr.io/linuxserver/sonarr:latest
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -60,21 +60,21 @@ spec:
               value: '0'
           ports:
             - name: http
-              containerPort: 7878
+              containerPort: 8989
               protocol: TCP
           volumeMounts:
-            - name: radarr-pvc
+            - name: sonarr-pvc
               mountPath: /config
             - name: deluge-pvc
               mountPath: /downloads
               subPath: data
             - name: media-data-pvc
-              mountPath: /movies
-              subPath: movies
+              mountPath: /tv
+              subPath: tv
       volumes:
-        - name: radarr-pvc
+        - name: sonarr-pvc
           persistentVolumeClaim:
-            claimName: radarr-pvc
+            claimName: sonarr-pvc
         - name: deluge-pvc
           persistentVolumeClaim:
             claimName: deluge-pvc
@@ -85,12 +85,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-pvc
+  name: sonarr-pvc
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: radarr-pvc
+    app.kubernetes.io/name: sonarr-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -101,12 +101,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: radarr-pv
+  name: sonarr-pv
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: radarr-pv
+    app.kubernetes.io/name: sonarr-pv
 spec:
   capacity:
     storage: 100Mi
@@ -115,7 +115,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   claimRef:
-    name: radarr-pvc
+    name: sonarr-pvc
     namespace: media
   local:
     path: /mnt/moriyya/media/sonarr
