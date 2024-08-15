@@ -1,37 +1,22 @@
 #
 # References:
 # https://github.com/munnerz/kube-plex
-# https://github.com/plexinc/pms-docker/tree/master/charts/plex-media-server
+# https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: kube-plex
+  name: plex-media-server
   namespace: media
   labels:
     app.kubernetes.io/component: git-repository
-    app.kubernetes.io/name: kube-plex
+    app.kubernetes.io/name: plex-media-server
 spec:
   interval: 24h
-  url: https://github.com/munnerz/kube-plex
+  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
   ref:
     branch: master
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmChart
-metadata:
-  name: plex
-  namespace: media
-  labels:
-    app.kubernetes.io/component: helm-chart
-    app.kubernetes.io/name: media
-spec:
-  interval: 12h
-  chart: ./charts/kube-plex
-  sourceRef:
-    kind: GitRepository
-    name: kube-plex
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -43,42 +28,45 @@ metadata:
     app.kubernetes.io/name: plex-server
 spec:
   interval: 1h0m0s
-  chartRef:
-    kind: HelmChart
-    name: plex
-    namespace: media
+  chart:
+    chart: plex
+    sourceRef:
+      kind: HelmRepository
+      name: plex-media-server
+      namespace: media
+    version: '>=0.4.0 <1.0.0'
   values:
-    claimToken:
-      secretKeyRef:
-        name: plex
-        key: claim
-    timezone: 'America/Los_Angeles'
-    service:
-      type: ClusterIP # LoadBalancer
-      port: 32400
-    proxy:
+    ingress:
       enabled: false
-    resources:
-      limits:
-        nvidia.com/gpu: 1
-    # tolerations:
-    #   - key: nvidia.com/gpu
-    #     operator: Exists
-    #     effect: NoSchedule
-    nodeSelector:
-      kubernetes.io/hostname: sheol
-    persistence:
-      transcode:
-        enabled: true
-        size: 20Gi
-        claimName: media-data-pvc
-      data:
-        size: 20Ti
-        claimName: media-data-pvc
-      config:
-        size: 5Gi
-        claimName: plex-pvc
-        subPath: config
+    pms:
+      configStorage: 5Gi
+      configExistingClaim: plex-pvc
+      resources:
+        limits:
+          nvidia.com/gpu: 1
+      runtimeClassName: nvidia
+      service:
+        type: ClusterIP
+        port: 32400
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      extraEnv:
+        PLEX_CLAIM: claim
+        HOSTNAME:
+        TZ: 'America/Los_Angeles'
+        PLEX_UID: '0'
+        PLEX_GID: '0'
+        ALLOWED_NETWORKS: '10.0.0.0/16'
+      extraVolumeMounts:
+        - name: data
+          mountPath: /data
+          existingClaim: media-data-pvc
+          readOnly: false
+        - name: transcode
+          mountPath: /transcode
+          existingClaim: transcode-pvc
+          readOnly: false
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -163,6 +151,52 @@ spec:
     namespace: media
   local:
     path: /mnt/moriyya/media/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transcode-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: transcode-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: transcode-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: transcode-pv
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: transcode-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/data/temp
   nodeAffinity:
     required:
       nodeSelectorTerms:
