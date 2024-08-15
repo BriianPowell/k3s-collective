@@ -61,10 +61,10 @@ spec:
     resources:
       limits:
         nvidia.com/gpu: 1
-    tolerations:
-      - key: nvidia.com/gpu
-        operator: Exists
-        effect: NoSchedule
+    # tolerations:
+    #   - key: nvidia.com/gpu
+    #     operator: Exists
+    #     effect: NoSchedule
     nodeSelector:
       kubernetes.io/hostname: sheol
     persistence:
