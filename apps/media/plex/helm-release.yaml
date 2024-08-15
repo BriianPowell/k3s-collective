@@ -55,8 +55,7 @@ spec:
     #     operator: Exists
     #     effect: NoSchedule
     extraEnv:
-      PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
-      HOSTNAME:
+      HOSTNAME: PlexServer
       TZ: 'America/Los_Angeles'
       PLEX_UID: '0'
       PLEX_GID: '0'
