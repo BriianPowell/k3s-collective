@@ -52,6 +52,11 @@ spec:
         name: plex
         key: claim
     timezone: 'America/Los_Angeles'
+    service:
+      type: LoadBalancer
+      port: 32400
+    proxy:
+      enabled: false
     resources:
       limits:
         nvidia.com/gpu: 1
