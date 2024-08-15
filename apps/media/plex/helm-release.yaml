@@ -1,38 +1,167 @@
 #
 # References:
-# https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/values.yaml
+# https://github.com/munnerz/kube-plex
+# https://github.com/plexinc/pms-docker/tree/master/charts/plex-media-server
 #
 
-# apiVersion: source.toolkit.fluxcd.io/v1
-# kind: HelmRepository
-# metadata:
-#   name: plex-inc
-#   namespace: media
-#   labels:
-#     media: plex
-# spec:
-#   interval: 24h
-#   url: https://k8s-at-home.com/charts/
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: plex-server
-#   namespace: media
-#   labels:
-#     media: plex
-#     tier: frontend
-# spec:
-#   interval: 1h0m0s
-#   chart:
-#     spec:
-#       chart: plex
-#       sourceRef:
-#         kind: HelmRepository
-#         name: plex-inc
-#         namespace: media
-#       version: '>=0.3.0 <0.4.0'
-#   values:
-#     ingress:
-#       enabled: false
-#     pms:
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: kube-plex
+  namespace: media
+  labels:
+    app.kubernetes.io/component: git-repository
+    app.kubernetes.io/name: kube-plex
+spec:
+  interval: 24h
+  url: https://github.com/munnerz/kube-plex
+  ref:
+    branch: master
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
+metadata:
+  name: plex
+  namespace: media
+  labels:
+    app.kubernetes.io/component: helm-chart
+    app.kubernetes.io/name: media
+spec:
+  chart: ./charts/kube-plex
+  sourceRef:
+    kind: GitRepository
+    name: kube-plex
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plex-server
+  namespace: media
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: plex-server
+spec:
+  interval: 1h0m0s
+  chartRef:
+    kind: HelmChart
+    name: plex
+    namespace: media
+  values:
+    claimToken:
+      secretKeyRef:
+        name: plex
+        key: claim
+    timezone: 'America/Los_Angeles'
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: in
+        effect: NoSchedule
+    nodeSelector:
+      kubernetes.io/hostname: sheol
+    persistence:
+      transcode:
+        enabled: true
+        size: 20Gi
+        claimName: media-data-pvc
+      data:
+        size: 20Ti
+        claimName: media-data-pvc
+      config:
+        size: 5Gi
+        claimName: plex-pvc
+        subPath: config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: plex-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: plex-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: plex-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/plex
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-data-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: media-data-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Ti
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-data-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: media-data-pv
+spec:
+  capacity:
+    storage: 20Ti
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: media-data-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

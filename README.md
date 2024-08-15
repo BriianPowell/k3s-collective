@@ -65,11 +65,11 @@ flux bootstrap github \
 
 - [ ] Jellyfin
 - [ ] Plex
-- [ ] Radarr
-- [ ] Sonarr 
+- [ ] [Overseerr](https://github.com/sct/overseerr) - Needs a plex server to run
 - [ ] Lidarr
 - [ ] Prowlarr
-- [ ] [Overseerr](https://github.com/sct/overseerr)
+- [ ] Sonarr
+- [ ] [Radarr](https://github.com/linuxserver/docker-radarr)
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn)
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 
