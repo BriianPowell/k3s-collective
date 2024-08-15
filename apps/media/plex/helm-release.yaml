@@ -46,8 +46,9 @@ spec:
           nvidia.com/gpu: 1
     runtimeClassName: nvidia
     service:
-      type: ClusterIP
+      type: NodePort
       port: 32400
+      nodePort: 32400
     nodeSelector:
       kubernetes.io/hostname: sheol
     # tolerations:
