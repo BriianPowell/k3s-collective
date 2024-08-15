@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: sonarr
 
 resources:
-  # - deployment.yaml
-  # - ingress.yaml
+  - deployment.yaml
+  - ingress.yaml
