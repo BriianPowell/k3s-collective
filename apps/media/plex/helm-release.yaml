@@ -1,237 +1,237 @@
-#
-# References:
-# https://github.com/munnerz/kube-plex
-# https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md
-#
+# #
+# # References:
+# # https://github.com/munnerz/kube-plex
+# # https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md
+# #
 
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: plex
-  namespace: media
-  labels:
-    app.kubernetes.io/component: helm-repository
-    app.kubernetes.io/name: plex
-spec:
-  interval: 24h
-  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: plex-media-server
-  namespace: media
-  labels:
-    app.kubernetes.io/component: helm-release
-    app.kubernetes.io/name: plex-server
-spec:
-  interval: 1h0m0s
-  timeout: 10m0s
-  chart:
-    spec:
-      chart: plex-media-server
-      sourceRef:
-        kind: HelmRepository
-        name: plex
-        namespace: media
-      version: '>=0.4.0 <1.0.0'
-  values:
-    ingress:
-      enabled: false
-    pms:
-      configStorage: 5Gi
-      configExistingClaim: plex-pvc
-      resources:
-        limits:
-          nvidia.com/gpu: 1
-    runtimeClassName: nvidia
-    service:
-      type: ClusterIP
-      port: 32400
-    nodeSelector:
-      kubernetes.io/hostname: sheol
-    # tolerations:
-    #   - key: nvidia.com/gpu
-    #     operator: Exists
-    #     effect: NoSchedule
-    extraEnv:
-      PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
-      HOSTNAME:
-      TZ: 'America/Los_Angeles'
-      PLEX_UID: '0'
-      PLEX_GID: '0'
-      ALLOWED_NETWORKS: '10.0.0.0/16'
-    extraVolumeMounts:
-      - name: data
-        mountPath: /data
-        readOnly: false
-      - name: transcode
-        mountPath: /transcode
-        readOnly: false
-    extraVolumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: media-data-pvc
-      - name: transcode
-        persistentVolumeClaim:
-          claimName: transcode-pvc
+# apiVersion: source.toolkit.fluxcd.io/v1
+# kind: HelmRepository
+# metadata:
+#   name: plex
+#   namespace: media
+#   labels:
+#     app.kubernetes.io/component: helm-repository
+#     app.kubernetes.io/name: plex
+# spec:
+#   interval: 24h
+#   url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: plex-media-server
+#   namespace: media
+#   labels:
+#     app.kubernetes.io/component: helm-release
+#     app.kubernetes.io/name: plex-server
+# spec:
+#   interval: 1h0m0s
+#   timeout: 10m0s
+#   chart:
+#     spec:
+#       chart: plex-media-server
+#       sourceRef:
+#         kind: HelmRepository
+#         name: plex
+#         namespace: media
+#       version: '>=0.4.0 <1.0.0'
+#   values:
+#     ingress:
+#       enabled: false
+#     pms:
+#       configStorage: 5Gi
+#       configExistingClaim: plex-pvc
+#       resources:
+#         limits:
+#           nvidia.com/gpu: 1
+#     runtimeClassName: nvidia
+#     service:
+#       type: ClusterIP
+#       port: 32400
+#     nodeSelector:
+#       kubernetes.io/hostname: sheol
+#     # tolerations:
+#     #   - key: nvidia.com/gpu
+#     #     operator: Exists
+#     #     effect: NoSchedule
+#     extraEnv:
+#       PLEX_CLAIM: claim-sFzT8ozK7P59csseuFzi
+#       HOSTNAME:
+#       TZ: 'America/Los_Angeles'
+#       PLEX_UID: '0'
+#       PLEX_GID: '0'
+#       ALLOWED_NETWORKS: '10.0.0.0/16'
+#     extraVolumeMounts:
+#       - name: data
+#         mountPath: /data
+#         readOnly: false
+#       - name: transcode
+#         mountPath: /transcode
+#         readOnly: false
+#     extraVolumes:
+#       - name: data
+#         persistentVolumeClaim:
+#           claimName: media-data-pvc
+#       - name: transcode
+#         persistentVolumeClaim:
+#           claimName: transcode-pvc
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: plex-pvc
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: plex-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: plex-pv
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: plex-pv
-spec:
-  capacity:
-    storage: 5Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: plex-pvc
-    namespace: media
-  local:
-    path: /mnt/moriyya/media/plex
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - sheol
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: media-data-pvc
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: media-data-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Ti
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: media-data-pv
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: media-data-pv
-spec:
-  capacity:
-    storage: 20Ti
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: media-data-pvc
-    namespace: media
-  local:
-    path: /mnt/moriyya/media/data
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - sheol
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: transcode-pvc
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: transcode-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 50Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: transcode-pv
-  namespace: media
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: transcode-pv
-spec:
-  capacity:
-    storage: 50Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: transcode-pvc
-    namespace: media
-  local:
-    path: /mnt/moriyya/media/temp
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - sheol
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: plex-dashboard-https
-  namespace: media
-  labels:
-    app.kubernetes.io/component: ingress
-    app.kubernetes.io/name: plex
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`plex.powell.place`)
-      middlewares:
-        - name: security
-          namespace: kube-system
-      services:
-        - name: plex-media-server
-          port: pms
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: plex-pvc
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume-claim
+#     app.kubernetes.io/name: plex-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 5Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: plex-pv
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume
+#     app.kubernetes.io/name: plex-pv
+# spec:
+#   capacity:
+#     storage: 5Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   claimRef:
+#     name: plex-pvc
+#     namespace: media
+#   local:
+#     path: /mnt/moriyya/media/plex
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/hostname
+#               operator: In
+#               values:
+#                 - sheol
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: media-data-pvc
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume-claim
+#     app.kubernetes.io/name: media-data-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Ti
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: media-data-pv
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume
+#     app.kubernetes.io/name: media-data-pv
+# spec:
+#   capacity:
+#     storage: 20Ti
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   claimRef:
+#     name: media-data-pvc
+#     namespace: media
+#   local:
+#     path: /mnt/moriyya/media/data
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/hostname
+#               operator: In
+#               values:
+#                 - sheol
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: transcode-pvc
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume-claim
+#     app.kubernetes.io/name: transcode-pvc
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 50Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: transcode-pv
+#   namespace: media
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume
+#     app.kubernetes.io/name: transcode-pv
+# spec:
+#   capacity:
+#     storage: 50Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   claimRef:
+#     name: transcode-pvc
+#     namespace: media
+#   local:
+#     path: /mnt/moriyya/media/temp
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/hostname
+#               operator: In
+#               values:
+#                 - sheol
+# ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: plex-dashboard-https
+#   namespace: media
+#   labels:
+#     app.kubernetes.io/component: ingress
+#     app.kubernetes.io/name: plex
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - kind: Rule
+#       match: Host(`plex.powell.place`)
+#       middlewares:
+#         - name: security
+#           namespace: kube-system
+#       services:
+#         - name: plex-media-server
+#           port: pms
