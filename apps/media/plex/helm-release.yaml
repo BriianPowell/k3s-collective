@@ -27,6 +27,7 @@ metadata:
     app.kubernetes.io/component: helm-chart
     app.kubernetes.io/name: media
 spec:
+  interval: 12h
   chart: ./charts/kube-plex
   sourceRef:
     kind: GitRepository
