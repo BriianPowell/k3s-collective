@@ -75,7 +75,7 @@ spec:
             targetPort: 9877
     workload:
       main:
-        replicas: 1
+        replicas: 0
         podSpec:
           containers:
             main:
