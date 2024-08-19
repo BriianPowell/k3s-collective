@@ -66,11 +66,11 @@ flux bootstrap github \
 - [ ] Jellyfin
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md)
 - [x] [Overseerr](https://github.com/sct/overseerr)
-- [ ] [Lidarr](https://github.com/Lidarr/Lidarr)
-- [ ] [Bazarr](https://github.com/morpheus65535/bazarr)
+- [x] [Lidarr](https://github.com/Lidarr/Lidarr)
+- [x] [Bazarr](https://github.com/morpheus65535/bazarr)
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr)
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr)
-- [x] [Radarr](https://github.com/linuxserver/docker-radarr)
+- [x] [Radarr](https://github.com/Radarr/Radarr)
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn)
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 

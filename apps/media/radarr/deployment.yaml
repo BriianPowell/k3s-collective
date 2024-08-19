@@ -1,6 +1,7 @@
 #
 # Reference:
 # https://docs.linuxserver.io/images/docker-radarr/
+# https://github.com/Radarr/Radarr
 #
 
 apiVersion: v1
