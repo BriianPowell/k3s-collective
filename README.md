@@ -82,9 +82,9 @@ flux bootstrap github \
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
-- [ ] Readarr
-- [ ] Kavita
-- [ ] Jellyfin
+- [ ] [Readarr](https://github.com/Readarr/Readarr)
+- [ ] [Kavita](https://github.com/Kareadita/Kavita)
+- [ ] [jellyfin](https://github.com/jellyfin/jellyfin)
 
 ## Secrets Management
 
