@@ -41,12 +41,18 @@ spec:
               containerPort: 8989
               protocol: TCP
           volumeMounts:
-            # - name: recyclarr-pvc
-            #   mountPath: /config
-            - name: secrets
+            - name: recyclarr-pvc
               mountPath: /config
-              subPath: secrets.yml
+            - name: secrets
+              mountPath: /secrets
               readOnly: true
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - cp /secrets/secrets.yml /config/secrets.yml
       volumes:
         - name: recyclarr-pvc
           persistentVolumeClaim:
@@ -54,6 +60,9 @@ spec:
         - name: secrets
           secret:
             secretName: recyclarr
+            items:
+              - key: secrets.yml
+                path: secrets.yml
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
