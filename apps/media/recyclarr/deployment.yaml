@@ -2,6 +2,7 @@
 # Reference:
 # https://recyclarr.dev/wiki/
 # https://github.com/recyclarr/recyclarr
+# https://github.com/recyclarr/config-templates
 #
 ---
 apiVersion: apps/v1
