@@ -61,19 +61,20 @@ flux bootstrap github \
 - [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
 - [x] [V-Rising](https://truecharts.org/charts/stable/v-rising/)
 
-### Media
+### Media 
 
-- [ ] Jellyfin
+*In Installation  Order*
+
+- [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md)
-- [x] [Overseerr](https://github.com/sct/overseerr)
+- [x] [Deluge](https://github.com/binhex/arch-delugevpn)
+- [x] [Radarr](https://github.com/Radarr/Radarr)
+- [x] [Sonarr](https://github.com/Sonarr/Sonarr)
 - [x] [Lidarr](https://github.com/Lidarr/Lidarr)
 - [x] [Bazarr](https://github.com/morpheus65535/bazarr)
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr)
-- [x] [Sonarr](https://github.com/Sonarr/Sonarr)
-- [x] [Radarr](https://github.com/Radarr/Radarr)
-- [x] [Deluge](https://github.com/binhex/arch-delugevpn)
 - [ ] [Recyclarr](https://github.com/recyclarr/recyclarr)
-- [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
+- [x] [Overseerr](https://github.com/sct/overseerr)
 - [ ] [Tautulli](https://github.com/Tautulli/Tautulli)
 
 ### TBD
@@ -83,6 +84,7 @@ flux bootstrap github \
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 - [ ] Readarr
 - [ ] Kavita
+- [ ] Jellyfin
 
 ## Secrets Management
 

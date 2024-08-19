@@ -3,25 +3,6 @@
 # https://recyclarr.dev/wiki/
 # https://github.com/recyclarr/recyclarr
 #
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: recyclarr
-  namespace: media
-  labels:
-    app.kubernetes.io/component: service
-    app.kubernetes.io/name: recyclarr
-spec:
-  selector:
-    app.kubernetes.io/component: app
-    app.kubernetes.io/name: recyclarr
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 8989
-      protocol: TCP
-      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -55,10 +36,6 @@ spec:
           env:
             - name: TZ
               value: America/Los_Angeles
-            - name: PGID
-              value: '0'
-            - name: PUID
-              value: '0'
           ports:
             - name: http
               containerPort: 8989
@@ -66,22 +43,16 @@ spec:
           volumeMounts:
             - name: recyclarr-pvc
               mountPath: /config
-            - name: deluge-pvc
-              mountPath: /data
-              subPath: data
-            - name: media-data-pvc
-              mountPath: /tv
-              subPath: tv
+            - name: secrets
+              mountPath: /config/secrets.yml
+              readOnly: true
       volumes:
         - name: recyclarr-pvc
           persistentVolumeClaim:
             claimName: recyclarr-pvc
-        - name: deluge-pvc
-          persistentVolumeClaim:
-            claimName: deluge-pvc
-        - name: media-data-pvc
-          persistentVolumeClaim:
-            claimName: media-data-pvc
+        - name: secrets
+          secret:
+            secretName: recyclarr
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
