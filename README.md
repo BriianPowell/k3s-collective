@@ -72,13 +72,17 @@ flux bootstrap github \
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr)
 - [x] [Radarr](https://github.com/Radarr/Radarr)
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn)
+- [ ] [Recyclarr](https://github.com/recyclarr/recyclarr)
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
+- [ ] [Tautulli](https://github.com/Tautulli/Tautulli)
 
 ### TBD
 
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
+- [ ] Readarr
+- [ ] Kavita
 
 ## Secrets Management
 
