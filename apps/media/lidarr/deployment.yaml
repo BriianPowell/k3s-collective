@@ -1,36 +1,36 @@
 #
 # Reference:
-# https://docs.linuxserver.io/images/docker-bazarr/
-# https://github.com/morpheus65535/bazarr
+# https://github.com/Lidarr/Lidarr
+# https://docs.linuxserver.io/images/docker-lidarr/
 #
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: bazarr
+  name: lidarr
   namespace: media
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: bazarr
+    app.kubernetes.io/name: lidarr
 spec:
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: bazarr
+    app.kubernetes.io/name: lidarr
   type: ClusterIP
   ports:
     - name: http
-      port: 6767
+      port: 8686
       protocol: TCP
       targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bazarr
+  name: lidarr
   namespace: media
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: bazarr
+    app.kubernetes.io/name: lidarr
 spec:
   replicas: 1
   strategy:
@@ -38,19 +38,19 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: bazarr
+      app.kubernetes.io/name: lidarr
   template:
     metadata:
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: bazarr
+        app.kubernetes.io/name: lidarr
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
       containers:
-        - name: bazarr
-          image: lscr.io/linuxserver/bazarr:latest
+        - name: lidarr
+          image: lscr.io/linuxserver/lidarr:latest
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -61,21 +61,24 @@ spec:
               value: '0'
           ports:
             - name: http
-              containerPort: 6767
+              containerPort: 8686
               protocol: TCP
           volumeMounts:
-            - name: bazarr-pvc
+            - name: lidarr-pvc
               mountPath: /config
+            - name: deluge-pvc
+              mountPath: /data
+              subPath: data
             - name: media-data-pvc
-              mountPath: /movies
-              subPath: movies
-            - name: media-data-pvc
-              mountPath: /tv
-              subPath: tv
+              mountPath: /music
+              subPath: music
       volumes:
-        - name: bazarr-pvc
+        - name: lidarr-pvc
           persistentVolumeClaim:
-            claimName: bazarr-pvc
+            claimName: lidarr-pvc
+        - name: deluge-pvc
+          persistentVolumeClaim:
+            claimName: deluge-pvc
         - name: media-data-pvc
           persistentVolumeClaim:
             claimName: media-data-pvc
@@ -83,12 +86,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: bazarr-pvc
+  name: lidarr-pvc
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: bazarr-pvc
+    app.kubernetes.io/name: lidarr-pvc
 spec:
   accessModes:
     - ReadWriteMany
@@ -99,12 +102,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: bazarr-pv
+  name: lidarr-pv
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: bazarr-pv
+    app.kubernetes.io/name: lidarr-pv
 spec:
   capacity:
     storage: 100Mi
@@ -113,10 +116,10 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   claimRef:
-    name: bazarr-pvc
+    name: lidarr-pvc
     namespace: media
   local:
-    path: /mnt/moriyya/media/bazarr
+    path: /mnt/moriyya/media/lidarr
   nodeAffinity:
     required:
       nodeSelectorTerms:
