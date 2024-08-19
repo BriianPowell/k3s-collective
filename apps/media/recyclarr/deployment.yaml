@@ -46,13 +46,16 @@ spec:
             - name: secrets
               mountPath: /secrets
               readOnly: true
-          # lifecycle:
-          #   postStart:
-          #     exec:
-          #       command:
-          #         - /bin/bash
-          #         - -c
-          #         - cp /secrets/secrets.yml /config/secrets.yml
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - cp /secrets/secrets.yml /config/secrets.yml
       volumes:
         - name: recyclarr-pvc
           persistentVolumeClaim:
