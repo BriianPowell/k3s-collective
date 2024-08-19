@@ -44,7 +44,8 @@ spec:
             # - name: recyclarr-pvc
             #   mountPath: /config
             - name: secrets
-              mountPath: /config/secrets.yml
+              mountPath: /config
+              subPath: secrets.yml
               readOnly: true
       volumes:
         - name: recyclarr-pvc
