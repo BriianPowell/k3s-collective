@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bazarr-dashboard-https
+  namespace: media
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: bazarr
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`bazarr.powell.place`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: bazarr
+          port: http

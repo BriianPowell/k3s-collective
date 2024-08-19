@@ -1,0 +1,122 @@
+#
+# Reference:
+# https://github.com/morpheus65535/bazarr
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: bazarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: bazarr
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 6767
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: bazarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: bazarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: bazarr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: bazarr
+          image: lscr.io/linuxserver/bazarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PGID
+              value: '0'
+            - name: PUID
+              value: '0'
+          ports:
+            - name: http
+              containerPort: 6767
+              protocol: TCP
+          volumeMounts:
+            - name: bazarr-pvc
+              mountPath: /config
+            - name: media-data-pvc
+              mountPath: /movies
+              subPath: movies
+            - name: media-data-pvc
+              mountPath: /tv
+              subPath: tv
+      volumes:
+        - name: bazarr-pvc
+          persistentVolumeClaim:
+            claimName: bazarr-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bazarr-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: bazarr-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: bazarr-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: bazarr-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: bazarr-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/bazarr
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
