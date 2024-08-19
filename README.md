@@ -63,7 +63,7 @@ flux bootstrap github \
 
 ### Media 
 
-*In Installation  Order*
+*In Installation Order*
 
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md)
