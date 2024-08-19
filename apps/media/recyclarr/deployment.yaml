@@ -45,7 +45,6 @@ spec:
               mountPath: /config
             - name: secrets
               mountPath: /config/secrets.yml
-              subPath: secrets.yml
               readOnly: true
       volumes:
         - name: recyclarr-pvc
@@ -54,9 +53,6 @@ spec:
         - name: secrets
           secret:
             secretName: recyclarr
-            items:
-              - key: secrets.yml
-                path: secrets.yml
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
