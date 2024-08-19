@@ -50,7 +50,7 @@ spec:
             postStart:
               exec:
                 command:
-                  - /bin/sh
+                  - /bin/bash
                   - -c
                   - cp /secrets/secrets.yml /config/secrets.yml
       volumes:
