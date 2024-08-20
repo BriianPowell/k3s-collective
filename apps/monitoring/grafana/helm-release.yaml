@@ -139,6 +139,8 @@ spec:
         k3s:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/k3s/dashboard.json'
       app-logs:
+        atuin:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/atuin.json'
         error-pages:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/error-pages.json'
         home-assistant:
