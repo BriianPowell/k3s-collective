@@ -43,8 +43,11 @@ spec:
           image: ghcr.io/home-assistant/home-assistant:stable
           imagePullPolicy: Always
           volumeMounts:
-            - mountPath: /config
-              name: hass-storage
+            - name: hass-storage
+              mountPath: /config
+            - name: secrets
+              mountPath: /secrets
+              readOnly: true
           ports:
             - name: http
               containerPort: 8123
@@ -56,12 +59,25 @@ spec:
             limits:
               cpu: 350m
               memory: 1Gi
-      securityContext:
-        privileged: true
+          securityContext:
+            privileged: true
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - cp /secrets/secrets.yaml /config/secrets.yaml
       volumes:
         - name: hass-storage
           persistentVolumeClaim:
             claimName: homeassistant-pvc
+        - name: secrets
+          secret:
+            secretName: homeassistant
+            items:
+              - key: secrets.yaml
+                path: secrets.yaml
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
