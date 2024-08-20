@@ -90,6 +90,14 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
+          - name: system-dashboards
+            orgId: 1
+            folder: System Dashboards
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/system
           - name: app-logs
             orgId: 1
             folder: App Logs
@@ -123,6 +131,13 @@ spec:
             options:
               path: /var/lib/grafana/dashboards/monitoring-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+      system-dashboards:
+        flux-cluster:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/flux/cluster.json'
+        flux-control-plane:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/flux/control-plane.json'
+        k3s:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/k3s/dashboard.json'
       app-logs:
         error-pages:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/error-pages.json'
