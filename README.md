@@ -84,7 +84,7 @@ flux bootstrap github \
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 - [ ] [Readarr](https://github.com/Readarr/Readarr)
 - [ ] [Kavita](https://github.com/Kareadita/Kavita)
-- [ ] [jellyfin](https://github.com/jellyfin/jellyfin)
+- [ ] [Jellyfin](https://github.com/jellyfin/jellyfin)
 
 ## Secrets Management
 
