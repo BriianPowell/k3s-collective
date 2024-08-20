@@ -75,7 +75,7 @@ flux bootstrap github \
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr)
 - [x] [Recyclarr](https://github.com/recyclarr/recyclarr)
 - [x] [Overseerr](https://github.com/sct/overseerr)
-- [ ] [Tautulli](https://github.com/Tautulli/Tautulli)
+- [x] [Tautulli](https://github.com/Tautulli/Tautulli)
 
 ### TBD
 

@@ -5,4 +5,4 @@ commonLabels:
   app.kubernetes.io/part-of: recyclarr
 
 resources:
-  - deployment.yaml
+  # - deployment.yaml
