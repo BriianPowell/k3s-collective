@@ -6,8 +6,8 @@
 
 | Service  | Logs | Grafana Dashboard | Notes |
 | -------- | ---- | ----------------- | ----- |
-| App      | ✅   | ❌                |       |
-| Postgres | ✅   | ❌                |       |
+| App      | ✅   | ✅                |       |
+| Postgres | ✅   | ✅                |       |
 
 ### Error-Pages
 
