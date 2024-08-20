@@ -2,20 +2,25 @@
 
 ## App Logs
 
+### Atuin
+
+| Service  | Logs | Grafana Dashboard | Notes |
+| -------- | ---- | ----------------- | ----- |
+| App      | ✅   | ❌                |       |
+| Postgres | ✅   | ❌                |       |
+
 ### Error-Pages
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Home Assistant
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Postgres          | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service  | Logs | Grafana Dashboard | Notes |
+| -------- | ---- | ----------------- | ----- |
+| App      | ✅   | ✅                |       |
+| Postgres | ✅   | ✅                |       |
 
 ### Keycloak
 
@@ -27,89 +32,78 @@
 
 ### Nextcloud
 
-| Service           | Logs | Notes                                                      |
-| ----------------- | ---- | ---------------------------------------------------------- |
-| App               | ✅   |                                                            |
-| Exporter          | ❌   | Can't figure out how to get the exporter logs from the pod |
-| cron              | ✅   |                                                            |
-| redis             | ✅   |                                                            |
-| postgres          | ✅   |                                                            |
-| Grafana Dashboard | ✅   |                                                            |
+| Service  | Logs | Grafana Dashboard | Notes                                                      |
+| -------- | ---- | ----------------- | ---------------------------------------------------------- |
+| App      | ✅   | ✅                |
+| Exporter | ❌   | ❌                | Can't figure out how to get the exporter logs from the pod |
+| Cron     | ✅   | ✅                |                                                            |
+| Redis    | ✅   | ✅                |                                                            |
+| Postgres | ✅   | ✅                |                                                            |
 
 ### Pihole
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Wiki.JS
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Postgres          | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service  | Logs | Grafana Dashboard | Notes |
+| -------- | ---- | ----------------- | ----- |
+| App      | ✅   | ✅                |       |
+| Postgres | ✅   | ✅                |       |
 
 ## Flux System
 
 ### Helm Controller
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Kustomize Controller
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Notification Controller
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Sealed Secrets Controller
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Source Controller
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ## Game Logs
 
 ### Minecraft
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| Server            | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| Server  | ✅   | ✅                |       |
 
 ### V-Rising
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| Server            | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| Server  | ✅   | ✅                |       |
 
 ### Valheim
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| Server            | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| Server  | ✅   | ✅                |       |
 
 ## Infrastructure Logs
 
@@ -117,129 +111,128 @@
 
 #### Core DNS
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 #### Local Path Provisioner
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Cert Manager
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| Controller        | ✅   |       |
-| CA-Injector       | ✅   |       |
-| Webhook           | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service     | Logs | Grafana Dashboard | Notes |
+| ----------- | ---- | ----------------- | ----- |
+| Controller  | ✅   | ✅                |       |
+| CA-Injector | ✅   | ✅                |       |
+| Webhook     | ✅   | ✅                |       |
 
 ### CloudNative PG
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| Manager           | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| Manager | ✅   | ✅                |       |
 
 ### Crowdsec
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| LAPI              | ✅   |       |
-| Agent             | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| LAPI    | ✅   | ✅                |       |
+| Agent   | ✅   | ✅                |       |
 
 ### Nvidia Device Plugin
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Reflector
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Reloader
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Traefik
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Forward Auth      | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service      | Logs | Grafana Dashboard | Notes |
+| ------------ | ---- | ----------------- | ----- |
+| App          | ✅   | ✅                |       |
+| Forward Auth | ✅   | ✅                |       |
 
 ## Monitoring Applications
 
 ### Alert Manager
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Alloy
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Grafana
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### kube-state-metrics
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Loki
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Canary            | ✅   |       |
-| Chunks Cache      | ✅   |       |
-| Gateway           | ✅   |       |
-| Results Cache     | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service       | Logs | Grafana Dashboard | Notes |
+| ------------- | ---- | ----------------- | ----- |
+| App           | ✅   | ✅                |       |
+| Canary        | ✅   | ✅                |       |
+| Chunks Cache  | ✅   | ✅                |       |
+| Gateway       | ✅   | ✅                |       |
+| Results Cache | ✅   | ✅                |       |
 
 ### Node Exporter
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Prometheus
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
 
 ### Prometheus Operator
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ✅   | ✅                |       |
+
+## Media Applications
+
+| Service      | Logs | Grafana Dashboard | Notes |
+| ------------ | ---- | ----------------- | ----- |
+| Bazaar       | ✅   | ❌                |       |
+| Deluge       | ✅   | ❌                |       |
+| Flaresolverr | ✅   | ❌                |       |
+| Lidarr       | ✅   | ❌                |       |
+| Overseerr    | ✅   | ❌                |       |
+| Plex         | ✅   | ❌                |       |
+| Prowlarr     | ✅   | ❌                |       |
+| Radarr       | ✅   | ❌                |       |
+| Recyclarr    | ✅   | ❌                |       |
+| Sonarr       | ✅   | ❌                |       |
+| Tautulli     | ✅   | ❌                |       |

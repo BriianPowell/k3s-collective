@@ -108,6 +108,44 @@ data:
     }
 
     // ========================================
+    // Atuin
+    // Application
+    discovery.kubernetes "atuin" {
+      role = "pod"
+
+      namespaces {
+        names = ["atuin"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=atuin"
+      }
+    }
+
+    loki.source.kubernetes "atuin" {
+      targets = discovery.kubernetes.atuin.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Database
+    discovery.kubernetes "atuin_db" {
+      role = "pod"
+
+      namespaces {
+        names = ["atuin"]
+      }
+      selectors {
+        role = "pod"
+        label = "cnpg.io/instanceName=atuin-pgcluster-1"
+      }
+    }
+
+    loki.source.kubernetes "atuin" {
+      targets = discovery.kubernetes.atuin.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Error Pages
     // Application
     discovery.kubernetes "error_pages" {
@@ -860,8 +898,211 @@ data:
     }
 
     // ========================================
+    // Media Logs
+    // ========================================
+
+    // Bazaar
+    discovery.kubernetes "bazaar" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=bazaar"
+      }
+    }
+
+    loki.source.kubernetes "bazaar" {
+      targets = discovery.kubernetes.bazaar.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Deluge
+    discovery.kubernetes "deluge" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=deluge"
+      }
+    }
+
+    loki.source.kubernetes "deluge" {
+      targets = discovery.kubernetes.deluge.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Flaresolverr
+    discovery.kubernetes "flaresolverr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=flaresolverr"
+      }
+    }
+
+    loki.source.kubernetes "flaresolverr" {
+      targets = discovery.kubernetes.flaresolverr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Lidarr
+    discovery.kubernetes "lidarr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=lidarr"
+      }
+    }
+
+    loki.source.kubernetes "lidarr" {
+      targets = discovery.kubernetes.lidarr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Overseerr
+    discovery.kubernetes "overseerr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=overseerr"
+      }
+    }
+
+    loki.source.kubernetes "overseerr" {
+      targets = discovery.kubernetes.overseerr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Plex
+    discovery.kubernetes "plex" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=plex"
+      }
+    }
+
+    loki.source.kubernetes "plex" {
+      targets = discovery.kubernetes.plex.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Prowlarr
+    discovery.kubernetes "prowlarr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=prowlarr"
+      }
+    }
+
+    loki.source.kubernetes "prowlarr" {
+      targets = discovery.kubernetes.prowlarr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Radarr
+    discovery.kubernetes "radarr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=radarr"
+      }
+    }
+
+    loki.source.kubernetes "radarr" {
+      targets = discovery.kubernetes.radarr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Recyclarr
+    discovery.kubernetes "recyclarr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=recyclarr"
+      }
+    }
+
+    loki.source.kubernetes "recyclarr" {
+      targets = discovery.kubernetes.recyclarr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Sonarr
+    discovery.kubernetes "sonarr" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=sonarr"
+      }
+    }
+
+    loki.source.kubernetes "sonarr" {
+      targets = discovery.kubernetes.sonarr.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Tautulli
+    discovery.kubernetes "tautulli" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=tautulli"
+      }
+    }
+
+    loki.source.kubernetes "tautulli" {
+      targets = discovery.kubernetes.tautulli.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Loki Write Source
     // ========================================
+
     loki.write "local" {
       endpoint {
         url = "http://loki.monitoring:3100/loki/api/v1/push"
@@ -871,6 +1112,7 @@ data:
     // ========================================
     // Configuration Blocks
     // ========================================
+
     logging {
       level = "info"
       format = "logfmt"
