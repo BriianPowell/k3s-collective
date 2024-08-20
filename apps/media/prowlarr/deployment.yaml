@@ -46,7 +46,7 @@ spec:
     spec:
       restartPolicy: Always
       nodeSelector:
-        kubernetes.io/hostname: sheol
+        kubernetes.io/hostname: abaddon
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
@@ -84,7 +84,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -97,7 +97,7 @@ metadata:
     app.kubernetes.io/name: prowlarr-pv
 spec:
   capacity:
-    storage: 100Mi
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
@@ -106,7 +106,7 @@ spec:
     name: prowlarr-pvc
     namespace: media
   local:
-    path: /mnt/moriyya/media/prowlarr
+    path: /media/prowlarr
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -114,4 +114,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - sheol
+                - abaddon

@@ -29,7 +29,7 @@ spec:
     spec:
       restartPolicy: Always
       nodeSelector:
-        kubernetes.io/hostname: sheol
+        kubernetes.io/hostname: abaddon
       containers:
         - name: recyclarr
           image: ghcr.io/recyclarr/recyclarr:latest
@@ -104,7 +104,7 @@ spec:
     name: recyclarr-pvc
     namespace: media
   local:
-    path: /mnt/moriyya/media/recyclarr
+    path: /media/recyclarr
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -112,4 +112,4 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - sheol
+                - abaddon
