@@ -140,7 +140,7 @@ data:
       }
     }
 
-    loki.source.kubernetes "atuin" {
+    loki.source.kubernetes "atuin_db" {
       targets = discovery.kubernetes.atuin.targets
       forward_to = [loki.write.local.receiver]
     }

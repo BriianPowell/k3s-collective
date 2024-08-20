@@ -79,7 +79,7 @@ flux bootstrap github \
 
 ### TBD
 
-- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s
+- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s, [helm chart current under development](https://github.com/AnalogJ/scrutiny/pull/363)
 - [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 - [ ] [Readarr](https://github.com/Readarr/Readarr)
