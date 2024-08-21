@@ -5,16 +5,16 @@ metadata:
   namespace: atuin
   labels:
     app.kubernetes.io/component: ingress
-    app.kubernetes.io/name: atuin
+    app.kubernetes.io/name: atuin-ingress-https
 spec:
   entryPoints:
     - websecure
   routes:
     - match: Host(`atuin.powell.place`)
       kind: Rule
-      services:
-        - name: atuin
-          port: atuin
       middlewares:
         - name: security
           namespace: kube-system
+      services:
+        - name: atuin
+          port: http

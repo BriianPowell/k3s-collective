@@ -12,10 +12,10 @@ spec:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: atuin
   ports:
-    - name: atuin
+    - name: http
       port: 8888
-      targetPort: atuin
       protocol: TCP
+      targetPort: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -56,12 +56,16 @@ spec:
             - name: ATUIN_HOST
               value: 0.0.0.0
             - name: ATUIN_PORT
-              value: "8888"
+              value: '8888'
             - name: ATUIN_OPEN_REGISTRATION
-              value: "true"
+              value: 'true'
           ports:
-            - name: atuin
+            - name: http
               containerPort: 8888
+              protocol: TCP
+            - name: metrics
+              containerPort: 9901
+              protocol: TCP
           resources:
             limits:
               cpu: 250m
@@ -70,8 +74,8 @@ spec:
               cpu: 250m
               memory: 1Gi
           volumeMounts:
-            - mountPath: /config
-              name: atuin-pvc
+            - name: atuin-pvc
+              mountPath: /config
       volumes:
         - name: atuin-pvc
           persistentVolumeClaim:
@@ -91,4 +95,34 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Mi
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: atuin-pv
+  namespace: atuin
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: atuin-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: atuin-pvc
+    namespace: kube-system
+  local:
+    path: /media/atuin
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - abaddon
