@@ -93,16 +93,10 @@ spec:
             - name: ntfy-pvc
               mountPath: /var/lib/ntfy
               subPath: lib
-            - name: config
-              mountPath: /etc/ntfy/server.yaml
-              subPath: server.yaml
       volumes:
         - name: ntfy-pvc
           persistentVolumeClaim:
             claimName: ntfy-pvc
-        - name: config
-          configMap:
-            name: ntfy
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
