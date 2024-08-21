@@ -65,6 +65,8 @@ spec:
               value: 'false'
             - name: NTFY_LOG_LEVEL
               value: INFO
+            - name: NTFY_LOG_FORMAT
+              value: json
             - name: NTFY_BASE_URL
               value: https://ntfy.powell.place
             - name: NTFY_CACHE_FILE

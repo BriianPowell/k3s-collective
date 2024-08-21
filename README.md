@@ -36,6 +36,7 @@ flux bootstrap github \
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://github.com/home-assistant)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
+- [x] [Ntfy](https://github.com/binwiederhier/ntfy)
 - [x] [Wiki.js](https://github.com/requarks/wiki)
 - [x] [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
 - [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
@@ -80,7 +81,6 @@ flux bootstrap github \
 ### TBD
 
 - [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s, [helm chart current under development](https://github.com/AnalogJ/scrutiny/pull/363)
-- [ ] [Gotify](https://github.com/gotify/server) - **find alternative** as is not possible with iOS
 - [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 - [ ] [Readarr](https://github.com/Readarr/Readarr)
 - [ ] [Kavita](https://github.com/Kareadita/Kavita)

@@ -411,6 +411,26 @@ data:
     }
 
     // ========================================
+    // Ntfy
+    // Application
+    discovery.kubernetes "ntfy" {
+      role = "pod"
+
+      namespaces {
+        names = ["kube-system"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=ntfy"
+      }
+    }
+
+    loki.source.kubernetes "ntfy" {
+      targets = discovery.kubernetes.ntfy.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // ========================================
     // Nvidia Device Plugin
     discovery.kubernetes "nvidia_device_plugin" {
       role = "pod"
