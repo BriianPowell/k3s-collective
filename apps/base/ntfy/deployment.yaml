@@ -77,6 +77,10 @@ spec:
           volumeMounts:
             - name: ntfy-pvc
               mountPath: /var/cache/ntfy
+              subPath: cache
+            - name: ntfy-pvc
+              mountPath: /var/lib/ntfy
+              subPath: lib
             - name: config
               mountPath: /etc/ntfy/server.yaml
               subPath: server.yaml
