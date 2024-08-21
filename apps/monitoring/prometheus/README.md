@@ -2,7 +2,7 @@
 
 | App           | Service Monitor | Supported                        |
 | ------------- | --------------- | -------------------------------- |
-| Atuin         | ❓              |                                  |
+| Atuin         | ❓              | Maybe Supported?                 |
 | Error Pages   | ❌              | Not supported                    |
 | HomeAssistant | ✅              | Created through API spec         |
 | Keycloak      | ✅              | Created through API spec         |

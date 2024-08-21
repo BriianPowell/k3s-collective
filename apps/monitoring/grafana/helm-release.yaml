@@ -133,67 +133,69 @@ spec:
     dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
       system-dashboards:
         flux-cluster:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/flux/cluster.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/flux/cluster.json'
         flux-control-plane:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/flux/control-plane.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/flux/control-plane.json'
         k3s:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/system/k3s/dashboard.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/k3s/dashboard.json'
+        ntfy:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/ntfy/dashboard.json'
       app-logs:
         atuin:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/atuin.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/atuin.json'
         error-pages:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/error-pages.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/error-pages.json'
         home-assistant:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/home-assistant.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/home-assistant.json'
         keycloak:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/keycloak.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/keycloak.json'
         nextcloud:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/nextcloud.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/nextcloud.json'
         pihole:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/pihole.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/pihole.json'
         wiki-js:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/apps/wiki-js.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/wiki-js.json'
       game-logs:
         minecraft:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/minecraft.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/minecraft.json'
         v-rising:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/v-rising.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/v-rising.json'
         valheim:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/games/valheim.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/valheim.json'
       infra-logs:
         cert-manager:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/cert-manager.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/cert-manager.json'
         cloudnative-pg:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/cloudnative-pg.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/cloudnative-pg.json'
         crowdsec:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/crowdsec.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/crowdsec.json'
         flux-system:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/flux-system.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/flux-system.json'
         kube-system:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/kube-system.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/kube-system.json'
         nvidia-device-plugin:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/nvidia-device-plugin.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/nvidia-device-plugin.json'
         reflector:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reflector.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/reflector.json'
         reloader:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/reloader.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/reloader.json'
         traefik:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/infra/traefik.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/traefik.json'
       monitoring-logs:
         alert-manager:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/alert-manager.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/alert-manager.json'
         alloy:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/alloy.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/alloy.json'
         grafana:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/grafana.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/grafana.json'
         kube-state-metrics:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/kube-state-metrics.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/kube-state-metrics.json'
         loki:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/loki.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/loki.json'
         node-exporter:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/node-exporter.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/node-exporter.json'
         prometheus:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/master/dashboards/logs/monitoring/prometheus.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/prometheus.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/
