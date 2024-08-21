@@ -99,34 +99,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: atuin-pv
-  namespace: atuin
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: atuin-pv
-spec:
-  capacity:
-    storage: 100Mi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: atuin-pvc
-    namespace: kube-system
-  local:
-    path: /media/atuin
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - abaddon
+      storage: 10Mi

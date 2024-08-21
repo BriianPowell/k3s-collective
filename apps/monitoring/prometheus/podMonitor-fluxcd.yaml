@@ -23,3 +23,19 @@ spec:
           # - image-reflector-controller
   podMetricsEndpoints:
     - port: http-prom
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sealed-secrets
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: sealed-secrets
+spec:
+  selector:
+    matchLabels:
+      operated-alertmanager: 'true'
+  endpoints:
+    - interval: 30s
+      port: web
