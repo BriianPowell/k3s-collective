@@ -83,6 +83,12 @@ spec:
               value: https://ntfy.sh
             - name: NTFY_ENABLE_METRICS
               value: 'true'
+          livesnessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
           ports:
             - name: http
               containerPort: 80
