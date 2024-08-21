@@ -16,6 +16,10 @@ spec:
       port: 8888
       protocol: TCP
       targetPort: http
+    - name: metrics
+      port: 9001
+      protocol: TCP
+      targetPort: metrics
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -64,7 +68,7 @@ spec:
               containerPort: 8888
               protocol: TCP
             - name: metrics
-              containerPort: 9901
+              containerPort: 9001
               protocol: TCP
           resources:
             limits:
