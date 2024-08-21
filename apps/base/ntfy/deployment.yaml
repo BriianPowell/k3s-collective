@@ -73,6 +73,8 @@ spec:
               value: /var/cache/ntfy/attachments
             - name: NTFY_BEHIND_PROXY
               value: 'true'
+            - name: NTFY_UPSTREAM_BASE_URL
+              value: https://ntfy.sh
           ports:
             - name: http
               containerPort: 80
