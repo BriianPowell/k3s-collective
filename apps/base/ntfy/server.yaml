@@ -1,4 +1,0 @@
-cache-file: "/var/cache/ntfy/cache.db"
-attachment-cache-dir: "/var/cache/ntfy/attachments"
-auth-file: "/var/lib/ntfy/auth.db"
-auth-default-access: "deny-all"

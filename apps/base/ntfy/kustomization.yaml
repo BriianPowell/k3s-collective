@@ -7,8 +7,3 @@ commonLabels:
 resources:
   - deployment.yaml
   - ingress.yaml
-
-configMapGenerator:
-  - name: ntfy
-    files:
-      - server.yaml

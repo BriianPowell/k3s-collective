@@ -63,6 +63,16 @@ spec:
               value: INFO
             - name: NTFY_BASE_URL
               value: https://ntfy.powell.place
+            - name: NTFY_CACHE_FILE
+              value: /var/cache/ntfy/cache.db
+            - name: NTFY_AUTH_FILE
+              value: /var/lib/ntfy/auth.db
+            - name: NTFY_AUTH_DEFAULT_ACCESS
+              value: deny-all
+            - name: NTFY_ATTACHMENT_CACHE_DIR
+              value: /var/cache/ntfy/attachments
+            - name: NTFY_BEHIND_PROXY
+              value: 'true'
           ports:
             - name: http
               containerPort: 80
