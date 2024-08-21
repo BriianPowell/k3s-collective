@@ -68,6 +68,7 @@ spec:
               readOnly: true
             - name: utmp
               mountPath: /var/run/utmp
+              readOnly: true
           securityContext:
             privileged: true
             runAsUser: 0
