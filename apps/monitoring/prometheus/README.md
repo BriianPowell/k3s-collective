@@ -1,13 +1,15 @@
 # Service Monitors
 
-| App           | Service Monitor | Supported                |
-| ------------- | --------------- | ------------------------ |
-| Error Pages   | ❌              | Not supported            |
-| HomeAssistant | ✅              | Created through API spec |
-| Keycloak      | ✅              | Created through API spec |
-| NextCloud     | ✅              | Created through API spec |
-| Pihole        | ✅              | Created through API spec |
-| Wiki.JS       | ❌              | Not Supported            |
+| App           | Service Monitor | Supported                        |
+| ------------- | --------------- | -------------------------------- |
+| Atuin         | ❓              |                                  |
+| Error Pages   | ❌              | Not supported                    |
+| HomeAssistant | ✅              | Created through API spec         |
+| Keycloak      | ✅              | Created through API spec         |
+| NextCloud     | ✅              | Created through API spec         |
+| Ntfy          | ✅              | Supported through ServiceMonitor |
+| Pihole        | ✅              | Created through API spec         |
+| Wiki.JS       | ❌              | Not Supported                    |
 
 | Game      | Service Monitor | Supported                 |
 | --------- | --------------- | ------------------------- |
@@ -56,3 +58,17 @@
 | Keycloak Postgres      | ✅          | Supported through CNPG API |
 | Nextcloud Postgres     | ✅          | Supported through CNPG API |
 | Wiki.Js Postgres       | ✅          | Supported through CNPG API |
+
+| Media        | Monitor | Supported |
+| ------------ | ------- | --------- |
+| Bazaarr      | ❓      |           |
+| Deluge       | ❓      |           |
+| Flaresolverr | ❓      |           |
+| Lidarr       | ❓      |           |
+| Overseerr    | ❓      |           |
+| Plex         | ❓      |           |
+| Prowlarr     | ❓      |           |
+| Radarr       | ❓      |           |
+| Recyclarr    | ❓      |           |
+| Sonarr       | ❓      |           |
+| Tautulli     | ❓      |           |

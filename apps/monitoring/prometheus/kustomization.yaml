@@ -15,6 +15,7 @@ resources:
   - serviceMonitor-keycloak.yaml
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
+  - serviceMonitor-ntfy.yaml
   - serviceMonitor-pihole.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
