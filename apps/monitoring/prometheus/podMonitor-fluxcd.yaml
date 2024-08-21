@@ -35,7 +35,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      operated-alertmanager: 'true'
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/instance: sealed-secrets-controller
+  namespaceSelector:
+    matchNames:
+      - flux-system
   endpoints:
     - interval: 30s
-      port: web
+      port: metrics
