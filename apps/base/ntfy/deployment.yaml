@@ -71,8 +71,8 @@ spec:
               value: deny-all
             - name: NTFY_ATTACHMENT_CACHE_DIR
               value: /var/cache/ntfy/attachments
-            - name: NTFY_ENABLE_LOGIN
-              value: 'true'
+            # - name: NTFY_ENABLE_LOGIN
+            #   value: 'true'
             - name: NTFY_BEHIND_PROXY
               value: 'true'
             - name: NTFY_UPSTREAM_BASE_URL
