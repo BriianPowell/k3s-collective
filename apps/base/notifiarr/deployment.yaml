@@ -80,7 +80,7 @@ spec:
         - name: utmp
           hostPath:
             path: /var/run/utmp
-            type: Directory
+            type: File
         - name: machine-id
           hostPath:
             path: /etc/machine-id
