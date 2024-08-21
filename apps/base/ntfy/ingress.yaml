@@ -1,20 +1,20 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: notifiarr-dashboard-https
+  name: ntfy-dashboard-https
   namespace: kube-system
   labels:
     app.kubernetes.io/component: ingress
-    app.kubernetes.io/name: notifiarr-dashboard-https
+    app.kubernetes.io/name: ntfy-dashboard-https
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`notifiarr.powell.place`)
+    - match: Host(`ntfy.powell.place`)
       kind: Rule
       middlewares:
         - name: security
           namespace: kube-system
       services:
-        - name: notifiarr
+        - name: ntfy
           port: http
