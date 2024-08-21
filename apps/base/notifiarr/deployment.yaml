@@ -54,8 +54,6 @@ spec:
           image: golift/notifiarr:latest
           imagePullPolicy: Always
           env:
-            - name: TZ
-              value: America/Los_Angeles
           ports:
             - name: http
               containerPort: 5454
@@ -121,7 +119,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   claimRef:
     name: notifiarr-pvc
-    namespace: media
+    namespace: kube-system
   local:
     path: /media/notifiarr
   nodeAffinity:
