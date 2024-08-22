@@ -55,15 +55,13 @@ spec:
           args:
             - tautulli
           env:
-            - name: PORT
-              value: '9707'
-            - name: TAUTULLI_URI
-              value: http://tautulli.media.svc.cluster.local:8181
             - name: TAUTULLI_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: exportarr
                   key: tautulli_api_key
+            - name: TAUTULLI_URI
+              value: http://tautulli.media.svc:8181
             - name: TAUTULLI_SSL_VERIFY
               value: 'false'
             - name: TAUTULLI_TIMEOUT
