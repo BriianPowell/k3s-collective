@@ -12,9 +12,9 @@ spec:
   routes:
     - match: Host(`wiki.powell.place`)
       kind: Rule
-      services:
-        - name: wiki-js
-          port: http
       middlewares:
         - name: security
           namespace: kube-system
+      services:
+        - name: wiki-js
+          port: http
