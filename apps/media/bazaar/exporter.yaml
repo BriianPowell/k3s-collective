@@ -1,4 +1,9 @@
 
+#
+# Reference:
+# https://github.com/onedr0p/exportarr
+#
+
 apiVersion: v1
 kind: Service
 metadata:
