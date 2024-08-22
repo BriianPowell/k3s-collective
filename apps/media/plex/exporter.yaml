@@ -1,35 +1,35 @@
 #
 # Reference:
-# https://github.com/nwalke/tautulli-exporter
+# https://github.com/axsuul/plex-media-server-exporter
 #
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: tautulli-exporter
+  name: plex-exporter
   namespace: media
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: tautulli-exporter
+    app.kubernetes.io/name: sonarr-exporterr
 spec:
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: tautulli-exporter
+    app.kubernetes.io/name: sonarr-exporterr
   type: ClusterIP
   ports:
     - name: metrics
-      port: 9487
+      port: 9707
       protocol: TCP
       targetPort: metrics
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tautulli-exporter
+  name: sonarr-exporterr
   namespace: media
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: tautulli-exporter
+    app.kubernetes.io/name: sonarr-exporterr
 spec:
   revisionHistoryLimit: 1
   replicas: 1
@@ -38,42 +38,48 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: tautulli-exporter
+      app.kubernetes.io/name: sonarr-exporterr
   template:
     metadata:
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: tautulli-exporter
+        app.kubernetes.io/name: sonarr-exporterr
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
-        - name: tautulli-exportarr
-          image: nwalke/tautulli_exporter:latest
+        - name: sonarr-exportarr
+          image: ghcr.io/onedr0p/exportarr:latest
           imagePullPolicy: Always
           args:
-            - tautulli
+            - sonarr
           env:
             - name: PORT
               value: '9707'
-            - name: TAUTULLI_URI
-              value: http://tautulli.media.svc.cluster.local:8181
-            - name: TAUTULLI_API_KEY
+            - name: URL
+              value: http://sonarr.media.svc.cluster.local:8989
+            - name: APIKEY
               valueFrom:
                 secretKeyRef:
                   name: exportarr
-                  key: tautulli_api_key
-            - name: TAUTULLI_SSL_VERIFY
-              value: 'false'
-            - name: TAUTULLI_TIMEOUT
-              value: '5'
-            - name: SERVE_PORT
-              value: '9487'
+                  key: sonarr_api_key
           ports:
             - name: metrics
-              containerPort: 9487
+              containerPort: 9707
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
           resources:
             requests:
               cpu: 100m

@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: service
-      app.kubernetes.io/name: tautulli-exporterr
+      app.kubernetes.io/name: tautulli-exporter
   namespaceSelector:
     matchNames:
       - media
