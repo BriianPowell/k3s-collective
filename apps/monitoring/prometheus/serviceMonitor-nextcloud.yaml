@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: service
-      app.kubernetes.io/name: nextcloud
+      app.kubernetes.io/name: nextcloud-exporter
   namespaceSelector:
     matchNames:
       - nextcloud
