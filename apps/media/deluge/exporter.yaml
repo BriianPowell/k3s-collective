@@ -54,7 +54,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: PER_TORRENT_METRICS
-              value: 0
+              value: '0'
             - name: LISTEN_PORT
               value: '9354'
             - name: LISTEN_ADDRESS
