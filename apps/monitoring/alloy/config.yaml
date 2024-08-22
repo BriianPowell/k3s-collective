@@ -921,8 +921,8 @@ data:
     // Media Logs
     // ========================================
 
-    // Bazaar
-    discovery.kubernetes "bazaar" {
+    // Bazarr
+    discovery.kubernetes "bazarr" {
       role = "pod"
 
       namespaces {
@@ -930,12 +930,12 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/name=bazaar"
+        label = "app.kubernetes.io/name=bazarr"
       }
     }
 
-    loki.source.kubernetes "bazaar" {
-      targets = discovery.kubernetes.bazaar.targets
+    loki.source.kubernetes "bazarr" {
+      targets = discovery.kubernetes.bazarr.targets
       forward_to = [loki.write.local.receiver]
     }
 
