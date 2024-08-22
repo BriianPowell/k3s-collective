@@ -21,6 +21,9 @@ resources:
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
   - serviceMonitor-pihole.yaml
+  - serviceMonitor-prowlarr.yaml
+  - serviceMonitor-radarr.yaml
+  - serviceMonitor-sonarr.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
   # - serviceMonitor-valheim.yaml

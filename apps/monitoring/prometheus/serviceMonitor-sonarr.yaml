@@ -1,16 +1,16 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: lidarr
+  name: sonarr
   namespace: monitoring
   labels:
     app.kubernetes.io/component: service-monitor
-    app.kubernetes.io/name: lidarr
+    app.kubernetes.io/name: sonarr
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: service
-      app.kubernetes.io/name: lidarr-exporterr
+      app.kubernetes.io/name: sonarr-exporterr
   namespaceSelector:
     matchNames:
       - media

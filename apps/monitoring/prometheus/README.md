@@ -61,14 +61,14 @@
 
 | Media        | Monitor | Supported                                                                                                                                                                        |
 | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Bazaarr      | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implement                                                                     |
+| Bazaarr      | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                     |
 | Deluge       | ❓      | Not supported natively, but can use [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                                                 |
 | Flaresolverr | ✅      | Supported through API Spec                                                                                                                                                       |
-| Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Lidarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Overseerr    | ❓      | Not supported natively, but can use [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)                                                                       |
 | Plex         | ❓      | Not supported natively, but can use [plex_exporter](https://github.com/arnarg/plex_exporter) or [plex-media-server-export](https://github.com/axsuul/plex-media-server-exporter) |
-| Prowlarr     | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
-| Radarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Prowlarr     | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
+| Radarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Recyclarr    | ✅      | Not currently supported                                                                                                                                                          |
-| Sonarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Sonarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Tautulli     | ❓      | Not supported natively, but can use [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                                                                             |
