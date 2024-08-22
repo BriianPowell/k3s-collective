@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/component: cron
     app.kubernetes.io/name: nextcloud-cron
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:

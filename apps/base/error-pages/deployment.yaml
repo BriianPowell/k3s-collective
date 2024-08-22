@@ -25,6 +25,7 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: error-pages
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   strategy:
     type: Recreate

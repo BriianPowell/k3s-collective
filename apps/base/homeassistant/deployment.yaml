@@ -25,7 +25,10 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: homeassistant
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/component: app

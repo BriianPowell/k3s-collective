@@ -22,20 +22,6 @@ spec:
       port: 80
       targetPort: http
       protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nextcloud-exporter
-  namespace: nextcloud
-  labels:
-    app.kubernetes.io/component: service
-    app.kubernetes.io/name: nextcloud-exporter
-spec:
-  selector:
-    app.kubernetes.io/component: app
-    app.kubernetes.io/name: nextcloud
-  ports:
     - name: metrics
       port: 9205
       targetPort: metrics
@@ -50,6 +36,7 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: nextcloud
 spec:
+  revisionHistoryLimit: 2
   replicas: 1
   strategy:
     type: Recreate
@@ -153,6 +140,7 @@ spec:
           volumeMounts:
             - name: nextcloud-storage
               mountPath: /var/www/html
+      initContainers:
         - name: nextcloud-exporter
           image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
           imagePullPolicy: IfNotPresent

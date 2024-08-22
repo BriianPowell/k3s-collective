@@ -31,6 +31,7 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: prowlarr
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   strategy:
     type: Recreate

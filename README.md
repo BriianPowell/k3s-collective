@@ -52,6 +52,11 @@ flux bootstrap github \
 - [x] [Loki](https://github.com/grafana/loki)
 - [x] [Alloy](https://github.com/grafana/alloy)
 
+#### More detailed loggin configurations are outlined here:
+
+- [Prometheus Service Monitors](./apps/monitoring/prometheus/README.md)
+- [Alloy Log Aggregations](./apps/monitoring/alloy/README.md)
+
 ### Security
 
 - [x] [CrowdSec](https://github.com/crowdsecurity/crowdsec)
@@ -62,9 +67,9 @@ flux bootstrap github \
 - [x] [Minecraft](https://artifacthub.io/packages/helm/minecraft-server-charts/minecraft)
 - [x] [V-Rising](https://truecharts.org/charts/stable/v-rising/)
 
-### Media 
+### Media
 
-*In Installation Order*
+_In Installation Order_
 
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md)
