@@ -23,6 +23,7 @@ spec:
           # - image-reflector-controller
   podMetricsEndpoints:
     - port: http-prom
+# Neither of the following have worked for to monitor the Sealed Secrets Controller
 # ---
 # apiVersion: monitoring.coreos.com/v1
 # kind: ServiceMonitor
@@ -43,23 +44,23 @@ spec:
 #   endpoints:
 #     - interval: 30s
 #       port: metrics
----
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
-metadata:
-  name: sealed-secrets-controller
-  namespace: monitoring
-  labels:
-    app.kubernetes.io/component: pod-monitor
-    app.kubernetes.io/name: sealed-secrets-controller
-spec:
-  namespaceSelector:
-    matchNames:
-      - flux-system
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: sealed-secrets-controller
-      app.kubernetes.io/name: sealed-secrets
-  podMetricsEndpoints:
-    - interval: 30s
-      targetPort: 8081
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: PodMonitor
+# metadata:
+#   name: sealed-secrets-controller
+#   namespace: monitoring
+#   labels:
+#     app.kubernetes.io/component: pod-monitor
+#     app.kubernetes.io/name: sealed-secrets-controller
+# spec:
+#   namespaceSelector:
+#     matchNames:
+#       - flux-system
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/instance: sealed-secrets-controller
+#       app.kubernetes.io/name: sealed-secrets
+#   podMetricsEndpoints:
+#     - interval: 30s
+#       targetPort: 8081
