@@ -48,6 +48,8 @@ spec:
         - name: lidarr-exportarr
           image: ghcr.io/onedr0p/exportarr:latest
           imagePullPolicy: Always
+          args:
+            - lidarr
           env:
             - name: PORT
               value: '9707'

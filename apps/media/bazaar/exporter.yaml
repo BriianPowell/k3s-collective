@@ -48,6 +48,8 @@ spec:
         - name: bazarr-exportarr
           image: ghcr.io/onedr0p/exportarr:latest
           imagePullPolicy: Always
+          args:
+            - bazarr
           env:
             - name: PORT
               value: '9707'
