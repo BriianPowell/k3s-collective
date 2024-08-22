@@ -62,7 +62,7 @@ spec:
             - name: LOG_LEVEL
               value: INFO
             - name: DELUGE_HOST
-              value: http://deluge.media.svc.cluster.local
+              value: http://deluge.media.svc
             - name: DELUGE_PORT
               value: '8112'
             - name: DELUGE_USER

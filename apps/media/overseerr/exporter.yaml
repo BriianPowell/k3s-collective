@@ -1,0 +1,65 @@
+#
+# Reference:
+# https://github.com/sct/overseerr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerr-exporter
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: overseerr-exporter
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: overseerr-exporter
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9850
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerr-exporter
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: overseerr-exporter
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: overseerr-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: overseerr-exporter
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: overseerr-exporter
+          image: ghcr.io/willfantom/overseerr-exporter:latest
+          imagePullPolicy: Always
+          args:
+            = --overseerr.address=http://overseerr.media.svc.cluster.local:5055
+          env:
+            - name: LOG_L
+              value: debug
+            - name: TZ
+              value: America/Los_Angeles
+          ports:
+            - name: metrics
+              containerPort: 9850
+              protocol: TCP

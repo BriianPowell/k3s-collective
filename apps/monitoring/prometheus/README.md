@@ -62,7 +62,7 @@
 | Media        | Monitor | Supported                                                                                                                                                                        |
 | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bazaarr      | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                     |
-| Deluge       | ❓      | Not supported natively, but can use [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                                                 |
+| Deluge       | ❓      | Supported through [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                               |
 | Flaresolverr | ✅      | Supported through API Spec                                                                                                                                                       |
 | Lidarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Overseerr    | ❓      | Not supported natively, but can use [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)                                                                       |
