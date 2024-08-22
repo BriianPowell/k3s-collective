@@ -54,7 +54,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://radarr.media.svc
+              value: http://radarr.media.svc.cluster.local:7878
             - name: APIKEY
               valueFrom:
                 secretKeyRef:

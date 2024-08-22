@@ -54,7 +54,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://lidarr.media.svc
+              value: http://lidarr.media.svc.cluster.local:8686
             - name: APIKEY
               valueFrom:
                 secretKeyRef:

@@ -54,7 +54,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://sonarr.media.svc
+              value: http://sonarr.media.svc.cluster.local:8989
             - name: APIKEY
               valueFrom:
                 secretKeyRef:

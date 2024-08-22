@@ -54,7 +54,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://prowlarr.media.svc
+              value: http://prowlarr.media.svc.cluster.local:9696
             - name: APIKEY
               valueFrom:
                 secretKeyRef:

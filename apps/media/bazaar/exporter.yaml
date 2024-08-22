@@ -54,7 +54,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://bazarr.media.svc
+              value: http://bazarr.media.svc.cluster.local:6767
             - name: APIKEY
               valueFrom:
                 secretKeyRef:
