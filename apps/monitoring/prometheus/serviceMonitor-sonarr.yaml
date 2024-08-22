@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: service
-      app.kubernetes.io/name: sonarr-exporterr
+      app.kubernetes.io/name: sonarr-exportarr
   namespaceSelector:
     matchNames:
       - media
