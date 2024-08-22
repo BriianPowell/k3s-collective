@@ -7,7 +7,7 @@
 | HomeAssistant | ✅              | Created through API spec         |
 | Keycloak      | ✅              | Created through API spec         |
 | NextCloud     | ✅              | Created through API spec         |
-| Ntfy          | ✅              | Supported through ServiceMonitor |
+| Ntfy          | ✅              | Created through API spec |
 | Pihole        | ✅              | Created through API spec         |
 | Wiki.JS       | ❌              | Not currently supported          |
 
@@ -27,30 +27,30 @@
 
 | Infra                | Service Monitor | Supported                               |
 | -------------------- | --------------- | --------------------------------------- |
-| Cert Manager         | ✅              | Supported by helm chart                 |
+| Cert Manager         | ✅              | Supported by Helm Chart               |
 | CloudNativePG        | ✅              | Supported through PodMonitor API spec   |
 | CrowdSec             | ✅              | Created though API spec                 |
-| Kube APIServer       | ✅              | Supported by helm chart                 |
-| Kube CoreDNS         | ✅              | Supported by helm chart                 |
-| Kube Controller      | ✅              | Supported by helm chart                 |
-| Kube ETCD            | ✅              | Supported by helm chart                 |
-| Kube Proxy           | ✅              | Supported by helm chart                 |
-| Kube Scheduler       | ✅              | Supported by helm chart                 |
-| Kubelet              | ✅              | Supported by helm chart                 |
+| Kube APIServer       | ✅              | Supported by Helm Chart               |
+| Kube CoreDNS         | ✅              | Supported by Helm Chart               |
+| Kube Controller      | ✅              | Supported by Helm Chart               |
+| Kube ETCD            | ✅              | Supported by Helm Chart              |
+| Kube Proxy           | ✅              | Supported by Helm Chart               |
+| Kube Scheduler       | ✅              | Supported by Helm Chart               |
+| Kubelet              | ✅              | Supported by Helm Chart               |
 | Nvidia Device Plugin | ❌              | Not currently supported                 |
 | Reflector            | ❌              | Not currently supported                 |
-| Reloader             | ✅              | PodMonitor supported through helm chart |
+| Reloader             | ✅              | PodMonitor supported through Helm Chart |
 | Traefik              | ✅              | Created through API Spec                |
 
 | Monitoring            | Service Monitor | Supported                                                                                                                            |
 | --------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Alert Manager         | ✅              | Supported from helm chart                                                                                                            |
-| Alloy                 | ✅              | Supported from helm Chart                                                                                                            |
-| Grafana               | ✅              | Supported from helm Chart                                                                                                            |
-| Kube State Metrics    | ✅              | Supported from helm chart                                                                                                            |
+| Alert Manager         | ✅              | Supported from Helm Chart                                                                                                          |
+| Alloy                 | ✅              | Supported from Helm Chart                                                                                                           |
+| Grafana               | ✅              | Supported from Helm Chart                                                                                                           |
+| Kube State Metrics    | ✅              | Supported from Helm Chart                                                                                                          |
 | Loki                  | ❓              | Supported through [meta-monitoring-chart](https://github.com/grafana/meta-monitoring-chart), but need to spend the time to implement |
-| Node Exporter         | ✅              | Supported from helm chart                                                                                                            |
-| Prometheus + Operator | ✅              | Supported from helm chart                                                                                                            |
+| Node Exporter         | ✅              | Supported from Helm Chart                                                                                                          |
+| Prometheus + Operator | ✅              | Supported from Helm Chart                                                                                                          |
 
 | PG Clusters            | Pod Monitor | Supported                  |
 | ---------------------- | ----------- | -------------------------- |
@@ -59,7 +59,7 @@
 | Nextcloud Postgres     | ✅          | Supported through CNPG API |
 | Wiki.Js Postgres       | ✅          | Supported through CNPG API |
 
-| Media        | Monitor | Supported                                                                                                                                                                        |
+| Media        | Service Monitor | Supported                                                                                                                                                                        |
 | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bazaarr      | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                     |
 | Deluge       | ✅     | Supported through [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                               |
