@@ -1,0 +1,81 @@
+#
+# Reference:
+# https://github.com/onedr0p/exportarr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tautulli-exporterr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: tautulli-exporterr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: tautulli-exporterr
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9487
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tautulli-exporterr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: tautulli-exporterr
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: tautulli-exporterr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: tautulli-exporterr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: tautulli-exportarr
+          image: nwalke/tautulli_exporter:latest
+          imagePullPolicy: Always
+          args:
+            - tautulli
+          env:
+            - name: PORT
+              value: '9707'
+            - name: TAUTULLI_URI
+              value: http://tautulli.media.svc.cluster.local:8181
+            - name: TAUTULLI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: exportarr
+                  key: tautulli_api_key
+            - name: TAUTULLI_TIMEOUT
+              value: '5'
+            - name: SERVER_PORT
+              value: '9487'
+          ports:
+            - name: metrics
+              containerPort: 9487
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
