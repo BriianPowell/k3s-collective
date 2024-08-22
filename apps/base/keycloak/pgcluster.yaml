@@ -12,14 +12,7 @@ spec:
     initdb:
       database: keycloak
       owner: keycloak
-      # import:
-      #   type: microservice
-      #   databases:
-      #     - keycloak
-      #   source:
-      #     externalCluster: keycloak-pg
   storage:
-    resizeInUseVolumes: False
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
@@ -31,42 +24,33 @@ spec:
           storage: 15Gi
   monitoring:
     enablePodMonitor: true
-  # externalClusters:
-  #   - name: keycloak-pg
-  #     connectionParameters:
-  #       host: keycloak-pgsql
-  #       user: root
-  #       dbname: keycloak
-  #     password:
-  #       name: keycloak
-  #       key: PG_PASS
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: keycloak-pg-pv
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: keycloak-pg-pv
-spec:
-  capacity:
-    storage: 15Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  local:
-    path: /mnt/moriyya/keycloak-postgres
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - sheol
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: keycloak-pg-pv
+#   labels:
+#     type: local
+#     app.kubernetes.io/component: storage-volume
+#     app.kubernetes.io/name: keycloak-pg-pv
+# spec:
+#   capacity:
+#     storage: 15Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: local-path
+#   local:
+#     path: /mnt/moriyya/keycloak-postgres
+#   nodeAffinity:
+#     required:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: kubernetes.io/hostname
+#               operator: In
+#               values:
+#                 - sheol
 ---
 apiVersion: v1
 kind: PersistentVolume
