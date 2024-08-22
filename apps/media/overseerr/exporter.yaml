@@ -1,7 +1,6 @@
 #
 # Reference:
 # https://github.com/WillFantom/overseerr-exporter
-# Not currently sure I'd like to support that as the API Key needs to be passed as a command line argument, this makes it insecure with Kubernetes
 #
 
 apiVersion: v1
@@ -60,7 +59,7 @@ spec:
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: exporterr
+                  name: exportarr
                   key: overseerr_api_key
           ports:
             - name: metrics
