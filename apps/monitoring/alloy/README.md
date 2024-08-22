@@ -44,7 +44,7 @@
 
 | Service | Logs | Grafana Dashboard | Notes |
 | ------- | ---- | ----------------- | ----- |
-| App     | ❌   | ❌                |       |
+| App     | ✅   | ❌                |       |
 
 ### Pihole
 
