@@ -19,6 +19,7 @@ spec:
       #   source:
       #     externalCluster: keycloak-pg
   storage:
+    resizeInUseVolumes: False
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
