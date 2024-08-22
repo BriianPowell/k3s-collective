@@ -12,11 +12,11 @@ spec:
   routes:
     - match: Host(`alloy.powell.place`)
       kind: Rule
+      middlewares:
+        - name: traefik-forward-auth
+          namespace: kube-system
+        - name: security
+          namespace: kube-system
       services:
         - name: alloy
           port: http-metrics
-      middlewares:
-        - name: security
-          namespace: kube-system
-        - name: traefik-forward-auth
-          namespace: kube-system

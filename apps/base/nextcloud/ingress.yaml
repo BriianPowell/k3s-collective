@@ -12,9 +12,6 @@ spec:
   routes:
     - match: Host(`nextcloud.powell.place`)
       kind: Rule
-      services:
-        - name: nextcloud
-          port: http
       middlewares:
         - name: nextcloud-headers-middleware
           namespace: nextcloud
@@ -22,3 +19,6 @@ spec:
           namespace: nextcloud
         - name: security
           namespace: kube-system
+      services:
+        - name: nextcloud
+          port: http

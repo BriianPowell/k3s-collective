@@ -12,9 +12,9 @@ spec:
   routes:
     - match: Host(`hass.powell.place`)
       kind: Rule
-      services:
-        - name: homeassistant
-          port: http
       middlewares:
         - name: security
           namespace: kube-system
+      services:
+        - name: homeassistant
+          port: http

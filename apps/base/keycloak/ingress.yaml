@@ -12,9 +12,9 @@ spec:
   routes:
     - match: Host(`keycloak.powell.place`)
       kind: Rule
-      services:
-        - name: keycloak
-          port: http
       middlewares:
         - name: security-no-frame-deny
           namespace: kube-system
+      services:
+        - name: keycloak
+          port: http

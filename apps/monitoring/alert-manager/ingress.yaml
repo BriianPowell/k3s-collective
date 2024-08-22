@@ -12,11 +12,11 @@ spec:
   routes:
     - match: Host(`alertmanager.powell.place`)
       kind: Rule
-      services:
-        - name: alertmanager-operated
-          port: web
       middlewares:
         - name: traefik-forward-auth
           namespace: kube-system
         - name: security
           namespace: kube-system
+      services:
+        - name: alertmanager-operated
+          port: web
