@@ -12,6 +12,7 @@ resources:
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
   - serviceMonitor-crowdsec.yaml
+  - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml
   # - serviceMonitor-minecraft.yaml

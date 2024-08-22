@@ -42,15 +42,15 @@
 | Reloader             | ✅              | PodMonitor supported through helm chart |
 | Traefik              | ✅              | Created through API Spec                |
 
-| Monitoring            | Service Monitor | Supported                 |
-| --------------------- | --------------- | ------------------------- |
-| Alert Manager         | ✅              | Supported from helm chart |
-| Alloy                 | ✅              | Supported from helm Chart |
-| Grafana               | ✅              | Supported from helm Chart |
-| Kube State Metrics    | ✅              | Supported from helm chart |
-| Loki                  | ❓              | Unsure if supported       |
-| Node Exporter         | ✅              | Supported from helm chart |
-| Prometheus + Operator | ✅              | Supported from helm chart |
+| Monitoring            | Service Monitor | Supported                                                                                                                            |
+| --------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Alert Manager         | ✅              | Supported from helm chart                                                                                                            |
+| Alloy                 | ✅              | Supported from helm Chart                                                                                                            |
+| Grafana               | ✅              | Supported from helm Chart                                                                                                            |
+| Kube State Metrics    | ✅              | Supported from helm chart                                                                                                            |
+| Loki                  | ❓              | Supported through [meta-monitoring-chart](https://github.com/grafana/meta-monitoring-chart), but need to spend the time to implement |
+| Node Exporter         | ✅              | Supported from helm chart                                                                                                            |
+| Prometheus + Operator | ✅              | Supported from helm chart                                                                                                            |
 
 | PG Clusters            | Pod Monitor | Supported                  |
 | ---------------------- | ----------- | -------------------------- |
@@ -59,16 +59,16 @@
 | Nextcloud Postgres     | ✅          | Supported through CNPG API |
 | Wiki.Js Postgres       | ✅          | Supported through CNPG API |
 
-| Media        | Monitor | Supported |
-| ------------ | ------- | --------- |
-| Bazaarr      | ❓      |           |
-| Deluge       | ❓      |           |
-| Flaresolverr | ❓      |           |
-| Lidarr       | ❓      |           |
-| Overseerr    | ❓      |           |
-| Plex         | ❓      |           |
-| Prowlarr     | ❓      |           |
-| Radarr       | ❓      |           |
-| Recyclarr    | ❓      |           |
-| Sonarr       | ❓      |           |
-| Tautulli     | ❓      |           |
+| Media        | Monitor | Supported                                                                                                    |
+| ------------ | ------- | ------------------------------------------------------------------------------------------------------------ |
+| Bazaarr      | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implement |
+| Deluge       | ❓      |                                                                                                              |
+| Flaresolverr | ❓      |                                                                                                              |
+| Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
+| Overseerr    | ❓      |                                                                                                              |
+| Plex         | ❓      |                                                                                                              |
+| Prowlarr     | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
+| Radarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
+| Recyclarr    | ❓      |                                                                                                              |
+| Sonarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
+| Tautulli     | ❓      |                                                                                                              |
