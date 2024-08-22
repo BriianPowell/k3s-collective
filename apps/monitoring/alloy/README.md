@@ -40,6 +40,12 @@
 | Redis    | ✅   | ✅                |                                                            |
 | Postgres | ✅   | ✅                |                                                            |
 
+### Ntfy
+
+| Service | Logs | Grafana Dashboard | Notes |
+| ------- | ---- | ----------------- | ----- |
+| App     | ❌   | ❌                |       |
+
 ### Pihole
 
 | Service | Logs | Grafana Dashboard | Notes |

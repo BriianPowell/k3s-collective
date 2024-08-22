@@ -37,8 +37,8 @@
 | Kube Proxy           | ✅              | Supported by helm chart                 |
 | Kube Scheduler       | ✅              | Supported by helm chart                 |
 | Kubelet              | ✅              | Supported by helm chart                 |
-| Nvidia Device Plugin | ❌              | Not currently support                   |
-| Reflector            | ❌              | Not supported                           |
+| Nvidia Device Plugin | ❌              | Not currently supported                 |
+| Reflector            | ❌              | Not currently supported                 |
 | Reloader             | ✅              | PodMonitor supported through helm chart |
 | Traefik              | ✅              | Created through API Spec                |
 
@@ -59,16 +59,16 @@
 | Nextcloud Postgres     | ✅          | Supported through CNPG API |
 | Wiki.Js Postgres       | ✅          | Supported through CNPG API |
 
-| Media        | Monitor | Supported                                                                                                    |
-| ------------ | ------- | ------------------------------------------------------------------------------------------------------------ |
-| Bazaarr      | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implement |
-| Deluge       | ❓      |                                                                                                              |
-| Flaresolverr | ✅      | Supported through API Spec                                                                                   |
-| Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
-| Overseerr    | ❓      | Not supported natively, but can use [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)   |
-| Plex         | ❓      |                                                                                                              |
-| Prowlarr     | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
-| Radarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
-| Recyclarr    | ❓      |                                                                                                              |
-| Sonarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
-| Tautulli     | ❓      |                                                                                                              |
+| Media        | Monitor | Supported                                                                                                                                                                        |
+| ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bazaarr      | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implement                                                                     |
+| Deluge       | ❓      | Not supported natively, but can use [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                                                 |
+| Flaresolverr | ✅      | Supported through API Spec                                                                                                                                                       |
+| Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Overseerr    | ❓      | Not supported natively, but can use [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)                                                                       |
+| Plex         | ❓      | Not supported natively, but can use [plex_exporter](https://github.com/arnarg/plex_exporter) or [plex-media-server-export](https://github.com/axsuul/plex-media-server-exporter) |
+| Prowlarr     | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Radarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Recyclarr    | ✅      | Not currently supported                                                                                                                                                          |
+| Sonarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen                                                                      |
+| Tautulli     | ❓      | Not supported natively, but can use [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                                                                             |
