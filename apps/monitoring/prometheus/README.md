@@ -2,20 +2,20 @@
 
 | App           | Service Monitor | Supported                        |
 | ------------- | --------------- | -------------------------------- |
-| Atuin         | ❓              | Maybe Supported?                 |
-| Error Pages   | ❌              | Not supported                    |
+| Atuin         | ❌              | Not currently supported          |
+| Error Pages   | ❌              | Not currently supported          |
 | HomeAssistant | ✅              | Created through API spec         |
 | Keycloak      | ✅              | Created through API spec         |
 | NextCloud     | ✅              | Created through API spec         |
 | Ntfy          | ✅              | Supported through ServiceMonitor |
 | Pihole        | ✅              | Created through API spec         |
-| Wiki.JS       | ❌              | Not Supported                    |
+| Wiki.JS       | ❌              | Not currently supported          |
 
-| Game      | Service Monitor | Supported                 |
-| --------- | --------------- | ------------------------- |
-| Minecraft | ❌              | Created but not supported |
-| Valheim   | ❌              | Created but not supported |
-| V-Rising  | ❌              | Created but not supported |
+| Game      | Service Monitor | Supported               |
+| --------- | --------------- | ----------------------- |
+| Minecraft | ❌              | Not currently supported |
+| Valheim   | ❌              | Not currently supported |
+| V-Rising  | ❌              | Not currently supported |
 
 | Flux                      | Service Monitor | Supported                                                                                  |
 | ------------------------- | --------------- | ------------------------------------------------------------------------------------------ |
@@ -37,7 +37,7 @@
 | Kube Proxy           | ✅              | Supported by helm chart                 |
 | Kube Scheduler       | ✅              | Supported by helm chart                 |
 | Kubelet              | ✅              | Supported by helm chart                 |
-| Nvidia Device Plugin | ❓              | Unsure if supported                     |
+| Nvidia Device Plugin | ❌              | Not currently support                   |
 | Reflector            | ❌              | Not supported                           |
 | Reloader             | ✅              | PodMonitor supported through helm chart |
 | Traefik              | ✅              | Created through API Spec                |
