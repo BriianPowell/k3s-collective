@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`pihole.powell.place`) && PathPrefix(`/admin`)
+    - match: Host(`pihole.powell.place`)
       kind: Rule
       middlewares:
         - name: traefik-forward-auth
@@ -18,6 +18,8 @@ spec:
         - name: security
           namespace: kube-system
         - name: pihole-redirect-regex
+          namespace: kube-system
+        - name: pihole-add-prefix
           namespace: kube-system
       services:
         - name: pihole-web
