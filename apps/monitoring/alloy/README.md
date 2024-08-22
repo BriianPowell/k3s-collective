@@ -32,13 +32,13 @@
 
 ### Nextcloud
 
-| Service  | Logs | Grafana Dashboard | Notes                                                      |
-| -------- | ---- | ----------------- | ---------------------------------------------------------- |
-| App      | ✅   | ✅                |
-| Exporter | ❌   | ❌                | Can't figure out how to get the exporter logs from the pod |
-| Cron     | ✅   | ✅                |                                                            |
-| Redis    | ✅   | ✅                |                                                            |
-| Postgres | ✅   | ✅                |                                                            |
+| Service  | Logs | Grafana Dashboard | Notes                                       |
+| -------- | ---- | ----------------- | ------------------------------------------- |
+| App      | ✅   | ✅                |                                             |
+| Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Cron     | ✅   | ✅                |                                             |
+| Redis    | ✅   | ✅                |                                             |
+| Postgres | ✅   | ✅                |                                             |
 
 ### Ntfy
 
@@ -229,16 +229,25 @@
 
 ## Media Applications
 
-| Service      | Logs | Grafana Dashboard | Notes |
-| ------------ | ---- | ----------------- | ----- |
-| Bazaar       | ✅   | ❌                |       |
-| Deluge       | ✅   | ❌                |       |
-| Flaresolverr | ✅   | ❌                |       |
-| Lidarr       | ✅   | ❌                |       |
-| Overseerr    | ✅   | ❌                |       |
-| Plex         | ✅   | ❌                |       |
-| Prowlarr     | ✅   | ❌                |       |
-| Radarr       | ✅   | ❌                |       |
-| Recyclarr    | ✅   | ❌                |       |
-| Sonarr       | ✅   | ❌                |       |
-| Tautulli     | ✅   | ❌                |       |
+| Service            | Logs | Grafana Dashboard | Notes                                       |
+| ------------------ | ---- | ----------------- | ------------------------------------------- |
+| Bazaar             | ✅   | ❌                |                                             |
+| Bazaar Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Deluge             | ✅   | ❌                |                                             |
+| Deluge Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Flaresolverr       | ✅   | ❌                |                                             |
+| Lidarr             | ✅   | ❌                |                                             |
+| Lidarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Overseerr          | ✅   | ❌                |                                             |
+| Overseerr Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Plex               | ✅   | ❌                |                                             |
+| Plex Exporter      | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Prowlarr           | ✅   | ❌                |                                             |
+| Prowlarr Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Radarr             | ✅   | ❌                |                                             |
+| Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Recyclarr          | ✅   | ❌                |                                             |
+| Sonarr             | ✅   | ❌                |                                             |
+| Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Tautulli           | ✅   | ❌                |                                             |
+| Tautulli Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |

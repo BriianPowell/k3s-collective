@@ -62,10 +62,10 @@
 | Media        | Monitor | Supported                                                                                                                                                                        |
 | ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Bazaarr      | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                     |
-| Deluge       | ❓      | Supported through [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                               |
+| Deluge       | ✅     | Supported through [deluge_exporter](https://github.com/tobbez/deluge_exporter)                                                               |
 | Flaresolverr | ✅      | Supported through API Spec                                                                                                                                                       |
 | Lidarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
-| Overseerr    | ❓      | Supported through [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter), however this has security concerns for k8s implementation |
+| Overseerr    | ✅     | Supported through [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter), however this has security concerns for k8s implementation |
 | Plex         | ❓      | Not supported natively, but can use [plex_exporter](https://github.com/arnarg/plex_exporter) or [plex-media-server-export](https://github.com/axsuul/plex-media-server-exporter) |
 | Prowlarr     | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Radarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
