@@ -63,7 +63,7 @@
 | ------------ | ------- | ------------------------------------------------------------------------------------------------------------ |
 | Bazaarr      | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implement |
 | Deluge       | ❓      |                                                                                                              |
-| Flaresolverr | ❓      |                                                                                                              |
+| Flaresolverr | ✅      | Supported through API Spec                                                                                   |
 | Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
 | Overseerr    | ❓      |                                                                                                              |
 | Plex         | ❓      |                                                                                                              |
