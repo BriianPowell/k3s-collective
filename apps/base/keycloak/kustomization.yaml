@@ -5,6 +5,9 @@ commonLabels:
   app.kubernetes.io/part-of: keycloak
 
 resources:
-  - deployment.yaml
-  - ingress.yaml
-  - pgcluster.yaml
+#   - deployment.yaml
+#   - ingress.yaml
+#   - pgcluster.yaml
+
+# sudo rm -r keycloak/database/pgdata
+# sudo cp -r pgdata keycloak/database/pgdata
