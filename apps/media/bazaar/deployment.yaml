@@ -73,7 +73,6 @@ spec:
             - name: media-data-pvc
               mountPath: /tv
               subPath: tv
-
       volumes:
         - name: bazarr-pvc
           persistentVolumeClaim:
