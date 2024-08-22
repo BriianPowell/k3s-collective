@@ -66,9 +66,10 @@
 | Flaresolverr | ✅      | Supported through API Spec                                                                                                                                                       |
 | Lidarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Overseerr    | ✅     | Supported through [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter) |
-| Plex         | ❓      | Not supported natively, but can use [plex_exporter](https://github.com/arnarg/plex_exporter) or [plex-media-server-export](https://github.com/axsuul/plex-media-server-exporter) |
+| Plex         | ❓      | Supported through [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter) |
 | Prowlarr     | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Radarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
-| Recyclarr    | ❌    | Not currently supported                                                                                                                                                          |
+| Recyclarr    | ❌    | Not currently supported, but also not really needed                                                                                                                            |
 | Sonarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
-| Tautulli     | ❓      | Not supported natively, but can use [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                                                                             |
+| Tautulli     | ✅     | Supported through [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                                                            |
+
