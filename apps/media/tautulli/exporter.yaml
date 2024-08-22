@@ -65,7 +65,7 @@ spec:
             - name: TAUTULLI_SSL_VERIFY
               value: 'false'
             - name: TAUTULLI_TIMEOUT
-              value: '5'
+              value: '5s'
             - name: SERVE_PORT
               value: '9487'
           ports:
