@@ -1,0 +1,203 @@
+#
+# Reference:
+# https://github.com/binhex/arch-delugevpn
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: deluge-exporter
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: deluge-exporter
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: deluge-exporter
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 8112
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deluge
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: deluge
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: deluge
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: deluge
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: arch-delugevpn
+          image: ghcr.io/binhex/arch-delugevpn:latest
+          imagePullPolicy: Always
+          env:
+            - name: VPN_ENABLED
+              value: 'yes'
+            - name: VPN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: deluge
+                  key: VPN_USER
+            - name: VPN_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: deluge
+                  key: VPN_PASS
+            - name: VPN_PROV
+              value: pia
+            - name: VPN_CLIENT
+              value: wireguard
+            - name: ENABLE_STARTUP_SCRIPTS
+              value: 'no'
+            - name: ENABLE_PRIVOXY
+              value: 'no'
+            - name: STRICT_PORT_FORWARD
+              value: 'yes'
+            - name: USERSPACE_WIREGUARD
+              value: 'no'
+            - name: ENABLE_SOCKS
+              value: 'no'
+            - name: SOCKS_USER
+              value: admin
+            - name: SOCKS_PASS
+              value: socks
+            - name: LAN_NETWORK
+              value: '10.0.0.0/16'
+            - name: NAME_SERVERS
+              value: '84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1'
+            - name: DELUGE_DAEMON_LOG_LEVEL
+              value: debug
+            - name: DELUGE_WEB_LOG_LEVEL
+              value: debug
+            - name: DELUGE_ENABLE_WEBUI_PASSWORD
+              value: 'yes'
+            # - name: VPN_INPUT_PORTS
+            #   value: '1234'
+            # - name: VPN_OUTPUT_PORTS
+            #   value: '5678'
+            - name: DEBUG
+              value: 'false'
+            # - name: UMASK
+            #   value: '000'
+            - name: PUID
+              value: '0'
+            - name: PGID
+              value: '0'
+          ports:
+            - name: http
+              containerPort: 8112
+              protocol: TCP
+            - name: privoxy
+              containerPort: 8118
+              protocol: TCP
+            - name: microsocks
+              containerPort: 9118
+              protocol: TCP
+            - name: thin
+              containerPort: 58846
+              protocol: TCP
+            - name: vpn-tcp
+              containerPort: 58946
+              protocol: TCP
+            - name: vpn-udp
+              containerPort: 58946
+              protocol: UDP
+          # livenessProbe:
+          #   exec:
+          #     command: ["/bin/bash", "-c", "curl -sL --fail http://localhost:8112 && curl -sL --fail https://google.com || exit 1"]
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
+            # sysctls:
+            #   - name: net.ipv4.conf.all.src_valid_mark
+            #     value: "1"
+            privileged: true
+          volumeMounts:
+            - name: tz
+              mountPath: /etc/localtime
+              readOnly: true
+            - name: deluge-pvc
+              mountPath: /config
+              subPath: config
+            - name: deluge-pvc
+              mountPath: /data
+              subPath: data
+      volumes:
+        - name: tz
+          hostPath:
+            path: /etc/localtime
+            type: File
+        - name: deluge-pvc
+          persistentVolumeClaim:
+            claimName: deluge-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: deluge-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: deluge-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deluge-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: deluge-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: deluge-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/deluge
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

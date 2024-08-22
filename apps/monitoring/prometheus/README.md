@@ -69,6 +69,6 @@
 | Plex         | ❓      | Not supported natively, but can use [plex_exporter](https://github.com/arnarg/plex_exporter) or [plex-media-server-export](https://github.com/axsuul/plex-media-server-exporter) |
 | Prowlarr     | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Radarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
-| Recyclarr    | ✅      | Not currently supported                                                                                                                                                          |
+| Recyclarr    | ❌    | Not currently supported                                                                                                                                                          |
 | Sonarr       | ✅     | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                                                      |
 | Tautulli     | ❓      | Not supported natively, but can use [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                                                                             |
