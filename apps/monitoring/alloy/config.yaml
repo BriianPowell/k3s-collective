@@ -1011,7 +1011,7 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
-    // Plex
+    // Plex Media Server
     discovery.kubernetes "plex" {
       role = "pod"
 
@@ -1020,7 +1020,7 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/name=plex"
+        label = "app.kubernetes.io/name=plex-media-server"
       }
     }
 
