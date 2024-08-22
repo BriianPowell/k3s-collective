@@ -52,8 +52,6 @@ spec:
         - name: plex-exporter
           image: ghcr.io/axsuul/plex-media-server-exporter:latest
           imagePullPolicy: Always
-          args:
-            - sonarr
           env:
             - name: PORT
               value: '9594'
