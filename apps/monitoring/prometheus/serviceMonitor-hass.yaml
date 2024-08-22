@@ -19,7 +19,8 @@ spec:
         credentials:
           key: HASSTOKEN
           name: prometheus
-      interval: 30s
-      path: /api/prometheus
+      interval: 4m
       port: http
+      scrapeTimeout: 90s
+      path: /api/prometheus
       scheme: http

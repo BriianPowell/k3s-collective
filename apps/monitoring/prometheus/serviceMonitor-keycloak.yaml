@@ -15,9 +15,10 @@ spec:
     matchNames:
       - keycloak
   endpoints:
-    - interval: 30s
-      path: /metrics
+    - interval: 4m
       port: http
+      scrapeTimeout: 90s
+      path: /metrics
       metricRelabelings:
        - sourceLabels: [ __name__ ]
          targetLabel: __name__

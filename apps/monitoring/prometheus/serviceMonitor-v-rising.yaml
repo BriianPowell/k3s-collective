@@ -15,5 +15,7 @@ spec:
     matchNames:
       - v-rising
   endpoints:
-    - interval: 30s
+    - interval: 4m
       port: main
+      scrapeTimeout: 90s
+      path: /metrics

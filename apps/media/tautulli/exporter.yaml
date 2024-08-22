@@ -64,6 +64,8 @@ spec:
                 secretKeyRef:
                   name: exportarr
                   key: tautulli_api_key
+            - name: TAUTULLI_SSL_VERIFY
+              value: 'false'
             - name: TAUTULLI_TIMEOUT
               value: '5'
             - name: SERVE_PORT

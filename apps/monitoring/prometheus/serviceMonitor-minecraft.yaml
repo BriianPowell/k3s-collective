@@ -15,5 +15,7 @@ spec:
     matchNames:
       - minecraft
   endpoints:
-    - interval: 30s
+    - interval: 4m
       port: minecraft
+      scrapeTimeout: 90s
+      path: /metrics

@@ -15,5 +15,7 @@ spec:
     matchNames:
       - valheim
   endpoints:
-    - interval: 30s
+    - interval: 4m
       port: valheim-1
+      scrapeTimeout: 90s
+      path: /metrics

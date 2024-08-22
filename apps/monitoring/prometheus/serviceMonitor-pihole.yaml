@@ -15,5 +15,7 @@ spec:
     matchNames:
       - kube-system
   endpoints:
-    - interval: 30s
+    - interval: 4m
       targetPort: 9617
+      scrapeTimeout: 90s
+      path: /metrics

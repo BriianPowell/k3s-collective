@@ -11,5 +11,7 @@ spec:
     matchLabels:
       operated-alertmanager: 'true'
   endpoints:
-    - interval: 30s
+    - interval: 4m
       port: web
+      scrapeTimeout: 90s
+      path: /metrics
