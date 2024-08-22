@@ -1,0 +1,25 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: pihole-redirect-regex
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: pihole-redirect
+spec:
+  redirectRegex:
+    regex: /admin/$
+    replacement: /
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: pihole-add-prefix
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: pihole-add-prefix
+spec:
+  addPrefix:
+    prefix: /admin

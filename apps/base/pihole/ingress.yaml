@@ -17,6 +17,8 @@ spec:
           namespace: kube-system
         - name: security
           namespace: kube-system
+        - name: pihole-redirect
+          namespace: kube-system
       services:
         - name: pihole-web
           port: http

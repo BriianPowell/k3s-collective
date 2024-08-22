@@ -7,3 +7,4 @@ commonLabels:
 resources:
   - helm-release.yaml
   - ingress.yaml
+  - middleware.yaml
