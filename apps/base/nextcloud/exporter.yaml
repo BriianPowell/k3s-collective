@@ -1,0 +1,76 @@
+#
+# Reference:
+# https://github.com/xperimental/nextcloud-exporter
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud-exporter
+  namespace: nextcloud
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: nextcloud-exporter
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: nextcloud-exporter
+  ports:
+    - name: metrics
+      port: 9205
+      targetPort: metrics
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-exporter
+  namespace: nextcloud
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: nextcloud-exporter
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: nextcloud-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: nextcloud-exporter
+    spec:
+      restartPolicy: Alwayse
+      containers:
+        - name: nextcloud-exporter
+          image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NEXTCLOUD_SERVER
+              value: http://nextcloud.nextcloud.svc
+            - name: NEXTCLOUD_LISTEN_ADDRESS
+              value: :9205
+            - name: NEXTCLOUD_TIMEOUT
+              value: 15s
+            - name: NEXTCLOUD_TLS_SKIP_VERIFY
+              value: 'false'
+            - name: NEXTCLOUD_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud
+                  key: TOKEN
+          ports:
+            - name: metrics
+              containerPort: 9205
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 150Mi
+            limits:
+              cpu: 150m
+              memory: 250Mi

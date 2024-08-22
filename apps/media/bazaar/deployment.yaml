@@ -22,6 +22,10 @@ spec:
       port: 6767
       protocol: TCP
       targetPort: http
+    - name: metrics
+      port: 9707
+      protocol: TCP
+      targetPort: metrics
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -92,6 +96,25 @@ spec:
             - name: metrics
               containerPort: 9707
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: monitoring
+            failureThreshold: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: monitoring
+            failureThreshold: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
       volumes:
         - name: bazarr-pvc
           persistentVolumeClaim:
