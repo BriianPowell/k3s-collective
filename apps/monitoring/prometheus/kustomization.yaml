@@ -21,6 +21,7 @@ resources:
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
+  - serviceMonitor-overseerr.yaml
   - serviceMonitor-pihole.yaml
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
