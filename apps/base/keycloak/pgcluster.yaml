@@ -24,33 +24,6 @@ spec:
           storage: 15Gi
   monitoring:
     enablePodMonitor: true
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: keycloak-pg-pv
-#   labels:
-#     type: local
-#     app.kubernetes.io/component: storage-volume
-#     app.kubernetes.io/name: keycloak-pg-pv
-# spec:
-#   capacity:
-#     storage: 15Gi
-#   volumeMode: Filesystem
-#   accessModes:
-#     - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: local-path
-#   local:
-#     path: /mnt/moriyya/keycloak-postgres
-#   nodeAffinity:
-#     required:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#             - key: kubernetes.io/hostname
-#               operator: In
-#               values:
-#                 - sheol
 ---
 apiVersion: v1
 kind: PersistentVolume
