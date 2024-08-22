@@ -80,7 +80,7 @@ _In Installation Order_
 - [x] [Bazarr](https://github.com/morpheus65535/bazarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Recyclarr](https://github.com/recyclarr/recyclarr)
-- [x] [Overseerr](https://github.com/sct/overseerr)
+- [x] [Overseerr](https://github.com/sct/overseerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
 - [x] [Tautulli](https://github.com/Tautulli/Tautulli)
 
 ### TBD
