@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bazarr-exporterr
+  name: prowlarr-exporterr
   namespace: media
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: bazarr-exporterr
+    app.kubernetes.io/name: prowlarr-exporterr
 spec:
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: bazarr-exporterr
+    app.kubernetes.io/name: prowlarr-exporterr
   type: ClusterIP
   ports:
     - name: metrics
@@ -21,11 +21,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bazarr-exporterr
+  name: prowlarr-exporterr
   namespace: media
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: bazarr-exporterr
+    app.kubernetes.io/name: prowlarr-exporterr
 spec:
   revisionHistoryLimit: 1
   replicas: 1
@@ -34,32 +34,32 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: bazarr-exporterr
+      app.kubernetes.io/name: prowlarr-exporterr
   template:
     metadata:
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: bazarr-exporterr
+        app.kubernetes.io/name: prowlarr-exporterr
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
-        - name: bazarr-exportarr
+        - name: prowlarr-exportarr
           image: ghcr.io/onedr0p/exportarr:latest
           imagePullPolicy: Always
           args:
-            - bazarr
+            - prowlarr
           env:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://bazarr.media.svc
+              value: http://prowlarr.media.svc
             - name: APIKEY
               valueFrom:
                 secretKeyRef:
                   name: exportarr
-                  key: bazarr_api_key
+                  key: prowlarr_api_key
           ports:
             - name: metrics
               containerPort: 9707
