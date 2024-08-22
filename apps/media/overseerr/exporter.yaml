@@ -55,7 +55,13 @@ spec:
           imagePullPolicy: Always
           args:
             - --overseerr.address=http://overseerr.media.svc.cluster.local:5055
-            - --overseerr.api-key=veryunsecureapikey
+            - --overseerr.api-key=$(API_KEY)
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: exporterr
+                  key: overseerr_api_key
           ports:
             - name: metrics
               containerPort: 9850

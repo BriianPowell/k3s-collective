@@ -13,6 +13,7 @@ resources:
   # - serviceMonitor-atuin.yaml
   - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
+  - serviceMonitor-deluge.yaml
   - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml

@@ -6,4 +6,5 @@ commonLabels:
 
 resources:
   - deployment.yaml
+  - exporter.yaml
   - ingress.yaml

@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: deluge
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: deluge
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: deluge-exporterr
+  namespaceSelector:
+    matchNames:
+      - media
+  endpoints:
+    - interval: 4m
+      port: metrics
+      scrapeTimeout: 90s
+      path: /metrics
