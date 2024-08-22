@@ -26,6 +26,7 @@ resources:
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
   - serviceMonitor-sonarr.yaml
+  - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
   # - serviceMonitor-valheim.yaml
