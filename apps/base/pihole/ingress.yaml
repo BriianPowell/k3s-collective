@@ -17,7 +17,7 @@ spec:
           namespace: kube-system
         - name: security
           namespace: kube-system
-        - name: pihole-replace-regex
+        - name: pihole-redirect-regex
           namespace: kube-system
       services:
         - name: pihole-web
