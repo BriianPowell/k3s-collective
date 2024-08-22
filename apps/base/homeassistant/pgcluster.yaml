@@ -17,12 +17,12 @@ spec:
       #   databases:
       #     - recorder
       #   source:
-      #     externalCluster: hass-pg
+      #     externalCluster: homeassistant-pg
   storage:
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: hass-pg-pv
+      volumeName: homeassistant-pg-pv
       accessModes:
         - ReadWriteOnce
       resources:
@@ -31,7 +31,7 @@ spec:
   monitoring:
     enablePodMonitor: true
   # externalClusters:
-  #   - name: hass-pg
+  #   - name: homeassistant-pg
   #     connectionParameters:
   #       host: homeassistant-pgsql
   #       user: root
@@ -43,11 +43,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: hass-pg-pv
+  name: homeassistant-pg-pv
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: hass-pg-pv
+    app.kubernetes.io/name: homeassistant-pg-pv
 spec:
   capacity:
     storage: 15Gi
@@ -57,7 +57,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   local:
-    path: /mnt/moriyya/homeassistant
+    path: /mnt/moriyya/homeassistant/database
   nodeAffinity:
     required:
       nodeSelectorTerms:
