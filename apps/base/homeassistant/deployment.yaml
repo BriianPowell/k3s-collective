@@ -28,7 +28,7 @@ spec:
   revisionHistoryLimit: 1
   replicas: 1
   strategy:
-    type: RollingUpdate # TODO: Change to Recreate
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/component: app

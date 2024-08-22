@@ -12,17 +12,11 @@ spec:
     initdb:
       database: recorder
       owner: hass
-      # import:
-      #   type: microservice
-      #   databases:
-      #     - recorder
-      #   source:
-      #     externalCluster: homeassistant-pg
   storage:
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: homeassistant-pg-pv
+      volumeName: homeassistant-pgcluster-pv
       accessModes:
         - ReadWriteOnce
       resources:
@@ -30,24 +24,15 @@ spec:
           storage: 15Gi
   monitoring:
     enablePodMonitor: true
-  # externalClusters:
-  #   - name: homeassistant-pg
-  #     connectionParameters:
-  #       host: homeassistant-pgsql
-  #       user: root
-  #       dbname: recorder
-  #     password:
-  #       name: homeassistant
-  #       key: PG_PASS
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: homeassistant-pg-pv
+  name: homeassistant-pgcluster-pv
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: homeassistant-pg-pv
+    app.kubernetes.io/name: homeassistant-pgcluster-pv
 spec:
   capacity:
     storage: 15Gi
