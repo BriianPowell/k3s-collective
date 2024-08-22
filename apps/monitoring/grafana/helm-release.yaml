@@ -122,6 +122,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/infra-logs
+          - name: media-logs
+            orgId: 1
+            folder: Media Logs
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/media-logs
           - name: monitoring-logs
             orgId: 1
             folder: Monitoring Logs
@@ -183,6 +191,29 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/reloader.json'
         traefik:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/traefik.json'
+      media-logs:
+        bazarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/bazarr.json'
+        deluge:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/deluge.json'
+        flaresolverr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/flaresolverr.json'
+        lidarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/lidarr.json'
+        overseerr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/overseerr.json'
+        plex:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/plex.json'
+        prowlarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/prowlarr.json'
+        radarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/radarr.json'
+        recyclarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/recyclarr.json'
+        sonarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/sonarr.json'
+        tautulli:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/tautulli.json'
       monitoring-logs:
         alert-manager:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/alert-manager.json'
