@@ -1,6 +1,7 @@
 #
 # Reference:
-# https://github.com/sct/overseerr
+# https://github.com/WillFantom/overseerr-exporter
+# Not currently sure I'd like to support that as the API Key needs to be passed as a command line argument, this makes it insecure with Kubernetes
 #
 
 apiVersion: v1
@@ -53,12 +54,8 @@ spec:
           image: ghcr.io/willfantom/overseerr-exporter:latest
           imagePullPolicy: Always
           args:
-            = --overseerr.address=http://overseerr.media.svc.cluster.local:5055
-          env:
-            - name: LOG_L
-              value: debug
-            - name: TZ
-              value: America/Los_Angeles
+            - --overseerr.address=http://overseerr.media.svc.cluster.local:5055
+            - --overseerr.api-key=veryunsecureapikey
           ports:
             - name: metrics
               containerPort: 9850
