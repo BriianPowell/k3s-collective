@@ -22,7 +22,7 @@ spec:
     size: 15Gi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: keycloak-pg-pv
+      volumeName: keycloak-pgcluster-pv
       accessModes:
         - ReadWriteOnce
       resources:
@@ -58,6 +58,33 @@ spec:
   storageClassName: local-path
   local:
     path: /mnt/moriyya/keycloak-postgres
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keycloak-pgcluster-pv
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: keycloak-pgcluster-pv
+spec:
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  local:
+    path: /mnt/moriyya/keycloak/database
   nodeAffinity:
     required:
       nodeSelectorTerms:
