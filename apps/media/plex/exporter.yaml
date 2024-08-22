@@ -18,7 +18,7 @@ spec:
   type: ClusterIP
   ports:
     - name: metrics
-      port: 9707
+      port: 9594
       protocol: TCP
       targetPort: metrics
 ---
@@ -50,36 +50,32 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: plex-exporter
-          image:
+          image: ghcr.io/axsuul/plex-media-server-exporter:latest
           imagePullPolicy: Always
           args:
             - sonarr
           env:
             - name: PORT
-              value: '9707'
-            - name: URL
-              value: http://plex.media.svc.cluster.local:8989
-            - name: APIKEY
+              value: '9594'
+            - name: PLEX_ADDR
+              value: http://plex.media.svc.cluster.local:32400
+            - name: PLEX_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: exportarr
-                  key: sonarr_api_key
+                  key: plex_token
+            - name: PLEX_TIMEOUT
+              value: '10'
+            - name: PLEX_RETRIES_COUNT
+              value: '0'
+            - name: METRICS_PREFIX
+              value: plex
+            - name: METRICS_MEDIA_COLLECTING_INTERVAL_SECONDS
+              value: '300'
           ports:
             - name: metrics
-              containerPort: 9707
+              containerPort: 9594
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: metrics
-            failureThreshold: 5
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: metrics
-            failureThreshold: 5
-            periodSeconds: 10
           resources:
             requests:
               cpu: 100m
