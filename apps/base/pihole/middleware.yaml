@@ -1,3 +1,7 @@
+#
+# Reference:
+# https://community.traefik.io/t/external-pihole-behind-traefik-redirect-admin/17383/9
+#
 
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
