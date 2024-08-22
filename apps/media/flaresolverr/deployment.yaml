@@ -63,7 +63,7 @@ spec:
             - name: PROMETHEUS_ENABLED
               value: 'true'
             - name: PROMETHEUS_PORT
-              value: '8191'
+              value: '8192'
           ports:
             - name: http
               containerPort: 8191

@@ -65,7 +65,7 @@
 | Deluge       | ❓      |                                                                                                              |
 | Flaresolverr | ✅      | Supported through API Spec                                                                                   |
 | Lidarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
-| Overseerr    | ❓      |                                                                                                              |
+| Overseerr    | ❓      | Not supported natively, but can use [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)   |
 | Plex         | ❓      |                                                                                                              |
 | Prowlarr     | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
 | Radarr       | ❓      | Supported through [exportarr](https://github.com/onedr0p/exportarr), but need to spend the time to implemen  |
