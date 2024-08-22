@@ -11,6 +11,7 @@ resources:
   - rules.yaml
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
+  - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
   - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
