@@ -44,7 +44,7 @@
 
 | Service | Logs | Grafana Dashboard | Notes |
 | ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅               |       |
+| App     | ✅   | ✅                |       |
 
 ### Pihole
 
@@ -231,23 +231,23 @@
 
 | Service            | Logs | Grafana Dashboard | Notes                                       |
 | ------------------ | ---- | ----------------- | ------------------------------------------- |
-| Bazaar             | ✅   | ✅               |                                             |
+| Bazaar             | ✅   | ✅                |                                             |
 | Bazaar Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Deluge             | ✅   | ✅               |                                             |
+| Deluge             | ✅   | ✅                |                                             |
 | Deluge Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Flaresolverr       | ✅   | ✅               |                                             |
-| Lidarr             | ✅   | ✅               |                                             |
+| Flaresolverr       | ✅   | ✅                |                                             |
+| Lidarr             | ✅   | ✅                |                                             |
 | Lidarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Overseerr          | ✅   | ✅               |                                             |
+| Overseerr          | ✅   | ✅                |                                             |
 | Overseerr Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Plex               | ✅   | ✅               |                                             |
+| Plex               | ✅   | ✅                |                                             |
 | Plex Exporter      | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Prowlarr           | ✅   | ✅               |                                             |
+| Prowlarr           | ✅   | ✅                |                                             |
 | Prowlarr Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Radarr             | ✅   | ✅               |                                             |
+| Radarr             | ✅   | ✅                |                                             |
 | Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Recyclarr          | ✅   | ✅               |                                             |
-| Sonarr             | ✅   | ✅               |                                             |
+| Recyclarr          | ✅   | ✅                |                                             |
+| Sonarr             | ✅   | ✅                |                                             |
 | Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Tautulli           | ✅   | ✅               |                                             |
+| Tautulli           | ✅   | ✅                |                                             |
 | Tautulli Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |
