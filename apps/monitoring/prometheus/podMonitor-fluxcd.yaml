@@ -19,8 +19,8 @@ spec:
           - source-controller
           - kustomize-controller
           - notification-controller
-          # - image-automation-controller
-          # - image-reflector-controller
+          - image-automation-controller
+          - image-reflector-controller
   podMetricsEndpoints:
     - port: http-prom
 # Neither of the following have worked for to monitor the Sealed Secrets Controller
