@@ -1,25 +1,40 @@
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
-# kind: ImageUpdateAutomation
-# metadata:
-#   name: flux-system
-#   namespace: flux-system
-# spec:
-#   git:
-#     checkout:
-#       ref:
-#         branch: main
-#     commit:
-#       author:
-#         email: fluxcdbot@users.noreply.github.com
-#         name: fluxcdbot
-#       messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println
-#         .NewValue}}{{end}}'
-#     push:
-#       branch: main
-#   interval: 12h0m0s
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   update:
-#     path: ./clusters/k3s
-#     strategy: Setters
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  interval: 12h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        Automated Image Update
+        Automation Name: {{ .AutomationObject }}
+
+        Files:
+        {{ range $filename, $_ := .Changed.FileChanges -}}
+        - {{ $filename }}
+        {{ end -}}
+
+        Objects:
+        {{ range $resource, $changes := .Changed.Objects -}}
+        - {{ $resource.Kind }} {{ $resource.Name }}
+          Changes:
+        {{- range $_, $change := $changes }}
+            - {{ $change.OldValue }} -> {{ $change.NewValue }}
+        {{ end -}}
+        {{ end -}}
+    push:
+      branch: main
+  update:
+    path: ./clusters/k3s
+    strategy: Setters
