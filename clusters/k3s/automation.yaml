@@ -1,10 +1,16 @@
+#
+# Reference:
+# https://fluxcd.io/flux/guides/image-update/
+# https://fluxcd.io/flux/components/image/imageupdateautomations/
+#
+
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: radarr
   namespace: flux-system
 spec:
-  interval: 12h0m0s
+  interval: 0h5m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -16,7 +22,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: '{{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+      messageTemplate: '🚨 {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
     push:
       branch: main
   update:
