@@ -73,10 +73,11 @@ spec:
           imagePullPolicy: IfNotPresent
           args: ['start']
           env:
-            - name: KEYCLOAK_ADMIN
-              value: admin
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: keycloak
+            # For first time setup
+            # - name: KEYCLOAK_ADMIN
+            #   value: admin
+            # - name: KEYCLOAK_ADMIN_PASSWORD
+            #   value: keycloak
             - name: KC_PROXY
               value: edge
             - name: KC_HOSTNAME
