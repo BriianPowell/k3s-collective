@@ -36,5 +36,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./app/media/radarr
+    path: ./apps/media/radarr
     strategy: Setters
