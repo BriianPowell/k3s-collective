@@ -10,7 +10,7 @@ metadata:
   name: radarr
   namespace: flux-system
 spec:
-  interval: 0h5m0s
+  interval: 24h0m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -22,7 +22,9 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: '🚨 {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}'
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
     push:
       branch: main
   update:
