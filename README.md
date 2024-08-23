@@ -72,7 +72,7 @@ flux bootstrap github \
 _In Installation Order_
 
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
-- [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md)
+- [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md) + [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter)
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn) + [deluge_exporter](https://github.com/tobbez/deluge_exporter)
 - [x] [Radarr](https://github.com/Radarr/Radarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr) + [Exportarr](https://github.com/onedr0p/exportarr)
@@ -81,7 +81,7 @@ _In Installation Order_
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Recyclarr](https://github.com/recyclarr/recyclarr)
 - [x] [Overseerr](https://github.com/sct/overseerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
-- [x] [Tautulli](https://github.com/Tautulli/Tautulli)
+- [x] [Tautulli](https://github.com/Tautulli/Tautulli) + [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)
 
 ### TBD
 
