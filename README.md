@@ -13,6 +13,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 
 ```sh
 flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
   --owner=BriianPowell \
   --repository=k3s-collective \
   --branch=main \
