@@ -38,7 +38,7 @@ spec:
   values:
     image:
       repository: docker.io/plexinc/pms-docker # {"$imagepolicy": "flux-system:plex:name"}
-      tag: 1.10.0.4523-648bc61d4 # {"$imagepolicy": "flux-system:plex:tag"}
+      tag: public # {"$imagepolicy": "flux-system:plex:tag"}
     ingress:
       enabled: false
     pms:
