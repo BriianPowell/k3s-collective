@@ -51,7 +51,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: lidarr
-          image: lscr.io/linuxserver/lidarr:latest
+          image: lscr.io/linuxserver/lidarr:latest # {"$imagepolicy": "flux-system:lidarr"}
           imagePullPolicy: Always
           env:
             - name: TZ

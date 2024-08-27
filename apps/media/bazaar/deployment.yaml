@@ -51,7 +51,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: bazarr
-          image: lscr.io/linuxserver/bazarr:latest
+          image: lscr.io/linuxserver/bazarr:latest # {"$imagepolicy": "flux-system:bazarr"}
           imagePullPolicy: Always
           env:
             - name: TZ

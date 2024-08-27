@@ -54,7 +54,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: overseerr
-          image: ghcr.io/flaresolverr/flaresolverr:latest
+          image: ghcr.io/flaresolverr/flaresolverr:latest # {"$imagepolicy": "flux-system:flaresolverr"}
           imagePullPolicy: Always
           env:
             - name: LOG_LEVEL

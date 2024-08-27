@@ -33,7 +33,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: recyclarr
-          image: ghcr.io/recyclarr/recyclarr:latest
+          image: ghcr.io/recyclarr/recyclarr:latest # {"$imagepolicy": "flux-system:recyclarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
