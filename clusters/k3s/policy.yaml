@@ -8,7 +8,7 @@ spec:
     name: bazarr
   policy:
     semver:
-      range: '>1.0.0'
+      range: '>=1.4.3'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -32,7 +32,7 @@ spec:
     name: flaresolverr
   policy:
     semver:
-      range: '>3.0.0'
+      range: '>=3.3.21'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -44,7 +44,7 @@ spec:
     name: lidarr
   policy:
     semver:
-      range: '>2.0.0'
+      range: '>=8.121350'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -56,7 +56,7 @@ spec:
     name: overseerr
   policy:
     semver:
-      range: '>1.0.0'
+      range: '>=1.33.2'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -68,7 +68,7 @@ spec:
     name: prowlarr
   policy:
     semver:
-      range: '>1.0.0'
+      range: '>=1.21.2'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -80,7 +80,7 @@ spec:
     name: radarr
   policy:
     semver:
-      range: '>5.0.0'
+      range: '>=5.9.1'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -92,7 +92,7 @@ spec:
     name: recyclarr
   policy:
     semver:
-      range: '>7.0.0'
+      range: '>=7.2.2'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -104,7 +104,7 @@ spec:
     name: sonarr
   policy:
     semver:
-      range: '>4.0.0'
+      range: '>=4.0.9'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -116,4 +116,4 @@ spec:
     name: tautulli
   policy:
     semver:
-      range: '>2.0.0'
+      range: '>=2.14.4'
