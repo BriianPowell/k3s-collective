@@ -30,6 +30,8 @@ metadata:
 spec:
   imageRepositoryRef:
     name: flaresolverr
+  filterTags:
+    pattern: 'latest'
   policy:
     semver:
       range: '>=3.3.21'
