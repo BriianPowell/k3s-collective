@@ -103,8 +103,8 @@ spec:
   imageRepositoryRef:
     name: plex
   policy:
-    alphabetical:
-      order: asc
+    semver:
+      range: '>=1.40.5.8854-f36c552fd'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
