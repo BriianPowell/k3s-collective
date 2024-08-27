@@ -103,8 +103,6 @@ spec:
   imageRepositoryRef:
     name: plex
   policy:
-    semver:
-      range: '>=1.40.5.8897-x'
     numerical:
       order: desc
 ---
