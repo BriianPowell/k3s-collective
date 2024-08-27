@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: sonarr-exportarr
-          image: ghcr.io/onedr0p/exportarr:latest # {"$imagepolicy": "flux-system:exportarr"}
+          image: ghcr.io/onedr0p/exportarr:v2.0.1 # {"$imagepolicy": "flux-system:exportarr"}
           imagePullPolicy: Always
           args:
             - sonarr
