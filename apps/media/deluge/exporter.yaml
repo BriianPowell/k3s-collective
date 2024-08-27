@@ -18,7 +18,7 @@ spec:
   type: ClusterIP
   ports:
     - name: metrics
-      port: 9354
+      port: 8011
       protocol: TCP
       targetPort: metrics
 ---
@@ -50,23 +50,19 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: deluge-exporter
-          image: tobbez/deluge_exporter:latest
+          image: ngosand/deluge-exporter:latest # {"$imagepolicy": "flux-system:deluge-exporter"}
           imagePullPolicy: Always
           env:
-            - name: PER_TORRENT_METRICS
-              value: '0'
+            - name: TZ
+              value: America/Los_Angeles
             - name: LISTEN_PORT
-              value: '9354'
+              value: '8011'
             - name: LISTEN_ADDRESS
               value: '0.0.0.0'
             - name: LOG_LEVEL
               value: INFO
-            - name: DELUGE_HOST
-              value: http://deluge.media.svc
-            - name: DELUGE_PORT
-              value: '8112'
-            - name: DELUGE_USER
-              value: deluge
+            - name: DELUGE_URL
+              value: http://deluge.media.svc:8112
             - name: DELUGE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -74,5 +70,5 @@ spec:
                   key: APP_PASS
           ports:
             - name: metrics
-              containerPort: 9354
+              containerPort: 8011
               protocol: TCP

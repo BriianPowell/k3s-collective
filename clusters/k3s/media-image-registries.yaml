@@ -19,6 +19,15 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
+  name: deluge-exporter
+  namespace: flux-system
+spec:
+  image: docker.io/ngosang/delgue-exporter
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
   name: exportarr
   namespace: flux-system
 spec:
@@ -58,7 +67,7 @@ metadata:
   name: plex
   namespace: flux-system
 spec:
-  image: plexinc/pms-docker
+  image: docker.io/plexinc/pms-docker
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2

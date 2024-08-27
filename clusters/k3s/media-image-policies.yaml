@@ -25,6 +25,18 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
+  name: deluge-exporter
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: deluge
+  policy:
+    semver:
+      range: '>=1.0.2'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
   name: exportarr
   namespace: flux-system
 spec:
