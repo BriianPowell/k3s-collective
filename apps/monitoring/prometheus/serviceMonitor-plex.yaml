@@ -19,7 +19,3 @@ spec:
       port: metrics
       scrapeTimeout: 90s
       path: /metrics
-      metricRelabelings:
-       - sourceLabels: [ __name__ ]
-         targetLabel: __name__
-         replacement: plex_$1
