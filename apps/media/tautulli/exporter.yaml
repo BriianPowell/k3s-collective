@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: tautulli-exportarr
-          image: nwalke/tautulli_exporter:latest # {"$imagepolicy": "flux-system:tautulli-exporter"}
+          image: docker.io/nwalke/tautulli_exporter:v0.1.0 # {"$imagepolicy": "flux-system:tautulli-exporter"}
           imagePullPolicy: Always
           args:
             - tautulli
