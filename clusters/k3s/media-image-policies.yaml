@@ -102,7 +102,7 @@ metadata:
 spec:
   imageRepositoryRef:
     name: plex
-  filterTages:
+  filterTags:
     pattern: '.*-*'
   policy:
     semver:
