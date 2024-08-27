@@ -92,7 +92,7 @@ spec:
     name: plex
   policy:
     semver:
-      range: '>=1.40.5.8897-x'
+      range: '>=1.40.5.8897-e5987a19d'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
