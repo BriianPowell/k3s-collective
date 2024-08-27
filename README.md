@@ -75,7 +75,7 @@ _In Installation Order_
 
 - [x] [nvidia-device-plugin](https://github.com/NVIDIA/k8s-device-plugin)
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md) + [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter)
-- [x] [Deluge](https://github.com/binhex/arch-delugevpn) + [deluge_exporter](https://github.com/tobbez/deluge_exporter)
+- [x] [Deluge](https://github.com/binhex/arch-delugevpn) + [deluge_exporter](https://github.com/ngosang/deluge-exporter)
 - [x] [Radarr](https://github.com/Radarr/Radarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Lidarr ](https://github.com/Lidarr/Lidarr)+ [Exportarr](https://github.com/onedr0p/exportarr)

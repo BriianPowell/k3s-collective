@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: overseerr-exporter
-          image: ghcr.io/willfantom/overseerr-exporter:latest
+          image: ghcr.io/willfantom/overseerr-exporter:latest # {"$imagepolicy": "flux-system:overseerr-exporter"}
           imagePullPolicy: Always
           args:
             - --overseerr.address=http://overseerr.media.svc.cluster.local:5055
