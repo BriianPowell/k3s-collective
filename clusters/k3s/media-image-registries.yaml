@@ -132,3 +132,12 @@ metadata:
 spec:
   image: ghcr.io/tautulli/tautulli
   interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: tautulli-exporter
+  namespace: flux-system
+spec:
+  image: docker.io/nwalke/tautulli_exporter
+  interval: 24h
