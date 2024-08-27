@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: overseerr
-          image: sctx/overseerr:latest # {"$imagepolicy": "flux-system:overseerr"}
+          image: ghcr.io/sct/overseerr:1.33.2 # {"$imagepolicy": "flux-system:overseerr"}
           imagePullPolicy: Always
           env:
             - name: LOG_LEVEL
