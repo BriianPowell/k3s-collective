@@ -1,4 +1,3 @@
-
 #
 # Reference:
 # https://github.com/onedr0p/exportarr
@@ -51,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: bazarr-exportarr
-          image: ghcr.io/onedr0p/exportarr:latest # {"$imagepolicy": "flux-system:exportarr"}
+          image: ghcr.io/onedr0p/exportarr:v2.0.1 # {"$imagepolicy": "flux-system:exportarr"}
           imagePullPolicy: Always
           args:
             - bazarr
