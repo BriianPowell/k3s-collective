@@ -94,20 +94,21 @@ spec:
 #     semver:
 #       range: '>=1.2'
 # ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImagePolicy
-metadata:
-  name: plex
-  namespace: flux-system
-spec:
-  imageRepositoryRef:
-    name: plex
-  filterTags:
-    pattern: '.*-*'
-  policy:
-    semver:
-      range: '>=1.40.5.8854'
----
+# # Plex is kinda busted, the tags are non-standard https://hub.docker.com/r/plexinc/pms-docker/tags/
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImagePolicy
+# metadata:
+#   name: plex
+#   namespace: flux-system
+# spec:
+#   imageRepositoryRef:
+#     name: plex
+#   filterTags:
+#     pattern: '.*-*'
+#   policy:
+#     semver:
+#       range: '>=1.40.5.8854'
+# ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:

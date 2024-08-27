@@ -139,33 +139,33 @@ spec:
     path: ./apps/media/overseerr
     strategy: Setters
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageUpdateAutomation
-metadata:
-  name: plex
-  namespace: flux-system
-spec:
-  interval: 24h0m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxcdbot@users.noreply.github.com
-        name: fluxcdbot
-      messageTemplate: |
-        🚨 Image Automation Update 🚨
-        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
-    push:
-      branch: main
-  update:
-    path: ./apps/media/plex
-    strategy: Setters
----
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImageUpdateAutomation
+# metadata:
+#   name: plex
+#   namespace: flux-system
+# spec:
+#   interval: 24h0m0s
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   git:
+#     checkout:
+#       ref:
+#         branch: main
+#     commit:
+#       author:
+#         email: fluxcdbot@users.noreply.github.com
+#         name: fluxcdbot
+#       messageTemplate: |
+#         🚨 Image Automation Update 🚨
+#         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+#     push:
+#       branch: main
+#   update:
+#     path: ./apps/media/plex
+#     strategy: Setters
+# ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
