@@ -104,7 +104,7 @@ spec:
     name: plex
   policy:
     alphabetical:
-      order: desc
+      order: asc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
