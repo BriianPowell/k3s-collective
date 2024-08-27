@@ -1,0 +1,131 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: bazarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: bazarr
+  policy:
+    semver:
+      range: '>=1.4.3'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: deluge
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: deluge
+  policy:
+    semver:
+      range: '>=2.1.1-6-05'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: flaresolverr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: flaresolverr
+  policy:
+    semver:
+      range: '>=3.3.21'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lidarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lidarr
+  policy:
+    semver:
+      range: '>=2.4.3 <3.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: overseerr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: overseerr
+  policy:
+    semver:
+      range: '>=1.33.2'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: overseerr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: overseerr
+  policy:
+    semver:
+      range: '>=1.40.5.8897-x'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: prowlarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: prowlarr
+  policy:
+    semver:
+      range: '>=1.21.2'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: radarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: radarr
+  policy:
+    semver:
+      range: '>=5.9.1'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: recyclarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: recyclarr
+  policy:
+    semver:
+      range: '>=7.2.2'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: sonarr
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sonarr
+  policy:
+    semver:
+      range: '>=4.0.9'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: tautulli
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: tautulli
+  policy:
+    semver:
+      range: '>=2.14.4'
