@@ -29,7 +29,7 @@ metadata:
   namespace: flux-system
 spec:
   imageRepositoryRef:
-    name: deluge
+    name: deluge-exporter
   policy:
     semver:
       range: '>=1.0.2'
