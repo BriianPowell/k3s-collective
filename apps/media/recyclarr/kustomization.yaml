@@ -6,3 +6,4 @@ commonLabels:
 
 resources:
   - deployment.yaml
+  - image-automation.yaml

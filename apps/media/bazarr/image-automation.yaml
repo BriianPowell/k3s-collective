@@ -1,0 +1,99 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  image: ghcr.io/linuxserver/bazarr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  imageRepositoryRef:
+    name: bazarr
+    namespace: media
+  policy:
+    semver:
+      range: '>=1.4.3'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/bazarr
+    strategy: Setters
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: exportarr
+  namespace: media
+spec:
+  image: ghcr.io/onedr0p/exportarr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: exportarr
+  namespace: media
+spec:
+  imageRepositoryRef:
+    name: exportarr
+  policy:
+    semver:
+      range: '>=2.0.1'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: bazarr-exportarr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/bazarr
+    strategy: Setters
+---

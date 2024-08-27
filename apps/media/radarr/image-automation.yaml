@@ -1,0 +1,77 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  image: ghcr.io/linuxserver/radarr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  imageRepositoryRef:
+    name: radarr
+    namespace: media
+  policy:
+    semver:
+      range: '>=5.9.1'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/radarr
+    strategy: Setters
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: radarr-exportarr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/radarr
+    strategy: Setters

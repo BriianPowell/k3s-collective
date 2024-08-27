@@ -1,0 +1,98 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: overseerr
+  namespace: media
+spec:
+  image: ghcr.io/sct/overseerr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: overseerr
+  namespace: media
+spec:
+  imageRepositoryRef:
+    name: overseerr
+    namespace: media
+  policy:
+    semver:
+      range: '>=1.33.2'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: overseerr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/overseerr
+    strategy: Setters
+# ---
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImageRepository
+# metadata:
+#   name: overseerr-exporter
+#   namespace: media
+# spec:
+#   image: ghcr.io/willfantom/overseerr-exporter
+#   interval: 24h
+# ---
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImagePolicy
+# metadata:
+#   name: overseerr-exporter
+#   namespace: media
+# spec:
+#   imageRepositoryRef:
+#     name: overseerr-exporter
+#   policy:
+#     semver:
+#       range: '>=1.2'
+# ---
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImageUpdateAutomation
+# metadata:
+#   name: overseerr-exporter
+#   namespace: media
+# spec:
+#   interval: 24h0m0s
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   git:
+#     checkout:
+#       ref:
+#         branch: main
+#     commit:
+#       author:
+#         email: fluxcdbot@users.noreply.github.com
+#         name: fluxcdbot
+#       messageTemplate: |
+#         🚨 Image Automation Update 🚨
+#         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+#     push:
+#       branch: main
+#   update:
+#     path: ./apps/media/overseerr
+#     strategy: Setters
