@@ -44,7 +44,7 @@ spec:
     name: lidarr
   policy:
     semver:
-      range: '>=2.5.0'
+      range: '>=2.4.3'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
@@ -54,8 +54,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: overseerr
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=1.33.2'
@@ -68,8 +66,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: prowlarr
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=1.21.2'
@@ -82,8 +78,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: radarr
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=5.9.1'
@@ -96,8 +90,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: recyclarr
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=7.2.2'
@@ -110,8 +102,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: sonarr
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=4.0.9'
@@ -124,8 +114,6 @@ metadata:
 spec:
   imageRepositoryRef:
     name: tautulli
-  filterTags:
-    pattern: latest
   policy:
     semver:
       range: '>=2.14.4'
