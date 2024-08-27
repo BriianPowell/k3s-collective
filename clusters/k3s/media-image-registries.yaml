@@ -19,6 +19,15 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
+  name: exportarr
+  namespace: flux-system
+spec:
+  image: ghcr.io/onedr0p/exportarr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
   name: flaresolverr
   namespace: flux-system
 spec:
