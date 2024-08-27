@@ -103,7 +103,7 @@ spec:
   imageRepositoryRef:
     name: plex
   filterTages:
-    pattern: '.*-*.*'
+    pattern: '.*-*'
   policy:
     semver:
       range: '>=1.40.5.8854'
