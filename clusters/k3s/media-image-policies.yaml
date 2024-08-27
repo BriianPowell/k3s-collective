@@ -103,7 +103,7 @@ spec:
   imageRepositoryRef:
     name: plex
   policy:
-    numerical:
+    alphabetical:
       order: desc
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
