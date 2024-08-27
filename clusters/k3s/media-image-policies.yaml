@@ -73,11 +73,11 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: overseerr
+  name: plex
   namespace: flux-system
 spec:
   imageRepositoryRef:
-    name: overseerr
+    name: plex
   policy:
     semver:
       range: '>=1.40.5.8897-x'
