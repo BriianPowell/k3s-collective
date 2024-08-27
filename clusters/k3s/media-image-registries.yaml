@@ -22,7 +22,7 @@ metadata:
   name: deluge-exporter
   namespace: flux-system
 spec:
-  image: docker.io/ngosang/delgue-exporter
+  image: ghcr.io/ngosang/delgue-exporter
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
