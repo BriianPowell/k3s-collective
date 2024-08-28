@@ -25,6 +25,7 @@ metadata:
     app.kubernetes.io/name: metrics-server
 spec:
   interval: 1h0m0s
+  timeout: 10m0s
   chart:
     spec:
       chart: metrics-server
