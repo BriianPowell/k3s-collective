@@ -1,6 +1,7 @@
 #
 # Reference:
 # https://artifacthub.io/packages/helm/metrics-server/metrics-server
+# https://github.com/k3s-io/k3s/issues/1968#issuecomment-680219642
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1
