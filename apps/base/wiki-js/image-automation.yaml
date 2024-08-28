@@ -4,7 +4,7 @@ metadata:
   name: wiki-js
   namespace: wiki
 spec:
-  image: docker.io/binwiederhier
+  image: docker.io/requarks/wiki
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
