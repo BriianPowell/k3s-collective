@@ -47,7 +47,7 @@ spec:
       serviceAccountName: wiki-js
       containers:
         - name: wiki-js
-          image: requarks/wiki:latest
+          image: requarks/wiki:latest # { $imagepolicy: "wiki:wiki-js" }
           imagePullPolicy: Always
           env:
             - name: DB_TYPE

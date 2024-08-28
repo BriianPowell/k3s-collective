@@ -5,7 +5,8 @@ commonLabels:
   app.kubernetes.io/part-of: wiki-js
 
 resources:
+  - deployment.yaml
+  - image-automation.yaml
   - ingress.yaml
   - pgcluster.yaml
   - service-account.yaml
-  - deployment.yaml

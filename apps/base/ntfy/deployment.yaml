@@ -55,7 +55,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: ntfy
-          image: binwiederhier/ntfy:latest
+          image: binwiederhier/ntfy:latest # { $imagepolicy: "kube-system:ntfy" }
           imagePullPolicy: Always
           args: ["serve"]
           env:
