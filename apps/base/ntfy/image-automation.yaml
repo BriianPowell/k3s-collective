@@ -19,31 +19,31 @@ spec:
   policy:
     semver:
       range: '>=2.11.0'
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
-# kind: ImageUpdateAutomation
-# metadata:
-#   name: ntfy
-#   namespace: kube-system
-# spec:
-#   interval: 24h0m0s
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#     namespace: flux-system
-#   git:
-#     checkout:
-#       ref:
-#         branch: main
-#     commit:
-#       author:
-#         email: fluxcdbot@users.noreply.github.com
-#         name: fluxcdbot
-#       messageTemplate: |
-#         🚨 Image Automation Update 🚨
-#         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
-#     push:
-#       branch: main
-#   update:
-#     path: ./apps/base/ntfy
-#     strategy: Setters
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: ntfy
+  namespace: kube-system
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/base/ntfy
+    strategy: Setters
