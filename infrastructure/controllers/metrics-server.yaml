@@ -1,86 +1,86 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: metrics-server
-  namespace: kube-system
-  labels:
-    app.kubernetes.io/component: helm-repository
-    app.kubernetes.io/name: metrics-server
-spec:
-  interval: 24h
-  url: https://kubernetes-sigs.github.io/metrics-server/
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: metrics-server
-  namespace: kube-system
-  labels:
-    app.kubernetes.io/component: helm-release
-    app.kubernetes.io/name: metrics-server
-spec:
-  interval: 1h0m0s
-  chart:
-    spec:
-      chart: metrics-server
-      sourceRef:
-        kind: HelmRepository
-        name: metrics-server
-        namespace: kube-system
-      version: ">=3.12.1 <4.0.0"
-  values:
-    hostNetwork:
-      enabled: false
-    replicas: 2
-    revisionHistoryLimit: 1
-    updateStrategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 1
-    defaultArgs:
-      - --cert-dir=/tmp
-      - --secure-port=4443
-      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-      - --kubelet-use-node-status-port
-      - --metric-resolution=15s
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-      runAsUser: 1000
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
-    resources:
-      requests:
-        cpu: 100m
-        memory: 200Mi
-      limits:
-        cpu: 500m
-        memory: 1Gi
-    podDisruptionBudget:
-      enabled: true
-      minAvailable: 1
-    apiService:
-      create: true
-      insecureSkipTLSVerify: true
-    nodeSelector:
-      kubernetes.io/os: linux
-    metrics:
-      enabled: true
-    serviceMonitor:
-      enabled: true
-      additionalLabels:
-        monitored-by: prometheus
-    affinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: app
-                app.kubernetes.io/name: metrics-server
-            namespaces:
-              - kube-system
-            topologyKey: kubernetes.io/hostname
+# apiVersion: source.toolkit.fluxcd.io/v1
+# kind: HelmRepository
+# metadata:
+#   name: metrics-server
+#   namespace: kube-system
+#   labels:
+#     app.kubernetes.io/component: helm-repository
+#     app.kubernetes.io/name: metrics-server
+# spec:
+#   interval: 24h
+#   url: https://kubernetes-sigs.github.io/metrics-server/
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: metrics-server
+#   namespace: kube-system
+#   labels:
+#     app.kubernetes.io/component: helm-release
+#     app.kubernetes.io/name: metrics-server
+# spec:
+#   interval: 1h0m0s
+#   chart:
+#     spec:
+#       chart: metrics-server
+#       sourceRef:
+#         kind: HelmRepository
+#         name: metrics-server
+#         namespace: kube-system
+#       version: ">=3.12.1 <4.0.0"
+#   values:
+#     hostNetwork:
+#       enabled: false
+#     replicas: 2
+#     revisionHistoryLimit: 1
+#     updateStrategy:
+#       type: RollingUpdate
+#       rollingUpdate:
+#         maxUnavailable: 1
+#     defaultArgs:
+#       - --cert-dir=/tmp
+#       - --secure-port=4443
+#       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+#       - --kubelet-use-node-status-port
+#       - --metric-resolution=15s
+#     securityContext:
+#       allowPrivilegeEscalation: false
+#       readOnlyRootFilesystem: true
+#       runAsNonRoot: true
+#       runAsUser: 1000
+#       seccompProfile:
+#         type: RuntimeDefault
+#       capabilities:
+#         drop:
+#           - ALL
+#     resources:
+#       requests:
+#         cpu: 100m
+#         memory: 200Mi
+#       limits:
+#         cpu: 500m
+#         memory: 1Gi
+#     podDisruptionBudget:
+#       enabled: true
+#       minAvailable: 1
+#     apiService:
+#       create: true
+#       insecureSkipTLSVerify: true
+#     nodeSelector:
+#       kubernetes.io/os: linux
+#     metrics:
+#       enabled: true
+#     serviceMonitor:
+#       enabled: true
+#       additionalLabels:
+#         monitored-by: prometheus
+#     affinity:
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#           - labelSelector:
+#               matchLabels:
+#                 app.kubernetes.io/component: app
+#                 app.kubernetes.io/name: metrics-server
+#             namespaces:
+#               - kube-system
+#             topologyKey: kubernetes.io/hostname
