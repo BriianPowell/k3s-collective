@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: tautulli
-          image: ghcr.io/tautulli/tautulli:v2.14.4 # {"$imagepolicy": "flux-system:tautulli"}
+          image: ghcr.io/tautulli/tautulli:v2.14.4 # {"$imagepolicy": "media:tautulli"}
           imagePullPolicy: Always
           env:
             - name: TZ

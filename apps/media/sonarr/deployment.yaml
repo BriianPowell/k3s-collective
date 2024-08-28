@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: sonarr
-          image: ghcr.io/linuxserver/sonarr:4.0.9 # {"$imagepolicy": "flux-system:sonarr"}
+          image: ghcr.io/linuxserver/sonarr:4.0.9 # {"$imagepolicy": "media:sonarr"}
           imagePullPolicy: Always
           env:
             - name: TZ

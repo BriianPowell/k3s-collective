@@ -1,0 +1,46 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: atuin
+  namespace: atuin
+spec:
+  image: ghcr.io/atuinsh/atuin
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: atuin
+  namespace: atuin
+spec:
+  imageRepositoryRef:
+    name: atuin
+    namespace: atuin
+---
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImageUpdateAutomation
+# metadata:
+#   name: atuin
+#   namespace: atuin
+# spec:
+#   interval: 24h0m0s
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   git:
+#     checkout:
+#       ref:
+#         branch: main
+#     commit:
+#       author:
+#         email: fluxcdbot@users.noreply.github.com
+#         name: fluxcdbot
+#       messageTemplate: |
+#         🚨 Image Automation Update 🚨
+#         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+#     push:
+#       branch: main
+#   update:
+#     path: ./apps/base/atuin
+#     strategy: Setters

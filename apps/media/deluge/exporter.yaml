@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: deluge-exporter
-          image: docker.io/ngosang/deluge-exporter:1.0.2 # {"$imagepolicy": "flux-system:deluge-exporter"}
+          image: docker.io/ngosang/deluge-exporter:1.0.2 # {"$imagepolicy": "media:deluge-exporter"}
           imagePullPolicy: Always
           env:
             - name: TZ
