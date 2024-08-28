@@ -38,7 +38,7 @@ spec:
   values:
     hostNetwork:
       enabled: false
-    containerPort: 4443
+    containerPort: 10250
     replicas: 2
     revisionHistoryLimit: 1
     updateStrategy:
@@ -47,7 +47,6 @@ spec:
         maxUnavailable: 1
     defaultArgs:
       - --cert-dir=/tmp
-      - --secure-port=4443
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
       - --kubelet-use-node-status-port
       - --metric-resolution=15s
@@ -114,4 +113,4 @@ spec:
       port: 443
       labels:
         kubernetes.io/cluster-service: true
-        kubernetes.io/name: Metrics-Server
+        kubernetes.io/name: metrics-server
