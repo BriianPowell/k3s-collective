@@ -16,6 +16,9 @@ spec:
   imageRepositoryRef:
     name: atuin
     namespace: atuin
+  policy:
+    semver:
+      range: '>=1.0'
 ---
 # apiVersion: image.toolkit.fluxcd.io/v1beta2
 # kind: ImageUpdateAutomation
