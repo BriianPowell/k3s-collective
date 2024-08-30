@@ -28,9 +28,9 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: kube-system
-      version: '>=28.0.0 <29.0.0'
+      version: '>=30.0.0 <33.0.0'
   values:
-    commontLabels:
+    commonLabels:
       app.kubernetes.io/part-of: traefik
     deployment:
       annotations:
