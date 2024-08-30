@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: image-repository
     app.kubernetes.io/name: traefik-forward-auth
 spec:
-  image: ghcr.io/thomseddon/traefik-forward-auth
+  image: docker.io/thomseddon/traefik-forward-auth
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
