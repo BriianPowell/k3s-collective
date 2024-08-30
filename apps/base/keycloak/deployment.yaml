@@ -79,7 +79,7 @@ spec:
           imagePullPolicy: IfNotPresent
           args: ['start']
           env:
-            # First Time Setup, use generic passwords
+            # First Time Setup, use generic user
             # - name: KEYCLOAK_ADMIN
             #   value: admin
             # - name: KEYCLOAK_ADMIN_PASSWORD
@@ -126,9 +126,7 @@ spec:
               value: '9000'
             - name: KC_HTTP_MANAGEMENT_RELATIVE_PATH
               value: /
-            - name: KC_LEGACY_OBSERVABILITY_INTERFACE
-              value: 'false'
-            - name: KC_HEALTH_ENABLED # Enabled by default now
+            - name: KC_HEALTH_ENABLED
               value: 'true'
             # - name: KC_METRICS_ENABLED # Enabled by default now
             #   value: 'true'
