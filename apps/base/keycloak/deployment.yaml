@@ -128,8 +128,8 @@ spec:
               cpu: 10m
               memory: 400Mi
             limits:
-              cpu: 300m
-              memory: 500Mi
+              cpu: 750m
+              memory: 750Mi
           readinessProbe:
             initialDelaySeconds: 30
             timeoutSeconds: 30
