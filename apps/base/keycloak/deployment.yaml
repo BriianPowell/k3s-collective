@@ -2,6 +2,7 @@
 # Reference:
 # https://github.com/keycloak/keycloak/discussions/12594
 # https://www.keycloak.org/docs/latest/upgrading/
+# https://www.keycloak.org/server/all-config
 #
 
 apiVersion: v1
@@ -128,8 +129,8 @@ spec:
               value: /
             - name: KC_HEALTH_ENABLED
               value: 'true'
-            # - name: KC_METRICS_ENABLED # Enabled by default now
-            #   value: 'true'
+            - name: KC_METRICS_ENABLED
+              value: 'true'
           ports:
             - name: jgroups
               containerPort: 7600
