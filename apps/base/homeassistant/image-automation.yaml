@@ -47,7 +47,7 @@ spec:
     commit:
       author:
         email: fluxcdbot@users.noreply.github.com
-        name: fluxcdbot
+        name: FluxCDBot
       messageTemplate: |
         🚨 Image Automation Update 🚨
         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}

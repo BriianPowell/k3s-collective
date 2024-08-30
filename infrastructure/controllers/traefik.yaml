@@ -1,3 +1,8 @@
+#
+# Reference:
+# https://artifacthub.io/packages/helm/traefik/traefik/30.0.1
+#
+
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
