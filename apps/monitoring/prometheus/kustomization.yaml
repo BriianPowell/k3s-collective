@@ -16,7 +16,7 @@ resources:
   - serviceMonitor-deluge.yaml
   - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
-  - serviceMonitor-keycloak.yaml
+  # - serviceMonitor-keycloak.yaml # Keycloak Metrics broke in latest release
   - serviceMonitor-lidarr.yaml
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
