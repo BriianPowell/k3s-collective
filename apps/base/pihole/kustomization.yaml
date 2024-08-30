@@ -6,6 +6,5 @@ commonLabels:
 
 resources:
   - helm-release.yaml
-  - image-automation.yaml
   - ingress.yaml
   - middleware.yaml
