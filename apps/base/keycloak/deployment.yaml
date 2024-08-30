@@ -80,7 +80,7 @@ spec:
             #   value: keycloak
             - name: KC_PROXY # deprecated
               value: edge
-            # - name: KC_PROXY_HEADERS
+            # - name: KC_PROXY_HEADERS # need to set up keystore for this to work getting the following error: Key material not provided to setup HTTPS. Please configure your keys/certificates or start the server in development mode.
             #   value: xforwarded
             - name: KC_HOSTNAME
               valueFrom:
