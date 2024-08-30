@@ -1,39 +1,39 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: wiki-js
-  namespace: wiki
+  name: homeassistant
+  namespace: homeassistant
   labels:
     app.kubernetes.io/component: image-repository
-    app.kubernetes.io/name: wiki-js
+    app.kubernetes.io/name: homeassistant
 spec:
-  image: docker.io/requarks/wiki
+  image: docker.io/home-assistant/home-assistant
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: wiki-js
-  namespace: wiki
+  name: homeassistant
+  namespace: kube-system
   labels:
     app.kubernetes.io/component: image-policy
-    app.kubernetes.io/name: wiki-js
+    app.kubernetes.io/name: homeassistant
 spec:
   imageRepositoryRef:
-    name: wiki-js
-    namespace: wiki
+    name: homeassistant
+    namespace: homeassistant
   policy:
     semver:
-      range: '>=2.5.303'
+      range: '>=2024.8.3'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: wiki-js
-  namespace: wiki
+  name: homeassistant
+  namespace: homeassistant
   labels:
     app.kubernetes.io/component: image-update-automation
-    app.kubernetes.io/name: wiki-js
+    app.kubernetes.io/name: homeassistant
 spec:
   interval: 24h0m0s
   sourceRef:
@@ -54,5 +54,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/base/wiki-js
+    path: ./apps/base/homeassistant
     strategy: Setters

@@ -3,6 +3,9 @@ kind: ImageRepository
 metadata:
   name: atuin
   namespace: atuin
+  labels:
+    app.kubernetes.io/component: image-repository
+    app.kubernetes.io/name: atuin
 spec:
   image: ghcr.io/atuinsh/atuin
   interval: 24h
@@ -12,6 +15,9 @@ kind: ImagePolicy
 metadata:
   name: atuin
   namespace: atuin
+  labels:
+    app.kubernetes.io/component: image-policy
+    app.kubernetes.io/name: atuin
 spec:
   imageRepositoryRef:
     name: atuin
@@ -25,6 +31,9 @@ kind: ImageUpdateAutomation
 metadata:
   name: atuin
   namespace: atuin
+  labels:
+    app.kubernetes.io/component: image-update-automation
+    app.kubernetes.io/name: atuin
 spec:
   interval: 24h0m0s
   sourceRef:

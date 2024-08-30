@@ -3,6 +3,9 @@ kind: ImageRepository
 metadata:
   name: error-pages
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-repository
+    app.kubernetes.io/name: error-pages
 spec:
   image: ghcr.io/tarampampam/error-pages
   interval: 24h
@@ -12,6 +15,9 @@ kind: ImagePolicy
 metadata:
   name: error-pages
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-policy
+    app.kubernetes.io/name: error-pages
 spec:
   imageRepositoryRef:
     name: error-pages
@@ -25,6 +31,9 @@ kind: ImageUpdateAutomation
 metadata:
   name: error-pages
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-update-automation
+    app.kubernetes.io/name: error-pages
 spec:
   interval: 24h0m0s
   sourceRef:

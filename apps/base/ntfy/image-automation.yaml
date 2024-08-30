@@ -3,6 +3,9 @@ kind: ImageRepository
 metadata:
   name: ntfy
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-repository
+    app.kubernetes.io/name: ntfy
 spec:
   image: docker.io/binwiederhier/ntfy
   interval: 24h
@@ -12,6 +15,9 @@ kind: ImagePolicy
 metadata:
   name: ntfy
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-policy
+    app.kubernetes.io/name: ntfy
 spec:
   imageRepositoryRef:
     name: ntfy
@@ -25,6 +31,9 @@ kind: ImageUpdateAutomation
 metadata:
   name: ntfy
   namespace: kube-system
+  labels:
+    app.kubernetes.io/component: image-update-automation
+    app.kubernetes.io/name: ntfy
 spec:
   interval: 24h0m0s
   sourceRef:

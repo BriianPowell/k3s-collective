@@ -43,7 +43,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: homeassistant
-          image: ghcr.io/home-assistant/home-assistant:stable
+          image: ghcr.io/home-assistant/home-assistant:stable # {"$imagepolicy": "homeassistant:homeassistant"}
           imagePullPolicy: Always
           volumeMounts:
             - name: hass-storage
