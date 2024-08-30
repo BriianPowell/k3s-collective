@@ -7,4 +7,5 @@ commonLabels:
 resources:
   - config.yaml
   - deployment.yaml
+  - image-automation.yaml
   - ingress.yaml
