@@ -78,10 +78,10 @@ spec:
             #   value: admin
             # - name: KEYCLOAK_ADMIN_PASSWORD
             #   value: keycloak
-            # - name: KC_PROXY # deprecated
-            #   value: edge
-            - name: KC_PROXY_HEADERS
-              value: xforwarded
+            - name: KC_PROXY # deprecated
+              value: edge
+            # - name: KC_PROXY_HEADERS
+            #   value: xforwarded
             - name: KC_HOSTNAME
               valueFrom:
                 secretKeyRef:
