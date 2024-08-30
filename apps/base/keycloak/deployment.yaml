@@ -69,7 +69,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:23.0 # {"$imagepolicy": "keycloak:keycloak"}
+          image: quay.io/keycloak/keycloak:25.0.4 # {"$imagepolicy": "keycloak:keycloak"}
           imagePullPolicy: IfNotPresent
           args: ['start']
           env:
