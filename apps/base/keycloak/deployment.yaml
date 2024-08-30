@@ -89,8 +89,8 @@ spec:
                   key: DOMAIN
             - name: KC_HEALTH_ENABLED
               value: 'true'
-            - name: KC_METRICS_ENABLED
-              value: 'true'
+            # - name: KC_METRICS_ENABLED
+            #   value: 'true'
             - name: KC_SPI_ADMIN_REALM
               value: inferno
             - name: KC_DB
