@@ -149,9 +149,9 @@ spec:
             limits:
               cpu: 750m
               memory: 750Mi
-          readinessProbe:
-            initialDelaySeconds: 180
-            timeoutSeconds: 30
-            httpGet:
-              path: /health/ready
-              port: management
+          # readinessProbe:
+          #   initialDelaySeconds: 180
+          #   timeoutSeconds: 30
+          #   httpGet:
+          #     path: /health/ready
+          #     port: management
