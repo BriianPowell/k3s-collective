@@ -24,7 +24,7 @@ spec:
     namespace: keycloak
   policy:
     semver:
-      range: '>=2024.8.3'
+      range: '>=25.0.0'
 ---
 # apiVersion: image.toolkit.fluxcd.io/v1beta2
 # kind: ImageUpdateAutomation
