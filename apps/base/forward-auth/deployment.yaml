@@ -49,7 +49,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: traefik-forward-auth
-          image: thomseddon/traefik-forward-auth:2 # {"$imagepolicy": "kube-system:traefik-forward-auth"}
+          image: docker.io/thomseddon/traefik-forward-auth:2.2.0 # {"$imagepolicy": "kube-system:traefik-forward-auth"}
           imagePullPolicy: Always
           env:
             - name: LOG_LEVEL
