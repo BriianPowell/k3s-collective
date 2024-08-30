@@ -16,7 +16,7 @@ spec:
       - keycloak
   endpoints:
     - interval: 4m
-      port: http
+      port: manage
       scrapeTimeout: 90s
       path: /metrics
       metricRelabelings:

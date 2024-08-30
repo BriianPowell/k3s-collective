@@ -46,6 +46,10 @@ spec:
       port: 8080
       protocol: TCP
       targetPort: http
+    - name: manage
+      port: 9000
+      protocol: TCP
+      targetPort: manage
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -126,6 +130,10 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+              protocol: TCP
+            - name: manage
+              containerPort: 9000
+              protocol: TCP
           resources:
             requests:
               cpu: 10m
@@ -137,5 +145,5 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
             httpGet:
-              path: /realms/inferno
-              port: 8080
+              path: /health/ready
+              port: manage
