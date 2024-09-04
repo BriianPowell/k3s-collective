@@ -32,23 +32,6 @@ spec:
         - /dev/sdc
         - /dev/sdd
         - /dev/sde
-    # extraInstances:
-    #   - config:
-    #       devices:
-    #         - /dev/sda
-    #         - /dev/sdb
-    #         - /dev/sdc
-    #         - /dev/sdd
-    #         - /dev/sde
-    #       nodeSelector:
-    #         kubernetes.io/hostname: sheol
-    #   - config:
-    #       devices:
-    #         - /dev/sda
-    #       nodeSelector:
-    #         kubernetes.io/hostname: abaddon
-    # nodeSelector:
-    #   kubernetes.io/hostname: sheol
     common:
       config:
         bind_to: '0.0.0.0:9633'
