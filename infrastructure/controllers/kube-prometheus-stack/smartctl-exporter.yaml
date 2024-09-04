@@ -1,0 +1,32 @@
+#
+# Reference:
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-smartctl-exporter/values.yaml
+#
+
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: smartctl-exporter
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: helm-release
+    app.kubernetes.io/name: smartctl-exporter
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: prometheus-smartctl-exporter
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: monitoring
+      version: '>=0.10.0 <1.0.0'
+  values:
+    serviceMonitor:
+      enabled: true
+    common:
+      config:
+        bind_to: '0.0.0.0:9633'
+        url_path: /metrics
+        smartctl_location: /run/current-system/sw/bin/smartctl
+        collect_not_more_than_period: 120s
