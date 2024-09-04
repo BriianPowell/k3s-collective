@@ -90,68 +90,124 @@ metadata:
     app.kubernetes.io/name: cnpg-default-rules
 spec:
   groups:
-  - name: cnpg-default.rules
-    rules:
-    - alert: LongRunningTransaction
-      annotations:
-        description: Pod {{ $labels.pod }} is taking more than 5 minutes (300 seconds) for a query.
-        summary: A query is taking longer than 5 minutes.
-      expr: |-
-        cnpg_backends_max_tx_duration_seconds > 300
-      for: 1m
-      labels:
-        severity: warning
-    - alert: BackendsWaiting
-      annotations:
-        description: Pod {{ $labels.pod  }} has been waiting for longer than 5 minutes
-        summary: If a backend is waiting for longer than 5 minutes
-      expr: |-
-        cnpg_backends_waiting_total > 300
-      for: 1m
-      labels:
-        severity: warning
-    - alert: PGDatabaseXidAge
-      annotations:
-        description: Over 150,000,000 transactions from frozen xid on pod {{ $labels.pod  }}
-        summary: Number of transactions from the frozen XID to the current one
-      expr: |-
-        cnpg_pg_database_xid_age > 150000000
-      for: 1m
-      labels:
-        severity: warning
-    - alert: PGReplication
-      annotations:
-        description: Standby is lagging behind by over 300 seconds (5 minutes)
-        summary: The standby is lagging behind the primary
-      expr: |-
-        cnpg_pg_replication_lag > 300
-      for: 1m
-      labels:
-        severity: warning
-    - alert: LastFailedArchiveTime
-      annotations:
-        description: Archiving failed for {{ $labels.pod }}
-        summary: Checks the last time archiving failed. Will be < 0 when it has not failed.
-      expr: |-
-        (cnpg_pg_stat_archiver_last_failed_time - cnpg_pg_stat_archiver_last_archived_time) > 1
-      for: 1m
-      labels:
-        severity: warning
-    - alert: DatabaseDeadlockConflicts
-      annotations:
-        description: There are over 10 deadlock conflicts in {{ $labels.pod }}
-        summary: Checks the number of database conflicts
-      expr: |-
-        cnpg_pg_stat_database_deadlocks > 10
-      for: 1m
-      labels:
-        severity: warning
-    - alert: ReplicaFailingReplication
-      annotations:
-        description: Replica {{ $labels.pod }} is failing to replicate
-        summary: Checks if the replica is failing to replicate
-      expr: |-
-        cnpg_pg_replication_in_recovery > cnpg_pg_replication_is_wal_receiver_up
-      for: 1m
-      labels:
-        severity: warning
+    - name: cnpg-default.rules
+      rules:
+        - alert: LongRunningTransaction
+          annotations:
+            description: Pod {{ $labels.pod }} is taking more than 5 minutes (300 seconds) for a query.
+            summary: A query is taking longer than 5 minutes.
+          expr: |-
+            cnpg_backends_max_tx_duration_seconds > 300
+          for: 1m
+          labels:
+            severity: warning
+        - alert: BackendsWaiting
+          annotations:
+            description: Pod {{ $labels.pod  }} has been waiting for longer than 5 minutes
+            summary: If a backend is waiting for longer than 5 minutes
+          expr: |-
+            cnpg_backends_waiting_total > 300
+          for: 1m
+          labels:
+            severity: warning
+        - alert: PGDatabaseXidAge
+          annotations:
+            description: Over 150,000,000 transactions from frozen xid on pod {{ $labels.pod  }}
+            summary: Number of transactions from the frozen XID to the current one
+          expr: |-
+            cnpg_pg_database_xid_age > 150000000
+          for: 1m
+          labels:
+            severity: warning
+        - alert: PGReplication
+          annotations:
+            description: Standby is lagging behind by over 300 seconds (5 minutes)
+            summary: The standby is lagging behind the primary
+          expr: |-
+            cnpg_pg_replication_lag > 300
+          for: 1m
+          labels:
+            severity: warning
+        - alert: LastFailedArchiveTime
+          annotations:
+            description: Archiving failed for {{ $labels.pod }}
+            summary: Checks the last time archiving failed. Will be < 0 when it has not failed.
+          expr: |-
+            (cnpg_pg_stat_archiver_last_failed_time - cnpg_pg_stat_archiver_last_archived_time) > 1
+          for: 1m
+          labels:
+            severity: warning
+        - alert: DatabaseDeadlockConflicts
+          annotations:
+            description: There are over 10 deadlock conflicts in {{ $labels.pod }}
+            summary: Checks the number of database conflicts
+          expr: |-
+            cnpg_pg_stat_database_deadlocks > 10
+          for: 1m
+          labels:
+            severity: warning
+        - alert: ReplicaFailingReplication
+          annotations:
+            description: Replica {{ $labels.pod }} is failing to replicate
+            summary: Checks if the replica is failing to replicate
+          expr: |-
+            cnpg_pg_replication_in_recovery > cnpg_pg_replication_is_wal_receiver_up
+          for: 1m
+          labels:
+            severity: warning
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: smartctl-device-rules
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: prometheus-rule
+    app.kubernetes.io/name: smartctl-default-rules
+spec:
+  groups:
+    - name: smartctl-device.rules
+      rules:
+        # https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-smartctl-exporter/rules/rules.txt
+        - alert: SmartCTLDeviceMediaErrors
+          expr: smartctl_device_media_errors != 0
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} has media errors
+          for: 1m
+          labels:
+            severity: error
+        - alert: SmartCTLDeviceCriticalWarning
+          expr: smartctl_device_critical_warning != 0
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} has media errors
+          for: 1m
+          labels:
+            severity: warning
+        - alert: SmartCTLDeviceAvailableSpareUnderThreshold
+          expr: smartctl_device_available_spare_threshold > smartctl_device_available_spare
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} is under available spare threshold.
+          for: 1m
+          labels:
+            severity: warning
+        - alert: SmartCTLDeviceStatus
+          expr: smartctl_device_status != 1
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} has a bad status
+          for: 1m
+          labels:
+            severity: error
+        - alert: SmartCTLDInterfaceSlow
+          expr: smartctl_device_interface_speed{speed_type="current"} != on(device, instance, namespace, pod) smartctl_device_interface_speed{speed_type="max"}
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} interface is slower then it should be
+          for: 1m
+          labels:
+            severity: warning
+        - alert: SmartCTLDDeviceTemperature
+          expr: smartctl_device_temperature{temperature_type="current"} > 70 # > 60 it gets hot in the office hehe
+          annotations:
+            message: Device {{ $labels.device }} on instance {{ $labels.instance }} has temperature higher than 60°C
+          for: 1m
+          labels:
+            severity: warning
