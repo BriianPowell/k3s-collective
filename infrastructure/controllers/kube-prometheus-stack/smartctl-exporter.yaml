@@ -28,10 +28,10 @@ spec:
     config:
       devices:
         - /dev/sda
-        - /dev/sdb
-        - /dev/sdc
-        - /dev/sdd
-        - /dev/sde
+        # - /dev/sdb
+        # - /dev/sdc
+        # - /dev/sdd
+        # - /dev/sde
     # extraInstances:
     #   - config:
     #       devices:
