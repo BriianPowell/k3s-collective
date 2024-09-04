@@ -2,10 +2,10 @@
 
 Collection of all of my kubernetes resources created for my k3s cluster, hosted on a 2 nodes in my home office.
 
-| Name    | CPU      | GPU        |
-| ------- | -------- | ---------- |
-| Sheol   | i7-6700k | RTX-3080   |
-| Abaddon | i5-6600T | Integrated |
+| Name    | CPU      | Memory                 | **GPU**    |
+| ------- | -------- | ---------------------- | ---------- |
+| Sheol   | i7-6700k | 32 GiB DDR4 @ 3000 MHz | RTX-3080   |
+| Abaddon | i5-6600T | 16 GiB DDR4 @ 2400 MHz | Integrated |
 
 ## FluxCD Installation
 
@@ -28,9 +28,8 @@ flux bootstrap github \
 
 ### Base
 
-- [x] [Atuin Self Hosted](https://github.com/atuinsh/atuin)
-- [x] [Traefik](https://github.com/traefik/traefik)
-- [x] [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
+- [x] [Atuin](https://github.com/atuinsh/atuin)
+- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik) + [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
 - [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
 - [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)
@@ -87,8 +86,6 @@ _In Installation Order_
 
 ### TBD
 
-- [ ] [Scrutiny](https://github.com/AnalogJ/scrutiny) - **find alternative** as this is not compatible with k8s, [helm chart current under development](https://github.com/AnalogJ/scrutiny/pull/363)
-- [ ] [Uptime Kuma](https://github.com/louislam/uptime-kuma) - On the fence, kinda like the idea tho
 - [ ] [Readarr](https://github.com/Readarr/Readarr)
 - [ ] [Kavita](https://github.com/Kareadita/Kavita)
 - [ ] [Jellyfin](https://github.com/jellyfin/jellyfin)
