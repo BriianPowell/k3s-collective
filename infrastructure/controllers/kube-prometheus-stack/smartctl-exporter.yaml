@@ -25,6 +25,22 @@ spec:
   values:
     serviceMonitor:
       enabled: true
+    extraInstances:
+      - config:
+          devices:
+            - /dev/disk/by-id/ata-WDC_WD120EDAZ-11F3RA0_5PJJLNYF
+            - /dev/disk/by-id/ata-WDC_WD120EDAZ-11F3RA0_5PJLB1DE
+            - /dev/disk/by-id/ata-WDC_WD120EDAZ-11F3RA0_5PJLHGMF
+            - /dev/disk/by-id/ata-WDC_WD120EDAZ-11F3RA0_5PJL2HAF
+            - /dev/disk/by-id/ata-WDC_WD120EDAZ-11F3RA0_5PJH1GYF
+            - /dev/disk/by-id/nvme-Micron_7300_MTFDHBE1T9TDF_20492BD7C9AC
+          nodeSelector:
+            kubernetes.io/hostname: sheol
+      - config:
+          devices:
+            - /dev/disk/by-id/ata-SK_hynix_SC311_SATA_128GB_MI81N035211101A0U
+          nodeSelector:
+            kubernetes.io/hostname: abaddon
     common:
       config:
         bind_to: '0.0.0.0:9633'
