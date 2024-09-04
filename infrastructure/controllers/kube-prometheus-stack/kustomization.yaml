@@ -6,6 +6,8 @@ commonLabels:
 
 resources:
   - helm-release.yaml
+  - smartctl-exporter.yaml
+
 configMapGenerator:
   - name: flux-kube-state-metrics-config
     files:
@@ -14,5 +16,6 @@ configMapGenerator:
       labels:
         app.kubernetes.io/part-of: flux
         app.kubernetes.io/component: monitoring
+
 configurations:
   - kustomize-config.yaml
