@@ -1,5 +1,6 @@
 #
 # Reference:
+# https://github.com/prometheus-community/smartctl_exporter
 # https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-smartctl-exporter/values.yaml
 #
 

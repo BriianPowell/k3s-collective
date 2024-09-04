@@ -50,6 +50,7 @@ flux bootstrap github \
 - [x] [Alert Manager](https://github.com/prometheus/alertmanager)
 - [x] [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [Node Exporter](https://github.com/prometheus/node_exporter)
+- [ ] [Smartctl Exporter](https://github.com/prometheus-community/smartctl_exporter)
 - [x] [Loki](https://github.com/grafana/loki)
 - [x] [Alloy](https://github.com/grafana/alloy)
 
