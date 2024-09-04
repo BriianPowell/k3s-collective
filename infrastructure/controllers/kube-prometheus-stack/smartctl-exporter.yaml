@@ -25,24 +25,28 @@ spec:
   values:
     serviceMonitor:
       enabled: true
-    # config:
-    #   devices:
-    #     - /dev/sda
-    extraInstances:
-      - config:
-          devices:
-            - /dev/sda
-            - /dev/sdb
-            - /dev/sdc
-            - /dev/sdd
-            - /dev/sde
-          nodeSelector:
-            kubernetes.io/hostname: sheol
-      - config:
-          devices:
-            - /dev/sda
-          nodeSelector:
-            kubernetes.io/hostname: abaddon
+    config:
+      devices:
+        - /dev/sda
+        - /dev/sdb
+        - /dev/sdc
+        - /dev/sdd
+        - /dev/sde
+    # extraInstances:
+    #   - config:
+    #       devices:
+    #         - /dev/sda
+    #         - /dev/sdb
+    #         - /dev/sdc
+    #         - /dev/sdd
+    #         - /dev/sde
+    #       nodeSelector:
+    #         kubernetes.io/hostname: sheol
+    #   - config:
+    #       devices:
+    #         - /dev/sda
+    #       nodeSelector:
+    #         kubernetes.io/hostname: abaddon
     # nodeSelector:
     #   kubernetes.io/hostname: sheol
     common:
