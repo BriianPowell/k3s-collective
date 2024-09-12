@@ -7,23 +7,6 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 | Sheol   | i7-6700k | 32 GiB DDR4 @ 3000 MHz | RTX-3080   |
 | Abaddon | i5-6600T | 16 GiB DDR4 @ 2400 MHz | Integrated |
 
-## FluxCD Installation
-
-**Will need to create a GitHub Personal Access Token**
-
-```sh
-flux bootstrap github \
-  --components-extra=image-reflector-controller,image-automation-controller \
-  --owner=BriianPowell \
-  --repository=k3s-collective \
-  --branch=main \
-  --path=clusters/k3s \
-  --read-write-key \
-  --personal=true \
-  --private=false \
-  --reconcile # use if repository already exists
-```
-
 ## Infrastructure
 
 ### Base
@@ -50,7 +33,7 @@ flux bootstrap github \
 - [x] [Alert Manager](https://github.com/prometheus/alertmanager)
 - [x] [Kube State Metrics](https://github.com/kubernetes/kube-state-metrics)
 - [x] [Node Exporter](https://github.com/prometheus/node_exporter)
-- [ ] [Smartctl Exporter](https://github.com/prometheus-community/smartctl_exporter)
+- [x] [Smartctl Exporter](https://github.com/prometheus-community/smartctl_exporter)
 - [x] [Loki](https://github.com/grafana/loki)
 - [x] [Alloy](https://github.com/grafana/alloy)
 
@@ -91,59 +74,23 @@ _In Installation Order_
 - [ ] [Kavita](https://github.com/Kareadita/Kavita)
 - [ ] [Jellyfin](https://github.com/jellyfin/jellyfin)
 
-## Secrets Management
+### [Secrets Management](./infrastructure/secrets/README.md)
 
-1. Register Helm Repo
+## FluxCD Installation
 
-```sh
-flux create source helm sealed-secrets \
-  --interval=1h \
-  --url=https://bitnami-labs.github.io/sealed-secrets
-```
-
-2. Create HelmRelease to install Sealed-Secrets Controller
+**Will need to create a GitHub Personal Access Token**
 
 ```sh
-flux create helmrelease sealed-secrets \
-  --interval=1h \
-  --release-name=sealed-secrets-controller \
-  --target-namespace=flux-system \
-  --source=HelmRepository/sealed-secrets \
-  --chart=sealed-secrets \
-  --chart-version=">=2.8.0 <3.0.0" \
-  --crds=CreateReplace
-```
-
-3. Retrieve the public key:
-
-```sh
-kubeseal --fetch-cert \
-  --controller-name=sealed-secrets-controller \
-  --controller-namespace=flux-system \
-  > pub-sealed-secrets.pem
-```
-
-4. Create a secret
-
-```sh
-kubectl -n default create secret generic basic-auth \
-  --from-literal=user=admin \
-  --from-literal=password=change-me \
-  --dry-run=client \
-  -o yaml > basic-auth.yaml
-```
-
-5. Seal the Secret
-
-```sh
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-  < basic-auth.yaml > basic-auth-sealed.yaml
-```
-
-6. Apply the Sealed Secret
-
-```sh
-kubectl apply -f basic-auth-sealed.yaml
+flux bootstrap github \
+  --components-extra=image-reflector-controller,image-automation-controller \
+  --owner=BriianPowell \
+  --repository=k3s-collective \
+  --branch=main \
+  --path=clusters/k3s \
+  --read-write-key \
+  --personal=true \
+  --private=false \
+  --reconcile # use if repository already exists
 ```
 
 ## References

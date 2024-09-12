@@ -144,6 +144,13 @@ spec:
             - name: vpn-udp
               containerPort: 58946
               protocol: UDP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
           # livenessProbe:
           #   exec:
           #     command: ["/bin/bash", "-c", "curl -sL --fail http://localhost:8112 && curl -sL --fail https://google.com || exit 1"]

@@ -5,5 +5,5 @@
 *.csr
 *.srl
 
-secrets/*-secret.yaml
+infrastructure/secrets/*-secret.yaml
 testclient.json
