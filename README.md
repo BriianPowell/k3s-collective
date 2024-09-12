@@ -61,7 +61,7 @@ _In Installation Order_
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn) + [deluge_exporter](https://github.com/ngosang/deluge-exporter)
 - [x] [Radarr](https://github.com/Radarr/Radarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr) + [Exportarr](https://github.com/onedr0p/exportarr)
-- [x] [Lidarr ](https://github.com/Lidarr/Lidarr)+ [Exportarr](https://github.com/onedr0p/exportarr)
+- [x] [Lidarr](https://github.com/Lidarr/Lidarr)+ [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Bazarr](https://github.com/morpheus65535/bazarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Recyclarr](https://github.com/recyclarr/recyclarr)
