@@ -261,7 +261,7 @@ spec:
         auth_url: $__env{AUTH_URL}
         token_url: $__env{TOKEN_URL}
         api_url: $__env{API_URL}
-        role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
+        role_attribute_path: contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'dev') && 'Editor' || 'Viewer'
       users:
         allow_org_create: true
         allow_sign_up: false
