@@ -26,7 +26,7 @@ spec:
     serviceMonitor:
       enabled: true
     prometheusRules:
-      enabled: false
+      enabled: true
     config:
       devices:
         - /dev/sda
