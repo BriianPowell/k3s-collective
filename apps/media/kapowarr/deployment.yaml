@@ -51,7 +51,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: kapowarr
-          image: mrcas/kapowarr:latest # {"$imagepolicy": "media:kapowarr"}
+          image: docker.io/mrcas/kapowarr:latest # {"$imagepolicy": "media:kapowarr"}
           imagePullPolicy: Always
           # env:
           #   - name: TZ
