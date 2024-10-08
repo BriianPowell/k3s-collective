@@ -140,20 +140,21 @@ spec:
             namespace: monitoring
             port: 9093
             scheme: http
+        ruleSelectorNilUsesHelmValues: false
         ruleNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        ruleSelector:
-          matchLabels: null
+        ruleSelector: {}
+        serviceMonitorSelectorUsesHelmValues: false
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
         serviceMonitorSelector: {}
+        podMonitorSelectorUsesHelmValues: false
         podMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        podMonitorSelector:
-          matchLabels: null
+        podMonitorSelector: {}
         # scrapeConfigNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
