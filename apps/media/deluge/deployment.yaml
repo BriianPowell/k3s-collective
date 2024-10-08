@@ -182,6 +182,9 @@ spec:
         - name: deluge-pvc
           persistentVolumeClaim:
             claimName: deluge-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
