@@ -69,10 +69,6 @@ spec:
               mountPath: /config
             - name: media-data-pvc
               mountPath: /data
-              subPath: downloader
-            - name: media-data-pvc
-              mountPath: /movies
-              subPath: movies
       volumes:
         - name: radarr-pvc
           persistentVolumeClaim:

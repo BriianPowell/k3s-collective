@@ -68,17 +68,10 @@ spec:
               mountPath: /config
             - name: media-data-pvc
               mountPath: /data
-              subPath: downloader
-            - name: media-data-pvc
-              mountPath: /tv
-              subPath: tv
       volumes:
         - name: sonarr-pvc
           persistentVolumeClaim:
             claimName: sonarr-pvc
-        # - name: deluge-pvc
-        #   persistentVolumeClaim:
-        #     claimName: deluge-pvc
         - name: media-data-pvc
           persistentVolumeClaim:
             claimName: media-data-pvc

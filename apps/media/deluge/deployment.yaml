@@ -173,7 +173,6 @@ spec:
               subPath: config
             - name: media-data-pvc
               mountPath: /data
-              subPath: downloader
       volumes:
         - name: tz
           hostPath:

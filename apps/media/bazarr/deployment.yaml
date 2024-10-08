@@ -68,7 +68,7 @@ spec:
             - name: bazarr-pvc
               mountPath: /config
             - name: media-data-pvc
-              mountPath: /data/media
+              mountPath: /data
       volumes:
         - name: bazarr-pvc
           persistentVolumeClaim:
