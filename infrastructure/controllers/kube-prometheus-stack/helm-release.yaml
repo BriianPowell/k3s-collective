@@ -144,17 +144,16 @@ spec:
           matchLabels:
             monitored-by: prometheus
         ruleSelector:
-          matchLabels: null
+          matchLabels: 'null'
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        # serviceMonitorSelector:
-        #   matchLabels: null
+        serviceMonitorSelector: {}
         podMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
         podMonitorSelector:
-          matchLabels: null
+          matchLabels: 'null'
         # scrapeConfigSelector:
         #   matchLabels:
         #     scrape: prometheus-operator
