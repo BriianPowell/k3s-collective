@@ -1,0 +1,124 @@
+#
+# Reference:
+# https://github.com/Casvt/Kapowarr
+# https://casvt.github.io/Kapowarr/
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kapowarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: kapowarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: kapowarr
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5656
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kapowarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: kapowarr
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: kapowarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: kapowarr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: kapowarr
+          image: mrcas/kapowarr:latest # {"$imagepolicy": "media:kapowarr"}
+          imagePullPolicy: Always
+          # env:
+          #   - name: TZ
+          #     value: America/Los_Angeles
+          #   - name: PGID
+          #     value: '0'
+          #   - name: PUID
+          #     value: '0'
+          ports:
+            - name: http
+              containerPort: 5656
+              protocol: TCP
+          volumeMounts:
+            - name: kapowarr-pvc
+              mountPath: /app/db
+            - name: media-data-pvc
+              mountPath: /data
+      volumes:
+        - name: kapowarr-pvc
+          persistentVolumeClaim:
+            claimName: kapowarr-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kapowarr-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: kapowarr-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kapowarr-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: kapowarr-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: kapowarr-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/kapowarr
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

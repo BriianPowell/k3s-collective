@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kapowarr-dashboard-https
+  namespace: media
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: kapowarr
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`kapowarr.powell.place`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: kapowarr
+          port: http
