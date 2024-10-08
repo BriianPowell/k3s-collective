@@ -144,7 +144,7 @@ spec:
           matchLabels:
             monitored-by: prometheus
         ruleSelector:
-          matchLabels: 'null'
+          matchLabels: null
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
@@ -153,11 +153,11 @@ spec:
           matchLabels:
             monitored-by: prometheus
         podMonitorSelector:
-          matchLabels: 'null'
+          matchLabels: null
+        # scrapeConfigNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
         #     scrape: prometheus-operator
-        # scrapeConfigNamespaceSelector: {}
         nodeSelector:
           kubernetes.io/hostname: abaddon
         resources:
