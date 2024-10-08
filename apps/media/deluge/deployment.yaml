@@ -171,9 +171,9 @@ spec:
             - name: deluge-pvc
               mountPath: /config
               subPath: config
-            - name: deluge-pvc
+            - name: media-data-pvc
               mountPath: /data
-              subPath: data
+              subPath: downloader
       volumes:
         - name: tz
           hostPath:
