@@ -73,9 +73,6 @@ spec:
         - name: lidarr-pvc
           persistentVolumeClaim:
             claimName: lidarr-pvc
-        # - name: deluge-pvc
-        #   persistentVolumeClaim:
-        #     claimName: deluge-pvc
         - name: media-data-pvc
           persistentVolumeClaim:
             claimName: media-data-pvc

@@ -73,9 +73,6 @@ spec:
         - name: radarr-pvc
           persistentVolumeClaim:
             claimName: radarr-pvc
-        # - name: deluge-pvc
-        #   persistentVolumeClaim:
-        #     claimName: deluge-pvc
         - name: media-data-pvc
           persistentVolumeClaim:
             claimName: media-data-pvc
