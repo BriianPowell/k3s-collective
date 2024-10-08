@@ -68,11 +68,7 @@ spec:
             - name: lidarr-pvc
               mountPath: /config
             - name: media-data-pvc
-              mountPath: /data
-              subPath: downloader
-            - name: media-data-pvc
-              mountPath: /music
-              subPath: music
+              mountPath: /data/media
       volumes:
         - name: lidarr-pvc
           persistentVolumeClaim:
