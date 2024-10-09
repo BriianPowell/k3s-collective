@@ -6,6 +6,6 @@ commonLabels:
 
 resources:
   - deployment.yaml
-  - image-automation.yaml
+  # - image-automation.yaml # version 26 of keycloak is busted
   - ingress.yaml
   - pgcluster.yaml
