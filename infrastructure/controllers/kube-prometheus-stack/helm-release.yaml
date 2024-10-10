@@ -141,20 +141,20 @@ spec:
             port: 9093
             scheme: http
         ruleSelectorNilUsesHelmValues: false
+        ruleSelector: {}
         ruleNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        ruleSelector: {}
-        serviceMonitorSelectorUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
         serviceMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        serviceMonitorSelector: {}
-        podMonitorSelectorUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelector: {}
         podMonitorNamespaceSelector:
           matchLabels:
             monitored-by: prometheus
-        podMonitorSelector: {}
         # scrapeConfigNamespaceSelector: {}
         # scrapeConfigSelector:
         #   matchLabels:
