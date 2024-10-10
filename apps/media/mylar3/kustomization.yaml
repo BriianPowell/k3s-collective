@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: mylar3
 
 resources:
-  - deployment.yaml
-  - ingress.yaml
+  # - deployment.yaml
+  # - ingress.yaml
