@@ -1,0 +1,123 @@
+#
+# Reference:
+# https://docs.linuxserver.io/images/docker-mylar3/#application-setup
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mylar3
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: mylar3
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: mylar3
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8090
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mylar3
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: mylar3
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: mylar3
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: mylar3
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: mylar3
+          image: ghcr.io/linuxserver/mylar3:latest # {"$imagepolicy": "media:mylar3"}
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PGID
+              value: '0'
+            - name: PUID
+              value: '0'
+          ports:
+            - name: http
+              containerPort: 8090
+              protocol: TCP
+          volumeMounts:
+            - name: mylar3-pvc
+              mountPath: /config
+            - name: media-data-pvc
+              mountPath: /data
+      volumes:
+        - name: mylar3-pvc
+          persistentVolumeClaim:
+            claimName: mylar3-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mylar3-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: mylar3-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mylar3-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: mylar3-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: mylar3-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/mylar3
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
