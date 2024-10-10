@@ -1,0 +1,123 @@
+#
+# Reference:
+# https://docs.linuxserver.io/images/docker-readarr/#application-setup
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: readarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: readarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: readarr
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8787
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: readarr
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: readarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: readarr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: readarr
+          image: ghcr.io/linuxserver/readarr:latest # {"$imagepolicy": "media:readarr"}
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PGID
+              value: '0'
+            - name: PUID
+              value: '0'
+          ports:
+            - name: http
+              containerPort: 8787
+              protocol: TCP
+          volumeMounts:
+            - name: readarr-pvc
+              mountPath: /config
+            - name: media-data-pvc
+              mountPath: /data
+      volumes:
+        - name: readarr-pvc
+          persistentVolumeClaim:
+            claimName: readarr-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readarr-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: readarr-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: readarr-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: readarr-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: readarr-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/readarr
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
