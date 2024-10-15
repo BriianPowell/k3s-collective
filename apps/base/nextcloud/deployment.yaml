@@ -49,7 +49,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: nextcloud
-          image: nextcloud:stable-apache
+          image: nextcloud:production-apache
           imagePullPolicy: Always
           env:
             - name: TIMEZONE
