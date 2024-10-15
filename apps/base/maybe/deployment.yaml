@@ -1,0 +1,166 @@
+#
+# Reference:
+# https://docs.linuxserver.io/images/docker-bazarr/
+# https://github.com/morpheus65535/bazarr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ntfy
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: ntfy
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: ntfy
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ntfy
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: ntfy
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: ntfy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: ntfy
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: ntfy
+          image: docker.io/binwiederhier/ntfy:v2.11.0 # {"$imagepolicy": "kube-system:ntfy"}
+          imagePullPolicy: Always
+          args: ['serve']
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: NTFY_DEBUG
+              value: 'false'
+            - name: NTFY_LOG_LEVEL
+              value: INFO
+            - name: NTFY_LOG_FORMAT
+              value: json
+            - name: NTFY_BASE_URL
+              value: https://ntfy.powell.place
+            - name: NTFY_CACHE_FILE
+              value: /var/cache/ntfy/cache.db
+            - name: NTFY_AUTH_FILE
+              value: /var/lib/ntfy/auth.db
+            - name: NTFY_AUTH_DEFAULT_ACCESS
+              value: deny-all
+            - name: NTFY_ATTACHMENT_CACHE_DIR
+              value: /var/cache/ntfy/attachments
+            - name: NTFY_ENABLE_LOGIN
+              value: 'true'
+            - name: NTFY_BEHIND_PROXY
+              value: 'true'
+            - name: NTFY_UPSTREAM_BASE_URL
+              value: https://ntfy.sh
+            - name: NTFY_ENABLE_METRICS
+              value: 'true'
+            - name: NTFY_METRICS_LISTEN_HTTP
+              value: ':9090'
+          livesnessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 150m
+              memory: 150Mi
+          volumeMounts:
+            - name: ntfy-pvc
+              mountPath: /var/cache/ntfy
+              subPath: cache
+            - name: ntfy-pvc
+              mountPath: /var/lib/ntfy
+              subPath: lib
+      volumes:
+        - name: ntfy-pvc
+          persistentVolumeClaim:
+            claimName: ntfy-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ntfy-pvc
+  namespace: kube-system
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: ntfy-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ntfy-pv
+  namespace: kube-system
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: ntfy-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: ntfy-pvc
+    namespace: kube-system
+  local:
+    path: /media/ntfy
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - abaddon
