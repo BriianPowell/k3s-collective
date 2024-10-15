@@ -100,9 +100,54 @@ spec:
               memory: 150Mi
           volumeMounts:
             - name: maybe-pvc
-              mountPath: /var/cache/ntfy
-              subPath: config
+              mountPath: /rails/storage
       volumes:
         - name: maybe-pvc
           persistentVolumeClaim:
             claimName: maybe-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maybe-pvc
+  namespace: maybe
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: maybe-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 150Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: maybe-pv
+  namespace: maybe
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: maybe-pv
+spec:
+  capacity:
+    storage: 150Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: maybe-pvc
+    namespace: maybe
+  local:
+    path: /data/maybe/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - abaddon

@@ -16,7 +16,7 @@ spec:
     size: 300Mi
     pvcTemplate:
       storageClassName: local-path
-      volumeName: maybe-pv
+      volumeName: maybe-pg-pv
       accessModes:
         - ReadWriteOnce
       resources:
@@ -38,12 +38,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: maybe-pv
+  name: maybe-pg-pv
   namespace: maybe
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: maybe-pv
+    app.kubernetes.io/name: maybe-pg-pv
 spec:
   capacity:
     storage: 300Mi
@@ -53,7 +53,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   local:
-    path: /data/maybe
+    path: /data/maybe/database
   nodeAffinity:
     required:
       nodeSelectorTerms:
