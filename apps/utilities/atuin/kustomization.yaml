@@ -5,7 +5,7 @@ commonLabels:
   app.kubernetes.io/part-of: atuin
 
 resources:
-  - deployment.yaml
-  - image-automation.yaml
-  - ingress.yaml
-  - pgcluster.yaml
+  # - deployment.yaml
+  # - image-automation.yaml
+  # - ingress.yaml
+  # - pgcluster.yaml

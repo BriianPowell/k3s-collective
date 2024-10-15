@@ -81,10 +81,10 @@ spec:
           args: ['start']
           env:
             # First Time Setup, use generic user
-            # - name: KEYCLOAK_ADMIN
-            #   value: admin
-            # - name: KEYCLOAK_ADMIN_PASSWORD
-            #   value: keycloak
+            - name: KEYCLOAK_ADMIN
+              value: admin
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: keycloak
             - name: KC_PROXY_HEADERS
               value: xforwarded
             - name: KC_HTTP_ENABLED

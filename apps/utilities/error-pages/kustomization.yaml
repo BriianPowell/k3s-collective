@@ -5,7 +5,7 @@ commonLabels:
   app.kubernetes.io/part-of: error-pages
 
 resources:
-  - deployment.yaml
-  - image-automation.yaml
-  - ingress.yaml
-  - middleware.yaml
+  # - deployment.yaml
+  # - image-automation.yaml
+  # - ingress.yaml
+  # - middleware.yaml
