@@ -1,0 +1,64 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: maybe-pgcluster
+  namespace: maybe
+  labels:
+    app.kubernetes.io/component: pgcluster
+    app.kubernetes.io/name: maybe-pgcluster
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: maybe
+      owner: maybe
+  storage:
+    size: 300Mi
+    pvcTemplate:
+      storageClassName: local-path
+      volumeName: maybe-pv
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 300Mi
+  affinity:
+    nodeSelector:
+      kubernetes.io/hostname: abaddon
+  monitoring:
+    enablePodMonitor: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 750m
+      memory: 600Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: maybe-pv
+  namespace: maybe
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: maybe-pv
+spec:
+  capacity:
+    storage: 300Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  local:
+    path: /data/maybe
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - abaddon
