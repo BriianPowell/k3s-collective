@@ -235,25 +235,29 @@
 
 ## Media Applications
 
-| Service            | Logs | Grafana Dashboard | Notes                                       |
-| ------------------ | ---- | ----------------- | ------------------------------------------- |
-| Bazaar             | ✅   | ✅                |                                             |
-| Bazaar Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Deluge             | ✅   | ✅                |                                             |
-| Deluge Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Flaresolverr       | ✅   | ✅                |                                             |
-| Lidarr             | ✅   | ✅                |                                             |
-| Lidarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Overseerr          | ✅   | ✅                |                                             |
-| Overseerr Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Plex               | ✅   | ✅                |                                             |
-| Plex Exporter      | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Prowlarr           | ✅   | ✅                |                                             |
-| Prowlarr Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Radarr             | ✅   | ✅                |                                             |
-| Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Recyclarr          | ✅   | ✅                |                                             |
-| Sonarr             | ✅   | ✅                |                                             |
-| Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Tautulli           | ✅   | ✅                |                                             |
-| Tautulli Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs |
+| Service            | Logs | Grafana Dashboard | Notes                                                                         |
+| ------------------ | ---- | ----------------- | ----------------------------------------------------------------------------- |
+| Bazaar             | ✅   | ✅                |                                                                               |
+| Bazaar Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Deluge             | ✅   | ✅                |                                                                               |
+| Deluge Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Flaresolverr       | ✅   | ✅                |                                                                               |
+| Kapowarr           | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
+| Kavita             | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
+| Lidarr             | ✅   | ✅                |                                                                               |
+| Lidarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Mylar3             | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
+| Overseerr          | ✅   | ✅                |                                                                               |
+| Overseerr Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Plex               | ✅   | ✅                |                                                                               |
+| Plex Exporter      | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Prowlarr           | ✅   | ✅                |                                                                               |
+| Prowlarr Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Radarr             | ✅   | ✅                |                                                                               |
+| Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Readarr            | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
+| Recyclarr          | ✅   | ✅                |                                                                               |
+| Sonarr             | ✅   | ✅                |                                                                               |
+| Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+| Tautulli           | ✅   | ✅                |                                                                               |
+| Tautulli Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
