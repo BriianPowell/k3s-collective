@@ -63,7 +63,10 @@ spec:
             - name: GOOD_JOB_EXECUTION_MODE
               value: async
             - name: SECRET_KEY_BASE
-              value: 'secret'
+              valueFrom:
+                secretKeyRef:
+                  name: maybe
+                  key: secret_key_base
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
