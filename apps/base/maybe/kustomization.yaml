@@ -4,7 +4,8 @@ namespace: maybe
 commonLabels:
   app.kubernetes.io/part-of: maybe
 
+# Automatic connectors not currently supported
 resources:
-  - deployment.yaml
-  - ingress.yaml
-  - pgcluster.yaml
+  # - deployment.yaml
+  # - ingress.yaml
+  # - pgcluster.yaml
