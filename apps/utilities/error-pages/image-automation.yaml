@@ -54,5 +54,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/base/error-pages
+    path: ./apps/utilities/error-pages
     strategy: Setters
