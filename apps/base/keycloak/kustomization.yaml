@@ -9,3 +9,6 @@ resources:
   # - image-automation.yaml # version 26 of keycloak is busted
   - ingress.yaml
   - pgcluster.yaml
+
+
+https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout?post_logout_redirect_uri=https%3A%2F%2Fgrafana.powell.place%2Flogin
