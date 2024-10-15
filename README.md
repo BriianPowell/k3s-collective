@@ -11,7 +11,6 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 
 ### Base
 
-- [x] [Atuin](https://github.com/atuinsh/atuin)
 - [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik) + [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
 - [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
@@ -20,11 +19,16 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://github.com/home-assistant)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
-- [x] [Ntfy](https://github.com/binwiederhier/ntfy)
 - [x] [Wiki.js](https://github.com/requarks/wiki)
 - [x] [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
 - [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
+
+### Utilities
+
+- [x] [Atuin](https://github.com/atuinsh/atuin)
 - [x] [Error Pages](https://github.com/tarampampam/error-pages)
+- [x] [Maybe](https://github.com/maybe-finance/maybe) - Configuration created but automatic connectors not supported yet
+- [x] [Ntfy](https://github.com/binwiederhier/ntfy)
 
 ### Monitoring & Logging
 
