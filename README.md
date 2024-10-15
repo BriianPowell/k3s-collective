@@ -101,5 +101,3 @@ flux bootstrap github \
 ## References
 
 All references I've used to create this project are listed as comments within each of their respective projects. In many cases I had to utilize several sources to create a working deployment file for my needs. If anyone has any questons or would like to reach out about the way I've done things, I'd be more than happy to talk about this project :grin:
-
-php occ maintenance:install --database "pgsql" --database-name "nextcloud" --database-user "nextcloud" --database-pass "XfY5aAxE8anKnlS7n0Osyqp9zYw2gNFKGjPzCmVg0mpdCkEdSG20Jkird7RmhNQU"
