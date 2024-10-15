@@ -54,5 +54,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/base/atuin
+    path: ./apps/utilities/atuin
     strategy: Setters
