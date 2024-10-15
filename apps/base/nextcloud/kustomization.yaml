@@ -5,10 +5,10 @@ commonLabels:
   app.kubernetes.io/part-of: nextcloud
 
 resources:
-  - cron.yaml
-  - deployment.yaml
-  - exporter.yaml
-  - ingress.yaml
-  - middleware.yaml
-  - pgcluster.yaml
-  - redis.yaml
+  # - cron.yaml
+  # - deployment.yaml
+  # - exporter.yaml
+  # - ingress.yaml
+  # - middleware.yaml
+  # - pgcluster.yaml
+  # - redis.yaml
