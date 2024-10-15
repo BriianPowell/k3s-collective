@@ -22,4 +22,4 @@ metadata:
 spec:
   replacePathRegex:
     regex: ^/.well-known/ca(l|rd)dav
-    replacement: /remote.php/dav/
+    replacement: /nextcloud/remote.php/dav/
