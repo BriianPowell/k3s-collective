@@ -17,6 +17,9 @@ spec:
         namespace: monitoring
       version: '>=0.1.0 <1.0.0'
   values:
+    controller:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
     alloy:
       configMap:
         create: false
