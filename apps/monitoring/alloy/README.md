@@ -256,6 +256,7 @@
 | Radarr             | ✅   | ✅                |                                                                               |
 | Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
 | Readarr            | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
+| Readarr Exporter   | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
 | Recyclarr          | ✅   | ✅                |                                                                               |
 | Sonarr             | ✅   | ✅                |                                                                               |
 | Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
