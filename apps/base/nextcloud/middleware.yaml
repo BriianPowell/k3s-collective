@@ -20,6 +20,6 @@ metadata:
     app.kubernetes.io/component: middleware
     app.kubernetes.io/name: nextcloud-redirect-middleware
 spec:
-  replacePathRegex:
+  redirectRegex:
     regex: /.well-known/ca(l|rd)dav
     replacement: /remote.php/dav/
