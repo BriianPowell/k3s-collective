@@ -63,6 +63,13 @@ spec:
             - name: http
               containerPort: 5000
               protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 350Mi
+            limits:
+              cpu: 150m
+              memory: 1Gi
           volumeMounts:
             - name: kavita-pvc
               mountPath: /config
