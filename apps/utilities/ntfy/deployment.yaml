@@ -57,7 +57,7 @@ spec:
         - name: ntfy
           image: docker.io/binwiederhier/ntfy:v2.11.0 # {"$imagepolicy": "kube-system:ntfy"}
           imagePullPolicy: Always
-          args: ["serve"]
+          args: ['serve']
           env:
             - name: TZ
               value: America/Los_Angeles
@@ -101,12 +101,12 @@ spec:
               containerPort: 9090
               protocol: TCP
           resources:
-            limits:
-              cpu: 300m
-              memory: 300Mi
             requests:
               cpu: 150m
               memory: 150Mi
+            limits:
+              cpu: 500m
+              memory: 300Mi
           volumeMounts:
             - name: ntfy-pvc
               mountPath: /var/cache/ntfy
