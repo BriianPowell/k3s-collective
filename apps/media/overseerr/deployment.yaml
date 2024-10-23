@@ -61,6 +61,13 @@ spec:
             - name: http
               containerPort: 5055
               protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 150Mi
+            limits:
+              cpu: 500m
+              memory: 750Mi
           volumeMounts:
             - name: overseerr-pvc
               mountPath: /app/config

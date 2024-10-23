@@ -64,6 +64,13 @@ spec:
             - name: http
               containerPort: 7878
               protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 150Mi
+            limits:
+              cpu: 500m
+              memory: 750Mi
           volumeMounts:
             - name: radarr-pvc
               mountPath: /config
