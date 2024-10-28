@@ -51,7 +51,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: lidarr
-          image: ghcr.io/linuxserver/lidarr:2.6.4 # {"$imagepolicy": "media:lidarr"}
+          image: ghcr.io/linuxserver/lidarr:2.7.1 # {"$imagepolicy": "media:lidarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
