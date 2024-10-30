@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: kapowarr
 
 resources:
-  # - deployment.yaml
-  # - ingress.yaml
+  - deployment.yaml
+  - ingress.yaml
