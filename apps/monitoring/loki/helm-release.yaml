@@ -15,6 +15,7 @@ spec:
   interval: 1h0m0s
   chart:
     spec:
+      timeout: 10m0s
       chart: loki
       sourceRef:
         kind: HelmRepository
