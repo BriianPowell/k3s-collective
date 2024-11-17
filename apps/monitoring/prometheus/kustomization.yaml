@@ -26,6 +26,7 @@ resources:
   - serviceMonitor-plex.yaml
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
+  - serviceMonitor-readarr.yaml
   - serviceMonitor-sonarr.yaml
   - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml

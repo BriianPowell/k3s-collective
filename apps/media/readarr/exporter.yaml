@@ -1,0 +1,89 @@
+#
+# Reference:
+# https://github.com/onedr0p/exportarr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: readarr-exportarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: readarr-exportarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: readarr-exportarr
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9707
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr-exportarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: readarr-exportarr
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: readarr-exportarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: readarr-exportarr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: readarr-exportarr
+          image: ghcr.io/onedr0p/exportarr:v2.0.1 # {"$imagepolicy": "media:exportarr"}
+          imagePullPolicy: Always
+          args:
+            - readarr
+          env:
+            - name: PORT
+              value: '9707'
+            - name: URL
+              value: http://readarr.media.svc.cluster.local:7878
+            - name: APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: exportarr
+                  key: readarr_api_key
+          ports:
+            - name: metrics
+              containerPort: 9707
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

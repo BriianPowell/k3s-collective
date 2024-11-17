@@ -64,15 +64,15 @@
 | Bazaarr      | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Deluge       | ✅              | Supported through [deluge_exporter](https://github.com/tobbez/deluge_exporter)                       |
 | Flaresolverr | ✅              | Supported through API Spec                                                                           |
-| Kapowarr     | ❌              | Currently in the testing phase, will revisit if I decide to keep this service                        |
-| Kavita       | ❌              | Currently in the testing phase, will revisit if I decide to keep this service                        |
+| Kapowarr     | ❌              | Not currently supported                                                                              |
+| Kavita       | ❌              | Not currently supported                                                                              |
 | Lidarr       | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
-| Mylar3       | ❌              | Currently in the testing phase, will revisit if I decide to keep this service                        |
+| Mylar3       | ❌              | Not going to maintain this service, old and kinda clunky                                             |
 | Overseerr    | ✅              | Supported through [overseerr-exporter](https://github.com/WillFantom/overseerr-exporter)             |
 | Plex         | ✅              | Supported through [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter) |
 | Prowlarr     | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Radarr       | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
-| Readarr      | ❌              | Currently in the testing phase, will revisit if I decide to keep this service                        |
+| Readarr      | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Recyclarr    | ❌              | Not currently supported, but also not really needed                                                  |
 | Sonarr       | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Tautulli     | ✅              | Supported through [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                   |
