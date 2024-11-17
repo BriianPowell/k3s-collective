@@ -16,6 +16,8 @@ spec:
   imageRepositoryRef:
     name: sonarr
     namespace: media
+  fitlerTags:
+    pattern: '^\d+\.\d+\.\d+\.\d+$'
   policy:
     semver:
       range: '>=4.0.9.0'

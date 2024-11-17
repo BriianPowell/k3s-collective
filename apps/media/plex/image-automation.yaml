@@ -21,7 +21,7 @@ spec:
     name: plex
     namespace: media
   filterTags:
-    pattern: '^1\.([4-9][1-9]|[5-9][0-9])\.\d+\.\d+-[a-z0-9]+$'
+    pattern: '^\d+\.\d+\.\d+\.\d+-[a-z0-9]+$'
   policy:
     semver:
       range: '>=1.40.5'
