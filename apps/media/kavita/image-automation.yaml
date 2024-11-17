@@ -4,7 +4,7 @@ metadata:
   name: kavita
   namespace: media
 spec:
-  image: ghcr.io/kareadita/kavita
+  image: ghcr.io/linuxserver/kavita
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2

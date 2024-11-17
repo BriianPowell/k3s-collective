@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: kavita
-          image: ghcr.io/kareadita/kavita:0.8.3 # {"$imagepolicy": "media:kavita"}
+          image: ghcr.io/linuxserver/kavita:0.8.3 # {"$imagepolicy": "media:kavita"}
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -72,7 +72,7 @@ spec:
               memory: 750Mi
           volumeMounts:
             - name: kavita-pvc
-              mountPath: /kavita/config
+              mountPath: /config
             - name: media-data-pvc
               mountPath: /data
       volumes:
