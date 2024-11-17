@@ -1,29 +1,29 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: readarr
+  name: kavita
   namespace: media
 spec:
-  image: ghcr.io/linuxserver/readarr
+  image: ghcr.io/kareadita/kavita
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: readarr
+  name: kavita
   namespace: media
 spec:
   imageRepositoryRef:
-    name: readarr
+    name: kavita
     namespace: media
   policy:
     semver:
-      range: '>=0.4.2'
+      range: '>=0.8.3'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: readarr
+  name: kavita
   namespace: media
 spec:
   interval: 24h0m0s
@@ -45,33 +45,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/media/readarr
-    strategy: Setters
----
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageUpdateAutomation
-metadata:
-  name: readarr-exportarr
-  namespace: media
-spec:
-  interval: 24h0m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxcdbot@users.noreply.github.com
-        name: FluxCDBot
-      messageTemplate: |
-        🚨 Image Automation Update 🚨
-        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
-    push:
-      branch: main
-  update:
-    path: ./apps/media/readarr
+    path: ./apps/media/kavita
     strategy: Setters
