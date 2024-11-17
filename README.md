@@ -64,7 +64,6 @@ _In Installation Order_
 - [x] [Plex](https://github.com/plexinc/pms-docker/blob/master/charts/plex-media-server/README.md) + [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter)
 - [x] [Deluge](https://github.com/binhex/arch-delugevpn) + [deluge_exporter](https://github.com/ngosang/deluge-exporter)
 - [x] [Radarr](https://github.com/Radarr/Radarr) + [Exportarr](https://github.com/onedr0p/exportarr)
-- [x] [Readarr](https://github.com/Readarr/Readarr)
 - [x] [Sonarr](https://github.com/Sonarr/Sonarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Lidarr](https://github.com/Lidarr/Lidarr)+ [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Bazarr](https://github.com/morpheus65535/bazarr) + [Exportarr](https://github.com/onedr0p/exportarr)
@@ -73,6 +72,7 @@ _In Installation Order_
 - [x] [Overseerr](https://github.com/sct/overseerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
 - [x] [Tautulli](https://github.com/Tautulli/Tautulli) + [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)
 - [x] [Kavita](https://github.com/Kareadita/Kavita)
+- [x] [Readarr](https://github.com/Readarr/Readarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Kapowarr](https://github.com/Casvt/Kapowarr)
 
 ### TBD

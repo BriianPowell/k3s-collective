@@ -13,8 +13,8 @@ metadata:
     app.kubernetes.io/name: loki
 spec:
   interval: 1h0m0s
+  timeout: 10m0s
   chart:
-    timeout: 10m0s
     spec:
       chart: loki
       sourceRef:
