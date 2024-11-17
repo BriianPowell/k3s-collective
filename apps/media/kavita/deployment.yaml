@@ -72,7 +72,7 @@ spec:
               memory: 750Mi
           volumeMounts:
             - name: kavita-pvc
-              mountPath: /config
+              mountPath: /kavita/config
             - name: media-data-pvc
               mountPath: /data
       volumes:

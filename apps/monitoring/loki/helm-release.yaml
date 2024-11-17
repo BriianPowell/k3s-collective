@@ -1,6 +1,7 @@
 #
 # Referencens:
 # https://grafana.com/docs/loki/latest/operations/storage/schema/
+# https://github.com/grafana/loki/blob/main/production/helm/loki/Chart.yaml
 #
 
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
