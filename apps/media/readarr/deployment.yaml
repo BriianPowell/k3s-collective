@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: readarr
-          image: ghcr.io/linuxserver/readarr:1.0.1126 # {"$imagepolicy": "media:readarr"}
+          image: ghcr.io/linuxserver/readarr:0.4.4.2686 # {"$imagepolicy": "media:readarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
