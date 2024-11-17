@@ -2,58 +2,58 @@
 # Plex is kinda busted, the tags are non-standard https://hub.docker.com/r/plexinc/pms-docker/tags/
 #
 
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
-# kind: ImageRepository
-# metadata:
-#   name: plex
-#   namespace: media
-# spec:
-#   image: docker.io/plexinc/pms-docker
-#   interval: 24h
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
-# kind: ImagePolicy
-# metadata:
-#   name: plex
-#   namespace: flux-system
-# spec:
-#   imageRepositoryRef:
-#     name: plex
-#     namespace: media
-#   filterTags:
-#     pattern: '.*-*'
-#   policy:
-#     semver:
-#       range: '>=1.40.5.8854'
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
-# kind: ImageUpdateAutomation
-# metadata:
-#   name: plex
-#   namespace: media
-# spec:
-#   interval: 24h0m0s
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#     namespace: flux-system
-#   git:
-#     checkout:
-#       ref:
-#         branch: main
-#     commit:
-#       author:
-#         email: fluxcdbot@users.noreply.github.com
-#         name: FluxCDBot
-#       messageTemplate: |
-#         🚨 Image Automation Update 🚨
-#         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
-#     push:
-#       branch: main
-#   update:
-#     path: ./apps/media/plex
-#     strategy: Setters
-# ---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: plex
+  namespace: media
+spec:
+  image: docker.io/plexinc/pms-docker
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: plex
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: plex
+    namespace: media
+  filterTags:
+    pattern: '^1\.([4-9][1-9]|[5-9][0-9])\.\d+\.\d+-[a-z0-9]+$'
+  policy:
+    semver:
+      range: '>=1.40.5'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: plex
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: FluxCDBot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/plex
+    strategy: Setters
+---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
