@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/component: helm-release
     app.kubernetes.io/name: loki
 spec:
-  interval: 1h0m0s
+  interval: 24h0m0s
   timeout: 10m0s
   chart:
     spec:
