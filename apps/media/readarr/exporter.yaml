@@ -58,7 +58,7 @@ spec:
             - name: PORT
               value: '9707'
             - name: URL
-              value: http://readarr.media.svc.cluster.local:7878
+              value: http://readarr.media.svc.cluster.local:8787
             - name: APIKEY
               valueFrom:
                 secretKeyRef:
