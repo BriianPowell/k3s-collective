@@ -69,7 +69,7 @@ spec:
               memory: 350Mi
             # limits:
             #   cpu: 1500m
-            #   memory: 750Mi
+            #   memory: 1500Mi
           volumeMounts:
             - name: kavita-pvc
               mountPath: /config
