@@ -34,7 +34,6 @@ spec:
       extraLabels:
         app.kubernetes.io/component: service
         app.kubernetes.io/part-of: pihole
-        app.kubernetes.io/name: pihole-web
     serviceDns:
       enabled: true
       loadBalancerIP: 10.0.2.11
@@ -42,7 +41,6 @@ spec:
       extraLabels:
         app.kubernetes.io/component: service
         app.kubernetes.io/part-of: pihole
-        app.kubernetes.io/name: pihole-dns
     serviceDhcp:
       enabled: false
       loadBalancerIP: 10.0.2.11
@@ -50,7 +48,6 @@ spec:
       extraLabels:
         app.kubernetes.io/component: service
         app.kubernetes.io/part-of: pihole
-        app.kubernetes.io/name: pihole-dhcp
     admin:
       enabled: false
     podDnsConfig:
