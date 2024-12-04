@@ -46,6 +46,9 @@ spec:
         chunk_encoding: snappy
       tracing:
         enabled: true
+      querier:
+        # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+        max_concurrent: 2
     deploymentMode: SingleBinary
     singleBinary:
       replicas: 1
