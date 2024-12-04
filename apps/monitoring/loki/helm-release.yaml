@@ -27,7 +27,6 @@ spec:
     nameOverride: null
     fullnameOverride: null
     clusterLabelOverride: null
-    deploymentMode: SingleBinary
     loki:
       auth_enabled: false
       commonConfig:
@@ -43,6 +42,62 @@ spec:
             index:
               prefix: index_
               period: 24h
+      ingester:
+        chunk_encoding: snappy
+      tracing:
+        enabled: true
+    deploymentMode: SingleBinary
+    singleBinary:
+      replicas: 1
+      resources:
+        requests:
+          cpu: 3
+          memory: 4Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
+      extraEnv:
+        - name: GOMEMLIMIT
+          value: 3750MiB
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+    chunksCache:
+      # default is 500MB, with limited memory keep this smaller
+      writebackSizeLimit: 10MB
+    backend:
+      replicas: 0
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+    ingester:
+      replicas: 0
+    querier:
+      replicas: 0
+    queryFrontend:
+      replicas: 0
+    queryScheduler:
+      replicas: 0
+    distributor:
+      replicas: 0
+    compactor:
+      replicas: 0
+    indexGateway:
+      replicas: 0
+    bloomCompactor:
+      replicas: 0
+    bloomGateway:
+      replicas: 0
+    resultsCache:
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+    gateway:
+      enabled: true
+      replicas: 1
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+    minio:
+      enabled: false
     test:
       enabled: true
       prometheusAddress: http://prometheus-operated.monitoring.svc:9090
@@ -71,35 +126,3 @@ spec:
     #   enabled: true
     #   labels:
     #     monitored-by: prometheus
-    write:
-      replicas: 0
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    tableManager:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    read:
-      replicas: 0
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    backend:
-      replicas: 0
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    singleBinary:
-      replicas: 1
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    chunksCache:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    resultsCache:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    gateway:
-      enabled: true
-      replicas: 1
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
-    minio:
-      enabled: false

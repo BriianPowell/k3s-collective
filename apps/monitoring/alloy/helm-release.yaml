@@ -25,6 +25,13 @@ spec:
         create: false
         name: alloy
         key: config.content
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1000Mi
+        requests:
+          cpu: 25m
+          memory: 150Mi
     # serviceAccount:
     #   additionalLabels:
     #     app.kubernetes.io/component: service-account
