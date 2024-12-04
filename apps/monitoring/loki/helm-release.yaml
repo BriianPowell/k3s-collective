@@ -54,11 +54,11 @@ spec:
       replicas: 1
       resources:
         requests:
-          cpu: 3
-          memory: 4Gi
-        limits:
           cpu: 1
           memory: 2Gi
+        limits:
+          cpu: 3
+          memory: 4Gi
       extraEnv:
         - name: GOMEMLIMIT
           value: 3750MiB
