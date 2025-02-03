@@ -47,7 +47,7 @@ spec:
       serviceAccountName: wiki-js
       containers:
         - name: wiki-js
-          image: docker.io/requarks/wiki:2.5.305 # {"$imagepolicy": "wiki:wiki-js"}
+          image: docker.io/requarks/wiki:2.5.306 # {"$imagepolicy": "wiki:wiki-js"}
           imagePullPolicy: Always
           env:
             - name: DB_TYPE
