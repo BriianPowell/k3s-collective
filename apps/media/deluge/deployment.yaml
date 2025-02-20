@@ -150,7 +150,7 @@ spec:
               memory: 128Mi
             limits:
               cpu: 1500m
-              memory: 512Mi
+              memory: 1024Mi
           # livenessProbe:
           #   exec:
           #     command: ["/bin/bash", "-c", "curl -sL --fail http://localhost:8112 && curl -sL --fail https://google.com || exit 1"]
