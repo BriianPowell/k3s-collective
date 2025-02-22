@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:1.30.2 # {"$imagepolicy": "media:prowlarr"}
+          image: ghcr.io/linuxserver/prowlarr:1.31.2 # {"$imagepolicy": "media:prowlarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
