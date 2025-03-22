@@ -45,7 +45,7 @@ spec:
             - crowdsec
     image:
       # -- docker image repository name
-      repository: crowdsecurity/crowdsec
+      repository: ghcr.io/crowdsecurity/crowdsec
       # -- pullPolicy
       pullPolicy: IfNotPresent
       # -- pullSecrets
@@ -53,7 +53,7 @@ spec:
         []
         # - name: ""
       # -- docker image tag
-      tag: '1.6.5'
+      tag: ''
     agent:
       podLabels:
         app.kubernetes.io/component: agent
