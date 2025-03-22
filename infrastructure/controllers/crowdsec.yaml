@@ -43,6 +43,17 @@ spec:
           namespaces:
             - kube-system
             - crowdsec
+    image:
+      # -- docker image repository name
+      repository: crowdsecurity/crowdsec
+      # -- pullPolicy
+      pullPolicy: IfNotPresent
+      # -- pullSecrets
+      pullSecrets:
+        []
+        # - name: ""
+      # -- docker image tag
+      tag: '1.6.5'
     agent:
       podLabels:
         app.kubernetes.io/component: agent
