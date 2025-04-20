@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: radarr-exportarr
-          image: ghcr.io/onedr0p/exportarr:v2.1.0 # {"$imagepolicy": "media:exportarr"}
+          image: ghcr.io/onedr0p/exportarr:v2.2.0 # {"$imagepolicy": "media:exportarr"}
           imagePullPolicy: Always
           args:
             - radarr
