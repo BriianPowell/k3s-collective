@@ -36,9 +36,6 @@ spec:
         namespace: media
       version: '>=0.4.0 <1.0.0'
   values:
-    image:
-      repository: plexinc/pms-docker
-      tag: 1.41.2.9200-c6bbc1b53 # {"$imagepolicy": "media:plex:tag"}
     ingress:
       enabled: false
     pms:
