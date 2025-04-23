@@ -49,13 +49,6 @@ spec:
         max_concurrent: 2
       tracing:
         enabled: true
-      pattern_ingester:
-        enabled: true
-      limits_config:
-        allow_scructured_metadata: true
-        volume_enabled: true
-      ruler:
-        enable_api: true
     deploymentMode: SingleBinary
     singleBinary:
       replicas: 1
