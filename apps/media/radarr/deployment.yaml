@@ -51,7 +51,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: radarr
-          image: ghcr.io/linuxserver/radarr:5.21.1 # {"$imagepolicy": "media:radarr"}
+          image: ghcr.io/linuxserver/radarr:5.22.4 # {"$imagepolicy": "media:radarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
