@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: overseerr-exporter
-          image: ghcr.io/willfantom/overseerr-exporter:1.2.1 # {"$imagepolicy": "media:overseerr-exporter"}
+          image: ghcr.io/willfantom/overseerr-exporter:latest # {"$imagepolicy": "media:overseerr-exporter"}
           imagePullPolicy: Always
           args:
             - --overseerr.address=http://overseerr.media.svc.cluster.local:5055
