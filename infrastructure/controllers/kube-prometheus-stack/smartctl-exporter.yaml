@@ -23,6 +23,12 @@ spec:
         namespace: monitoring
       version: '>=0.10.0 <1.0.0'
   values:
+    image:
+      repository: quay.io/prometheuscommunity/smartctl-exporter
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: 0.14.0
+      pullPolicy: IfNotPresent
+      pullSecrets: []
     serviceMonitor:
       enabled: true
     prometheusRules:
