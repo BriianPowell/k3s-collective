@@ -61,13 +61,6 @@ spec:
                 secretKeyRef:
                   name: exportarr
                   key: overseerr_api_key
-          resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 128Mi
           ports:
             - name: metrics
               containerPort: 9850
