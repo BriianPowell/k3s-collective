@@ -70,7 +70,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: arch-delugevpn
-          image: ghcr.io/binhex/arch-delugevpn:2.1.1-8-03 # {"$imagepolicy": "media:deluge"}
+          image: ghcr.io/binhex/arch-delugevpn:2.2.0-1-02 # {"$imagepolicy": "media:deluge"}
           imagePullPolicy: Always
           env:
             - name: VPN_ENABLED
