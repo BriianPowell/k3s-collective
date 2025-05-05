@@ -36,7 +36,7 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: monitoring
-      version: '>=8.0.0 <9.0.0'
+      version: '>=8.0.0 <8.14.0'
   values:
     serviceMonitor:
       enabled: true
@@ -138,7 +138,7 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/monitoring-logs
-    dashboards: # https://github.com/grafana/helm-charts/blob/55564fcb13361e511d5eb33458bd5fb442eb1039/charts/grafana/values.yaml#L652
+    dashboards: # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
       system-dashboards:
         flux-cluster:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/flux/cluster.json'
