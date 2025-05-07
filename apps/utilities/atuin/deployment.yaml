@@ -45,7 +45,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: atuin
-          image: ghcr.io/atuinsh/atuin:18.5.0 # {"$imagepolicy": "atuin:atuin"}
+          image: ghcr.io/atuinsh/atuin:18.6.0 # {"$imagepolicy": "atuin:atuin"}
           imagePullPolicy: Always
           args:
             - server
