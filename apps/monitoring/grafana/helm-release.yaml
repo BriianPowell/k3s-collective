@@ -61,6 +61,8 @@ spec:
         - ReadWriteOnce
       size: 10G
       existingClaim: grafana-pvc
+    initChownData:
+      enabled: false
     admin:
       existingSecret: grafana
       userKey: USER
