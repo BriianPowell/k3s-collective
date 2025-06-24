@@ -92,7 +92,7 @@ spec:
     #   BLOCK_ICLOUD_PR: true
     webHttp: '80'
     webHttps: '443'
-    hostNetwork: 'true'
+    hostNetwork: 'false'
     privileged: 'false'
     monitoring:
       sidecar:
