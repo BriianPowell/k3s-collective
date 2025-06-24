@@ -74,6 +74,7 @@ spec:
       requests:
         cpu: 100m
         memory: 128Mi
+    # -- list of adlists to import during initial start of the container
     adlists:
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt
@@ -81,7 +82,10 @@ spec:
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/hoster.txt
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/spam-tlds-adblock.txt
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral-native.txt
-    whitelist:
+    # -- list of whitelisted domains to import during initial start of the container
+    whitelist: {}
+    # -- list of blacklisted domains to import during initial start of the container
+    blacklist: {}
     # ftl:
     #   BLOCK_ICLOUD_PR: true
     monitoring:
