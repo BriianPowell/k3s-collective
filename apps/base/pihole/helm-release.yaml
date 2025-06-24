@@ -92,8 +92,6 @@ spec:
     hostNetwork: 'false'
     privileged: 'false'
     capabilities:
-      add:
-        -
     monitoring:
       sidecar:
         enabled: true
