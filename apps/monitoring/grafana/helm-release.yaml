@@ -61,8 +61,16 @@ spec:
         - ReadWriteOnce
       size: 10G
       existingClaim: grafana-pvc
+    securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
+      runAsNonRoot: true
+      fsGroup: 65534
     initChownData:
       enabled: false
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
     admin:
       existingSecret: grafana
       userKey: USER
