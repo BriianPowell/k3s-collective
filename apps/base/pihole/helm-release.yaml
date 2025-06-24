@@ -97,5 +97,3 @@ spec:
     monitoring:
       sidecar:
         enabled: true
-        image:
-          tag: v0.4.0
