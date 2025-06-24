@@ -26,4 +26,4 @@ metadata:
     app.kubernetes.io/name: pihole-add-prefix
 spec:
   addPrefix:
-    prefix: /admin
+    prefix: /admin/
