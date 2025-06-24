@@ -5,5 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: grafana
 
 resources:
-  # - helm-release.yaml
-  # - ingress.yaml
+  - helm-release.yaml
+  - ingress.yaml
