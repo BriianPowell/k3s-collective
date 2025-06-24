@@ -73,8 +73,7 @@ spec:
         runAsGroup: 65534
     downloadDasboards:
       securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
+        allowPrivilegeEscalation: true
     admin:
       existingSecret: grafana
       userKey: USER
