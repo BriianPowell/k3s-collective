@@ -67,7 +67,11 @@ spec:
       runAsNonRoot: true
       fsGroup: 65534
     initChownData:
-      enabled: false
+      enabled: true
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+    downloadDasboards:
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534
