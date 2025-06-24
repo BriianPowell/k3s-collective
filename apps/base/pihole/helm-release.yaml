@@ -58,7 +58,7 @@ spec:
         - 1.1.1.1
     dnsmasq:
       additionalHostsEntries:
-        - 10.0.2.1 host1
+        - 10.0.2.1    unifi.boog.dmp    unifi
     persistentVolumeClaim:
       enabled: true
     nodeSelector:
@@ -86,8 +86,14 @@ spec:
     whitelist: {}
     # -- list of blacklisted domains to import during initial start of the container
     blacklist: {}
+    #  -- list of blacklisted regex expressions to import during initial start of the container
+    regex: {}
     # ftl:
     #   BLOCK_ICLOUD_PR: true
+    webHttp: '80'
+    webHttps: '443'
+    hostNetwork: 'true'
+    privileged: 'false'
     monitoring:
       sidecar:
         enabled: true
