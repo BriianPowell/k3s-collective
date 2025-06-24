@@ -1,6 +1,7 @@
 #
 # Reference:
 # https://github.com/MoJo2600/pihole-kubernetes
+# https://github.com/hagezi/dns-blocklists
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1
