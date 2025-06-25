@@ -1,26 +1,22 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: pihole-dashboard-https
-  namespace: pihole
+  name: adguard-dashboard-https
+  namespace: kube-system
   labels:
     app.kubernetes.io/component: ingress
-    app.kubernetes.io/name: pihole-dashboard-https
+    app.kubernetes.io/name: adguard-dashboard-https
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`pihole.powell.place`)
+    - match: Host(`guard.powell.place`)
       kind: Rule
       middlewares:
         - name: traefik-forward-auth
           namespace: kube-system
         - name: security
           namespace: kube-system
-        # - name: pihole-redirect-regex
-        #   namespace: pihole
-        # - name: pihole-add-prefix
-        #   namespace: pihole
       services:
-        - name: pihole-web
+        - name: adguard
           port: http
