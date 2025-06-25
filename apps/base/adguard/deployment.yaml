@@ -17,10 +17,10 @@ spec:
       port: 3000
       targetPort: http-initial
       protocol: TCP
-    # - name: http
-    #   port: 80
-    #   targetPort: http
-    #   protocol: TCP
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
     # - name: https-tcp
     #   port: 443
     #   targetPort: https-tcp
@@ -100,9 +100,9 @@ spec:
             - containerPort: 3000
               name: http-initial
               protocol: TCP
-            # - containerPort: 80
-            #   name: http
-            #   protocol: TCP
+            - containerPort: 80
+              name: http
+              protocol: TCP
             # - containerPort: 443
             #   name: https-tcp
             #   protocol: TCP
@@ -157,15 +157,15 @@ spec:
           volumeMounts:
             - name: adguard-data
               mountPath: /opt/adguardhome/work
-            # - name: adguard-config
-            #   mountPath: /opt/adguardhome/conf
+            - name: adguard-config
+              mountPath: /opt/adguardhome/conf
       volumes:
         - name: adguard-data
           persistentVolumeClaim:
             claimName: adguard-pvc
-        # - name: adguard-config
-        #   configMap:
-        #     name: adguard-config
+        - name: adguard-config
+          configMap:
+            name: adguard-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
