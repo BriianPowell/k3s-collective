@@ -83,7 +83,7 @@ spec:
     spec:
       restartPolicy: Always
       securityContext:
-        fsGroup: 1000
+        fsGroup: 65532
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
@@ -138,9 +138,10 @@ spec:
               cpu: 300m
               memory: 256Mi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
             runAsNonRoot: true
-            runAsUser: 1000
+            runAsUser: 65532
+            runAsGroup: 65532
             allowPrivilegeEscalation: false
           livenessProbe:
             httpGet:
