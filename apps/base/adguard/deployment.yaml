@@ -141,7 +141,7 @@ spec:
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
           livenessProbe:
             httpGet:
               path: /
