@@ -84,16 +84,18 @@ spec:
       restartPolicy: Always
       securityContext:
         fsGroup: 1000
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
       containers:
         - name: adguard-home
           image: adguard/adguardhome:latest
           imagePullPolicy: Always
-          env:
-            - name: AGH_CONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: adguard-config
-                  key: AdGuardHome.yaml
+          # env:
+          #   - name: AGH_CONFIG
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: adguard-config
+          #         key: AdGuardHome.yaml
           ports:
             - containerPort: 3000
               name: http-initial
@@ -155,15 +157,15 @@ spec:
           volumeMounts:
             - name: adguard-data
               mountPath: /opt/adguardhome/work
-            - name: adguard-config
-              mountPath: /opt/adguardhome/conf
+            # - name: adguard-config
+            #   mountPath: /opt/adguardhome/conf
       volumes:
         - name: adguard-data
           persistentVolumeClaim:
             claimName: adguard-pvc
-        - name: adguard-config
-          configMap:
-            name: adguard-config
+        # - name: adguard-config
+        #   configMap:
+        #     name: adguard-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

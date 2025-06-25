@@ -29,7 +29,7 @@ spec:
         namespace: pihole
       version: '>=2.22.0 <3.0.0'
   values: # https://github.com/MoJo2600/pihole-kubernetes/blob/main/charts/pihole/values.yaml
-    replicaCount: 0
+    replicaCount: 1
     strategyType: RollingUpdate
     maxSurge: 1
     maxUnavailable: 1
