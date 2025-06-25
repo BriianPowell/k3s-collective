@@ -1,8 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: adguard
-  namespace: adguard
+  name: rm3l-helm-charts
+  namespace: kube-system
 spec:
   interval: 24h
   url: https://helm-charts.rm3l.org
@@ -16,11 +16,11 @@ spec:
   interval: 1h0m0s
   chart:
     spec:
-      chart: adguard
+      chart: adguard-home
       sourceRef:
         kind: HelmRepository
-        name: adguard
-        namespace: adguard
+        name: rm3l-helm-charts
+        namespace: kube-system
       version: '>=0.1.0 <1.0.0'
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
     replicaCount: 1
