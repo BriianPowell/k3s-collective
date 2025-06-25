@@ -90,12 +90,12 @@ spec:
         - name: adguard-home
           image: adguard/adguardhome:latest
           imagePullPolicy: Always
-          # env:
-          #   - name: AGH_CONFIG
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: adguard-config
-          #         key: AdGuardHome.yaml
+          env:
+            - name: AGH_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: adguard-config
+                  key: AdGuardHome.yaml
           ports:
             - containerPort: 3000
               name: http-initial
@@ -137,11 +137,11 @@ spec:
             limits:
               cpu: 300m
               memory: 256Mi
-          # securityContext:
-          #   readOnlyRootFilesystem: true
-          #   runAsNonRoot: true
-          #   runAsUser: 1000
-          #   allowPrivilegeEscalation: false
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
           livenessProbe:
             httpGet:
               path: /
@@ -164,8 +164,8 @@ spec:
           persistentVolumeClaim:
             claimName: adguard-pvc
         - name: adguard-config
-          persistentVolumeClaim:
-            claimName: adguard-config-pvc
+          configMap:
+            name: adguard-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -203,51 +203,6 @@ spec:
     namespace: adguard
   local:
     path: /data/adguard
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - abaddon
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: adguard-config-pvc
-  namespace: adguard
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: adguard-config-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1G
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: adguard-config-pv
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: adguard-config-pv
-spec:
-  capacity:
-    storage: 1G
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  claimRef:
-    name: adguard-config-pvc
-    namespace: adguard
-  local:
-    path: /data/adguard-config
   nodeAffinity:
     required:
       nodeSelectorTerms:

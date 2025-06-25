@@ -19,4 +19,4 @@ spec:
           namespace: kube-system
       services:
         - name: adguard
-          port: http-initial
+          port: http
