@@ -5,6 +5,5 @@ commonLabels:
   app.kubernetes.io/part-of: adguard
 
 resources:
-  - configmap.yaml
-  - deployment.yaml
+  - helm-release.yaml
   - ingress.yaml
