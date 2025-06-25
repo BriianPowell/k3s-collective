@@ -95,8 +95,10 @@ spec:
             defaultmode: keep
     providers:
       kubernetesCRD:
+        enabeled: true
         allowCrossNamespace: true # Use Middlewares across namespaces
       kubernetesIngress:
+        enabled: true
         publishedService:
           enabled: true
     ingressRoute:
@@ -132,6 +134,16 @@ spec:
       default:
         defaultCertificate:
           secretName: wildcard-powell-place
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65532
+      runAsGroup: 65532
+    podSecurityContext:
+      fsGroup: 65532
     resources:
       requests:
         cpu: 10m
