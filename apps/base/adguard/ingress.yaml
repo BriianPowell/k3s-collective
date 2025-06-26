@@ -13,8 +13,6 @@ spec:
     - match: Host(`guard.powell.place`)
       kind: Rule
       middlewares:
-        - name: traefik-forward-auth
-          namespace: kube-system
         - name: security
           namespace: kube-system
       services:

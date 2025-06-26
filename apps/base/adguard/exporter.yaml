@@ -1,0 +1,92 @@
+#
+# Reference:
+# https://github.com/henrywhitaker3/adguard-exporter
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard-exporter
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: adguard-exporter
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: adguard-exporter
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9618
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-exporter
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: adguard-exporter
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: adguard-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: adguard-exporter
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: adguard-exporter
+          image: ghcr.io/henrywhitaker3/adguard-exporter:latest # {"$imagepolicy": "adguard:adguard-exporter"}
+          imagePullPolicy: Always
+          env:
+            - name: ADGUARD_SERVERS
+              value: http://adguard-home.adguard.svc.cluster.local
+            - name: ADGUARD_USERNAMES
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-exporter
+                  key: USERNAMES
+            - name: ADGUARD_PASSWORDS
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-exporter
+                  key: PASSWORDS
+            - name: INTERVAL
+              value: '60s'
+          ports:
+            - name: metrics
+              containerPort: 9618
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
