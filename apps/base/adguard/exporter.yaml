@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: adguard-exporter
-          image: ghcr.io/henrywhitaker3/adguard-exporter:latest # {"$imagepolicy": "adguard:adguard-exporter"}
+          image: ghcr.io/henrywhitaker3/adguard-exporter:v1.2.0 # {"$imagepolicy": "adguard:adguard-exporter"}
           imagePullPolicy: Always
           env:
             - name: ADGUARD_SERVERS
