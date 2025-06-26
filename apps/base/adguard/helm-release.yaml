@@ -47,13 +47,12 @@ spec:
         port: 443
       dns:
         enabled: true
-        type: NodePort
+        type: LoadBalancer
+        externalTrafficPolicy: Local
         tcp:
           port: 53
-          nodePort:
         udp:
           port: 53
-          nodePort:
     dnsOverTls:
       enabled: true
       type: NodePort
