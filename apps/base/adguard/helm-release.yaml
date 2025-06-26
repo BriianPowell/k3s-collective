@@ -320,7 +320,7 @@ spec:
       clients:
         persistent:
           - safe_search:
-              enabled: true
+              enabled: false
               bing: true
               duckduckgo: true
               google: true
