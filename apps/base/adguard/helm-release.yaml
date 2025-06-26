@@ -1,5 +1,6 @@
 #
 # Reference:
+# https://github.com/AdguardTeam/AdGuardHome/wiki/Encryption
 # https://helm-charts.rm3l.org/
 # https://github.com/AdguardTeam/AdGuardSDNSFilter
 # https://github.com/hagezi/dns-blocklists
@@ -322,7 +323,8 @@ spec:
         persistent:
           - name: unifi.boog.dmp
             use_global_settings: true
-            ids: 10.0.2.1
+            ids:
+              - 10.0.2.1
         runtime_sources:
           whois: true
           arp: true
