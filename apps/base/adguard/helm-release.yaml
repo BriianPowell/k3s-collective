@@ -140,7 +140,7 @@ spec:
       http_proxy: ''
       dns:
         bind_hosts:
-          - 127.0.0.1
+          - 0.0.0.0
         port: 53
         anonymize_client_ip: false
         protection_enabled: true
@@ -243,13 +243,13 @@ spec:
       querylog:
         enabled: true
         file_enabled: true
-        interval: 2160h # 90 days
+        interval: 720h # 30 days
         size_memory: 1000
         ignored: []
         dir_path: ''
       statistics:
         enabled: true
-        interval: 2160h # 90 days
+        interval: 168h # 7 days
         ignored: []
         dir_path: ''
       filters:
