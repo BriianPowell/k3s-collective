@@ -319,7 +319,10 @@ spec:
         user: ''
         rlimit_nofile: 0
       clients:
-        persistent: []
+        persistent:
+          - name: unifi.boog.dmp
+            use_global_settings: true
+            ids: 10.0.2.1
         runtime_sources:
           whois: true
           arp: true
