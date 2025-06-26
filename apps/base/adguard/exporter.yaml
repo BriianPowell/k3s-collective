@@ -54,7 +54,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: ADGUARD_SERVERS
-              value: http://adguard-home.adguard.svc.cluster.local
+              value: http://adguard-home-http.adguard.svc
             - name: ADGUARD_USERNAMES
               valueFrom:
                 secretKeyRef:
