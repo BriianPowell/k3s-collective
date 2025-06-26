@@ -9,6 +9,7 @@ resources:
   - podMonitor-cnpg.yaml
   - podMonitor-fluxcd.yaml
   - rules.yaml
+  - serviceMonitor-adguard.yaml
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
   - serviceMonitor-bazarr.yaml

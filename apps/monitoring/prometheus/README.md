@@ -2,7 +2,7 @@
 
 | App           | Service Monitor | Supported                |
 | ------------- | --------------- | ------------------------ |
-| Adguard |  |  |
+| Adguard | ✅ | Supported through [Adguard Exporter](https://github.com/henrywhitaker3/adguard-exporter) |
 | Atuin         | ❌              | Not currently supported  |
 | Error Pages   | ❌              | Not currently supported  |
 | HomeAssistant | ✅              | Created through API spec |
