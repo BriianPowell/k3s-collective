@@ -18,5 +18,5 @@ spec:
         - name: security
           namespace: kube-system
       services:
-        - name: adguard
-          port: http
+        - name: adguard-home-http
+          port: 80
