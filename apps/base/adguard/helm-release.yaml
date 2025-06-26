@@ -38,37 +38,26 @@ spec:
       adminPanel:
         type: ClusterIP
         port: 3000
-        externalTrafficPolicy: Cluster
       http:
         type: ClusterIP
-        externalTrafficPolicy: Cluster
         port: 80
       https:
         enabled: false
         type: ClusterIP
-        externalTrafficPolicy: Cluster
         port: 443
       dns:
         enabled: true
         type: NodePort
-        externalTrafficPolicy: Local
         tcp:
           port: 53
           nodePort:
         udp:
           port: 53
           nodePort:
-        ipFamilyPolicy: SingleStack
-        ipFamilies:
-          - IPv4
     dnsOverTls:
       enabled: true
       type: NodePort
-      externalTrafficPolicy: Local
       port: 853
-      ipFamilyPolicy: SingleStack
-      ipFamilies:
-        - IPv4
     dnsOverQuic:
       enabled: true
       type: NodePort
@@ -78,23 +67,15 @@ spec:
       port2:
         port: 8853
         nodePort:
-      externalTrafficPolicy: Local
-      ipFamilyPolicy: SingleStack
-      ipFamilies:
-        - IPv4
     dnscrypt:
       enabled: true
       type: NodePort
-      externalTrafficPolicy: Local
       tcp:
         port: 5443
         nodePort:
       udp:
         port: 5443
         nodePort:
-      ipFamilyPolicy: SingleStack
-      ipFamilies:
-        - IPv4
     extraServices: []
     ingresses:
       adminPanel:
