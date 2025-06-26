@@ -2,13 +2,14 @@
 
 | App           | Service Monitor | Supported                |
 | ------------- | --------------- | ------------------------ |
+| Adguard |  |  |
 | Atuin         | ❌              | Not currently supported  |
 | Error Pages   | ❌              | Not currently supported  |
 | HomeAssistant | ✅              | Created through API spec |
 | Keycloak      | ✅              | Created through API spec |
 | NextCloud     | ✅              | Created through API spec |
 | Ntfy          | ✅              | Created through API spec |
-| Pihole        | ✅              | Created through API spec |
+| Pihole        | 🗑️           | Migrated to Adguard Home |
 | Wiki.JS       | ❌              | Not currently supported  |
 
 | Game      | Service Monitor | Supported               |
