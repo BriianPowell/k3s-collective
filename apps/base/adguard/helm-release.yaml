@@ -340,6 +340,9 @@ spec:
         max_age: 3
         verbose: false
       schema_version: 28
+    # -- Whether to add default volume mounts.
     defaultVolumeMountsEnabled: true
+    # -- Additional Volume mounts
     extraVolumeMounts: []
+    # -- Additional volumes
     extraVolumes: []
