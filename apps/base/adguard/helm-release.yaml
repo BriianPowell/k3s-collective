@@ -143,7 +143,6 @@ spec:
           - 127.0.0.1
         port: 53
         anonymize_client_ip: false
-        blocked_services: []
         protection_enabled: true
         ratelimit: 20
         ratelimit_subnet_len_ipv4: 24
@@ -320,11 +319,7 @@ spec:
         user: ''
         rlimit_nofile: 0
       clients:
-        persistent:
-          - name: unifi.boog.dmp
-            use_global_settings: true
-            ids:
-              - 10.0.2.1
+        persistent: []
         runtime_sources:
           whois: true
           arp: true
