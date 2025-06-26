@@ -58,12 +58,12 @@ spec:
             - name: ADGUARD_USERNAMES
               valueFrom:
                 secretKeyRef:
-                  name: adguard-exporter
+                  name: adguard
                   key: USERNAMES
             - name: ADGUARD_PASSWORDS
               valueFrom:
                 secretKeyRef:
-                  name: adguard-exporter
+                  name: adguard
                   key: PASSWORDS
             - name: INTERVAL
               value: '60s'

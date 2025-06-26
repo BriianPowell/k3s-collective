@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: adguard
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: adguard
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: adguard
+  namespaceSelector:
+    matchNames:
+      - adguard
+  endpoints:
+    - interval: 4m
+      port: metrics
+      scrapeTimeout: 90s
+      path: /metrics
