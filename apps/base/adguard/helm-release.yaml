@@ -35,8 +35,15 @@ spec:
     serviceAccount:
       create: true
       annotations: {}
-    podSecurityContext: {}
-    securityContext: {}
+    podSecurityContext:
+      fsGroup: 65534
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFileSystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
     services:
       adminPanel:
         type: ClusterIP
@@ -56,27 +63,27 @@ spec:
           port: 53
         udp:
           port: 53
-    dnsOverTls:
-      enabled: true
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      port: 853
-    dnsOverQuic:
-      enabled: true
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      port1:
-        port: 784
-      port2:
-        port: 8853
-    dnscrypt:
-      enabled: true
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      tcp:
-        port: 5443
-      udp:
-        port: 5443
+      dnsOverTls:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        port: 853
+      dnsOverQuic:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        port1:
+          port: 784
+        port2:
+          port: 8853
+      dnscrypt:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        tcp:
+          port: 5443
+        udp:
+          port: 5443
     extraServices: []
     ingresses:
       adminPanel:
@@ -113,7 +120,7 @@ spec:
     readinessProbe: null
     startupProbe: null
     persistence:
-      existingClaim: ''
+      existingClaim: null
       volumeClaimSpec:
         accessModes:
           - ReadWriteOnce
