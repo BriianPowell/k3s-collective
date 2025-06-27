@@ -20,7 +20,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 - [x] [HomeAssistant](https://github.com/home-assistant)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
 - [x] [Wiki.js](https://github.com/requarks/wiki)
-- [x] [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
+- [x] [AdGuard Home](https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/README.md), migrated from [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
 - [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
 
 ### Utilities

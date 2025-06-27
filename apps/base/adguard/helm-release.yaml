@@ -227,7 +227,7 @@ spec:
           google: true
           pixabay: true
           yandex: true
-          youtube: true
+          youtube: false
         safebrowsing_enabled: false
         safebrowsing_cache_size: 1048576 # bytes
         safesearch_cache_size: 1048576 # bytes
