@@ -41,7 +41,7 @@ spec:
       capabilities:
         drop:
           - ALL
-      readOnlyRootFileSystem: true
+      readOnlyRootFileSystem: false
       runAsNonRoot: true
       runAsUser: 65534
     services:
