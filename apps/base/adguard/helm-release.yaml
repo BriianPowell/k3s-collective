@@ -35,15 +35,8 @@ spec:
     serviceAccount:
       create: true
       annotations: {}
-    podSecurityContext:
-      fsGroup: 65534
-    securityContext:
-      capabilities:
-        drop:
-          - ALL
-      readOnlyRootFileSystem: false
-      runAsNonRoot: true
-      runAsUser: 65534
+    podSecurityContext: {}
+    securityContext: {}
     services:
       adminPanel:
         type: ClusterIP
