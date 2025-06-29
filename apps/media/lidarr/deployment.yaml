@@ -33,7 +33,7 @@ metadata:
     app.kubernetes.io/name: lidarr
 spec:
   revisionHistoryLimit: 1
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   selector:

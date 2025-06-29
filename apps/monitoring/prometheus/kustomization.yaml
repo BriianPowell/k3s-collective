@@ -18,7 +18,7 @@ resources:
   - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml
-  - serviceMonitor-lidarr.yaml
+  # - serviceMonitor-lidarr.yaml
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
@@ -27,7 +27,7 @@ resources:
   - serviceMonitor-plex.yaml
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
-  - serviceMonitor-readarr.yaml
+  # - serviceMonitor-readarr.yaml
   - serviceMonitor-sonarr.yaml
   - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml
