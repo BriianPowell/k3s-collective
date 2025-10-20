@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: kavita
-          image: ghcr.io/linuxserver/kavita:0.8.7 # {"$imagepolicy": "media:kavita"}
+          image: ghcr.io/linuxserver/kavita:0.8.8 # {"$imagepolicy": "media:kavita"}
           imagePullPolicy: Always
           env:
             - name: TZ
