@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: overseerr
-          image: ghcr.io/sct/overseerr:1.34.0 # {"$imagepolicy": "media:overseerr"}
+          image: ghcr.io/sct/overseerr:1.35.0 # {"$imagepolicy": "media:overseerr"}
           imagePullPolicy: Always
           env:
             - name: LOG_LEVEL
