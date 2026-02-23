@@ -26,7 +26,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: recyclarr
-          image: ghcr.io/recyclarr/recyclarr:8.2.0 # {"$imagepolicy": "media:recyclarr"}
+          image: ghcr.io/recyclarr/recyclarr:8.2.1 # {"$imagepolicy": "media:recyclarr"}
           imagePullPolicy: Always
           env:
             - name: TZ
