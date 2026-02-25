@@ -43,7 +43,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: error-pages
-          image: ghcr.io/tarampampam/error-pages:3.8.0 # {"$imagepolicy": "kube-system:error-pages"}
+          image: ghcr.io/tarampampam/error-pages:3.8.1 # {"$imagepolicy": "kube-system:error-pages"}
           imagePullPolicy: Always
           env:
             - name: TEMPLATE_NAME
