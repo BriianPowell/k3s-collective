@@ -993,8 +993,8 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
-    // Overseerr
-    discovery.kubernetes "overseerr" {
+    // Seerr
+    discovery.kubernetes "seerr" {
       role = "pod"
 
       namespaces {
@@ -1002,12 +1002,12 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/name=overseerr"
+        label = "app.kubernetes.io/name=seerr"
       }
     }
 
-    loki.source.kubernetes "overseerr" {
-      targets = discovery.kubernetes.overseerr.targets
+    loki.source.kubernetes "seerr" {
+      targets = discovery.kubernetes.seerr.targets
       forward_to = [loki.write.local.receiver]
     }
 

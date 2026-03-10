@@ -1,16 +1,16 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: overseerr
+  name: seerr
   namespace: monitoring
   labels:
     app.kubernetes.io/component: service-monitor
-    app.kubernetes.io/name: overseerr
+    app.kubernetes.io/name: seerr
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: service
-      app.kubernetes.io/name: overseerr-exporter
+      app.kubernetes.io/name: seerr-exporter
   namespaceSelector:
     matchNames:
       - media

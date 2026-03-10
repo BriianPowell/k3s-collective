@@ -41,7 +41,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 - [x] [Loki](https://github.com/grafana/loki)
 - [x] [Alloy](https://github.com/grafana/alloy)
 
-#### More detailed loggin configurations are outlined here:
+#### More detailed loggin configurations are outlined here
 
 - [Prometheus Service Monitors](./apps/monitoring/prometheus/README.md)
 - [Alloy Log Aggregations](./apps/monitoring/alloy/README.md)
@@ -69,7 +69,7 @@ _In Installation Order_
 - [x] [Bazarr](https://github.com/morpheus65535/bazarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Prowlarr](https://github.com/Prowlarr/Prowlarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Recyclarr](https://github.com/recyclarr/recyclarr)
-- [x] [Overseerr](https://github.com/sct/overseerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
+- [x] [Seerr](https://github.com/seerr-team/seerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
 - [x] [Tautulli](https://github.com/Tautulli/Tautulli) + [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)
 - [x] [Kavita](https://github.com/Kareadita/Kavita)
 - [x] [Readarr](https://github.com/Readarr/Readarr) + [Exportarr](https://github.com/onedr0p/exportarr)

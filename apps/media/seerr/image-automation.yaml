@@ -1,29 +1,29 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: overseerr
+  name: seerr
   namespace: media
 spec:
-  image: ghcr.io/sct/overseerr
+  image: ghcr.io/seerr-team/seerr
   interval: 24h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: overseerr
+  name: seerr
   namespace: media
 spec:
   imageRepositoryRef:
-    name: overseerr
+    name: seerr
     namespace: media
   policy:
     semver:
-      range: '>=1.33.2'
+      range: '>=1.0.0'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: overseerr
+  name: seerr
   namespace: media
 spec:
   interval: 24h0m0s
@@ -45,13 +45,13 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/media/overseerr
+    path: ./apps/media/seerr
     strategy: Setters
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: overseerr-exporter
+  name: seerr-exporter
   namespace: media
 spec:
   image: ghcr.io/willfantom/overseerr-exporter
@@ -60,11 +60,11 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: overseerr-exporter
+  name: seerr-exporter
   namespace: media
 spec:
   imageRepositoryRef:
-    name: overseerr-exporter
+    name: seerr-exporter
   policy:
     semver:
       range: '>=1.2'
@@ -72,7 +72,7 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: overseerr-exporter
+  name: seerr-exporter
   namespace: media
 spec:
   interval: 24h0m0s
@@ -94,5 +94,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/media/overseerr
+    path: ./apps/media/seerr
     strategy: Setters
