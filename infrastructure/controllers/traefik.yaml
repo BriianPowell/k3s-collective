@@ -95,7 +95,7 @@ spec:
             defaultmode: keep
     providers:
       kubernetesCRD:
-        enabeled: true
+        enabled: true
         allowCrossNamespace: true # Use Middlewares across namespaces
       kubernetesIngress:
         enabled: true
