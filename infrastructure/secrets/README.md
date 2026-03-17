@@ -8,7 +8,7 @@ flux create source helm sealed-secrets \
   --url=https://bitnami-labs.github.io/sealed-secrets
 ```
 
-2. Create HelmRelease to install Sealed-Secrets Controller
+1. Create HelmRelease to install Sealed-Secrets Controller
 
 ```sh
 flux create helmrelease sealed-secrets \
@@ -21,7 +21,7 @@ flux create helmrelease sealed-secrets \
   --crds=CreateReplace
 ```
 
-3. Retrieve the public key:
+1. Retrieve the public key:
 
 ```sh
 kubeseal --fetch-cert \
@@ -30,7 +30,7 @@ kubeseal --fetch-cert \
   > pub-sealed-secrets.pem
 ```
 
-4. Create a secret
+1. Create a secret
 
 ```sh
 kubectl -n default create secret generic basic-auth \
@@ -40,14 +40,14 @@ kubectl -n default create secret generic basic-auth \
   -o yaml > basic-auth.yaml
 ```
 
-5. Seal the Secret
+1. Seal the Secret
 
 ```sh
 kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
   < basic-auth.yaml > basic-auth-sealed.yaml
 ```
 
-6. Apply the Sealed Secret
+1. Apply the Sealed Secret
 
 ```sh
 kubectl apply -f basic-auth-sealed.yaml

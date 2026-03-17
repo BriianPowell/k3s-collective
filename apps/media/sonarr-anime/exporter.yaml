@@ -63,7 +63,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: exportarr
-                  key: sonarr_api_key
+                  key: sonarr_anime_api_key
           ports:
             - name: metrics
               containerPort: 9707
