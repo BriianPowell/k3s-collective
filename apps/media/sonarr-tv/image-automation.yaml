@@ -1,7 +1,7 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageRepository
 metadata:
-  name: sonarr
+  name: sonarr-tv
   namespace: media
 spec:
   image: ghcr.io/linuxserver/sonarr
@@ -10,11 +10,11 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: sonarr
+  name: sonarr-tv
   namespace: media
 spec:
   imageRepositoryRef:
-    name: sonarr
+    name: sonarr-tv
     namespace: media
   policy:
     semver:
@@ -23,7 +23,7 @@ spec:
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: sonarr
+  name: sonarr-tv
   namespace: media
 spec:
   interval: 24h0m0s
@@ -45,13 +45,13 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/media/sonarr
+    path: ./apps/media/sonarr-tv
     strategy: Setters
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
-  name: sonarr-exportarr
+  name: sonarr-tv-exportarr
   namespace: media
 spec:
   interval: 24h0m0s
@@ -73,5 +73,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./apps/media/sonarr
+    path: ./apps/media/sonarr-tv
     strategy: Setters

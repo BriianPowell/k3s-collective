@@ -6,15 +6,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sonarr
+  name: sonarr-anime
   namespace: media
   labels:
     app.kubernetes.io/component: service
-    app.kubernetes.io/name: sonarr
+    app.kubernetes.io/name: sonarr-anime
 spec:
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: sonarr
+    app.kubernetes.io/name: sonarr-anime
   type: ClusterIP
   ports:
     - name: http
@@ -25,11 +25,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sonarr
+  name: sonarr-anime
   namespace: media
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: sonarr
+    app.kubernetes.io/name: sonarr-anime
 spec:
   revisionHistoryLimit: 1
   replicas: 1
@@ -38,19 +38,19 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: sonarr
+      app.kubernetes.io/name: sonarr-anime
   template:
     metadata:
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: sonarr
+        app.kubernetes.io/name: sonarr-anime
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
       containers:
-        - name: sonarr
-          image: ghcr.io/linuxserver/sonarr:4.0.16 # {"$imagepolicy": "media:sonarr"}
+        - name: sonarr-anime
+          image: ghcr.io/linuxserver/sonarr:4.0.16 # {"$imagepolicy": "media:sonarr-anime"}
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -71,14 +71,14 @@ spec:
               cpu: 500m
               memory: 750Mi
           volumeMounts:
-            - name: sonarr-pvc
+            - name: sonarr-anime-pvc
               mountPath: /config
             - name: media-data-pvc
               mountPath: /data
       volumes:
-        - name: sonarr-pvc
+        - name: sonarr-anime-pvc
           persistentVolumeClaim:
-            claimName: sonarr-pvc
+            claimName: sonarr-anime-pvc
         - name: media-data-pvc
           persistentVolumeClaim:
             claimName: media-data-pvc
@@ -86,12 +86,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarr-pvc
+  name: sonarr-anime-pvc
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: sonarr-pvc
+    app.kubernetes.io/name: sonarr-anime-pvc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -102,12 +102,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: sonarr-pv
+  name: sonarr-anime-pv
   namespace: media
   labels:
     type: local
     app.kubernetes.io/component: storage-volume
-    app.kubernetes.io/name: sonarr-pv
+    app.kubernetes.io/name: sonarr-anime-pv
 spec:
   capacity:
     storage: 100Mi
@@ -116,10 +116,10 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   claimRef:
-    name: sonarr-pvc
+    name: sonarr-anime-pvc
     namespace: media
   local:
-    path: /mnt/moriyya/media/sonarr
+    path: /mnt/moriyya/media/sonarr-anime
   nodeAffinity:
     required:
       nodeSelectorTerms:

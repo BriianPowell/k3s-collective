@@ -1,0 +1,89 @@
+#
+# Reference:
+# https://github.com/onedr0p/exportarr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr-tv-exportarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: sonarr-tv-exportarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: sonarr-tv-exportarr
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 9707
+      protocol: TCP
+      targetPort: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr-tv-exportarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: sonarr-tv-exportarr
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: sonarr-tv-exportarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: sonarr-tv-exportarr
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
+      containers:
+        - name: sonarr-tv-exportarr
+          image: ghcr.io/onedr0p/exportarr:v2.3.0 # {"$imagepolicy": "media:exportarr"}
+          imagePullPolicy: Always
+          args:
+            - sonarr
+          env:
+            - name: PORT
+              value: '9707'
+            - name: URL
+              value: http://sonarr.media.svc.cluster.local:8989
+            - name: APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: exportarr
+                  key: sonarr_api_key
+          ports:
+            - name: metrics
+              containerPort: 9707
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            failureThreshold: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
