@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: recyclarr-config
+  namespace: media
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/name: recyclarr
+data:
+  recyclarr.yml: |
+    # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
+
+    # An empty starter config to use with Recyclarr. Update the values below as needed for your
+    # instance. You will be required to update the `api_key` and `base_url` for each instance you want
+    # to use.
+    #
+    # If you'd rather use pre-built configuration instead of building your own from scratch, see these
+    # pages:
+    # - Config Templates: https://recyclarr.dev/wiki/guide-configs/
+    # - CLI Command: https://recyclarr.dev/wiki/cli/config/list/templates/
+    #
+    # This file WILL NOT WORK as it currently is. You need to read the documentation and build this
+    # configuration from scratch. Note that there's no "one size fits all" configuration. Please refer
+    # to the TRaSH Guides to understand how to build the appropriate configuration based on your
+    # hardware setup and capabilities.
+    #
+    # For more details on the configuration, see the Configuration Reference on the wiki here:
+    # https://recyclarr.dev/wiki/yaml/config-reference/
+    #
+    # Want a more flexible file layout?
+    # See: https://recyclarr.dev/wiki/file-structure/
+
+    # Configuration specific to Sonarr. For Radarr, the layout is the same.
+    # See: https://recyclarr.dev/wiki/yaml/config-reference/basic/
+    # Instance Definition: https://recyclarr.dev/wiki/yaml/config-reference/basic/
+    radarr:
+      movies:
+        base_url: !secret radarr_url
+        api_key: !secret radarr_api_key
+
+        quality_definition:
+          type: movie
+
+        quality_profiles:
+          - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: 9ca12ea80aa55ef916e3751f4b874151 # Remux + WEB 1080p
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: fd161a61e3ab826d3a22d53f935696dd # Remux + WEB 2160p
+            reset_unmatched_scores:
+              enabled: true
+
+    sonarr:
+      tv:
+        base_url: !secret sonarr_tv_url
+        api_key: !secret sonarr_tv_api_key
+
+        quality_definition:
+          type: tseries
+
+        quality_profiles:
+          - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: 9d142234e45d6143785ac55f5a9e8dc9 # WEB-1080p (Alternative)
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: dfa5eaae7894077ad6449169b6eb03e0 # WEB-2160p (Alternative)
+            reset_unmatched_scores:
+              enabled: true
+
+      anime:
+        base_url: !secret sonarr_anime_url
+        api_key: !secret sonarr_anime_api_key
+
+        quality_definition:
+          type: anime
+
+        quality_profiles:
+          - trash_id: 20e0fc959f1f1704bed501f23bdae76f # [Anime] Remux-1080p
+            reset_unmatched_scores:
+              enabled: true

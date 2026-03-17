@@ -48,6 +48,10 @@ spec:
             - name: secrets
               mountPath: /secrets
               readOnly: true
+            - name: recyclarr-config
+              mountPath: /config/recyclarr.yml
+              subPath: recyclarr.yml
+              readOnly: true
           securityContext:
             runAsUser: 0
             runAsGroup: 0
@@ -68,6 +72,9 @@ spec:
             items:
               - key: secrets.yml
                 path: secrets.yml
+        - name: recyclarr-config
+          configMap:
+            name: recyclarr-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
