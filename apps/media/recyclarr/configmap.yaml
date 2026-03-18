@@ -61,7 +61,7 @@ data:
         api_key: !secret sonarr_tv_api_key
 
         quality_definition:
-          type: tseries
+          type: series
 
         quality_profiles:
           - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p

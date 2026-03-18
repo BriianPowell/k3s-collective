@@ -1083,8 +1083,8 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
-    // Sonarr
-    discovery.kubernetes "sonarr" {
+    // Sonarr Anime
+    discovery.kubernetes "sonarr-anime" {
       role = "pod"
 
       namespaces {
@@ -1092,12 +1092,30 @@ data:
       }
       selectors {
         role = "pod"
-        label = "app.kubernetes.io/name=sonarr"
+        label = "app.kubernetes.io/name=sonarr-anime"
       }
     }
 
-    loki.source.kubernetes "sonarr" {
-      targets = discovery.kubernetes.sonarr.targets
+    loki.source.kubernetes "sonarr-anime" {
+      targets = discovery.kubernetes.sonarr-anime.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
+    // Sonarr TV
+    discovery.kubernetes "sonarr-tv" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=sonarr-tv"
+      }
+    }
+
+    loki.source.kubernetes "sonarr-tv" {
+      targets = discovery.kubernetes.sonarr-tv.targets
       forward_to = [loki.write.local.receiver]
     }
 
