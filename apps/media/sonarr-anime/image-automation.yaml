@@ -14,7 +14,7 @@ metadata:
   namespace: media
 spec:
   imageRepositoryRef:
-    name: sonarr
+    name: sonarr-anime
     namespace: media
   policy:
     semver:
