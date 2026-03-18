@@ -54,6 +54,9 @@ data:
           - trash_id: fd161a61e3ab826d3a22d53f935696dd # Remux + WEB 2160p
             reset_unmatched_scores:
               enabled: true
+          - trash_id: 722b624f9af1e492284c4bc842153a38  # [Anime] Remux-1080p
+            reset_unmatched_scores:
+              enabled: true
 
     sonarr:
       tv:
