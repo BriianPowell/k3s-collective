@@ -939,6 +939,24 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
+    // Bazarr Anime
+    discovery.kubernetes "bazarr-anime" {
+      role = "pod"
+
+      namespaces {
+        names = ["media"]
+      }
+      selectors {
+        role = "pod"
+        label = "app.kubernetes.io/name=bazarr-anime"
+      }
+    }
+
+    loki.source.kubernetes "bazarr-anime" {
+      targets = discovery.kubernetes.bazarr-anime.targets
+      forward_to = [loki.write.local.receiver]
+    }
+
     // Deluge
     discovery.kubernetes "deluge" {
       role = "pod"

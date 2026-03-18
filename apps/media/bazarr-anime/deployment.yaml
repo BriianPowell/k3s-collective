@@ -1,0 +1,131 @@
+#
+# Reference:
+# https://docs.linuxserver.io/images/docker-bazarr/
+# https://github.com/morpheus65535/bazarr
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr-anime
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: bazarr-anime
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: bazarr-anime
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 6767
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr-anime
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: bazarr-anime
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: bazarr-anime
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: bazarr-anime
+    spec:
+      restartPolicy: Always
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: bazarr-anime
+          image: ghcr.io/linuxserver/bazarr:1.5.6 # {"$imagepolicy": "media:bazarr-anime"}
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PGID
+              value: '0'
+            - name: PUID
+              value: '0'
+          ports:
+            - name: http
+              containerPort: 6767
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 150Mi
+            limits:
+              cpu: 500m
+              memory: 750Mi
+          volumeMounts:
+            - name: bazarr-anime-pvc
+              mountPath: /config
+            - name: media-data-pvc
+              mountPath: /data
+      volumes:
+        - name: bazarr-anime-pvc
+          persistentVolumeClaim:
+            claimName: bazarr-anime-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bazarr-anime-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: bazarr-anime-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: bazarr-anime-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: bazarr-anime-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: bazarr-anime-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/bazarr-anime
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
