@@ -940,7 +940,7 @@ data:
     }
 
     // Bazarr Anime
-    discovery.kubernetes "bazarr-anime" {
+    discovery.kubernetes "bazarr_anime" {
       role = "pod"
 
       namespaces {
@@ -952,8 +952,8 @@ data:
       }
     }
 
-    loki.source.kubernetes "bazarr-anime" {
-      targets = discovery.kubernetes.bazarr-anime.targets
+    loki.source.kubernetes "bazarr_anime" {
+      targets = discovery.kubernetes.bazarr_anime.targets
       forward_to = [loki.write.local.receiver]
     }
 
@@ -1102,7 +1102,7 @@ data:
     }
 
     // Sonarr Anime
-    discovery.kubernetes "sonarr-anime" {
+    discovery.kubernetes "sonarr_anime" {
       role = "pod"
 
       namespaces {
@@ -1114,13 +1114,13 @@ data:
       }
     }
 
-    loki.source.kubernetes "sonarr-anime" {
-      targets = discovery.kubernetes.sonarr-anime.targets
+    loki.source.kubernetes "sonarr_anime" {
+      targets = discovery.kubernetes.sonarr_anime.targets
       forward_to = [loki.write.local.receiver]
     }
 
     // Sonarr TV
-    discovery.kubernetes "sonarr-tv" {
+    discovery.kubernetes "sonarr_tv" {
       role = "pod"
 
       namespaces {
@@ -1132,8 +1132,8 @@ data:
       }
     }
 
-    loki.source.kubernetes "sonarr-tv" {
-      targets = discovery.kubernetes.sonarr-tv.targets
+    loki.source.kubernetes "sonarr_tv" {
+      targets = discovery.kubernetes.sonarr_tv.targets
       forward_to = [loki.write.local.receiver]
     }
 
