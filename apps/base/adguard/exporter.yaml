@@ -59,12 +59,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: adguard
-                  key: USERNAME
+                  key: username
             - name: ADGUARD_PASSWORDS
               valueFrom:
                 secretKeyRef:
                   name: adguard
-                  key: PASSWORD
+                  key: password
             - name: INTERVAL
               value: '60s'
           ports:
