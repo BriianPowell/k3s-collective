@@ -74,10 +74,6 @@ _In Installation Order_
 - [x] [Readarr](https://github.com/Readarr/Readarr) + [Exportarr](https://github.com/onedr0p/exportarr)
 - [x] [Kapowarr](https://github.com/Casvt/Kapowarr)
 
-### TBD
-
-- [ ] [Jellyfin](https://github.com/jellyfin/jellyfin)
-
 ### [Secrets Management](./infrastructure/secrets/README.md)
 
 ## FluxCD Installation
