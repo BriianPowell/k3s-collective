@@ -72,6 +72,35 @@ The exporter reads `Secret/adguard` keys `USERNAMES` and `PASSWORDS`. AdGuard Ho
 
 4. Remove legacy sealed secret if still present: `kubectl -n monitoring delete sealedsecret alertmanager`
 
+### Cloudflare API token (cert-manager DNS-01)
+
+Used by `ClusterIssuer/lets-encrypt` (`apiTokenSecretRef` → `Secret/cloudflare-api-token`, key `api-token`).
+
+1. In vault **Collective**, create item **Cloudflare** (or match `itemPath` below) with one field:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `api-token` | password | Cloudflare API token (DNS Edit for your zones) |
+
+   Create the token: [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Edit zone DNS** for zones you issue certs on.
+
+2. Set `spec.itemPath` in `cloudflare-api-token-onepassword-item.yaml` if your vault/item name differs.
+
+3. Copy the current token from the old secret before cutover (if still running):
+
+   ```sh
+   kubectl -n cert-manager get secret cloudflare-api-token -o jsonpath='{.data.api-token}' | base64 -d; echo
+   ```
+
+4. Commit, push, reconcile. Confirm:
+
+   ```sh
+   kubectl -n cert-manager get onepassworditem,secret cloudflare-api-token
+   kubectl describe clusterissuer lets-encrypt
+   ```
+
+5. Remove legacy sealed secret if still present: `kubectl -n cert-manager delete sealedsecret cloudflare-api-token`
+
 ---
 
 ## Sealed Secrets (legacy)
