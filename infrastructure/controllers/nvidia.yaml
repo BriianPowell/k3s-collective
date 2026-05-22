@@ -36,21 +36,27 @@ spec:
         namespace: kube-system
       version: '>=0.15.0 <1.0.0'
   values:
+    # Required for the chart to hostPath-mount driver libs at /driver-root in the plugin pod.
+    # Setting this only in config.map does NOT create the volume (see helm daemonset template).
+    nvidiaDriverRoot: /run/opengl-driver
     config:
+      default: default
       map:
         default: |-
           version: v1
           flags:
             migStrategy: 'none'
             failOnInitError: true
-            # NixOS driver libs live under /run/opengl-driver, not /.
             nvidiaDriverRoot: /run/opengl-driver
             plugin:
               passDeviceSpecs: false
+              # envvar works with NixOS + nvidia-container-runtime; cdi-annotations needs
+              # ld.so.cache and versioned libs under /driver-root that NixOS does not provide.
               deviceListStrategy:
-                - cdi-annotations
-              cdiAnnotationPrefix: cdi.k8s.io/
+                - envvar
               deviceIDStrategy: uuid
+    nfd:
+      enabled: false
     gdsEnabled: false
     mofedEnabled: false
     compatWithCPUManager: false
