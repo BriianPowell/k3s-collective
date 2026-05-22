@@ -1,8 +1,8 @@
 # Secrets Management
 
-## 1Password Operator
+Cluster secrets are synced from **1Password** via the [1Password Connect Kubernetes operator](https://developer.1password.com/docs/k8s/operator). Each `OnePasswordItem` creates a `Secret` with the same name in the CR’s namespace. **Field labels in 1Password must match the Kubernetes secret keys** your manifests reference (`secretKeyRef.key`, Helm `existingSecret`, etc.).
 
-Bootstrap (once, not in git):
+## Operator bootstrap (once, not in git)
 
 ```sh
 kubectl -n onepassword create secret generic op-credentials \
@@ -12,79 +12,62 @@ kubectl -n onepassword create secret generic onepassword-token \
   --from-literal=token='YOUR_CONNECT_TOKEN'
 ```
 
-App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, `apps/games/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
+The operator is deployed by Flux (`infrastructure/controllers/onepassword.yaml`). It polls 1Password every 10 minutes (`pollingInterval: 600`) and can restart workloads when secrets change (`autoRestart: true`).
 
-### Keycloak
+## Where secrets live in git
 
-`apps/base/keycloak/onepassword-item.yaml` → `Secret/keycloak` in `keycloak` (deployed with the `base` Flux kustomization).
+| Secret | Manifest | Namespace | Flux kustomization |
+|--------|----------|-----------|-------------------|
+| Cloudflare API token | `infrastructure/configs/onepassword-item.yaml` | `cert-manager` | `infra-configs` |
+| CrowdSec enroll key | `infrastructure/controllers/crowdsec-onepassword-item.yaml` | `crowdsec` | `infra-controllers` |
+| AdGuard exporter | `apps/base/adguard/onepassword-item.yaml` | `adguard` | `base` |
+| Forward Auth (OIDC) | `apps/base/forward-auth/onepassword-item.yaml` | `kube-system` | `kube-system` |
+| Home Assistant | `apps/base/homeassistant/onepassword-item.yaml` | `homeassistant` | `base` |
+| Keycloak | `apps/base/keycloak/onepassword-item.yaml` | `keycloak` | `base` |
+| Nextcloud + SMTP | `apps/base/nextcloud/onepassword-item.yaml` | `nextcloud` | `base` |
+| Alertmanager SMTP | `apps/monitoring/alert-manager/onepassword-item.yaml` | `monitoring` | `monitoring` |
+| Grafana | `apps/monitoring/grafana/onepassword-item.yaml` | `monitoring` | `monitoring` |
+| Prometheus (HA token) | `apps/monitoring/prometheus/onepassword-item.yaml` | `monitoring` | `monitoring` |
+| Arr stack (exportarr + Recyclarr) | `apps/media/arr-stack/onepassword-item.yaml` | `media` | `media` |
+| Deluge | `apps/media/deluge/onepassword-item.yaml` | `media` | `media` |
+| Valheim | `apps/games/valheim/onepassword-item.yaml` | `valheim` | `games` |
+| V Rising | `apps/games/v-rising/onepassword-item.yaml` | `v-rising` | `games` |
+
+Cloudflare DNS-01 setup is documented in [infrastructure/configs/README.md](../configs/README.md).
+
+Adjust `spec.itemPath` in each manifest if your vault or item title differs from `vaults/Collective/items/<Title>`.
+
+## Verify any secret
+
+```sh
+kubectl -n <namespace> get onepassworditem,secret <name>
+kubectl -n <namespace> get secret <name> -o json | jq -r '.data | keys[]'
+```
+
+## Per-application fields
+
+### Cloudflare (cert-manager)
+
+Item **Cloudflare**, field `api-token` → `Secret/cloudflare-api-token` (key `api-token`). See [configs README](../configs/README.md).
+
+### CrowdSec
 
 | Label | Used by |
 |-------|---------|
-| `DOMAIN` | `KC_HOSTNAME` (e.g. `keycloak.powell.place`) |
-| `KC_ADMN` | Legacy / optional bootstrap admin username (typo preserved for key parity; `KEYCLOAK_ADMIN` is commented out in deployment) |
-| `KC_PASS` | Legacy / optional bootstrap admin password (`KEYCLOAK_ADMIN_PASSWORD` commented out) |
+| `ENROLL_KEY` | CrowdSec Console enrollment (`HelmRelease/crowdsec` LAPI) |
 
-Postgres credentials come from CNPG `Secret/keycloak-pgcluster-app`, not this secret.
+[CrowdSec Console](https://app.crowdsec.net/) → create instance / enroll key.
 
-1. In vault **Collective**, create item **Keycloak** with those three fields (labels must match exactly, including `KC_ADMN`).
-
-2. Copy before cutover:
-
-   ```sh
-   kubectl -n keycloak get secret keycloak -o json | jq -r '.data | keys[]'
-   kubectl -n keycloak get secret keycloak -o jsonpath='{.data.DOMAIN}' | base64 -d; echo
-   ```
-
-   Or decode from local `infrastructure/secrets/keycloak-secret.yaml` (gitignored).
-
-3. Verify:
-
-   ```sh
-   kubectl -n keycloak get onepassworditem,secret keycloak
-   kubectl -n keycloak get pods -l app.kubernetes.io/name=keycloak
-   ```
-
-4. Remove legacy: `kubectl -n keycloak delete sealedsecret keycloak`
-
-### Nextcloud
-
-`apps/base/nextcloud/onepassword-item.yaml` → `Secret/nextcloud` in `nextcloud` (deployed with the `base` Flux kustomization).
+### AdGuard (exporter API)
 
 | Label | Used by |
 |-------|---------|
-| `ADMIN_USER` | `NEXTCLOUD_ADMIN_USER` |
-| `ADMIN_PASS` | `NEXTCLOUD_ADMIN_PASSWORD` |
-| `DOMAIN` | `NEXTCLOUD_TRUSTED_DOMAINS` |
-| `SMTP_NAME` | `SMTP_NAME` |
-| `SMTP_PASSWORD` | `SMTP_PASSWORD` |
-| `MAIL_FROM_ADDRESS` | `MAIL_FROM_ADDRESS` |
-| `TOKEN` | nextcloud-exporter `NEXTCLOUD_AUTH_TOKEN` |
-| `PG_DB`, `PG_USER`, `PG_PASS` | Legacy (Postgres is CNPG `nextcloud-pgcluster-app`; optional to keep for reference) |
+| `USERNAMES` | AdGuard exporter |
+| `PASSWORDS` | AdGuard exporter |
 
-1. In vault **Collective**, create item **Nextcloud** with those fields (labels must match exactly).
-
-2. Copy before cutover:
-
-   ```sh
-   kubectl -n nextcloud get secret nextcloud -o json | jq -r '.data | keys[]'
-   kubectl -n nextcloud get secret nextcloud -o jsonpath='{.data.DOMAIN}' | base64 -d; echo
-   ```
-
-   Or decode from local `infrastructure/secrets/nextcloud-secret.yaml` (gitignored).
-
-3. Verify:
-
-   ```sh
-   kubectl -n nextcloud get onepassworditem,secret nextcloud
-   kubectl -n nextcloud get pods -l app.kubernetes.io/name=nextcloud
-   kubectl -n nextcloud get pods -l app.kubernetes.io/name=nextcloud-exporter
-   ```
-
-4. Remove legacy: `kubectl -n nextcloud delete sealedsecret nextcloud`
+AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 
 ### Traefik Forward Auth (OIDC)
-
-`apps/base/forward-auth/onepassword-item.yaml` → `Secret/traefik-forward-auth` in `kube-system` (deployed with the `kube-system` app kustomization, not `infra-secrets`).
 
 | Label | Used as |
 |-------|---------|
@@ -92,355 +75,132 @@ Postgres credentials come from CNPG `Secret/keycloak-pgcluster-app`, not this se
 | `client-secret` | `PROVIDERS_OIDC_CLIENT_SECRET` |
 | `secret` | `SECRET` (cookie signing) |
 
-1. In vault **Collective**, item **Forward Auth** with those three fields (labels must match exactly, including hyphens).
-2. Copy values before cutover: `kubectl -n kube-system get secret traefik-forward-auth -o jsonpath='{.data}' | jq 'keys'`
-3. Verify: `kubectl -n kube-system get onepassworditem,secret traefik-forward-auth` and `kubectl -n kube-system get pods -l app.kubernetes.io/name=traefik-forward-auth`
-4. Remove legacy: `kubectl -n kube-system delete sealedsecret traefik-forward-auth`
-
 ### Home Assistant
 
-Vault **Collective**, item **Home Assistant**:
+| Label | Used by |
+|-------|---------|
+| `secrets.yaml` | Multiline file mounted to `/config/secrets.yaml` |
+| `token` | Also synced to `Secret/prometheus` in `monitoring` for Prometheus scrape |
 
-| Label | Type | Used by |
-|-------|------|---------|
-| `secrets.yaml` | text (multiline) | `apps/base/homeassistant/onepassword-item.yaml` → `Secret/homeassistant`; copied to `/config/secrets.yaml` on pod start |
-| `token` | concealed | `apps/monitoring/prometheus/onepassword-item.yaml` → `Secret/prometheus` in `monitoring`; Home Assistant Prometheus `/api/prometheus` scrapes |
+**Prometheus token:** Home Assistant → Profile → Security → Long-Lived Access Tokens. Same 1Password item, field `token`.
 
-**HA config secrets**
+### Keycloak
 
-1. Paste entire `secrets.yaml` (plain YAML only — no markdown code fences).
-2. Copy before cutover: `kubectl -n homeassistant get secret homeassistant -o jsonpath='{.data.secrets\.yaml}' | base64 -d`
-3. Verify: `kubectl -n homeassistant get onepassworditem,secret homeassistant` and `kubectl -n homeassistant get pods`
-4. Remove legacy: `kubectl -n homeassistant delete sealedsecret homeassistant`
+| Label | Notes |
+|-------|-------|
+| `DOMAIN` | `KC_HOSTNAME` (e.g. `keycloak.powell.place`) |
+| `KC_ADMN` | Optional legacy bootstrap username |
+| `KC_PASS` | Optional legacy bootstrap password |
 
-**Prometheus scrape token**
+Postgres: CNPG `Secret/keycloak-pgcluster-app`, not this secret.
 
-1. In Home Assistant: Profile → Security → Long-Lived Access Tokens → create token (or reuse existing).
-2. Add field `token` on the **Home Assistant** 1Password item with that value.
-3. Copy before cutover: `kubectl -n monitoring get secret prometheus -o jsonpath='{.data.HASSTOKEN}' | base64 -d`
-4. Verify:
+### Nextcloud
 
-   ```sh
-   kubectl -n monitoring get onepassworditem prometheus
-   kubectl -n monitoring get secret prometheus -o jsonpath='{.data.token}' | base64 -d | wc -c
-   ```
+**Item Nextcloud** → `Secret/nextcloud`:
 
-5. Remove legacy: `kubectl -n monitoring delete sealedsecret prometheus`
+| Label | Used by |
+|-------|---------|
+| `username` | `NEXTCLOUD_ADMIN_USER` |
+| `password` | `NEXTCLOUD_ADMIN_PASSWORD` |
+| `trusted_domains` | `NEXTCLOUD_TRUSTED_DOMAINS` |
+| `mail_from_address` | `MAIL_FROM_ADDRESS` |
+| `token` | nextcloud-exporter `NEXTCLOUD_AUTH_TOKEN` |
 
-### AdGuard (exporter API credentials)
+**Item SMTP Secondary** → `Secret/nextcloud-smtp`:
 
-1. In 1Password, create a **Login** or **Secure Note** in a vault Connect can access.
-2. Add fields with these **exact labels** (not `username` / `password` unless you change the exporter):
+| Label | Used by |
+|-------|---------|
+| `username` | `SMTP_NAME` |
+| `password` | `SMTP_PASSWORD` |
 
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `USERNAMES` | text | AdGuard API user (e.g. `admin`) |
-   | `PASSWORDS` | concealed | Plain AdGuard API password |
+Postgres: CNPG `Secret/nextcloud-pgcluster-app`.
 
-3. Grant the Connect server access to that vault.
-4. Set `spec.itemPath` in `apps/base/adguard/onepassword-item.yaml`:
+Exporter token: `occ config:app:set serverinfo token` in Nextcloud, or use app-password env vars per [exportarr docs](https://github.com/xperimental/nextcloud-exporter).
 
-   ```yaml
-   itemPath: vaults/<VaultName>/items/<ItemTitle>
-   ```
+### Alertmanager
 
-   Use vault/item **title** or UUID from `op item get --format json`.
+Config (routes, receivers, SMTP host/user) lives in git: `apps/monitoring/alert-manager/alertmanager.yaml`.
 
-5. Copy values from the old sealed secret before cutover (if still running):
+| Label | Mounted at |
+|-------|------------|
+| `smtp_auth_password` | `/etc/alertmanager/secrets/smtp_auth_password` |
 
-   ```sh
-   kubectl -n adguard get secret adguard -o jsonpath='{.data.USERNAMES}' | base64 -d; echo
-   kubectl -n adguard get secret adguard -o jsonpath='{.data.PASSWORDS}' | base64 -d; echo
-   ```
+Item **Alertmanager SMTP** → `Secret/alertmanager-smtp`.
 
-6. Commit, push, reconcile. Confirm:
+### Grafana
 
-   ```sh
-   kubectl -n adguard get onepassworditem,secret adguard
-   kubectl -n adguard logs deploy/adguard-exporter --tail=20
-   ```
+| Label | Used by |
+|-------|---------|
+| `USER` | Admin username |
+| `PASS` | Admin password |
+| `CLIENT_ID` | Keycloak OAuth |
+| `CLIENT_SECRET` | Keycloak OAuth |
+| `AUTH_URL` | Keycloak authorization endpoint |
+| `TOKEN_URL` | Keycloak token endpoint |
+| `API_URL` | Keycloak userinfo endpoint |
+| `LOGOUT_URL` | Keycloak logout redirect |
 
-The exporter reads `Secret/adguard` keys `USERNAMES` and `PASSWORDS`. AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
+Keycloak realm **inferno** well-known: `https://keycloak.powell.place/realms/inferno/.well-known/openid-configuration`.
 
-### Alertmanager (config in git, SMTP password in 1Password)
+### Arr stack (exportarr + Recyclarr)
 
-- **Git:** `apps/monitoring/alert-manager/alertmanager.yaml` — routes, receivers, SMTP host/user (no password). Kustomize `secretGenerator` creates `Secret/alertmanager`.
-- **1Password:** item **Alertmanager SMTP**, field `smtp_auth_password` → `Secret/alertmanager-smtp`, mounted at `/etc/alertmanager/secrets/smtp_auth_password`.
+Item **Arr Stack** → `Secret/arr-stack` in `media`:
 
-1. In vault **Collective**, create **Alertmanager SMTP** with one field:
+| Label | Used by |
+|-------|---------|
+| `bazarr_api_key` | Bazarr exportarr |
+| `bazarr_anime_api_key` | Bazarr Anime exportarr |
+| `lidarr_api_key` | Lidarr exportarr |
+| `prowlarr_api_key` | Prowlarr exportarr |
+| `radarr_api_key` | Radarr exportarr |
+| `readarr_api_key` | Readarr exportarr |
+| `sonarr_tv_api_key` | Sonarr TV exportarr |
+| `sonarr_anime_api_key` | Sonarr Anime exportarr |
+| `plex_token` | Plex exporter |
+| `seerr_api_key` | Seerr exporter |
+| `tautulli_api_key` | Tautulli exporter |
+| `secrets.yml` | Recyclarr (multiline YAML → `/config/secrets.yml`) |
 
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `smtp_auth_password` | password | iCloud app-specific SMTP password (plain text, one line) |
+Example `secrets.yml` (plain YAML in 1Password, no markdown fences):
 
-2. Edit routes/receivers in `alertmanager.yaml` in git as needed.
-
-3. After deploy, verify:
-
-   ```sh
-   kubectl -n monitoring get secret alertmanager alertmanager-smtp
-   kubectl -n monitoring get onepassworditem alertmanager-smtp
-   kubectl -n monitoring get pods -l app.kubernetes.io/name=alertmanager
-   ```
-
-4. Remove legacy sealed secret if still present: `kubectl -n monitoring delete sealedsecret alertmanager`
-
-### Grafana (admin + Keycloak OIDC)
-
-`apps/monitoring/grafana/onepassword-item.yaml` → `Secret/grafana` in `monitoring` (deployed with the `monitoring` Flux kustomization). Used by Grafana Helm chart: `admin.existingSecret` and `envFromSecrets` for Keycloak OAuth in `grafana.ini`.
-
-1. In vault **Collective**, create item **Grafana** with these fields (labels must match exactly):
-
-   | Label | Used by |
-   |-------|---------|
-   | `USER` | Grafana admin username |
-   | `PASS` | Grafana admin password |
-   | `CLIENT_ID` | Keycloak OAuth client ID |
-   | `CLIENT_SECRET` | Keycloak OAuth client secret |
-   | `AUTH_URL` | Keycloak authorization endpoint |
-   | `TOKEN_URL` | Keycloak token endpoint |
-   | `API_URL` | Keycloak userinfo endpoint |
-   | `LOGOUT_URL` | Keycloak logout redirect URL |
-
-2. Copy before cutover:
-
-   ```sh
-   kubectl -n monitoring get secret grafana -o json | jq -r '.data | keys[]'
-   ```
-
-   Or decode from local `infrastructure/secrets/grafana-secret.yaml` (gitignored).
-
-3. Verify:
-
-   ```sh
-   kubectl -n monitoring get onepassworditem,secret grafana
-   kubectl -n monitoring get pods -l app.kubernetes.io/name=grafana
-   ```
-
-4. Remove legacy: `kubectl -n monitoring delete sealedsecret grafana`
-
-### CrowdSec (Console enroll key)
-
-Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
-
-1. In vault **Collective**, create item **CrowdSec** with one field:
-
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `ENROLL_KEY` | password | CrowdSec Console enrollment key |
-
-   Create the key: [CrowdSec Console](https://app.crowdsec.net/) → enroll / instance key for your k3s deployment.
-
-2. Set `spec.itemPath` in `crowdsec-onepassword-item.yaml` if your vault/item name differs.
-
-3. Copy the current key before cutover (if still running):
-
-   ```sh
-   kubectl -n crowdsec get secret crowdsec -o jsonpath='{.data.ENROLL_KEY}' | base64 -d; echo
-   ```
-
-4. Commit, push, reconcile. Confirm:
-
-   ```sh
-   kubectl -n crowdsec get onepassworditem,secret crowdsec
-   kubectl -n crowdsec get pods
-   ```
-
-5. Remove legacy sealed secret if still present: `kubectl -n crowdsec delete sealedsecret crowdsec`
-
-### Arr Stack (exportarr + Recyclarr)
-
-One 1Password item for all *arr exporter API keys and Recyclarr instance credentials.
-
-`apps/media/arr-stack/onepassword-item.yaml` → `Secret/arr-stack` in `media` (deployed with the `media` Flux kustomization).
-
-1. In vault **Collective**, create item **Arr Stack** with these fields (labels must match exactly):
-
-   | Label | Type | Used by |
-   |-------|------|---------|
-   | `bazarr_api_key` | password | Bazarr exportarr |
-   | `bazarr_anime_api_key` | password | Bazarr Anime exportarr |
-   | `lidarr_api_key` | password | Lidarr exportarr |
-   | `prowlarr_api_key` | password | Prowlarr exportarr |
-   | `radarr_api_key` | password | Radarr exportarr |
-   | `readarr_api_key` | password | Readarr exportarr |
-   | `sonarr_tv_api_key` | password | Sonarr TV exportarr |
-   | `sonarr_anime_api_key` | password | Sonarr Anime exportarr |
-   | `plex_token` | password | Plex exporter |
-   | `seerr_api_key` | password | Seerr exporter |
-   | `tautulli_api_key` | password | Tautulli exporter |
-   | `secrets.yml` | text (multiline) | Recyclarr → copied to `/config/secrets.yml` on pod start |
-
-   `secrets.yml` example (plain YAML, no code fences):
-
-   ```yaml
-   radarr_url: http://radarr.media.svc:7878
-   radarr_api_key: <api-key>
-   sonarr_tv_url: http://sonarr-tv.media.svc:8989
-   sonarr_tv_api_key: <api-key>
-   sonarr_anime_url: http://sonarr-anime.media.svc:8989
-   sonarr_anime_api_key: <api-key>
-   ```
-
-2. Copy before cutover from legacy secrets (if still running):
-
-   ```sh
-   kubectl -n media get secret exportarr -o json | jq -r '.data | keys[]'
-   kubectl -n media get secret recyclarr -o jsonpath='{.data.secrets\.yml}' | base64 -d
-   ```
-
-   Or use gitignored `exportarr-secret.yaml` / `recyclarr-secret.yaml` under `infrastructure/secrets/`.
-
-3. Verify:
-
-   ```sh
-   kubectl -n media get onepassworditem,secret arr-stack
-   kubectl -n media get secret arr-stack -o json | jq -r '.data | keys[]'
-   kubectl -n media rollout restart deploy/recyclarr
-   for d in $(kubectl -n media get deploy -o name | grep exportarr); do kubectl -n media rollout restart "$d"; done
-   ```
-
-4. Remove legacy:
-
-   ```sh
-   kubectl -n media delete onepassworditem exportarr recyclarr --ignore-not-found
-   kubectl -n media delete secret exportarr recyclarr --ignore-not-found
-   kubectl -n media delete sealedsecret exportarr recyclarr --ignore-not-found
-   ```
-
-### Deluge (VPN + Web UI exporter password)
-
-Used by `Deployment/deluge` (`VPN_USER`, `VPN_PASS`) and `Deployment/deluge-exporter` (`APP_PASS` as Deluge Web UI password).
-
-1. In vault **Collective**, create item **Deluge** with three fields:
-
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `VPN_USER` | text | PIA WireGuard username |
-   | `VPN_PASS` | password | PIA WireGuard password |
-   | `APP_PASS` | password | Deluge Web UI password (for deluge-exporter metrics) |
-
-2. Set `spec.itemPath` in `deluge-onepassword-item.yaml` if your vault/item name differs.
-
-3. Copy values before cutover (if still running):
-
-   ```sh
-   kubectl -n media get secret deluge -o jsonpath='{.data.VPN_USER}' | base64 -d; echo
-   kubectl -n media get secret deluge -o jsonpath='{.data.VPN_PASS}' | base64 -d; echo
-   kubectl -n media get secret deluge -o jsonpath='{.data.APP_PASS}' | base64 -d; echo
-   ```
-
-4. Commit, push, reconcile. Confirm:
-
-   ```sh
-   kubectl -n media get onepassworditem,secret deluge
-   kubectl -n media get pods -l app.kubernetes.io/name=deluge
-   kubectl -n media get pods -l app.kubernetes.io/name=deluge-exporter
-   ```
-
-5. Remove legacy sealed secret if still present: `kubectl -n media delete sealedsecret deluge`
-
-### Valheim (server password)
-
-`apps/games/valheim/onepassword-item.yaml` → `Secret/valheim` in `valheim` (deployed with the `games` Flux kustomization). Used by `HelmRelease/valheim-server` as `SERVER_PASS` (`key: password`, min 5 characters).
-
-1. In vault **Collective**, create item **Valheim** with one field:
-
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `password` | password | Valheim server password |
-
-2. Copy before cutover:
-
-   ```sh
-   kubectl -n valheim get secret valheim -o jsonpath='{.data.password}' | base64 -d; echo
-   ```
-
-3. Verify:
-
-   ```sh
-   kubectl -n valheim get onepassworditem,secret valheim
-   ```
-
-4. Remove legacy: `kubectl -n valheim delete sealedsecret valheim`
-
-### V Rising (server password)
-
-`apps/games/v-rising/onepassword-item.yaml` → `Secret/v-rising` in `v-rising`. Used by `HelmRelease/v-rising-server` as `VR_PASSWORD` (`key: password`; leave empty in 1Password for no password).
-
-1. In vault **Collective**, create item **V-Rising** with one field:
-
-   | Label | Type | Value |
-   |-------|------|--------|
-   | `password` | password | V Rising server password (optional) |
-
-2. Copy before cutover:
-
-   ```sh
-   kubectl -n v-rising get secret v-rising -o jsonpath='{.data.password}' | base64 -d; echo
-   ```
-
-3. Verify:
-
-   ```sh
-   kubectl -n v-rising get onepassworditem,secret v-rising
-   ```
-
-4. Remove legacy: `kubectl -n v-rising delete sealedsecret v-rising`
-
----
-
-## Sealed Secrets (legacy)
-
-1. Register Helm Repo
-
-```sh
-flux create source helm sealed-secrets \
-  --interval=1h \
-  --url=https://bitnami-labs.github.io/sealed-secrets
+```yaml
+radarr_url: http://radarr.media.svc:7878
+radarr_api_key: <api-key>
+sonarr_tv_url: http://sonarr-tv.media.svc:8989
+sonarr_tv_api_key: <api-key>
 ```
 
-1. Create HelmRelease to install Sealed-Secrets Controller
+After changing keys:
 
 ```sh
-flux create helmrelease sealed-secrets \
-  --interval=1h \
-  --release-name=sealed-secrets-controller \
-  --target-namespace=flux-system \
-  --source=HelmRepository/sealed-secrets \
-  --chart=sealed-secrets \
-  --chart-version=">=2.8.0 <3.0.0" \
-  --crds=CreateReplace
+kubectl -n media rollout restart deploy/recyclarr
+for d in $(kubectl -n media get deploy -o name | grep exportarr); do kubectl -n media rollout restart "$d"; done
 ```
 
-1. Retrieve the public key:
+### Deluge
+
+| Label | Used by |
+|-------|---------|
+| `VPN_USER` | Deluge deployment (PIA WireGuard) |
+| `VPN_PASS` | Deluge deployment |
+| `APP_PASS` | deluge-exporter (Web UI password) |
+
+### Valheim / V Rising
+
+| Label | Used by |
+|-------|---------|
+| `password` | Server password (`SERVER_PASS` / `VR_PASSWORD`; min 5 chars for Valheim) |
+
+## Local migration files (gitignored)
+
+Plaintext `*-secret.yaml` under this directory (if present) are for one-off migration only and must not be committed. Use them to copy values into 1Password, then delete locally.
+
+## Uninstalling the old Sealed Secrets controller
+
+If the cluster still runs the Bitnami controller from the previous setup, remove it after all apps use 1Password:
 
 ```sh
-kubeseal --fetch-cert \
-  --controller-name=sealed-secrets-controller \
-  --controller-namespace=flux-system \
-  > pub-sealed-secrets.pem
-```
-
-1. Create a secret
-
-```sh
-kubectl -n default create secret generic basic-auth \
-  --from-literal=user=admin \
-  --from-literal=password=change-me \
-  --dry-run=client \
-  -o yaml > basic-auth.yaml
-```
-
-1. Seal the Secret
-
-```sh
-kubeseal --format=yaml --cert=pub-sealed-secrets.pem \
-  < basic-auth.yaml > basic-auth-sealed.yaml
-```
-
-1. Apply the Sealed Secret
-
-```sh
-kubectl apply -f basic-auth-sealed.yaml
+flux delete helmrelease sealed-secrets -n flux-system --silent
+flux delete source helm sealed-secrets -n flux-system --silent
+kubectl delete sealedsecrets --all-namespaces --all
 ```

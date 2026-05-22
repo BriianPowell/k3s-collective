@@ -68,8 +68,8 @@ spec:
         allowPrivilegeEscalation: true
     admin:
       existingSecret: grafana
-      userKey: USER
-      passwordKey: PASS
+      userKey: username
+      passwordKey: password
     envFromSecrets:
       - name: grafana
         optional: false

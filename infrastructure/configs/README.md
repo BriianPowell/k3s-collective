@@ -6,7 +6,7 @@
 
 1. In vault **Collective**, item **Cloudflare** with field `api-token` (password). [Create token](https://dash.cloudflare.com/profile/api-tokens) → **Edit zone DNS** for your zones.
 
-2. Adjust `spec.itemPath` in `cloudflare-api-token-onepassword-item.yaml` if needed.
+2. Adjust `spec.itemPath` in `onepassword-item.yaml` if needed.
 
 3. Verify after Flux reconciles `infra-configs`:
 

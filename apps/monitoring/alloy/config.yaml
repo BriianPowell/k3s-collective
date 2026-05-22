@@ -221,24 +221,6 @@ data:
       forward_to = [loki.write.local.receiver]
     }
 
-    // Sealed Secrets Controller
-    discovery.kubernetes "flux_system_sealed_secrets_controller" {
-      role = "pod"
-
-      namespaces {
-        names = ["flux-system"]
-      }
-      selectors {
-        role = "pod"
-        label = "app.kubernetes.io/instance=sealed-secrets-controller"
-      }
-    }
-
-    loki.source.kubernetes "flux_system_sealed_secrets_controller" {
-      targets = discovery.kubernetes.flux_system_sealed_secrets_controller.targets
-      forward_to = [loki.write.local.receiver]
-    }
-
     // Source Controller
     discovery.kubernetes "flux_system_source_controller" {
       role = "pod"
