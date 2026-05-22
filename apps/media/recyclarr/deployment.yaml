@@ -70,7 +70,7 @@ spec:
             claimName: recyclarr-pvc
         - name: secrets
           secret:
-            secretName: recyclarr
+            secretName: arr-stack
             items:
               - key: secrets.yml
                 path: secrets.yml

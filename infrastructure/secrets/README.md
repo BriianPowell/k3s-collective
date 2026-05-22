@@ -12,7 +12,7 @@ kubectl -n onepassword create secret generic onepassword-token \
   --from-literal=token='YOUR_CONNECT_TOKEN'
 ```
 
-App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
+App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, `apps/games/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
 
 ### Traefik Forward Auth (OIDC)
 
@@ -146,49 +146,65 @@ Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
 
 5. Remove legacy sealed secret if still present: `kubectl -n crowdsec delete sealedsecret crowdsec`
 
-### Exportarr (media stack API keys)
+### Arr Stack (exportarr + Recyclarr)
 
-Shared by exportarr / Plex / Seerr / Tautulli exporter deployments in `media` (`Secret/exportarr`).
+One 1Password item for all *arr exporter API keys and Recyclarr instance credentials.
 
-`apps/media/exportarr/onepassword-item.yaml` → `Secret/exportarr` (deployed with the `media` Flux kustomization).
+`apps/media/arr-stack/onepassword-item.yaml` → `Secret/arr-stack` in `media` (deployed with the `media` Flux kustomization).
 
-1. In vault **Collective**, create item **Exportarr** with these fields (labels must match exactly):
+1. In vault **Collective**, create item **Arr Stack** with these fields (labels must match exactly):
 
-   | Label | Used by |
-   |-------|---------|
-   | `bazarr_api_key` | Bazarr exportarr |
-   | `bazarr_anime_api_key` | Bazarr Anime exportarr |
-   | `lidarr_api_key` | Lidarr exportarr |
-   | `prowlarr_api_key` | Prowlarr exportarr |
-   | `radarr_api_key` | Radarr exportarr |
-   | `readarr_api_key` | Readarr exportarr |
-   | `sonarr_tv_api_key` | Sonarr TV exportarr |
-   | `sonarr_anime_api_key` | Sonarr Anime exportarr |
-   | `plex_token` | Plex exporter (`PLEX_TOKEN`) |
-   | `seerr_api_key` | Seerr exporter |
-   | `tautulli_api_key` | Tautulli exporter |
+   | Label | Type | Used by |
+   |-------|------|---------|
+   | `bazarr_api_key` | password | Bazarr exportarr |
+   | `bazarr_anime_api_key` | password | Bazarr Anime exportarr |
+   | `lidarr_api_key` | password | Lidarr exportarr |
+   | `prowlarr_api_key` | password | Prowlarr exportarr |
+   | `radarr_api_key` | password | Radarr exportarr |
+   | `readarr_api_key` | password | Readarr exportarr |
+   | `sonarr_tv_api_key` | password | Sonarr TV exportarr |
+   | `sonarr_anime_api_key` | password | Sonarr Anime exportarr |
+   | `plex_token` | password | Plex exporter |
+   | `seerr_api_key` | password | Seerr exporter |
+   | `tautulli_api_key` | password | Tautulli exporter |
+   | `secrets.yml` | text (multiline) | Recyclarr → copied to `/config/secrets.yml` on pod start |
 
-   Use **password** (concealed) fields for API keys/tokens. Keys come from each app’s Settings → General (or Plex token / Tautulli API key as applicable).
+   `secrets.yml` example (plain YAML, no code fences):
 
-2. Copy values before cutover (if still running):
-
-   ```sh
-   kubectl -n media get secret exportarr -o json | jq -r '.data | keys[]'
-   kubectl -n media get secret exportarr -o jsonpath='{.data.radarr_api_key}' | base64 -d; echo
-   # repeat for other keys
+   ```yaml
+   radarr_url: http://radarr.media.svc:7878
+   radarr_api_key: <api-key>
+   sonarr_tv_url: http://sonarr-tv.media.svc:8989
+   sonarr_tv_api_key: <api-key>
+   sonarr_anime_url: http://sonarr-anime.media.svc:8989
+   sonarr_anime_api_key: <api-key>
    ```
 
-   Or decode from local `infrastructure/secrets/exportarr-secret.yaml` (gitignored; optional reference copy).
-
-3. Commit, push, reconcile. Confirm:
+2. Copy before cutover from legacy secrets (if still running):
 
    ```sh
-   kubectl -n media get onepassworditem,secret exportarr
    kubectl -n media get secret exportarr -o json | jq -r '.data | keys[]'
+   kubectl -n media get secret recyclarr -o jsonpath='{.data.secrets\.yml}' | base64 -d
+   ```
+
+   Or use gitignored `exportarr-secret.yaml` / `recyclarr-secret.yaml` under `infrastructure/secrets/`.
+
+3. Verify:
+
+   ```sh
+   kubectl -n media get onepassworditem,secret arr-stack
+   kubectl -n media get secret arr-stack -o json | jq -r '.data | keys[]'
+   kubectl -n media rollout restart deploy/recyclarr
    for d in $(kubectl -n media get deploy -o name | grep exportarr); do kubectl -n media rollout restart "$d"; done
    ```
 
-4. Remove legacy: `kubectl -n media delete sealedsecret exportarr`
+4. Remove legacy:
+
+   ```sh
+   kubectl -n media delete onepassworditem exportarr recyclarr --ignore-not-found
+   kubectl -n media delete secret exportarr recyclarr --ignore-not-found
+   kubectl -n media delete sealedsecret exportarr recyclarr --ignore-not-found
+   ```
 
 ### Deluge (VPN + Web UI exporter password)
 
@@ -221,6 +237,54 @@ Used by `Deployment/deluge` (`VPN_USER`, `VPN_PASS`) and `Deployment/deluge-expo
    ```
 
 5. Remove legacy sealed secret if still present: `kubectl -n media delete sealedsecret deluge`
+
+### Valheim (server password)
+
+`apps/games/valheim/onepassword-item.yaml` → `Secret/valheim` in `valheim` (deployed with the `games` Flux kustomization). Used by `HelmRelease/valheim-server` as `SERVER_PASS` (`key: password`, min 5 characters).
+
+1. In vault **Collective**, create item **Valheim** with one field:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `password` | password | Valheim server password |
+
+2. Copy before cutover:
+
+   ```sh
+   kubectl -n valheim get secret valheim -o jsonpath='{.data.password}' | base64 -d; echo
+   ```
+
+3. Verify:
+
+   ```sh
+   kubectl -n valheim get onepassworditem,secret valheim
+   ```
+
+4. Remove legacy: `kubectl -n valheim delete sealedsecret valheim`
+
+### V Rising (server password)
+
+`apps/games/v-rising/onepassword-item.yaml` → `Secret/v-rising` in `v-rising`. Used by `HelmRelease/v-rising-server` as `VR_PASSWORD` (`key: password`; leave empty in 1Password for no password).
+
+1. In vault **Collective**, create item **V-Rising** with one field:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `password` | password | V Rising server password (optional) |
+
+2. Copy before cutover:
+
+   ```sh
+   kubectl -n v-rising get secret v-rising -o jsonpath='{.data.password}' | base64 -d; echo
+   ```
+
+3. Verify:
+
+   ```sh
+   kubectl -n v-rising get onepassworditem,secret v-rising
+   ```
+
+4. Remove legacy: `kubectl -n v-rising delete sealedsecret v-rising`
 
 ---
 

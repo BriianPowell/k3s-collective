@@ -60,7 +60,7 @@ spec:
             - name: PLEX_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: exportarr
+                  name: arr-stack
                   key: plex_token
             - name: PLEX_TIMEOUT
               value: '10'

@@ -62,7 +62,7 @@ spec:
             - name: APIKEY
               valueFrom:
                 secretKeyRef:
-                  name: exportarr
+                  name: arr-stack
                   key: sonarr_tv_api_key
           ports:
             - name: metrics

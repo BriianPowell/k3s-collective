@@ -59,7 +59,7 @@ spec:
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: exportarr
+                  name: arr-stack
                   key: seerr_api_key
           ports:
             - name: metrics

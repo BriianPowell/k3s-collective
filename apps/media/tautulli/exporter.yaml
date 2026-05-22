@@ -58,7 +58,7 @@ spec:
             - name: TAUTULLI_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: exportarr
+                  name: arr-stack
                   key: tautulli_api_key
             - name: TAUTULLI_URI
               value: http://tautulli.media.svc:8181

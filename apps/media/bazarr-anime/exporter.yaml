@@ -62,7 +62,7 @@ spec:
             - name: APIKEY
               valueFrom:
                 secretKeyRef:
-                  name: exportarr
+                  name: arr-stack
                   key: bazarr_anime_api_key
           ports:
             - name: metrics
