@@ -5,5 +5,6 @@ commonLabels:
   app.kubernetes.io/part-of: grafana
 
 resources:
+  - onepassword-item.yaml
   - helm-release.yaml
   - ingress.yaml

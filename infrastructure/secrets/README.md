@@ -185,6 +185,40 @@ The exporter reads `Secret/adguard` keys `USERNAMES` and `PASSWORDS`. AdGuard Ho
 
 4. Remove legacy sealed secret if still present: `kubectl -n monitoring delete sealedsecret alertmanager`
 
+### Grafana (admin + Keycloak OIDC)
+
+`apps/monitoring/grafana/onepassword-item.yaml` → `Secret/grafana` in `monitoring` (deployed with the `monitoring` Flux kustomization). Used by Grafana Helm chart: `admin.existingSecret` and `envFromSecrets` for Keycloak OAuth in `grafana.ini`.
+
+1. In vault **Collective**, create item **Grafana** with these fields (labels must match exactly):
+
+   | Label | Used by |
+   |-------|---------|
+   | `USER` | Grafana admin username |
+   | `PASS` | Grafana admin password |
+   | `CLIENT_ID` | Keycloak OAuth client ID |
+   | `CLIENT_SECRET` | Keycloak OAuth client secret |
+   | `AUTH_URL` | Keycloak authorization endpoint |
+   | `TOKEN_URL` | Keycloak token endpoint |
+   | `API_URL` | Keycloak userinfo endpoint |
+   | `LOGOUT_URL` | Keycloak logout redirect URL |
+
+2. Copy before cutover:
+
+   ```sh
+   kubectl -n monitoring get secret grafana -o json | jq -r '.data | keys[]'
+   ```
+
+   Or decode from local `infrastructure/secrets/grafana-secret.yaml` (gitignored).
+
+3. Verify:
+
+   ```sh
+   kubectl -n monitoring get onepassworditem,secret grafana
+   kubectl -n monitoring get pods -l app.kubernetes.io/name=grafana
+   ```
+
+4. Remove legacy: `kubectl -n monitoring delete sealedsecret grafana`
+
 ### CrowdSec (Console enroll key)
 
 Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
