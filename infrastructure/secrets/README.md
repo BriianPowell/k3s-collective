@@ -101,6 +101,35 @@ Used by `ClusterIssuer/lets-encrypt` (`apiTokenSecretRef` → `Secret/cloudflare
 
 5. Remove legacy sealed secret if still present: `kubectl -n cert-manager delete sealedsecret cloudflare-api-token`
 
+### CrowdSec (Console enroll key)
+
+Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
+
+1. In vault **Collective**, create item **CrowdSec** with one field:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `ENROLL_KEY` | password | CrowdSec Console enrollment key |
+
+   Create the key: [CrowdSec Console](https://app.crowdsec.net/) → enroll / instance key for your k3s deployment.
+
+2. Set `spec.itemPath` in `crowdsec-onepassword-item.yaml` if your vault/item name differs.
+
+3. Copy the current key before cutover (if still running):
+
+   ```sh
+   kubectl -n crowdsec get secret crowdsec -o jsonpath='{.data.ENROLL_KEY}' | base64 -d; echo
+   ```
+
+4. Commit, push, reconcile. Confirm:
+
+   ```sh
+   kubectl -n crowdsec get onepassworditem,secret crowdsec
+   kubectl -n crowdsec get pods
+   ```
+
+5. Remove legacy sealed secret if still present: `kubectl -n crowdsec delete sealedsecret crowdsec`
+
 ---
 
 ## Sealed Secrets (legacy)
