@@ -62,7 +62,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: nextcloud
-                  key: TOKEN
+                  key: token
           ports:
             - name: metrics
               containerPort: 9205
