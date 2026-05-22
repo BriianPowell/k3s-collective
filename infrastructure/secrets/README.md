@@ -123,9 +123,9 @@ Config (routes, receivers, SMTP host/user) lives in git: `apps/monitoring/alert-
 
 | Label | Mounted at |
 |-------|------------|
-| `smtp_auth_password` | `/etc/alertmanager/secrets/smtp_auth_password` |
+| `password` | iCloud app-specific SMTP password → mounted as `/etc/alertmanager/secrets/smtp_auth_password` |
 
-Item **Alertmanager SMTP** → `Secret/alertmanager-smtp`.
+Item **SMTP** (Login) in vault **Collective** → `Secret/alertmanager-smtp`. Use a **password** field (standard Login field); the deployment renames it to the path Alertmanager expects.
 
 ### Grafana
 

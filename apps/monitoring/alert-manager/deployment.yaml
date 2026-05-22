@@ -33,8 +33,9 @@ spec:
       secret:
         secretName: alertmanager-smtp
         items:
+          # 1Password Login item maps the app password to key "password"
           - key: password
-            path: password
+            path: smtp_auth_password
   nodeSelector:
     kubernetes.io/hostname: abaddon
   podMetadata:
