@@ -12,7 +12,7 @@ kubectl -n onepassword create secret generic onepassword-token \
   --from-literal=token='YOUR_CONNECT_TOKEN'
 ```
 
-App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
+App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
 
 ### Traefik Forward Auth (OIDC)
 
@@ -145,6 +145,50 @@ Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
    ```
 
 5. Remove legacy sealed secret if still present: `kubectl -n crowdsec delete sealedsecret crowdsec`
+
+### Exportarr (media stack API keys)
+
+Shared by exportarr / Plex / Seerr / Tautulli exporter deployments in `media` (`Secret/exportarr`).
+
+`apps/media/exportarr/onepassword-item.yaml` → `Secret/exportarr` (deployed with the `media` Flux kustomization).
+
+1. In vault **Collective**, create item **Exportarr** with these fields (labels must match exactly):
+
+   | Label | Used by |
+   |-------|---------|
+   | `bazarr_api_key` | Bazarr exportarr |
+   | `bazarr_anime_api_key` | Bazarr Anime exportarr |
+   | `lidarr_api_key` | Lidarr exportarr |
+   | `prowlarr_api_key` | Prowlarr exportarr |
+   | `radarr_api_key` | Radarr exportarr |
+   | `readarr_api_key` | Readarr exportarr |
+   | `sonarr_tv_api_key` | Sonarr TV exportarr |
+   | `sonarr_anime_api_key` | Sonarr Anime exportarr |
+   | `plex_token` | Plex exporter (`PLEX_TOKEN`) |
+   | `seerr_api_key` | Seerr exporter |
+   | `tautulli_api_key` | Tautulli exporter |
+
+   Use **password** (concealed) fields for API keys/tokens. Keys come from each app’s Settings → General (or Plex token / Tautulli API key as applicable).
+
+2. Copy values before cutover (if still running):
+
+   ```sh
+   kubectl -n media get secret exportarr -o json | jq -r '.data | keys[]'
+   kubectl -n media get secret exportarr -o jsonpath='{.data.radarr_api_key}' | base64 -d; echo
+   # repeat for other keys
+   ```
+
+   Or decode from local `infrastructure/secrets/exportarr-secret.yaml` (gitignored; optional reference copy).
+
+3. Commit, push, reconcile. Confirm:
+
+   ```sh
+   kubectl -n media get onepassworditem,secret exportarr
+   kubectl -n media get secret exportarr -o json | jq -r '.data | keys[]'
+   for d in $(kubectl -n media get deploy -o name | grep exportarr); do kubectl -n media rollout restart "$d"; done
+   ```
+
+4. Remove legacy: `kubectl -n media delete sealedsecret exportarr`
 
 ### Deluge (VPN + Web UI exporter password)
 
