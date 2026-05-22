@@ -4,7 +4,18 @@ namespace: monitoring
 commonLabels:
   app.kubernetes.io/part-of: alert-manager
 
+secretGenerator:
+  - name: alertmanager
+    files:
+      - alertmanager.yaml
+    options:
+      disableNameSuffixHash: true
+      labels:
+        app.kubernetes.io/component: secrets
+        app.kubernetes.io/name: alertmanager
+
 resources:
   - deployment.yaml
   - ingress.yaml
   - template.yaml
+  - onepassword-item.yaml

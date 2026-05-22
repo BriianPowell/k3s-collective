@@ -22,10 +22,19 @@ spec:
       volumeMounts:
         - name: templates-volume
           mountPath: /etc/alertmanager-templates
+        - name: smtp-auth
+          mountPath: /etc/alertmanager/secrets
+          readOnly: true
   volumes:
     - name: templates-volume
       configMap:
         name: alertmanager-templates
+    - name: smtp-auth
+      secret:
+        secretName: alertmanager-smtp
+        items:
+          - key: smtp_auth_password
+            path: smtp_auth_password
   nodeSelector:
     kubernetes.io/hostname: abaddon
   podMetadata:

@@ -47,7 +47,9 @@ spec:
             nvidiaDriverRoot: /run/opengl-driver
             plugin:
               passDeviceSpecs: false
-              deviceListStrategy: envvar
+              deviceListStrategy:
+                - cdi-annotations
+              cdiAnnotationPrefix: cdi.k8s.io/
               deviceIDStrategy: uuid
     gdsEnabled: false
     mofedEnabled: false

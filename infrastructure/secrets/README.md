@@ -49,6 +49,29 @@ App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`).
 
 The exporter reads `Secret/adguard` keys `USERNAMES` and `PASSWORDS`. AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 
+### Alertmanager (config in git, SMTP password in 1Password)
+
+- **Git:** `apps/monitoring/alert-manager/alertmanager.yaml` — routes, receivers, SMTP host/user (no password). Kustomize `secretGenerator` creates `Secret/alertmanager`.
+- **1Password:** item **Alertmanager SMTP**, field `smtp_auth_password` → `Secret/alertmanager-smtp`, mounted at `/etc/alertmanager/secrets/smtp_auth_password`.
+
+1. In vault **Collective**, create **Alertmanager SMTP** with one field:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `smtp_auth_password` | password | iCloud app-specific SMTP password (plain text, one line) |
+
+2. Edit routes/receivers in `alertmanager.yaml` in git as needed.
+
+3. After deploy, verify:
+
+   ```sh
+   kubectl -n monitoring get secret alertmanager alertmanager-smtp
+   kubectl -n monitoring get onepassworditem alertmanager-smtp
+   kubectl -n monitoring get pods -l app.kubernetes.io/name=alertmanager
+   ```
+
+4. Remove legacy sealed secret if still present: `kubectl -n monitoring delete sealedsecret alertmanager`
+
 ---
 
 ## Sealed Secrets (legacy)

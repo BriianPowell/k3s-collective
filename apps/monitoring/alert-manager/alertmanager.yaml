@@ -1,0 +1,23 @@
+global:
+  smtp_from: alert@powell.place
+  smtp_smarthost: smtp.mail.me.com:587
+  smtp_auth_username: bapowell00@icloud.com
+  smtp_auth_password_file: /etc/alertmanager/secrets/smtp_auth_password
+  smtp_require_tls: true
+templates:
+  - '/etc/alertmanager-templates/*.tmpl'
+route:
+  receiver: alert-emailer
+  group_by: ['alertname', 'priority']
+  group_wait: 30s
+  repeat_interval: 10m
+  routes:
+    - receiver: 'null'
+      matchers:
+        - alertname=~"InfoInhibitor|Watchdog"
+receivers:
+  - name: 'null'
+  - name: alert-emailer
+    email_configs:
+      - to: brian@powell.place
+        send_resolved: true
