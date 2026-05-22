@@ -82,9 +82,15 @@ spec:
           env:
             # First Time Setup, use generic user
             # - name: KEYCLOAK_ADMIN
-            #   value: admin
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: keycloak
+            #       key: username
             # - name: KEYCLOAK_ADMIN_PASSWORD
-            #   value: keycloak
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: keycloak
+            #       key: password
             - name: KC_PROXY_HEADERS
               value: xforwarded
             - name: KC_HTTP_ENABLED
@@ -93,7 +99,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: keycloak
-                  key: DOMAIN
+                  key: trusted_domains
             - name: KC_SPI_ADMIN_REALM
               value: inferno
             - name: KC_DB

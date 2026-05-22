@@ -14,6 +14,38 @@ kubectl -n onepassword create secret generic onepassword-token \
 
 App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, `apps/games/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
 
+### Keycloak
+
+`apps/base/keycloak/onepassword-item.yaml` → `Secret/keycloak` in `keycloak` (deployed with the `base` Flux kustomization).
+
+| Label | Used by |
+|-------|---------|
+| `DOMAIN` | `KC_HOSTNAME` (e.g. `keycloak.powell.place`) |
+| `KC_ADMN` | Legacy / optional bootstrap admin username (typo preserved for key parity; `KEYCLOAK_ADMIN` is commented out in deployment) |
+| `KC_PASS` | Legacy / optional bootstrap admin password (`KEYCLOAK_ADMIN_PASSWORD` commented out) |
+
+Postgres credentials come from CNPG `Secret/keycloak-pgcluster-app`, not this secret.
+
+1. In vault **Collective**, create item **Keycloak** with those three fields (labels must match exactly, including `KC_ADMN`).
+
+2. Copy before cutover:
+
+   ```sh
+   kubectl -n keycloak get secret keycloak -o json | jq -r '.data | keys[]'
+   kubectl -n keycloak get secret keycloak -o jsonpath='{.data.DOMAIN}' | base64 -d; echo
+   ```
+
+   Or decode from local `infrastructure/secrets/keycloak-secret.yaml` (gitignored).
+
+3. Verify:
+
+   ```sh
+   kubectl -n keycloak get onepassworditem,secret keycloak
+   kubectl -n keycloak get pods -l app.kubernetes.io/name=keycloak
+   ```
+
+4. Remove legacy: `kubectl -n keycloak delete sealedsecret keycloak`
+
 ### Nextcloud
 
 `apps/base/nextcloud/onepassword-item.yaml` → `Secret/nextcloud` in `nextcloud` (deployed with the `base` Flux kustomization).
