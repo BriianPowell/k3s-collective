@@ -7,6 +7,7 @@ commonLabels:
 resources:
   - cron.yaml
   - deployment.yaml
+  - onepassword-item.yaml
   - exporter.yaml
   - ingress.yaml
   - middleware.yaml

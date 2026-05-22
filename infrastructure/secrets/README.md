@@ -14,6 +14,42 @@ kubectl -n onepassword create secret generic onepassword-token \
 
 App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`, `apps/media/*/onepassword-item.yaml`, `apps/games/*/onepassword-item.yaml`, and this directory for cluster-wide secrets). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
 
+### Nextcloud
+
+`apps/base/nextcloud/onepassword-item.yaml` → `Secret/nextcloud` in `nextcloud` (deployed with the `base` Flux kustomization).
+
+| Label | Used by |
+|-------|---------|
+| `ADMIN_USER` | `NEXTCLOUD_ADMIN_USER` |
+| `ADMIN_PASS` | `NEXTCLOUD_ADMIN_PASSWORD` |
+| `DOMAIN` | `NEXTCLOUD_TRUSTED_DOMAINS` |
+| `SMTP_NAME` | `SMTP_NAME` |
+| `SMTP_PASSWORD` | `SMTP_PASSWORD` |
+| `MAIL_FROM_ADDRESS` | `MAIL_FROM_ADDRESS` |
+| `TOKEN` | nextcloud-exporter `NEXTCLOUD_AUTH_TOKEN` |
+| `PG_DB`, `PG_USER`, `PG_PASS` | Legacy (Postgres is CNPG `nextcloud-pgcluster-app`; optional to keep for reference) |
+
+1. In vault **Collective**, create item **Nextcloud** with those fields (labels must match exactly).
+
+2. Copy before cutover:
+
+   ```sh
+   kubectl -n nextcloud get secret nextcloud -o json | jq -r '.data | keys[]'
+   kubectl -n nextcloud get secret nextcloud -o jsonpath='{.data.DOMAIN}' | base64 -d; echo
+   ```
+
+   Or decode from local `infrastructure/secrets/nextcloud-secret.yaml` (gitignored).
+
+3. Verify:
+
+   ```sh
+   kubectl -n nextcloud get onepassworditem,secret nextcloud
+   kubectl -n nextcloud get pods -l app.kubernetes.io/name=nextcloud
+   kubectl -n nextcloud get pods -l app.kubernetes.io/name=nextcloud-exporter
+   ```
+
+4. Remove legacy: `kubectl -n nextcloud delete sealedsecret nextcloud`
+
 ### Traefik Forward Auth (OIDC)
 
 `apps/base/forward-auth/onepassword-item.yaml` → `Secret/traefik-forward-auth` in `kube-system` (deployed with the `kube-system` app kustomization, not `infra-secrets`).

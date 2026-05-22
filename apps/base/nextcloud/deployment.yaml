@@ -76,22 +76,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: nextcloud-pgcluster-app
-                  key: host
+                  key: hostname
             - name: NEXTCLOUD_ADMIN_USER
               valueFrom:
                 secretKeyRef:
                   name: nextcloud
-                  key: ADMIN_USER
+                  key: username
             - name: NEXTCLOUD_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: nextcloud
-                  key: ADMIN_PASS
+                  key: password
             - name: NEXTCLOUD_TRUSTED_DOMAINS
               valueFrom:
                 secretKeyRef:
                   name: nextcloud
-                  key: DOMAIN
+                  key: trusted_domains
             - name: REDIS_HOST
               value: nextcloud-redis
             - name: SMTP_HOST
@@ -103,18 +103,18 @@ spec:
             - name: SMTP_NAME
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud
-                  key: SMTP_NAME
+                  name: nextcloud-smtp
+                  key: username
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nextcloud
-                  key: SMTP_PASSWORD
+                  name: nextcloud-smtp
+                  key: password
             - name: MAIL_FROM_ADDRESS
               valueFrom:
                 secretKeyRef:
                   name: nextcloud
-                  key: MAIL_FROM_ADDRESS
+                  key: mail_from_address
             - name: APACHE_DISABLE_REWRITE_IP
               value: '1'
             - name: TRUSTED_PROXIES
