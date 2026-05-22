@@ -76,7 +76,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: nextcloud-pgcluster-app
-                  key: hostname
+                  key: host
             - name: NEXTCLOUD_ADMIN_USER
               valueFrom:
                 secretKeyRef:
