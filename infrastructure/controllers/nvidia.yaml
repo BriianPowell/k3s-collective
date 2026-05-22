@@ -43,7 +43,8 @@ spec:
           flags:
             migStrategy: 'none'
             failOnInitError: true
-            nvidiaDriverRoot: '/'
+            # NixOS driver libs live under /run/opengl-driver, not /.
+            nvidiaDriverRoot: /run/opengl-driver
             plugin:
               passDeviceSpecs: false
               deviceListStrategy: envvar

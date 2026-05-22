@@ -51,10 +51,10 @@ spec:
       nodePort: 32400
     nodeSelector:
       kubernetes.io/hostname: sheol
-    # tolerations:
-    #   - key: nvidia.com/gpu
-    #     operator: Exists
-    #     effect: NoSchedule
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
     extraEnv:
       # PLEX_CLAIM: claim-y9QhWVfUGn22TSEPczbU
       HOSTNAME: PlexServer

@@ -143,11 +143,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: 10m
-              memory: 400Mi
+              cpu: 100m
+              memory: 1Gi
             limits:
-              cpu: 750m
-              memory: 750Mi
+              cpu: 1500m
+              memory: 2Gi
           readinessProbe:
             initialDelaySeconds: 90
             timeoutSeconds: 30
