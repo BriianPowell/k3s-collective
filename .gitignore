@@ -6,4 +6,5 @@
 *.srl
 
 infrastructure/secrets/*-secret.yaml
+**/1password-credentials.json
 testclient.json
