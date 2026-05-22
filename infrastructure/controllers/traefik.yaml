@@ -62,10 +62,20 @@ spec:
       labels:
         app.kubernetes.io/component: service
       ipFamilyPolicy: PreferDualStack
+      spec:
+        # Preserve client source IP to the Traefik pod (default Cluster SNATs to node IP)
+        externalTrafficPolicy: Local
     ports:
       web:
         redirectTo:
           port: websecure
+        forwardedHeaders:
+          insecure: true
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/16
+            - 10.42.0.0/24
+            - 10.43.0.0/24
       websecure:
         middlewares:
           - kube-system-crowdsec-bouncer@kubernetescrd
@@ -74,11 +84,11 @@ spec:
         forwardedHeaders:
           insecure: true
           trustedIPs:
-            # - 0.0.0.0/0 # for testing, will allow all IPS
-            - 127.0.0.1/32 # localhost
-            - 10.0.0.0/16 # local subnet
-            - 10.42.0.0/24 # Kubernetes Subnet
-            - 10.43.0.0/24 # Kubernetes Subnet
+            # LAN / cluster: trust X-Forwarded-* from upstream proxies on these nets
+            - 127.0.0.1/32
+            - 10.0.0.0/16
+            - 10.42.0.0/24
+            - 10.43.0.0/24
         proxyProtocol:
           insecure: true
           trustedIPs:
