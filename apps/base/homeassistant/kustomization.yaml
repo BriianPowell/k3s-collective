@@ -8,4 +8,5 @@ resources:
   - deployment.yaml
   - image-automation.yaml
   - ingress.yaml
+  - onepassword-item.yaml
   - pgcluster.yaml

@@ -17,7 +17,7 @@ spec:
   endpoints:
     - authorization:
         credentials:
-          key: HASSTOKEN
+          key: token
           name: prometheus
       interval: 4m
       port: http

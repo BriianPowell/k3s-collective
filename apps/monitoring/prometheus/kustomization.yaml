@@ -5,6 +5,7 @@ commonLabels:
   app.kubernetes.io/part-of: prometheus
 
 resources:
+  - onepassword-item.yaml
   - ingress.yaml
   - podMonitor-cnpg.yaml
   - podMonitor-fluxcd.yaml

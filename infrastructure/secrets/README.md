@@ -29,6 +29,36 @@ App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`).
 3. Verify: `kubectl -n kube-system get onepassworditem,secret traefik-forward-auth` and `kubectl -n kube-system get pods -l app.kubernetes.io/name=traefik-forward-auth`
 4. Remove legacy: `kubectl -n kube-system delete sealedsecret traefik-forward-auth`
 
+### Home Assistant
+
+Vault **Collective**, item **Home Assistant**:
+
+| Label | Type | Used by |
+|-------|------|---------|
+| `secrets.yaml` | text (multiline) | `apps/base/homeassistant/onepassword-item.yaml` → `Secret/homeassistant`; copied to `/config/secrets.yaml` on pod start |
+| `token` | concealed | `apps/monitoring/prometheus/onepassword-item.yaml` → `Secret/prometheus` in `monitoring`; Home Assistant Prometheus `/api/prometheus` scrapes |
+
+**HA config secrets**
+
+1. Paste entire `secrets.yaml` (plain YAML only — no markdown code fences).
+2. Copy before cutover: `kubectl -n homeassistant get secret homeassistant -o jsonpath='{.data.secrets\.yaml}' | base64 -d`
+3. Verify: `kubectl -n homeassistant get onepassworditem,secret homeassistant` and `kubectl -n homeassistant get pods`
+4. Remove legacy: `kubectl -n homeassistant delete sealedsecret homeassistant`
+
+**Prometheus scrape token**
+
+1. In Home Assistant: Profile → Security → Long-Lived Access Tokens → create token (or reuse existing).
+2. Add field `token` on the **Home Assistant** 1Password item with that value.
+3. Copy before cutover: `kubectl -n monitoring get secret prometheus -o jsonpath='{.data.HASSTOKEN}' | base64 -d`
+4. Verify:
+
+   ```sh
+   kubectl -n monitoring get onepassworditem prometheus
+   kubectl -n monitoring get secret prometheus -o jsonpath='{.data.token}' | base64 -d | wc -c
+   ```
+
+5. Remove legacy: `kubectl -n monitoring delete sealedsecret prometheus`
+
 ### AdGuard (exporter API credentials)
 
 1. In 1Password, create a **Login** or **Secure Note** in a vault Connect can access.
