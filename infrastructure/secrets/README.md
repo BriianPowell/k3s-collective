@@ -14,6 +14,21 @@ kubectl -n onepassword create secret generic onepassword-token \
 
 App secrets use `OnePasswordItem` CRs (see `apps/base/*/onepassword-item.yaml`). The operator creates a `Secret` with the same name as the CR. **Field labels in 1Password must match the Kubernetes secret keys** your apps reference (`secretKeyRef.key`).
 
+### Traefik Forward Auth (OIDC)
+
+`apps/base/forward-auth/onepassword-item.yaml` → `Secret/traefik-forward-auth` in `kube-system` (deployed with the `kube-system` app kustomization, not `infra-secrets`).
+
+| Label | Used as |
+|-------|---------|
+| `client-id` | `PROVIDERS_OIDC_CLIENT_ID` |
+| `client-secret` | `PROVIDERS_OIDC_CLIENT_SECRET` |
+| `secret` | `SECRET` (cookie signing) |
+
+1. In vault **Collective**, item **Forward Auth** with those three fields (labels must match exactly, including hyphens).
+2. Copy values before cutover: `kubectl -n kube-system get secret traefik-forward-auth -o jsonpath='{.data}' | jq 'keys'`
+3. Verify: `kubectl -n kube-system get onepassworditem,secret traefik-forward-auth` and `kubectl -n kube-system get pods -l app.kubernetes.io/name=traefik-forward-auth`
+4. Remove legacy: `kubectl -n kube-system delete sealedsecret traefik-forward-auth`
+
 ### AdGuard (exporter API credentials)
 
 1. In 1Password, create a **Login** or **Secure Note** in a vault Connect can access.

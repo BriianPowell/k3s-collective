@@ -93,17 +93,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: traefik-forward-auth
-                  key: client-id
+                  key: client_id
             - name: PROVIDERS_OIDC_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: traefik-forward-auth
-                  key: client-secret
+                  key: client_secret
             - name: SECRET
               valueFrom:
                 secretKeyRef:
                   name: traefik-forward-auth
-                  key: secret
+                  key: auth_secret
           ports:
             - name: http
               containerPort: 4181
