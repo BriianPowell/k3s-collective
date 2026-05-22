@@ -9,3 +9,4 @@ resources:
   - exporter.yaml
   - image-automation.yaml
   - ingress.yaml
+  - onepassword-item.yaml

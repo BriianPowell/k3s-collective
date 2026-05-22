@@ -130,6 +130,38 @@ Used by `HelmRelease/crowdsec` LAPI (`ENROLL_KEY` → `Secret/crowdsec`).
 
 5. Remove legacy sealed secret if still present: `kubectl -n crowdsec delete sealedsecret crowdsec`
 
+### Deluge (VPN + Web UI exporter password)
+
+Used by `Deployment/deluge` (`VPN_USER`, `VPN_PASS`) and `Deployment/deluge-exporter` (`APP_PASS` as Deluge Web UI password).
+
+1. In vault **Collective**, create item **Deluge** with three fields:
+
+   | Label | Type | Value |
+   |-------|------|--------|
+   | `VPN_USER` | text | PIA WireGuard username |
+   | `VPN_PASS` | password | PIA WireGuard password |
+   | `APP_PASS` | password | Deluge Web UI password (for deluge-exporter metrics) |
+
+2. Set `spec.itemPath` in `deluge-onepassword-item.yaml` if your vault/item name differs.
+
+3. Copy values before cutover (if still running):
+
+   ```sh
+   kubectl -n media get secret deluge -o jsonpath='{.data.VPN_USER}' | base64 -d; echo
+   kubectl -n media get secret deluge -o jsonpath='{.data.VPN_PASS}' | base64 -d; echo
+   kubectl -n media get secret deluge -o jsonpath='{.data.APP_PASS}' | base64 -d; echo
+   ```
+
+4. Commit, push, reconcile. Confirm:
+
+   ```sh
+   kubectl -n media get onepassworditem,secret deluge
+   kubectl -n media get pods -l app.kubernetes.io/name=deluge
+   kubectl -n media get pods -l app.kubernetes.io/name=deluge-exporter
+   ```
+
+5. Remove legacy sealed secret if still present: `kubectl -n media delete sealedsecret deluge`
+
 ---
 
 ## Sealed Secrets (legacy)

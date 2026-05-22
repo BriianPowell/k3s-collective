@@ -79,12 +79,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: deluge
-                  key: VPN_USER
+                  key: vpn_username
             - name: VPN_PASS
               valueFrom:
                 secretKeyRef:
                   name: deluge
-                  key: VPN_PASS
+                  key: vpn_password
             - name: VPN_PROV
               value: pia
             - name: VPN_CLIENT

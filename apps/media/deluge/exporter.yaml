@@ -67,7 +67,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: deluge
-                  key: APP_PASS
+                  key: password
           ports:
             - name: metrics
               containerPort: 8011
