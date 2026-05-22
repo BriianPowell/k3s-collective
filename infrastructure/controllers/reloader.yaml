@@ -44,7 +44,8 @@ spec:
       syncAfterRestart: false
       reloadStrategy: default # Set to default, env-vars or annotations
       # ignoreNamespaces: '' # Comma separated list of namespaces to ignore
-      namespaceSelector: 'kubernetes.io/metadata.name=crowdsec,kubernetes.io/metadata.name=kube-system,kubernetes.io/metadata.name=media' # Comma separated list of k8s label selectors for namespaces selection
+      # Multiple selectors are ANDed; use "in (...)" for OR across namespaces.
+      namespaceSelector: 'kubernetes.io/metadata.name in (crowdsec,kube-system,media)'
       # resourceLabelSelector: '' # Comma separated list of k8s label selectors for configmap/secret selection
       logFormat: 'json' #json
       watchGlobally: true
@@ -56,7 +57,7 @@ spec:
         replicas: 1
         labels:
           app.kubernetes.io/component: app
-          app.kuberenetes.io/name: reloader
+          app.kubernetes.io/name: reloader
         nodeSelector:
           kubernetes.io/hostname: abaddon
       serviceAccount:

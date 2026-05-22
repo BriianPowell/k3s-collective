@@ -27,7 +27,6 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 
 - [x] [Atuin](https://github.com/atuinsh/atuin)
 - [x] [Error Pages](https://github.com/tarampampam/error-pages)
-- [x] [Maybe](https://github.com/maybe-finance/maybe) - Configuration created but automatic connectors not supported yet
 - [x] [Ntfy](https://github.com/binwiederhier/ntfy)
 
 ### Monitoring & Logging
