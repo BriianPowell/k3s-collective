@@ -45,8 +45,6 @@ spec:
         secret.reloader.stakater.com/auto: 'true'
         # Explicit: restart when reflected CrowdSec bouncer cert rotates in kube-system
         secret.reloader.stakater.com/reload: crowdsec-bouncer-tls
-      additionalVolumes:
-        - name: plugins
       labels:
         app.kubernetes.io/component: deployment
       podLabels:
@@ -128,9 +126,6 @@ spec:
       - name: crowdsec-bouncer-tls
         mountPath: /etc/traefik/crowdsec-certs/
         type: secret
-    additionalVolumeMounts:
-      - name: plugins
-        mountPath: /plugins-storage
     tlsOptions:
       default:
         minVersion: VersionTLS12
