@@ -60,7 +60,7 @@ spec:
         kubernetes.io/hostname: abaddon
       initContainers:
         - name: init-config
-          image: eclipse-mosquitto:2.0.21 # {"$imagepolicy": "homeassistant:mosquitto"}
+          image: docker.io/library/eclipse-mosquitto:2.0.22 # {"$imagepolicy": "homeassistant:mosquitto"}
           command:
             - /bin/sh
             - -c
@@ -86,7 +86,7 @@ spec:
               mountPath: /mosquitto/config
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.0.21 # {"$imagepolicy": "homeassistant:mosquitto"}
+          image: docker.io/library/eclipse-mosquitto:2.0.22 # {"$imagepolicy": "homeassistant:mosquitto"}
           imagePullPolicy: Always
           ports:
             - name: mqtt
