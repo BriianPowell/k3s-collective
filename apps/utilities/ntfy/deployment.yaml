@@ -155,7 +155,7 @@ spec:
     name: ntfy-pvc
     namespace: kube-system
   local:
-    path: /media/ntfy
+    path: /data/ntfy
   nodeAffinity:
     required:
       nodeSelectorTerms:

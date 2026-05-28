@@ -1,0 +1,58 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: mosquitto
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: image-repository
+    app.kubernetes.io/name: mosquitto
+spec:
+  image: docker.io/library/eclipse-mosquitto
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: mosquitto
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: image-policy
+    app.kubernetes.io/name: mosquitto
+spec:
+  imageRepositoryRef:
+    name: mosquitto
+    namespace: homeassistant
+  policy:
+    semver:
+      range: '>=2.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: mosquitto
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: image-update-automation
+    app.kubernetes.io/name: mosquitto
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: FluxCDBot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/base/homeassistant
+    strategy: Setters

@@ -81,8 +81,12 @@ AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 |-------|---------|
 | `secrets.yaml` | Multiline file mounted to `/config/secrets.yaml` |
 | `token` | Also synced to `Secret/prometheus` in `monitoring` for Prometheus scrape |
+| `mqtt-username` | Mosquitto broker init container |
+| `mqtt-password` | Mosquitto broker init container |
 
 **Prometheus token:** Home Assistant → Profile → Security → Long-Lived Access Tokens. Same 1Password item, field `token`.
+
+**MQTT:** Add matching `MQTT_USERNAME` and `MQTT_PASSWORD` entries to the `secrets.yaml` field content (same values as `mqtt-username` / `mqtt-password`). LAN devices connect to `abaddon:1883` with those credentials.
 
 ### Keycloak
 
