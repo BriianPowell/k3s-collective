@@ -79,6 +79,39 @@ spec:
             severity: critical
           annotations:
             summary: Node {{$labels.kubernetes_io_hostname}} has more than 85% disk used
+    - name: Housekeeping
+      rules:
+        - alert: CertManagerCertificateExpiringSoon
+          expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 21 * 24 * 3600
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: Certificate {{ $labels.name }} in {{ $labels.namespace }} expires in less than 21 days
+            description: Check cert-manager Certificate / ACME renewal (e.g. wildcard-powell-place).
+        - alert: CertManagerCertificateExpiringCritical
+          expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 7 * 24 * 3600
+          for: 30m
+          labels:
+            severity: critical
+          annotations:
+            summary: Certificate {{ $labels.name }} in {{ $labels.namespace }} expires in less than 7 days
+        - alert: FluxResourceNotReady
+          expr: gotk_resource_info{ready="False", suspended!="true", customresource_kind=~"Kustomization|HelmRelease|GitRepository"} == 1
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: Flux {{ $labels.customresource_kind }} {{ $labels.name }} in {{ $labels.exported_namespace }} is not Ready
+            description: Run `flux get kustomizations,helmreleases,sources -A` and reconcile the failing resource.
+        - alert: PersistentVolumeClaimLowSpace
+          expr: kubelet_volume_stats_available_bytes / kubelet_volume_stats_capacity_bytes < 0.15 and kubelet_volume_stats_capacity_bytes > 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: PVC {{ $labels.persistentvolumeclaim }} in {{ $labels.namespace }} is over 85% full
+            description: Also see rule KubePersistentVolumeFillingUp (kubernetes-storage, ~97% full).
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
