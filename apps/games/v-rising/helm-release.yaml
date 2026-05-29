@@ -16,7 +16,7 @@ metadata:
 spec:
   type: oci
   interval: 24h
-  url: oci://tccr.io/truecharts
+  url: oci://oci.trueforge.org/truecharts
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmChart
