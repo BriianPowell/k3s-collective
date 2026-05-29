@@ -1,10 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# System namespaces (kube-system, flux-system, cert-manager, cnpg-system, onepassword,
-# reflector, reloader) intentionally have no policies — API webhooks, DNS, and operators need broader reach.
+# Unrestricted: flux-system (gotk policies), cnpg-system, onepassword (cross-ns API clients).
+# kube-system: CIS ingress policies in manifests/kube-system.yaml.
 
 resources:
   - manifests/standard.yaml
   - manifests/cnpg.yaml
   - manifests/open-ingress.yaml
+  - manifests/kube-system.yaml
