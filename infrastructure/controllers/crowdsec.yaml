@@ -26,6 +26,7 @@ metadata:
     app.kubernetes.io/name: crowdsec
 spec:
   interval: 1h0m0s
+  timeout: 10m0s
   chart:
     spec:
       chart: crowdsec
@@ -44,6 +45,8 @@ spec:
             - kube-system
             - crowdsec
     agent:
+      # PSA baseline on crowdsec forbids hostPath; we only scrape Traefik via k8s acquisition.
+      hostVarLog: false
       podLabels:
         app.kubernetes.io/component: agent
         app.kubernetes.io/name: crowdsec-agent
@@ -102,7 +105,7 @@ spec:
         config:
           existingClaim: crowdsec-config-pvc
       nodeSelector:
-        node-role.kubernetes.io/master: 'true'
+        kubernetes.io/hostname: sheol
       env:
         # For an internal test, disable the Online API
         - name: ENROLL_KEY
