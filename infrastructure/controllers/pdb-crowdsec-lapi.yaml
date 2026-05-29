@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: crowdsec-lapi
+  namespace: crowdsec
+  labels:
+    app.kubernetes.io/component: pod-disruption-budget
+    app.kubernetes.io/name: crowdsec-lapi
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: crowdsec-lapi

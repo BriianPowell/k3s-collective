@@ -38,6 +38,9 @@ spec:
   values:
     commonLabels:
       app.kubernetes.io/part-of: traefik
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
     deployment:
       revisionHistoryLimit: 3
       # k3s klipper-lb + externalTrafficPolicy: Local requires a pod on every node

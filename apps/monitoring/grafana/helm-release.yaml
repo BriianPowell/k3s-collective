@@ -47,6 +47,8 @@ spec:
       version: '>=8.0.0 <9.0.0'
   values:
     revisionHistoryLimit: 3
+    podDisruptionBudget:
+      minAvailable: 1
     serviceMonitor:
       enabled: true
       path: /metrics

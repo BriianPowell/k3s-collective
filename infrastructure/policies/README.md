@@ -8,6 +8,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 |--------|------------|
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
+
+**PDBs** (voluntary disruption): Traefik DS `minAvailable: 1` (Helm); Prometheus + Grafana `minAvailable: 1` (Helm); CrowdSec LAPI `pdb-crowdsec-lapi.yaml`. Single-replica workloads block `kubectl drain` until scaled or PDB removed.
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
 | `allow-all-ingress` | `adguard`, `minecraft`, `valheim`, `v-rising` (LB / game / DNS ports) |
 | `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
@@ -35,7 +37,7 @@ See `nix-config/hosts/sheol/kubernetes.nix`: `secrets-encryption`, `protect-kern
 | 3 | Idle games: `games` Kustomization + HelmRelease `suspend` | done |
 | 4 | CronJob: prune succeeded Jobs cluster-wide | done |
 | 5 | `LimitRange` in `media` (and optionally `monitoring`) | done |
-| 6 | PDBs for Traefik, Prometheus, Grafana, CrowdSec LAPI | pending |
+| 6 | PDBs for Traefik, Prometheus, Grafana, CrowdSec LAPI | done |
 | 7 | CIS: `automountServiceAccountToken: false` on default SAs | pending |
 | 8 | sheol PKI `chmod 600` on k3s server TLS material | pending |
 | 9 | Prometheus alerts (cert expiry, Flux Not Ready, disk, PVC) | pending |

@@ -140,6 +140,9 @@ spec:
         kubernetes.io/hostname: abaddon
     prometheus:
       enabled: true
+      podDisruptionBudget:
+        enabled: true
+        minAvailable: 1
       prometheusSpec:
         scrapeInterval: '30s'
         scrapeTimeout: '10s'
