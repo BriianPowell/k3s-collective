@@ -39,8 +39,6 @@ spec:
     revisionHistoryLimit: 3
     webhook:
       revisionHistoryLimit: 3
-    cainjector:
-      revisionHistoryLimit: 3
     global:
       leaderElection:
         namespace: 'cert-manager'
@@ -57,6 +55,7 @@ spec:
       defaultIssuerKind: 'ClusterIssuer'
       defaultIssuerGroup: 'cert-manager.io'
     cainjector:
+      revisionHistoryLimit: 3
       extraArgs:
         - --leader-elect=false
     prometheus:
