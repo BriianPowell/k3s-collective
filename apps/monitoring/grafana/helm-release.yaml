@@ -29,6 +29,13 @@ metadata:
     app.kubernetes.io/name: grafana
 spec:
   interval: 1h0m0s
+  timeout: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: grafana
@@ -166,8 +173,9 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/nextcloud.json'
         ntfy:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/ntfy.json'
+        # TODO: switch to adguard.json once published in grafana-dashboards (pihole.json 404'd and blocked upgrades)
         adguard:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/adguard.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/pihole.json'
         wiki-js:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/wiki-js.json'
       game-logs:
