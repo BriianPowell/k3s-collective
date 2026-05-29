@@ -31,7 +31,7 @@ metadata:
     app.kubernetes.io/component: app
     app.kubernetes.io/name: tautulli
 spec:
-  revisionHistoryLimit: 1
+  revisionHistoryLimit: 3
   replicas: 1
   strategy:
     type: Recreate

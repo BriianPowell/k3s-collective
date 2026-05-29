@@ -31,6 +31,7 @@ spec:
         namespace: adguard
       version: '>=0.1.0 <1.0.0'
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
+    revisionHistoryLimit: 3
     replicaCount: 1
     serviceAccount:
       create: true

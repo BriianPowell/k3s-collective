@@ -49,6 +49,7 @@ spec:
       name: flux-kube-state-metrics-config
       valuesKey: kube-state-metrics-config.yaml
   values:
+    revisionHistoryLimit: 3
     fullnameOverride: monitor
     namespaceOverride: monitoring
     defaultRules:

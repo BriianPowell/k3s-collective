@@ -26,7 +26,7 @@ metadata:
     app.kubernetes.io/component: redis
     app.kubernetes.io/name: nextcloud-redis
 spec:
-  revisionHistoryLimit: 1
+  revisionHistoryLimit: 3
   replicas: 1
   selector:
     matchLabels:

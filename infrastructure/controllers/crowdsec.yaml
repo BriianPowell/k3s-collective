@@ -87,6 +87,7 @@ spec:
         serviceMonitor:
           enabled: false
     lapi:
+      revisionHistoryLimit: 3
       podLabels:
         app.kubernetes.io/component: lapi
         app.kubernetes.io/name: crowdsec-lapi

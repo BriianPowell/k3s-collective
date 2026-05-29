@@ -39,7 +39,7 @@ spec:
       enabled: false
     containerPort: 10250
     replicas: 2
-    revisionHistoryLimit: 1
+    revisionHistoryLimit: 3
     updateStrategy:
       type: RollingUpdate
       rollingUpdate:

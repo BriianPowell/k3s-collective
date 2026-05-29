@@ -38,6 +38,7 @@ spec:
     commonLabels:
       app.kubernetes.io/part-of: traefik
     deployment:
+      revisionHistoryLimit: 3
       # k3s klipper-lb + externalTrafficPolicy: Local requires a pod on every node
       # that receives external traffic, otherwise svclb SNATs and backends see pod IPs.
       kind: DaemonSet

@@ -35,6 +35,11 @@ spec:
         namespace: cert-manager
       interval: 12h
   values:
+    revisionHistoryLimit: 3
+    webhook:
+      revisionHistoryLimit: 3
+    cainjector:
+      revisionHistoryLimit: 3
     global:
       leaderElection:
         namespace: 'cert-manager'
