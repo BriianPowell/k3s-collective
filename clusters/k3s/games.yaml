@@ -4,6 +4,7 @@ metadata:
   name: games
   namespace: flux-system
 spec:
+  suspend: true
   interval: 10m0s
   wait: true
   timeout: 5m0s
