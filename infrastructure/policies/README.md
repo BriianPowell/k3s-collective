@@ -9,7 +9,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
 | `allow-all-ingress` | `adguard`, `minecraft`, `valheim`, `v-rising` (LB / game / DNS ports) |
-| `kube-system` bundle | `kube-system` (intra-ns, DNS, Traefik, metrics-server) |
+| `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153 from monitoring, Traefik, metrics-server) |
 
 **No policies:** `flux-system`, `cnpg-system`, `onepassword` — operators and webhooks need broader reach.
 
