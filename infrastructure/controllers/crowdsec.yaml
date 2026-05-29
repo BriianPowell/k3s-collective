@@ -68,9 +68,9 @@ spec:
           program: traefik
       env:
         - name: PARSERS
-          value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
+          value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs crowdsecurity/whitelists'
         - name: COLLECTIONS
-          value: 'crowdsecurity/traefik crowdsecurity/whitelists'
+          value: 'crowdsecurity/traefik'
       # nodeSelector:
       #   node-role.kubernetes.io/master: 'true'
       persistentVolume:
