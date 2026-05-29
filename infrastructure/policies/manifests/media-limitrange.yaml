@@ -29,5 +29,6 @@ spec:
     - type: PersistentVolumeClaim
       min:
         storage: 100Mi
+      # Shared library PVC (media-data-pvc) requests 20Ti; cap typos, not the NAS volume.
       max:
-        storage: 50Gi
+        storage: 25Ti
