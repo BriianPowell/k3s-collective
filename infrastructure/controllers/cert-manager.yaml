@@ -36,10 +36,9 @@ spec:
         namespace: cert-manager
       interval: 12h
   values:
-    revisionHistoryLimit: 3
-    webhook:
-      revisionHistoryLimit: 3
     global:
+      # Applies to controller, webhook, and cainjector Deployments (chart schema: global.revisionHistoryLimit)
+      revisionHistoryLimit: 3
       leaderElection:
         namespace: 'cert-manager'
     installCRDs: true
@@ -55,7 +54,6 @@ spec:
       defaultIssuerKind: 'ClusterIssuer'
       defaultIssuerGroup: 'cert-manager.io'
     cainjector:
-      revisionHistoryLimit: 3
       extraArgs:
         - --leader-elect=false
     prometheus:
