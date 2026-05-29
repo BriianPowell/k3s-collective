@@ -87,9 +87,17 @@ spec:
           monitored-by: prometheus
     kubeDns:
       enabled: false
+    # k3s embeds etcd on the server node; requires --etcd-expose-metrics (sheol kubernetes.nix).
     kubeEtcd:
       enabled: true
+      endpoints: ['10.0.2.10']
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
       serviceMonitor:
+        enabled: true
+        scheme: http
         additionalLabels:
           monitored-by: prometheus
     kubeScheduler:
