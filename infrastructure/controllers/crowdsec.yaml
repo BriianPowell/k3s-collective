@@ -70,10 +70,7 @@ spec:
         - name: PARSERS
           value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs'
         - name: COLLECTIONS
-          value: 'crowdsecurity/traefik'
-        # Homelab: Traefik clients are mostly private IPs; disable whitelist so scenarios can fire
-        # - name: DISABLE_PARSERS
-        #   value: 'crowdsecurity/whitelists'
+          value: 'crowdsecurity/traefik crowdsecurity/whitelists'
       # nodeSelector:
       #   node-role.kubernetes.io/master: 'true'
       persistentVolume:
