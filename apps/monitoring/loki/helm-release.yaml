@@ -66,8 +66,10 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: abaddon
     chunksCache:
-      # Chart default allocatedMemory is 8192 (MiB) → ~9.8Gi limit; was scheduling on sheol.
+      # Chart default: 8192 MiB + 500m CPU. Unpinned, it landed on sheol; pinned to abaddon it
+      # failed scheduling (abaddon ~93% CPU requests). Memcached uses little CPU in practice.
       allocatedMemory: 2048
+      allocatedCPU: 100m
       writebackSizeLimit: 10MB
       nodeSelector:
         kubernetes.io/hostname: abaddon
