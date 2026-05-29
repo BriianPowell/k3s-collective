@@ -27,6 +27,7 @@ metadata:
     app.kubernetes.io/name: nvidia-device-plugin
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chart:
     spec:
       chart: nvidia-device-plugin

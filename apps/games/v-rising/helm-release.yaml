@@ -47,6 +47,7 @@ metadata:
     tier: backend
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chartRef:
     kind: HelmChart
     name: v-rising

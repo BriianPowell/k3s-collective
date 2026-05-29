@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/name: alloy
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chart:
     spec:
       chart: alloy

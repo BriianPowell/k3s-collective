@@ -20,6 +20,7 @@ metadata:
     app.kubernetes.io/name: reflector
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chart:
     spec:
       chart: reflector

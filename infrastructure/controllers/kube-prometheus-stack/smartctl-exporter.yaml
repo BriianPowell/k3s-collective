@@ -14,6 +14,7 @@ metadata:
     app.kubernetes.io/name: smartctl-exporter
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chart:
     spec:
       chart: prometheus-smartctl-exporter

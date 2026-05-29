@@ -26,6 +26,7 @@ metadata:
     app.kubernetes.io/name: crowdsec
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   timeout: 10m0s
   chart:
     spec:
@@ -45,6 +46,7 @@ spec:
             - kube-system
             - crowdsec
     agent:
+      revisionHistoryLimit: 3
       # PSA baseline on crowdsec forbids hostPath; we only scrape Traefik via k8s acquisition.
       hostVarLog: false
       podLabels:

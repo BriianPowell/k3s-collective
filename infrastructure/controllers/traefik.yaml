@@ -25,6 +25,7 @@ metadata:
     app.kubernetes.io/name: traefik
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   timeout: 10m0s
   chart:
     spec:

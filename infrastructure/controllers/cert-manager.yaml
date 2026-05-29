@@ -25,6 +25,7 @@ metadata:
     app.kubernetes.io/name: cert-manager
 spec:
   interval: 1h0m0s
+  maxHistory: 3
   chart:
     spec:
       chart: cert-manager
