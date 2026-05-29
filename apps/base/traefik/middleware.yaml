@@ -12,6 +12,8 @@ spec:
       enabled: true
       logLevel: INFO
       crowdsecMode: stream
+      # Do not fail-closed for all traffic when LAPI is briefly unreachable (e.g. CrowdSec upgrades).
+      updateMaxFailure: -1
       crowdsecLapiHost: crowdsec-service.crowdsec:8080
       crowdsecLapiScheme: https
       crowdsecLapiTLSCertificateAuthorityFile: /etc/traefik/crowdsec-certs/ca.crt
