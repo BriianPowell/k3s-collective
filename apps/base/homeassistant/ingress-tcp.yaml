@@ -1,0 +1,20 @@
+# MQTT over TLS on mqtt.powell.place:8883 (Traefik terminates TLS, backend is plain 1883).
+# Port-forward UDM WAN 8883 → Traefik LoadBalancer (same IP as 443). Do not expose 1883.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mosquitto-mqtts
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: mosquitto-mqtts
+spec:
+  entryPoints:
+    - mqtts
+  routes:
+    - match: HostSNI(`mqtt.powell.place`)
+      services:
+        - name: mosquitto
+          port: 1883
+  tls:
+    secretName: wildcard-powell-place

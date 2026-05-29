@@ -77,6 +77,13 @@ spec:
             - 10.0.0.0/16
             - 10.42.0.0/16
             - 10.43.0.0/16
+      mqtts:
+        # Public MQTT over TLS (IngressRouteTCP → Mosquitto). Forward WAN 8883 to Traefik LB.
+        port: 8883
+        expose:
+          default: true
+        exposedPort: 8883
+        protocol: TCP
       websecure:
         middlewares:
           - kube-system-crowdsec-bouncer@kubernetescrd
