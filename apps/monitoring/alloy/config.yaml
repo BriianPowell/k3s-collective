@@ -432,21 +432,21 @@ data:
     }
 
     // ========================================
-    // Pihole
-    discovery.kubernetes "pihole" {
+    // AdGuard Home
+    discovery.kubernetes "adguard_home" {
       role = "pod"
 
       namespaces {
-        names = ["kube-system"]
+        names = ["adguard"]
       }
       selectors {
         role = "pod"
-        label = "app=pihole"
+        label = "app.kubernetes.io/name=adguard-home"
       }
     }
 
-    loki.source.kubernetes "pihole" {
-      targets = discovery.kubernetes.pihole.targets
+    loki.source.kubernetes "adguard_home" {
+      targets = discovery.kubernetes.adguard_home.targets
       forward_to = [loki.write.local.receiver]
     }
 

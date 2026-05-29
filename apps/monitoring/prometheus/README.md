@@ -9,7 +9,6 @@
 | Keycloak      | ✅              | Created through API spec |
 | NextCloud     | ✅              | Created through API spec |
 | Ntfy          | ✅              | Created through API spec |
-| Pihole        | 🗑️           | Migrated to Adguard Home |
 | Wiki.JS       | ❌              | Not currently supported  |
 
 | Game      | Service Monitor | Supported               |

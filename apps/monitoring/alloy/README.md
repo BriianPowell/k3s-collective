@@ -52,7 +52,7 @@
 | ------- | ---- | ----------------- | ----- |
 | App     | ✅   | ✅                |       |
 
-### Pihole
+### AdGuard Home
 
 | Service | Logs | Grafana Dashboard | Notes |
 | ------- | ---- | ----------------- | ----- |

@@ -166,8 +166,8 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/nextcloud.json'
         ntfy:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/ntfy.json'
-        pihole:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/pihole.json'
+        adguard:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/adguard.json'
         wiki-js:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/wiki-js.json'
       game-logs:

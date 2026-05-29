@@ -24,7 +24,6 @@ resources:
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
   - serviceMonitor-seerr.yaml
-  # - serviceMonitor-pihole.yaml # -- replaced by adguard
   - serviceMonitor-plex.yaml
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
