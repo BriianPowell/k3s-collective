@@ -1,0 +1,33 @@
+# Caps runaway *arr / Plex pods; applies defaults when a container omits resources (e.g. Seerr, FlareSolverr).
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: media-container-limits
+  namespace: media
+  labels:
+    app.kubernetes.io/component: limit-range
+    app.kubernetes.io/name: media-container-limits
+spec:
+  limits:
+    - type: Container
+      defaultRequest:
+        cpu: 25m
+        memory: 128Mi
+      default:
+        cpu: '2'
+        memory: 4Gi
+      min:
+        cpu: 10m
+        memory: 32Mi
+      max:
+        cpu: '4'
+        memory: 8Gi
+    - type: Pod
+      max:
+        cpu: '6'
+        memory: 12Gi
+    - type: PersistentVolumeClaim
+      min:
+        storage: 100Mi
+      max:
+        storage: 50Gi

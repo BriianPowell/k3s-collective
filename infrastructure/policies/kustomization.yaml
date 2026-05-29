@@ -9,3 +9,4 @@ resources:
   - manifests/cnpg.yaml
   - manifests/open-ingress.yaml
   - manifests/kube-system.yaml
+  - manifests/media-limitrange.yaml

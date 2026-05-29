@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: prune-succeeded-jobs
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: cronjob
+    app.kubernetes.io/name: job-cleanup
+spec:
+  schedule: '0 4 * * *'
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: cronjob
+            app.kubernetes.io/name: job-cleanup
+        spec:
+          serviceAccountName: job-cleanup
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: kubectl
+              image: registry.k8s.io/kubectl:v1.31.4
+              imagePullPolicy: IfNotPresent
+              command:
+                - kubectl
+                - delete
+                - jobs
+                - --all-namespaces
+                - --field-selector=status.successful=1
+                - --ignore-not-found=true
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi

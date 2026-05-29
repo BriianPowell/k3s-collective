@@ -27,6 +27,7 @@ metadata:
     game: minecraft
     tier: backend
 spec:
+  suspend: true # resume when replicaCount > 0
   interval: 1h0m0s
   maxHistory: 3
   chart:

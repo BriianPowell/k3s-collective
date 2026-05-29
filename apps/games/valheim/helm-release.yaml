@@ -28,6 +28,7 @@ metadata:
     game: valheim
     tier: backend
 spec:
+  suspend: true # resume when controller.replicas > 0
   interval: 1h0m0s
   maxHistory: 3
   chart:
