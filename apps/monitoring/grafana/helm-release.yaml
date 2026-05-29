@@ -173,9 +173,8 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/nextcloud.json'
         ntfy:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/ntfy.json'
-        # TODO: switch to adguard.json once published in grafana-dashboards (pihole.json 404'd and blocked upgrades)
         adguard:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/pihole.json'
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/adguard.json'
         wiki-js:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/wiki-js.json'
       game-logs:
