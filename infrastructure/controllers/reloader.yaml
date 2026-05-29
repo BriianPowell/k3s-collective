@@ -36,8 +36,6 @@ spec:
       version: '>=1.0.0 <2.0.0'
   values:
     reloader:
-      deployment:
-        revisionHistoryLimit: 3
       autoReloadAll: false
       isArgoRollouts: false
       isOpenshift: false
@@ -57,6 +55,7 @@ spec:
       # Set to true if you have a pod security policy that enforces readOnlyRootFilesystem
       readOnlyRootFileSystem: false
       deployment:
+        revisionHistoryLimit: 3
         replicas: 1
         labels:
           app.kubernetes.io/component: app
