@@ -4,3 +4,10 @@ metadata:
   name: reloader
   labels:
     app.kubernetes.io/component: reloader
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: reloader
+automountServiceAccountToken: false

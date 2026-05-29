@@ -6,3 +6,10 @@ metadata:
     app.kubernetes.io/component: monitoring
     pod-security.kubernetes.io/enforce: privileged
     monitored-by: prometheus
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: monitoring
+automountServiceAccountToken: false

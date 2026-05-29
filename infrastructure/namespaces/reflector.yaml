@@ -4,3 +4,10 @@ metadata:
   name: reflector
   labels:
     app.kubernetes.io/component: reflector
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: reflector
+automountServiceAccountToken: false

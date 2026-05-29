@@ -38,7 +38,7 @@ See `nix-config/hosts/sheol/kubernetes.nix`: `secrets-encryption`, `protect-kern
 | 4 | CronJob: prune succeeded Jobs cluster-wide | done |
 | 5 | `LimitRange` in `media` (and optionally `monitoring`) | done |
 | 6 | PDBs for Traefik, Prometheus, Grafana, CrowdSec LAPI | done |
-| 7 | CIS: `automountServiceAccountToken: false` on default SAs | pending |
+| 7 | CIS: `automountServiceAccountToken: false` on default SAs | done |
 | 8 | sheol PKI `chmod 600` on k3s server TLS material | pending |
 | 9 | Prometheus alerts (cert expiry, Flux Not Ready, disk, PVC) | pending |
 | 10 | Loki retention vs disk budget | pending |
@@ -51,5 +51,5 @@ Periodic ops (no git): `k3s-remove-unused-rs`, `crictl rmi --prune`, orphan PVC 
 
 - Global PSA via `/var/lib/rancher/k3s/server/psa.yaml` with `kube-system` exempt (conflicts with per-namespace baseline labels until privileged workloads are removed).
 - Egress policies per namespace (also tracked in housekeeping #11).
-- CIS 5.1.5: disable `automountServiceAccountToken` on default ServiceAccounts (housekeeping #7).
+- CIS 5.1.5: extend default SA hardening to `kube-system` / `flux-system` / operators after testing (see second document in each `infrastructure/namespaces/*.yaml` except operator/core namespaces).
 - PKI file permissions on sheol: `chmod 600` on `/var/lib/rancher/k3s/server/tls/*.crt` (housekeeping #8).

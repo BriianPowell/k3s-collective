@@ -4,3 +4,10 @@ metadata:
   name: minecraft
   labels:
     app.kubernetes.io/component: game-server
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: minecraft
+automountServiceAccountToken: false

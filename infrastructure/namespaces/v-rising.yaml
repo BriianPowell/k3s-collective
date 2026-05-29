@@ -4,3 +4,10 @@ metadata:
   name: v-rising
   labels:
     app.kubernetes.io/component: game-server
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: v-rising
+automountServiceAccountToken: false

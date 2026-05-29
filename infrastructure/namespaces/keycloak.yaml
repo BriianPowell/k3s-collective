@@ -5,3 +5,10 @@ metadata:
   labels:
     app.kubernetes.io/component: identity
     monitored-by: prometheus
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: keycloak
+automountServiceAccountToken: false

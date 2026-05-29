@@ -4,3 +4,10 @@ metadata:
   name: crowdsec
   labels:
     app.kubernetes.io/component: security
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: crowdsec
+automountServiceAccountToken: false

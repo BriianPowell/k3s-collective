@@ -5,3 +5,10 @@ metadata:
   labels:
     app.kubernetes.io/component: home-automation
     monitored-by: prometheus
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: homeassistant
+automountServiceAccountToken: false
