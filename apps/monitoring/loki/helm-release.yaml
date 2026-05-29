@@ -66,8 +66,11 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: abaddon
     chunksCache:
-      # default is 500MB, with limited memory keep this smaller
+      # Chart default allocatedMemory is 8192 (MiB) → ~9.8Gi limit; was scheduling on sheol.
+      allocatedMemory: 2048
       writebackSizeLimit: 10MB
+      nodeSelector:
+        kubernetes.io/hostname: abaddon
     backend:
       replicas: 0
     read:
