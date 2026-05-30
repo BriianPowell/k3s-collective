@@ -47,7 +47,7 @@ Periodic ops (no git): `k3s-remove-unused-rs`, `crictl rmi --prune`, orphan PVC 
 
 **Alerts** (`apps/monitoring/prometheus/rules.yaml` → `monitor-custom-rules`): cert-manager expiry (21d/7d), Flux Not Ready (excludes `suspend: true`), PVC over 85% full; node disk already in `High Node Disk Usage`; default `KubePersistentVolumeFillingUp` at ~97%.
 
-**Loki** (`apps/monitoring/loki/helm-release.yaml`): 14d global retention (`336h`), compactor deletes enabled, `singleBinary.persistence.size: 20Gi`. Existing PVC stays at prior size until expanded or recreated; retention still caps growth. Chunks-cache on abaddon (`allocatedMemory: 2048`, `allocatedCPU: 100m`).
+**Loki** (`apps/monitoring/loki/helm-release.yaml`): 3d retention (`72h`), compactor enabled, PVC `10Gi`, memcached caches + canary disabled, lighter single-binary resources (debug-only).
 
 ## Later (optional)
 

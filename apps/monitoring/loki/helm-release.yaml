@@ -46,20 +46,21 @@ spec:
       ingester:
         chunk_encoding: snappy
       querier:
-        # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
-        max_concurrent: 2
+        max_concurrent: 1
       tracing:
-        enabled: true
-      # Retention requires compactor (runs inside single-binary targetModule: all) + 24h index period.
-      # PVC default is 10Gi; Alloy ships many pod log streams — tune period vs singleBinary.persistence.size.
+        enabled: false
+      # Debug-only logs: 3d retention on 10Gi PVC. Compactor runs in single-binary (targetModule: all).
       limits_config:
-        retention_period: 336h
-        max_query_lookback: 336h
+        retention_period: 72h
+        max_query_lookback: 72h
         reject_old_samples: true
-        reject_old_samples_max_age: 336h
+        reject_old_samples_max_age: 72h
+        ingestion_rate_mb: 8
+        ingestion_burst_size_mb: 16
+        max_line_size: 256kb
       compactor:
         working_directory: /var/loki/compactor
-        compaction_interval: 10m
+        compaction_interval: 30m
         retention_enabled: true
         retention_delete_delay: 2h
         delete_request_store: filesystem
@@ -68,27 +69,24 @@ spec:
       replicas: 1
       persistence:
         enabled: true
-        size: 20Gi
+        # Must match existing volumeClaimTemplates (10Gi). K8s forbids resizing via StatefulSet patch.
+        # To grow: patch PVC manually if storage class allows, or enable enableStatefulSetRecreationForSizeChange.
+        size: 10Gi
       resources:
         requests:
-          cpu: 1
-          memory: 2Gi
+          cpu: 200m
+          memory: 512Mi
         limits:
-          cpu: 3
-          memory: 4Gi
+          cpu: 2
+          memory: 2Gi
       extraEnv:
         - name: GOMEMLIMIT
-          value: 3750MiB
+          value: 1800MiB
       nodeSelector:
         kubernetes.io/hostname: abaddon
     chunksCache:
-      # Chart default: 8192 MiB + 500m CPU. Unpinned, it landed on sheol; pinned to abaddon it
-      # failed scheduling (abaddon ~93% CPU requests). Memcached uses little CPU in practice.
-      allocatedMemory: 2048
-      allocatedCPU: 100m
-      writebackSizeLimit: 10MB
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
+      # Optional query speedup; not needed for occasional Grafana debug queries.
+      enabled: false
     backend:
       replicas: 0
     read:
@@ -114,8 +112,7 @@ spec:
     bloomGateway:
       replicas: 0
     resultsCache:
-      nodeSelector:
-        kubernetes.io/hostname: abaddon
+      enabled: false
     gateway:
       enabled: true
       replicas: 1
@@ -124,8 +121,7 @@ spec:
     minio:
       enabled: false
     test:
-      enabled: true
-      prometheusAddress: http://prometheus-operated.monitoring.svc:9090
+      enabled: false
     # monitoring:
     #   dashboards:
     #     enabled: true
