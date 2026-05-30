@@ -39,13 +39,15 @@ See `nix-config/hosts/sheol/kubernetes.nix`: `secrets-encryption`, `protect-kern
 | 7 | CIS: `automountServiceAccountToken: false` on default SAs | done |
 | 8 | sheol PKI `chmod 600` on k3s server TLS material | done |
 | 9 | Prometheus alerts (cert expiry, Flux Not Ready, disk, PVC) | done |
-| 10 | Loki retention vs disk budget | pending |
+| 10 | Loki retention vs disk budget | done |
 | 11 | Egress network policies per namespace | pending |
 | 12 | Ops runbook (CrowdSec unban, Flux reconcile, game resume) | pending |
 
 Periodic ops (no git): `k3s-remove-unused-rs`, `crictl rmi --prune`, orphan PVC review.
 
 **Alerts** (`apps/monitoring/prometheus/rules.yaml` → `monitor-custom-rules`): cert-manager expiry (21d/7d), Flux Not Ready (excludes `suspend: true`), PVC over 85% full; node disk already in `High Node Disk Usage`; default `KubePersistentVolumeFillingUp` at ~97%.
+
+**Loki** (`apps/monitoring/loki/helm-release.yaml`): 14d global retention (`336h`), compactor deletes enabled, `singleBinary.persistence.size: 20Gi`. Existing PVC stays at prior size until expanded or recreated; retention still caps growth. Chunks-cache on abaddon (`allocatedMemory: 2048`, `allocatedCPU: 100m`).
 
 ## Later (optional)
 

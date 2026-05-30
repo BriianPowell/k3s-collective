@@ -50,9 +50,25 @@ spec:
         max_concurrent: 2
       tracing:
         enabled: true
+      # Retention requires compactor (runs inside single-binary targetModule: all) + 24h index period.
+      # PVC default is 10Gi; Alloy ships many pod log streams — tune period vs singleBinary.persistence.size.
+      limits_config:
+        retention_period: 336h
+        max_query_lookback: 336h
+        reject_old_samples: true
+        reject_old_samples_max_age: 336h
+      compactor:
+        working_directory: /var/loki/compactor
+        compaction_interval: 10m
+        retention_enabled: true
+        retention_delete_delay: 2h
+        delete_request_store: filesystem
     deploymentMode: SingleBinary
     singleBinary:
       replicas: 1
+      persistence:
+        enabled: true
+        size: 20Gi
       resources:
         requests:
           cpu: 1
