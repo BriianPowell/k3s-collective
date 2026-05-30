@@ -24,8 +24,7 @@ metadata:
     app.kubernetes.io/component: service
     app.kubernetes.io/name: mosquitto
 spec:
-  type: LoadBalancer
-  loadBalancerIP: 10.0.2.11
+  type: NodePort
   externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/component: broker
@@ -34,6 +33,7 @@ spec:
     - name: mqtt
       port: 1883
       targetPort: mqtt
+      nodePort: 31883
       protocol: TCP
 ---
 apiVersion: apps/v1
