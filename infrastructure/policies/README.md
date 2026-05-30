@@ -49,6 +49,8 @@ Periodic ops (no git): `k3s-remove-unused-rs`, `crictl rmi --prune`, orphan PVC 
 
 **Loki** (`apps/monitoring/loki/helm-release.yaml`): 3d retention (`72h`), compactor enabled, PVC `10Gi`, memcached caches + canary disabled, lighter single-binary resources (debug-only).
 
+**Alloy / log dashboards:** allowlist in `apps/monitoring/alloy/config.yaml`; Grafana log panels use `{namespace,pod}` LogQL ([grafana-dashboards](https://github.com/BriianPowell/grafana-dashboards)). Game and monitoring log folders removed from Grafana Helm provisioning.
+
 ## Later (optional)
 
 - Global PSA via `/var/lib/rancher/k3s/server/psa.yaml` with `kube-system` exempt (conflicts with per-namespace baseline labels until privileged workloads are removed).

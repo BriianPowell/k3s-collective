@@ -122,14 +122,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/app-logs
-          - name: game-logs
-            orgId: 1
-            folder: Game Logs
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/game-logs
           - name: infra-logs
             orgId: 1
             folder: Infra Logs
@@ -146,14 +138,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/media-logs
-          - name: monitoring-logs
-            orgId: 1
-            folder: Monitoring Logs
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/monitoring-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
       system-dashboards:
         flux-cluster:
@@ -167,8 +151,6 @@ spec:
       app-logs:
         atuin:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/atuin.json'
-        error-pages:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/error-pages.json'
         home-assistant:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/home-assistant.json'
         keycloak:
@@ -181,13 +163,6 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/adguard.json'
         wiki-js:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/wiki-js.json'
-      game-logs:
-        minecraft:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/minecraft.json'
-        v-rising:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/v-rising.json'
-        valheim:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/games/valheim.json'
       infra-logs:
         cert-manager:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/cert-manager.json'
@@ -199,12 +174,6 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/flux-system.json'
         kube-system:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/kube-system.json'
-        nvidia-device-plugin:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/nvidia-device-plugin.json'
-        reflector:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/reflector.json'
-        reloader:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/reloader.json'
         traefik:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/infra/traefik.json'
       media-logs:
@@ -230,21 +199,6 @@ spec:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/sonarr.json'
         tautulli:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/media/tautulli.json'
-      monitoring-logs:
-        alert-manager:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/alert-manager.json'
-        alloy:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/alloy.json'
-        grafana:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/grafana.json'
-        kube-state-metrics:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/kube-state-metrics.json'
-        loki:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/loki.json'
-        node-exporter:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/node-exporter.json'
-        prometheus:
-          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/monitoring/prometheus.json'
     grafana.ini:
       paths:
         data: /var/lib/grafana/

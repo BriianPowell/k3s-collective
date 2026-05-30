@@ -1,264 +1,62 @@
-# Alloy Pod Log Aggregation
+# Alloy → Loki
 
-## App Logs
+Alloy tails pod logs and pushes to Loki (`http://loki.monitoring:3100`). Query logs in **Grafana Explore** or the **log dashboards** in [grafana-dashboards](https://github.com/BriianPowell/grafana-dashboards) (LogQL uses `namespace` / `pod`, not Alloy `job` names).
 
-### Atuin
+Config: `config.yaml` (ConfigMap `alloy`).
 
-| Service  | Logs | Grafana Dashboard | Notes |
-| -------- | ---- | ----------------- | ----- |
-| App      | ✅   | ✅                |       |
-| Postgres | ✅   | ✅                |       |
+## What we collect
 
-### Error-Pages
+### Namespaces (`loki.source.kubernetes.apps`)
 
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
+| Namespace | Workloads |
+|-----------|-----------|
+| `adguard` | AdGuard Home |
+| `atuin` | App + Postgres (CNPG) |
+| `cert-manager` | controller, webhook, cainjector |
+| `cnpg-system` | CloudNative-PG operator |
+| `crowdsec` | agent + LAPI |
+| `flux-system` | helm / kustomize / notification / source controllers |
+| `homeassistant` | app + Postgres |
+| `keycloak` | app + Postgres |
+| `media` | *arr, Deluge, Plex, Seerr, etc. (not exporter sidecars) |
+| `nextcloud` | app, cron, redis, Postgres |
+| `wiki` | app + Postgres |
 
-### Home Assistant
+**Relabel drops (all namespaces):** `Succeeded` / `Failed` pods; containers matching `*exporter*`, `*metrics*`, `*memcached*`.
 
-| Service  | Logs | Grafana Dashboard | Notes |
-| -------- | ---- | ----------------- | ----- |
-| App      | ✅   | ✅                |       |
-| Postgres | ✅   | ✅                |       |
+### `kube-system` (`loki.source.kubernetes.kube_system`)
 
-### Keycloak
+| Target | Selector |
+|--------|----------|
+| Traefik | `app.kubernetes.io/name=traefik` |
+| ntfy | `app.kubernetes.io/name=ntfy` |
+| CoreDNS | `k8s-app=kube-dns` |
 
-| Service           | Logs | Notes |
-| ----------------- | ---- | ----- |
-| App               | ✅   |       |
-| Postgres          | ✅   |       |
-| Grafana Dashboard | ✅   |       |
+## Not collected (debug-only trim)
 
-### Nextcloud
+- `monitoring` (Alloy, Loki, Prometheus, Grafana, … — avoids noise and loops)
+- `minecraft`, `valheim`, `v-rising` (idle / games suspended)
+- `reflector`, `reloader`, `kube-system` bulk (local-path-provisioner, metrics-server, …)
+- NVIDIA device plugin
 
-| Service  | Logs | Grafana Dashboard | Notes                                       |
-| -------- | ---- | ----------------- | ------------------------------------------- |
-| App      | ✅   | ✅                |                                             |
-| Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs |
-| Cron     | ✅   | ✅                |                                             |
-| Redis    | ✅   | ✅                |                                             |
-| Postgres | ✅   | ✅                |                                             |
+Re-enable by adding the namespace to `discovery.kubernetes.apps.names` in `config.yaml`, or add a dedicated `discovery.kubernetes` block like Traefik.
 
-### Maybe
+## Grafana dashboards
 
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ❌   | ❌                |       |
+Log dashboards live in **grafana-dashboards** (`dashboards/logs/…`). Panels use LogQL such as:
 
-### Ntfy
+```logql
+{namespace="media", pod=~"deluge.*"}
+```
 
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
+After changing Alloy namespaces, update the matching dashboard JSON (or Explore with the same selectors). Dashboards for workloads we do not ship to Loki are **not** provisioned in Grafana Helm (`game-logs`, `monitoring-logs`, etc.).
 
-### AdGuard Home
+## Helm
 
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
+`helm-release.yaml`: ConfigMap `alloy` / key `config.content`, `nodeSelector: abaddon`.
 
-### Wiki.JS
+## Adding a workload
 
-| Service  | Logs | Grafana Dashboard | Notes |
-| -------- | ---- | ----------------- | ----- |
-| App      | ✅   | ✅                |       |
-| Postgres | ✅   | ✅                |       |
-
-## Flux System
-
-### Helm Controller
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Kustomize Controller
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Notification Controller
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Sealed Secrets Controller
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Source Controller
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-## Game Logs
-
-### Minecraft
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| Server  | ✅   | ✅                |       |
-
-### V-Rising
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| Server  | ✅   | ✅                |       |
-
-### Valheim
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| Server  | ✅   | ✅                |       |
-
-## Infrastructure Logs
-
-### Kube-System
-
-#### Core DNS
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-#### Local Path Provisioner
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Cert Manager
-
-| Service     | Logs | Grafana Dashboard | Notes |
-| ----------- | ---- | ----------------- | ----- |
-| Controller  | ✅   | ✅                |       |
-| CA-Injector | ✅   | ✅                |       |
-| Webhook     | ✅   | ✅                |       |
-
-### CloudNative PG
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| Manager | ✅   | ✅                |       |
-
-### Crowdsec
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| LAPI    | ✅   | ✅                |       |
-| Agent   | ✅   | ✅                |       |
-
-### Nvidia Device Plugin
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Reflector
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Reloader
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Traefik
-
-| Service      | Logs | Grafana Dashboard | Notes |
-| ------------ | ---- | ----------------- | ----- |
-| App          | ✅   | ✅                |       |
-| Forward Auth | ✅   | ✅                |       |
-
-## Monitoring Applications
-
-### Alert Manager
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Alloy
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Grafana
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### kube-state-metrics
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Loki
-
-| Service       | Logs | Grafana Dashboard | Notes |
-| ------------- | ---- | ----------------- | ----- |
-| App           | ✅   | ✅                |       |
-| Canary        | ✅   | ✅                |       |
-| Chunks Cache  | ✅   | ✅                |       |
-| Gateway       | ✅   | ✅                |       |
-| Results Cache | ✅   | ✅                |       |
-
-### Node Exporter
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Prometheus
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-### Prometheus Operator
-
-| Service | Logs | Grafana Dashboard | Notes |
-| ------- | ---- | ----------------- | ----- |
-| App     | ✅   | ✅                |       |
-
-## Media Applications
-
-| Service            | Logs | Grafana Dashboard | Notes                                                                         |
-| ------------------ | ---- | ----------------- | ----------------------------------------------------------------------------- |
-| Bazaar             | ✅   | ✅                |                                                                               |
-| Bazaar Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Deluge             | ✅   | ✅                |                                                                               |
-| Deluge Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Flaresolverr       | ✅   | ✅                |                                                                               |
-| Kapowarr           | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
-| Kavita             | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
-| Lidarr             | ✅   | ✅                |                                                                               |
-| Lidarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Mylar3             | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
-| Overseerr          | ✅   | ✅                |                                                                               |
-| Overseerr Exporter | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Plex               | ✅   | ✅                |                                                                               |
-| Plex Exporter      | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Prowlarr           | ✅   | ✅                |                                                                               |
-| Prowlarr Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Radarr             | ✅   | ✅                |                                                                               |
-| Radarr Exporter    | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Readarr            | ❌   | ❌                | Currently in the testing phase, will revisit if I decide to keep this service |
-| Readarr Exporter   | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Recyclarr          | ✅   | ✅                |                                                                               |
-| Sonarr             | ✅   | ✅                |                                                                               |
-| Sonarr Exporterr   | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
-| Tautulli           | ✅   | ✅                |                                                                               |
-| Tautulli Exporter  | ❌   | ❌                | Not supporting dashboards for exporter logs                                   |
+1. Ensure the pod’s namespace is in the `names` list in `config.yaml`, **or** add a `kube-system` selector block.
+2. In Grafana, use `{namespace="…", pod=~"…"}` (copy an existing dashboard panel).
+3. Optional: add a dashboard JSON under `grafana-dashboards/dashboards/logs/` and wire it in `apps/monitoring/grafana/helm-release.yaml`.

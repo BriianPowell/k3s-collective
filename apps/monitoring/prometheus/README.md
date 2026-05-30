@@ -48,7 +48,7 @@
 | Alloy                 | ✅              | Supported from Helm Chart                                                                                                            |
 | Grafana               | ✅              | Supported from Helm Chart                                                                                                            |
 | Kube State Metrics    | ✅              | Supported from Helm Chart                                                                                                            |
-| Loki                  | ❓              | Supported through [meta-monitoring-chart](https://github.com/grafana/meta-monitoring-chart), but need to spend the time to implement |
+| Loki                  | —               | Logs via Alloy → Loki; Loki metrics via meta-monitoring optional |
 | Node Exporter         | ✅              | Supported from Helm Chart                                                                                                            |
 | Prometheus + Operator | ✅              | Supported from Helm Chart                                                                                                            |
 
