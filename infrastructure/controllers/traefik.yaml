@@ -82,6 +82,13 @@ spec:
             - 10.0.0.0/16
             - 10.42.0.0/16
             - 10.43.0.0/16
+      mqtt:
+        # Plain MQTT for LAN (ESP8266, etc.) via IngressRouteTCP → Mosquitto. Do not forward :1883 on WAN.
+        port: 1883
+        expose:
+          default: true
+        exposedPort: 1883
+        protocol: TCP
       mqtts:
         # Public MQTT over TLS (IngressRouteTCP → Mosquitto). Forward WAN 8883 to Traefik LB.
         port: 8883

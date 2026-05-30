@@ -86,7 +86,7 @@ AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 
 **Prometheus token:** Home Assistant → Profile → Security → Long-Lived Access Tokens. Same 1Password item, field `token`.
 
-**MQTT:** Add matching `MQTT_USERNAME` and `MQTT_PASSWORD` entries to the `secrets.yaml` field content (same values as `mqtt-username` / `mqtt-password`). LAN devices connect to `abaddon:1883` with those credentials.
+**MQTT:** Add matching `MQTT_USERNAME` and `MQTT_PASSWORD` entries to the `secrets.yaml` field content (same values as `mqtt-username` / `mqtt-password`). LAN plain MQTT: any node IP (e.g. `10.0.2.11`) on **:1883** via Traefik entryPoint `mqtt` (do not forward :1883 on WAN). Remote TLS: `mqtt.powell.place` on :8883 or :443.
 
 ### Keycloak
 

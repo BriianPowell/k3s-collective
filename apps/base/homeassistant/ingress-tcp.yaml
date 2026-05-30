@@ -1,7 +1,25 @@
-# MQTT over TLS (Traefik terminates TLS → Mosquitto :1883). Do not expose plain 1883 on WAN.
+# MQTT via Traefik TCP (node :1883 / :8883 / :443 → Mosquitto ClusterIP :1883). Mosquitto has no hostNetwork.
 #
-# - :8883 (mqtts): optional; some networks block non-443 outbound (e.g. corp VPN).
-# - :443 (websecure): use for VPN-restricted clients; SNI mqtt.powell.place (443 already forwarded).
+# - :1883 (mqtt): plain MQTT for LAN; do not forward on WAN.
+# - :8883 (mqtts): TLS; optional WAN (some networks block non-443 outbound).
+# - :443 (websecure): TLS + SNI mqtt.powell.place (VPN / restrictive egress).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mosquitto-mqtt-lan
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: mosquitto-mqtt-lan
+spec:
+  entryPoints:
+    - mqtt
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: mosquitto
+          port: 1883
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:

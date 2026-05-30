@@ -31,6 +31,7 @@ labels:
             operator: NotIn
             values:
               - homeassistant
+              - kube-system
     pairs:
       pod-security.kubernetes.io/enforce: baseline
       pod-security.kubernetes.io/enforce-version: latest
