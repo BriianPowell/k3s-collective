@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/component: home-automation
     monitored-by: prometheus
-    # Home Assistant :8123 (hostPort + privileged). Mosquitto LAN :1883 is Traefik TCP (entryPoint mqtt).
+    # Home Assistant uses hostNetwork (HomeKit/mDNS); UI via Traefik. Mosquitto LAN :1883 is Traefik TCP (mqtt).
     pod-security.kubernetes.io/enforce: privileged
     pod-security.kubernetes.io/enforce-version: latest
 ---
