@@ -24,8 +24,6 @@ metadata:
     app.kubernetes.io/component: service
     app.kubernetes.io/name: mosquitto
 spec:
-  type: NodePort
-  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/component: broker
     app.kubernetes.io/name: mosquitto
@@ -33,7 +31,6 @@ spec:
     - name: mqtt
       port: 1883
       targetPort: mqtt
-      nodePort: 31883
       protocol: TCP
 ---
 apiVersion: apps/v1
@@ -59,6 +56,8 @@ spec:
         app.kubernetes.io/component: broker
         app.kubernetes.io/name: mosquitto
     spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       nodeSelector:
         kubernetes.io/hostname: abaddon
       initContainers:

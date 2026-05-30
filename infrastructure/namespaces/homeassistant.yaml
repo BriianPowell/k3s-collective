@@ -5,6 +5,9 @@ metadata:
   labels:
     app.kubernetes.io/component: home-automation
     monitored-by: prometheus
+    # Mosquitto LAN :1883 (hostPort) and Home Assistant :8123 (hostPort + privileged).
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
 ---
 apiVersion: v1
 kind: ServiceAccount
