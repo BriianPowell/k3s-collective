@@ -98,9 +98,10 @@ spec:
             isDefault: true
           - name: Loki
             type: loki
+            uid: P8E80F9AEF21F6940
             url: http://loki.monitoring:3100
             access: proxy
-            orgid: 1
+            orgId: 1
             version: 1
     dashboardProviders:
       dashboardproviders.yaml:

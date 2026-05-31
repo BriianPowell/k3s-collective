@@ -50,6 +50,20 @@ data:
         regex         = ".*(exporter|metrics|memcached).*"
         action        = "drop"
       }
+
+      // Loki/Grafana LogQL: {namespace="...", pod=~"..."} (not only job/instance).
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        target_label  = "namespace"
+      }
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label  = "pod"
+      }
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        target_label  = "container"
+      }
     }
 
     loki.source.kubernetes "apps" {
@@ -97,12 +111,29 @@ data:
       }
     }
 
-    loki.source.kubernetes "kube_system" {
+    discovery.relabel "kube_system" {
       targets = array.concat(
         discovery.kubernetes.traefik.targets,
         discovery.kubernetes.ntfy.targets,
         discovery.kubernetes.coredns.targets,
       )
+
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        target_label  = "namespace"
+      }
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label  = "pod"
+      }
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        target_label  = "container"
+      }
+    }
+
+    loki.source.kubernetes "kube_system" {
+      targets    = discovery.relabel.kube_system.output
       forward_to = [loki.write.local.receiver]
     }
 

@@ -49,6 +49,8 @@ Log dashboards live in **grafana-dashboards** (`dashboards/logs/…`). Panels us
 {namespace="media", pod=~"deluge.*"}
 ```
 
+Alloy `discovery.relabel` sets `namespace`, `pod`, and `container` labels on each stream (required for the dashboards above). Without those rules, Loki only stores `job` + `instance` and panels return no data.
+
 After changing Alloy namespaces, update the matching dashboard JSON (or Explore with the same selectors). Dashboards for workloads we do not ship to Loki are **not** provisioned in Grafana Helm (`game-logs`, `monitoring-logs`, etc.).
 
 ## Helm
