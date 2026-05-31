@@ -46,10 +46,10 @@ spec:
         limits:
           nvidia.com/gpu: 1
     runtimeClassName: nvidia
+    # LAN :32400 via Traefik entryPoint plex (see ingress-tcp.yaml). In-cluster stays ClusterIP.
     service:
-      type: NodePort
+      type: ClusterIP
       port: 32400
-      nodePort: 32400
     nodeSelector:
       kubernetes.io/hostname: sheol
     tolerations:

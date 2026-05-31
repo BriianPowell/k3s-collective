@@ -1,0 +1,19 @@
+# Plex LAN access: Traefik TCP :32400 → plex-media-server (ClusterIP). Do not forward on WAN.
+# HTTPS UI remains IngressRoute plex.powell.place on websecure.
+# Note: Plex UDP discovery (GDM) is not proxied; clients can add http://10.0.2.10:32400 manually.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: plex-lan
+  namespace: media
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: plex-lan
+spec:
+  entryPoints:
+    - plex
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: plex-media-server
+          port: pms
