@@ -5,8 +5,12 @@ kind: Kustomization
 # kube-system: CIS ingress policies in manifests/kube-system.yaml.
 
 resources:
-  - manifests/standard.yaml
-  - manifests/cnpg.yaml
-  - manifests/open-ingress.yaml
+  - manifests/cnpg-egress.yaml
+  - manifests/cnpg-ingress.yaml
   - manifests/kube-system.yaml
   - manifests/media-limitrange.yaml
+  - manifests/open-egress.yaml
+  - manifests/open-ingress.yaml
+  - manifests/permissive-egress.yaml
+  - manifests/standard-egress.yaml
+  - manifests/standard-ingress.yaml
