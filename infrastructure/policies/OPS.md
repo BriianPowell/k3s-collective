@@ -79,7 +79,17 @@ flux suspend kustomization games -n flux-system
 |------|-----------|----------------|
 | Minecraft | `minecraft` | `values.replicaCount` |
 | Valheim | `valheim` | `values.controller.replicas` |
-| V-Rising | `v-rising` | `values.controller.replicas` |
+| V-Rising | `v-rising` | `values.workload.main.replicas` |
+
+**Game networking (Traefik LB `10.0.2.10`):** no per-game LoadBalancer or NodePort. Port-forward to Traefik:
+
+| Game | Protocol | Ports |
+|------|----------|-------|
+| Minecraft | TCP | `25565` |
+| Valheim | UDP | `2456`, `2457`, `2458` |
+| V-Rising | UDP | `9876` (game), `9877` (query) |
+
+After resume: `kubectl get svc,ingressroutetcp,ingressrouteudp -n <namespace>`.
 
 ## Periodic ops (not in git)
 

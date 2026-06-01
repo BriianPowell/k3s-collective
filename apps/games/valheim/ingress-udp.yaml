@@ -1,0 +1,52 @@
+# Valheim UDP via Traefik LB (10.0.2.10). Forward :2456–2458 UDP to Traefik, not the game Service.
+# Service name from release valheim-server — verify: kubectl get svc -n valheim
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: valheim-1
+  namespace: valheim
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: valheim-1
+spec:
+  entryPoints:
+    - valheim-1
+  routes:
+    - services:
+        - name: valheim-server
+          port: 2456
+          nativeLB: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: valheim-2
+  namespace: valheim
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: valheim-2
+spec:
+  entryPoints:
+    - valheim-2
+  routes:
+    - services:
+        - name: valheim-server
+          port: 2457
+          nativeLB: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: valheim-3
+  namespace: valheim
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: valheim-3
+spec:
+  entryPoints:
+    - valheim-3
+  routes:
+    - services:
+        - name: valheim-server
+          port: 2458
+          nativeLB: true

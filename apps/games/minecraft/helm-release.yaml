@@ -63,8 +63,9 @@ spec:
       viewDistance: 25
       ops: anguiish
       motd: 'Welcome to The Neighborhood!'
-      serviceType: NodePort
-      nodePort: 30100
+      # ClusterIP + IngressRouteTCP on Traefik (10.0.2.10) — see ingress-tcp.yaml
+      serviceType: ClusterIP
+      servicePort: 25565
       overrideServerProperties: true
       # downloadModpackUrl:
       # resourcePackUrl:

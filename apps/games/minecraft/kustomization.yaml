@@ -5,3 +5,4 @@ commonLabels:
 
 resources:
   - helm-release.yaml
+  - ingress-tcp.yaml

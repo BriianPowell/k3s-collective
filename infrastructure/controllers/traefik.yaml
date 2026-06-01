@@ -103,6 +103,46 @@ spec:
           default: true
         exposedPort: 8883
         protocol: TCP
+      minecraft:
+        # Minecraft Java (IngressRouteTCP → minecraft/minecraft-server). Forward :25565 to Traefik LB.
+        port: 25565
+        expose:
+          default: true
+        exposedPort: 25565
+        protocol: TCP
+      valheim-1:
+        # Valheim game UDP (IngressRouteUDP → valheim/valheim-server). Forward :2456 to Traefik LB.
+        port: 2456
+        expose:
+          default: true
+        exposedPort: 2456
+        protocol: UDP
+      valheim-2:
+        port: 2457
+        expose:
+          default: true
+        exposedPort: 2457
+        protocol: UDP
+      valheim-3:
+        port: 2458
+        expose:
+          default: true
+        exposedPort: 2458
+        protocol: UDP
+      vrising:
+        # V Rising game UDP (IngressRouteUDP → v-rising/v-rising-server). Forward :9876 to Traefik LB.
+        port: 9876
+        expose:
+          default: true
+        exposedPort: 9876
+        protocol: UDP
+      vrising-query:
+        # V Rising Steam query UDP (IngressRouteUDP → v-rising-server-query). Forward :9877 to Traefik LB.
+        port: 9877
+        expose:
+          default: true
+        exposedPort: 9877
+        protocol: UDP
       websecure:
         middlewares:
           - kube-system-crowdsec-bouncer@kubernetescrd

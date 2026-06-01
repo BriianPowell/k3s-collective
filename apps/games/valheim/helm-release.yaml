@@ -57,6 +57,24 @@ spec:
       replicas: 0 # Set replica count to 0 when not in use
     service:
       main:
+        # ClusterIP + IngressRouteUDP on Traefik (10.0.2.10) — see ingress-udp.yaml
+        type: ClusterIP
+        ports:
+          valheim-1:
+            enabled: true
+            port: 2456
+            protocol: UDP
+            targetPort: 2456
+          valheim-2:
+            enabled: true
+            port: 2457
+            protocol: UDP
+            targetPort: 2457
+          valheim-3:
+            enabled: true
+            port: 2458
+            protocol: UDP
+            targetPort: 2458
         labels:
           app.kubernetes.io/component: service
     env:

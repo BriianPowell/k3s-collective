@@ -5,4 +5,5 @@ commonLabels:
 
 resources:
   - helm-release.yaml
+  - ingress-udp.yaml
   - onepassword-item.yaml

@@ -1,0 +1,35 @@
+# V Rising UDP via Traefik LB (10.0.2.10). Forward WAN/LAN :9876 and :9877 to Traefik, not the game Service.
+# Service names from TrueCharts release v-rising-server — verify: kubectl get svc -n v-rising
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: v-rising-game
+  namespace: v-rising
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: v-rising-game
+spec:
+  entryPoints:
+    - vrising
+  routes:
+    - services:
+        - name: v-rising-server
+          port: 9876
+          nativeLB: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: v-rising-query
+  namespace: v-rising
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: v-rising-query
+spec:
+  entryPoints:
+    - vrising-query
+  routes:
+    - services:
+        - name: v-rising-server-query
+          port: 9877
+          nativeLB: true
