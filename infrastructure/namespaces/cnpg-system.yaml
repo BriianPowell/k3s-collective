@@ -3,5 +3,7 @@ kind: Namespace
 metadata:
   name: cnpg-system
   labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
     app.kubernetes.io/component: postgres-operator
     monitored-by: prometheus

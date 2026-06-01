@@ -3,6 +3,8 @@ kind: Namespace
 metadata:
   name: media
   labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
     app.kubernetes.io/component: media-services
     monitored-by: prometheus
 ---

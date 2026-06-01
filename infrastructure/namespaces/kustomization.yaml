@@ -22,19 +22,12 @@ resources:
   - v-rising.yaml
   - wiki-js.yaml
 
+# enforce is set per Namespace manifest (privileged vs baseline). A global enforce label
+# here overwrites Namespace CR labels because cluster-scoped objects ignore namespaceSelectors.
 labels:
   - includeSelectors: false
     includeTemplates: false
-    namespaceSelectors:
-      - matchExpressions:
-          - key: kubernetes.io/metadata.name
-            operator: NotIn
-            values:
-              - homeassistant
-              - kube-system
     pairs:
-      pod-security.kubernetes.io/enforce: baseline
-      pod-security.kubernetes.io/enforce-version: latest
       pod-security.kubernetes.io/warn: restricted
       pod-security.kubernetes.io/warn-version: latest
       pod-security.kubernetes.io/audit: restricted

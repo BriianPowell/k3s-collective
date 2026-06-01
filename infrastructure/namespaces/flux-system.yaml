@@ -3,4 +3,6 @@ kind: Namespace
 metadata:
   name: flux-system
   labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
     app.kubernetes.io/component: gitops

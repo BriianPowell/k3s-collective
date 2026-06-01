@@ -3,6 +3,8 @@ kind: Namespace
 metadata:
   name: crowdsec
   labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
     app.kubernetes.io/component: security
 ---
 apiVersion: v1
