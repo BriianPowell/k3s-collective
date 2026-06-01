@@ -10,12 +10,11 @@ spec:
   selector:
     app.kubernetes.io/component: redis
     app.kubernetes.io/name: nextcloud-redis
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: redis
       port: 6379
       targetPort: redis
-      nodePort: 31011
 ---
 apiVersion: apps/v1
 kind: Deployment
