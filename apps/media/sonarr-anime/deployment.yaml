@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: sonarr-anime
-          image: ghcr.io/linuxserver/sonarr:4.0.18 # {"$imagepolicy": "media:sonarr-anime"}
+          image: ghcr.io/linuxserver/sonarr:4.0.19 # {"$imagepolicy": "media:sonarr-anime"}
           imagePullPolicy: Always
           env:
             - name: TZ
