@@ -55,7 +55,7 @@ spec:
               # ld.so.cache and versioned libs under /driver-root that NixOS does not provide.
               deviceListStrategy:
                 - envvar
-              deviceIDStrategy: uuid
+              deviceIDStrategy: index
     nfd:
       enabled: false
     gdsEnabled: false
