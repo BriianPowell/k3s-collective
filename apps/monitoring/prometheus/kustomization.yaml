@@ -13,23 +13,24 @@ resources:
   - serviceMonitor-adguard.yaml
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
-  - serviceMonitor-bazarr.yaml
+  # Lower-priority media exporters are disabled to reduce Prometheus target volume.
+  # - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
-  - serviceMonitor-deluge.yaml
-  - serviceMonitor-flaresolverr.yaml
+  # - serviceMonitor-deluge.yaml
+  # - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml
   # - serviceMonitor-lidarr.yaml
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
-  - serviceMonitor-seerr.yaml
+  # - serviceMonitor-seerr.yaml
   - serviceMonitor-plex.yaml
-  - serviceMonitor-prowlarr.yaml
-  - serviceMonitor-radarr.yaml
+  # - serviceMonitor-prowlarr.yaml
+  # - serviceMonitor-radarr.yaml
   # - serviceMonitor-readarr.yaml
-  - serviceMonitor-sonarr.yaml
-  - serviceMonitor-tautulli.yaml
+  # - serviceMonitor-sonarr.yaml
+  # - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
   # - serviceMonitor-valheim.yaml

@@ -61,8 +61,12 @@ spec:
       relabelings: []
       targetLabels: []
     resources:
-      cpu: 250m
-      memory: 500Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 500Mi
     nodeSelector:
       kubernetes.io/hostname: abaddon
     persistence:

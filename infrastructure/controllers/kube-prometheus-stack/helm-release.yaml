@@ -126,6 +126,13 @@ spec:
           monitored-by: prometheus
     prometheus-node-exporter:
       namespaceOverride: monitoring
+      resources:
+        requests:
+          cpu: 5m
+          memory: 16Mi
+        limits:
+          cpu: 100m
+          memory: 64Mi
       extraArgs:
         - --collector.netclass.ignored-devices=^(veth.*)$
         # Added by default
@@ -138,15 +145,24 @@ spec:
           monitored-by: prometheus
       nodeSelector:
         kubernetes.io/hostname: abaddon
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
     prometheus:
       enabled: true
       podDisruptionBudget:
         enabled: true
         minAvailable: 1
       prometheusSpec:
-        scrapeInterval: '30s'
+        scrapeInterval: '60s'
         scrapeTimeout: '10s'
-        evaluationInterval: '30s'
+        evaluationInterval: '60s'
+        retention: 7d
         externalUrl: https://prometheus.powell.place
         alertingEndpoints:
           - name: alertmanager-operated
@@ -178,6 +194,8 @@ spec:
           requests:
             cpu: 100m
             memory: 100Mi
+          limits:
+            memory: 2Gi
 # ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim
