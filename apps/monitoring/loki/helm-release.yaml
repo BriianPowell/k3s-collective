@@ -116,6 +116,8 @@ spec:
     gateway:
       enabled: true
       replicas: 1
+      deploymentStrategy:
+        type: Recreate
       resources:
         requests:
           cpu: 10m
