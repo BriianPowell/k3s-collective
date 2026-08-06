@@ -8,3 +8,6 @@ metadata:
     app.kubernetes.io/name: coredns
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: kube-dns
