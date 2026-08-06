@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coredns
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: dns
+    app.kubernetes.io/name: coredns
+spec:
+  replicas: 2

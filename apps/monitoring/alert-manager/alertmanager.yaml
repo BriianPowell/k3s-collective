@@ -15,6 +15,10 @@ route:
     - receiver: 'null'
       matchers:
         - alertname=~"InfoInhibitor|Watchdog"
+    - receiver: 'null'
+      matchers:
+        - alertname="CPUThrottlingHigh"
+        - container="node-exporter"
 receivers:
   - name: 'null'
   - name: alert-emailer
