@@ -42,6 +42,8 @@ spec:
       leaderElection:
         namespace: 'cert-manager'
     installCRDs: true
+    extraArgs:
+      - --dns01-recursive-nameservers-only
     resources:
       requests:
         cpu: 10m
