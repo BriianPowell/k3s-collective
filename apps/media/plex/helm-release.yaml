@@ -43,7 +43,12 @@ spec:
       configStorage: 5Gi
       configExistingClaim: plex-pvc
       resources:
+        requests:
+          cpu: 250m
+          memory: 512Mi
         limits:
+          cpu: '4'
+          memory: 4Gi
           nvidia.com/gpu: 1
     runtimeClassName: nvidia
     # LAN :32400 via Traefik entryPoint plex (see ingress-tcp.yaml). In-cluster stays ClusterIP.
