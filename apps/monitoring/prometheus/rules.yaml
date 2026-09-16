@@ -112,6 +112,40 @@ spec:
           annotations:
             summary: PVC {{ $labels.persistentvolumeclaim }} in {{ $labels.namespace }} is over 85% full
             description: Also see rule KubePersistentVolumeFillingUp (kubernetes-storage, ~97% full).
+    - name: SMART Storage
+      rules:
+        - alert: SmartCTLDevicePendingSectors
+          expr: smartctl_device_attribute{attribute_name="Current_Pending_Sector", attribute_value_type="raw"} > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SMART pending sectors on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} has {{ $value }} sectors waiting for remap. Treat this as an active disk failure risk.
+        - alert: SmartCTLDeviceOfflineUncorrectable
+          expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. Replace or offline the disk from redundant pools.
+        - alert: SmartCTLDeviceReallocatedSectors
+          expr: smartctl_device_attribute{attribute_name="Reallocated_Sector_Ct", attribute_value_type="raw"} > 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: SMART reallocated sectors on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} has {{ $value }} reallocated sectors. Watch for growth and plan replacement if this is new or increasing.
+        - alert: SmartCTLDeviceNewErrorLogEntries
+          expr: increase(smartctl_device_error_log_count[24h]) > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: New SMART error-log entries on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} recorded {{ $value }} new SMART error-log entries in the last 24h.
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
