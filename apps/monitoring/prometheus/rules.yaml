@@ -123,13 +123,13 @@ spec:
             summary: SMART pending sectors on {{ $labels.device }} at {{ $labels.instance }}
             description: Device {{ $labels.device }} has {{ $value }} sectors waiting for remap. Treat this as an active disk failure risk.
         - alert: SmartCTLDeviceOfflineUncorrectable
-          expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 0 unless smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 100
+          expr: delta(smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"}[7d]) > 0 unless smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 100
           for: 15m
           labels:
             severity: warning
           annotations:
-            summary: SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
-            description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. This can be historical; watch for growth, run a long self-test when the pool is healthy, and plan replacement if it increases.
+            summary: SMART offline uncorrectable sectors increased on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} recorded {{ $value }} new offline-uncorrectable sectors over the last 7d. Run a long self-test when the pool is healthy and plan replacement if growth continues.
         - alert: SmartCTLDeviceOfflineUncorrectableHigh
           expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 100
           for: 5m
@@ -139,13 +139,13 @@ spec:
             summary: High SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
             description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. Treat this as a likely disk failure and replace or offline it from redundant pools.
         - alert: SmartCTLDeviceReallocatedSectors
-          expr: smartctl_device_attribute{attribute_name="Reallocated_Sector_Ct", attribute_value_type="raw"} > 0
+          expr: delta(smartctl_device_attribute{attribute_name="Reallocated_Sector_Ct", attribute_value_type="raw"}[7d]) > 0
           for: 15m
           labels:
             severity: warning
           annotations:
-            summary: SMART reallocated sectors on {{ $labels.device }} at {{ $labels.instance }}
-            description: Device {{ $labels.device }} has {{ $value }} reallocated sectors. Watch for growth and plan replacement if this is new or increasing.
+            summary: SMART reallocated sectors increased on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} recorded {{ $value }} new reallocated sectors over the last 7d. Watch for continued growth and plan replacement if this keeps increasing.
         - alert: SmartCTLDeviceNewErrorLogEntries
           expr: increase(smartctl_device_error_log_count[24h]) > 0
           for: 5m

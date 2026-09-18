@@ -12,6 +12,13 @@ route:
   group_wait: 30s
   repeat_interval: 10m
   routes:
+    - receiver: alert-emailer
+      matchers:
+        - alertname=~"SmartCTL.*"
+      group_by: ['alertname', 'device', 'instance']
+      group_wait: 2m
+      group_interval: 30m
+      repeat_interval: 6h
     - receiver: 'null'
       matchers:
         - alertname=~"InfoInhibitor|Watchdog"
@@ -19,6 +26,12 @@ route:
       matchers:
         - alertname="CPUThrottlingHigh"
         - container="node-exporter"
+inhibit_rules:
+  - source_matchers:
+      - alertname=~"SmartCTLDevicePendingSectors|SmartCTLDeviceOfflineUncorrectableHigh"
+    target_matchers:
+      - alertname=~"SmartCTLDeviceOfflineUncorrectable|SmartCTLDeviceReallocatedSectors|SmartCTLDeviceNewErrorLogEntries"
+    equal: ['device', 'instance']
 receivers:
   - name: 'null'
   - name: alert-emailer
