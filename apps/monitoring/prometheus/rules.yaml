@@ -123,13 +123,21 @@ spec:
             summary: SMART pending sectors on {{ $labels.device }} at {{ $labels.instance }}
             description: Device {{ $labels.device }} has {{ $value }} sectors waiting for remap. Treat this as an active disk failure risk.
         - alert: SmartCTLDeviceOfflineUncorrectable
-          expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 0
+          expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 0 unless smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 100
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. This can be historical; watch for growth, run a long self-test when the pool is healthy, and plan replacement if it increases.
+        - alert: SmartCTLDeviceOfflineUncorrectableHigh
+          expr: smartctl_device_attribute{attribute_name="Offline_Uncorrectable", attribute_value_type="raw"} > 100
           for: 5m
           labels:
             severity: critical
           annotations:
-            summary: SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
-            description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. Replace or offline the disk from redundant pools.
+            summary: High SMART offline uncorrectable sectors on {{ $labels.device }} at {{ $labels.instance }}
+            description: Device {{ $labels.device }} has {{ $value }} offline-uncorrectable sectors. Treat this as a likely disk failure and replace or offline it from redundant pools.
         - alert: SmartCTLDeviceReallocatedSectors
           expr: smartctl_device_attribute{attribute_name="Reallocated_Sector_Ct", attribute_value_type="raw"} > 0
           for: 15m
