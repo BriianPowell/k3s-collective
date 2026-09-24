@@ -11,7 +11,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`seerr.powell.place`)
+      match: Host(`requests.powell.place`)
       middlewares:
         - name: security
           namespace: kube-system
