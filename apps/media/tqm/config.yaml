@@ -24,9 +24,11 @@ filters:
     DeleteData: true
     ignore:
       - IsTrackerDown()
-      # Deluge keeps counting seed time while announces fail (e.g. "Error: outgoing socket was
-      # closed", which IsTrackerDown() doesn't know), but the tracker only counts what it hears.
-      - (TrackerStatus startsWith "Error" || TrackerStatus startsWith "Warning") && !IsUnregistered()
+      # Only act when the last announce succeeded. Deluge keeps counting seed time while announces
+      # fail (e.g. "Error: outgoing socket was closed", which IsTrackerDown() doesn't know), but the
+      # tracker only counts what it hears; right after a Deluge restart statuses are "Announce Sent"
+      # or empty. Skipped torrents are picked up by a later run.
+      - TrackerStatus != "Announce OK" && !IsUnregistered()
       - Downloaded == false && !IsUnregistered()
       # One torrent per private tracker keeps the account announcing (rastastugan.org disables
       # accounts with no login or announce for 90 days).
