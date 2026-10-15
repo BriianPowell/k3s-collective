@@ -40,8 +40,10 @@ spec:
             app.kubernetes.io/name: tqm
         spec:
           restartPolicy: Never
+          # Deluge's VPN firewall only accepts the daemon port from LAN_NETWORK and sheol's own
+          # pod subnet, so tqm must run next to it.
           nodeSelector:
-            kubernetes.io/hostname: abaddon
+            kubernetes.io/hostname: sheol
           securityContext:
             runAsNonRoot: true
             runAsUser: 65534
