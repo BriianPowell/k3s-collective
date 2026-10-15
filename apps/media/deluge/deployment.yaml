@@ -73,6 +73,7 @@ spec:
       initContainers:
         # Upserts the daemon login tqm uses (apps/media/tqm) from 1Password. Only the "tqm:" line
         # is touched: localclient (used by the web UI) and other accounts stay Deluge-managed.
+        # Level 10 (admin): Deluge only lists torrents an account added itself below that.
         # Exits 0 on problems so a missing secret never keeps Deluge down.
         - name: tqm-auth
           image: docker.io/library/alpine:3.22
@@ -101,7 +102,7 @@ spec:
               fi
               {
                 grep -v '^tqm:' "$f" > "$f.tqm-tmp"
-                printf 'tqm:%s:5\n' "$TQM_PASSWORD" >> "$f.tqm-tmp" &&
+                printf 'tqm:%s:10\n' "$TQM_PASSWORD" >> "$f.tqm-tmp" &&
                   cat "$f.tqm-tmp" > "$f" &&
                   echo "tqm login written to $f"
               } || echo "failed to update $f, leaving it alone" >&2
