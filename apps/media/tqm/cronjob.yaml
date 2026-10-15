@@ -1,0 +1,137 @@
+#
+# Reference:
+# https://github.com/autobrr/tqm
+#
+# Removes Deluge torrents that have met their tracker's seeding rules (config.yaml).
+# Talks to the Deluge daemon (deluge.media.svc:58846) as user "tqm"; Deluge itself deletes the
+# files, so this pod needs no access to /data.
+#
+# tqm publishes no container image, so an init container fetches the pinned release binary and
+# checks it against the release's checksums file. To upgrade, bump TQM_VERSION and TQM_SHA256
+# (linux_amd64 line of tqm_<version>_checksums.txt).
+#
+# Dry run until the "would remove" output has been checked against each tracker's H&R page:
+#   kubectl -n media create job --from=cronjob/tqm tqm-manual-1
+#   kubectl -n media logs job/tqm-manual-1 -c tqm
+# then delete --dry-run from the args below.
+#
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tqm
+  namespace: media
+  labels:
+    app.kubernetes.io/component: cronjob
+    app.kubernetes.io/name: tqm
+spec:
+  schedule: '15 */6 * * *'
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: cronjob
+            app.kubernetes.io/name: tqm
+        spec:
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/hostname: abaddon
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            seccompProfile:
+              type: RuntimeDefault
+          initContainers:
+            - name: fetch
+              image: docker.io/library/alpine:3.22
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: TQM_VERSION
+                  value: '1.20.0'
+                - name: TQM_SHA256
+                  value: a78573f4f123249e113f920892fd621dd890e86fdcb272f1daf887e25d5ec3ec
+              command:
+                - /bin/sh
+                - -ec
+                - |
+                  cd /tmp
+                  wget -q -O tqm.tar.gz "https://github.com/autobrr/tqm/releases/download/v${TQM_VERSION}/tqm_${TQM_VERSION}_linux_amd64.tar.gz"
+                  echo "${TQM_SHA256}  tqm.tar.gz" | sha256sum -c -
+                  tar -xzf tqm.tar.gz -C /opt/tqm tqm
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+                limits:
+                  cpu: 200m
+                  memory: 64Mi
+              volumeMounts:
+                - name: bin
+                  mountPath: /opt/tqm
+                - name: tmp
+                  mountPath: /tmp
+          containers:
+            - name: tqm
+              image: docker.io/library/alpine:3.22
+              imagePullPolicy: IfNotPresent
+              command: ['/opt/tqm/tqm']
+              args:
+                - clean
+                - deluge
+                - --dry-run
+                - --config=/config/config.yaml
+                - --log=/tmp/tqm.log
+              env:
+                - name: TZ
+                  value: America/Los_Angeles
+                # tqm creates a default config dir under here at startup, even with --config.
+                - name: XDG_CONFIG_HOME
+                  value: /tmp
+                - name: TQM__CLIENTS_DELUGE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: tqm
+                      key: password
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+              volumeMounts:
+                - name: bin
+                  mountPath: /opt/tqm
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+          volumes:
+            - name: bin
+              emptyDir: {}
+            - name: tmp
+              emptyDir: {}
+            - name: config
+              configMap:
+                name: tqm-config

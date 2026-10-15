@@ -64,10 +64,67 @@ spec:
       labels:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: deluge
+      annotations:
+        secret.reloader.stakater.com/reload: tqm
     spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
+      initContainers:
+        # Upserts the daemon login tqm uses (apps/media/tqm) from 1Password. Only the "tqm:" line
+        # is touched: localclient (used by the web UI) and other accounts stay Deluge-managed.
+        # Exits 0 on problems so a missing secret never keeps Deluge down.
+        - name: tqm-auth
+          image: docker.io/library/alpine:3.22
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TQM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tqm
+                  key: password
+                  optional: true
+          command:
+            - /bin/sh
+            - -u
+            - -c
+            - |
+              f=/config/auth
+              if [ -z "${TQM_PASSWORD:-}" ]; then
+                echo "tqm secret not synced yet, leaving $f alone"; exit 0
+              fi
+              case "$TQM_PASSWORD" in
+                *:*|*' '*) echo "tqm password must not contain ':' or spaces, leaving $f alone" >&2; exit 0 ;;
+              esac
+              if [ ! -f "$f" ]; then
+                echo "$f missing; Deluge creates it on first start, tqm is added on the next restart"; exit 0
+              fi
+              {
+                grep -v '^tqm:' "$f" > "$f.tqm-tmp"
+                printf 'tqm:%s:5\n' "$TQM_PASSWORD" >> "$f.tqm-tmp" &&
+                  cat "$f.tqm-tmp" > "$f" &&
+                  echo "tqm login written to $f"
+              } || echo "failed to update $f, leaving it alone" >&2
+              rm -f "$f.tqm-tmp"
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          volumeMounts:
+            - name: deluge-pvc
+              mountPath: /config
+              subPath: config
       containers:
         - name: arch-delugevpn
           image: ghcr.io/binhex/arch-delugevpn:2.2.0-7-09-libtorrentv1 # {"$imagepolicy": "media:deluge"}

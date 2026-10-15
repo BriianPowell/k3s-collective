@@ -1,0 +1,71 @@
+# tqm config. The Deluge daemon password comes from the TQM__CLIENTS_DELUGE_PASSWORD env var
+# (tqm maps TQM__A_B_C to a.b.c), so this file holds no secrets.
+# Filter language: https://github.com/antonmedv/expr/blob/master/docs/language-definition.md
+#
+# Seed-time thresholds are each tracker's requirement * 1.25 + 24h, because Deluge's local
+# seeding time can trail the tracker's (Deluge downtime, re-added torrents), never lead it.
+# Ratio thresholds use 1.2 instead of 1.0: Deluge divides by bytes on disk, not tracker-recorded
+# downloaded bytes, and can read slightly high when pieces were re-downloaded.
+# Re-check tracker rules occasionally; they change and nothing here notices.
+
+clients:
+  deluge:
+    enabled: true
+    type: deluge
+    v2: true
+    filter: default
+    host: deluge.media.svc
+    port: 58846
+    login: tqm
+    download_path: /data/downloader/complete
+
+filters:
+  default:
+    DeleteData: true
+    ignore:
+      - IsTrackerDown()
+      # Deluge keeps counting seed time while announces fail (e.g. "Error: outgoing socket was
+      # closed", which IsTrackerDown() doesn't know), but the tracker only counts what it hears.
+      - (TrackerStatus startsWith "Error" || TrackerStatus startsWith "Warning") && !IsUnregistered()
+      - Downloaded == false && !IsUnregistered()
+      # One torrent per private tracker keeps the account announcing (rastastugan.org disables
+      # accounts with no login or announce for 90 days).
+      - Label startsWith "permaseed"
+      # Only *arr-managed torrents. Their library copy is a hardlink on the same volume, or the
+      # *arr upgraded/deleted it, so the torrent's files are safe to delete. Unlabelled and
+      # prowlarr (manual grab) torrents may be the only copy and are left alone.
+      - Label not in ["radarr", "sonarr", "sonarr-tv", "sonarr-anime", "lidarr", "readarr"]
+
+    remove:
+      # Deleted on the tracker ("Error: Torrent has been deleted."); no seeding obligation left.
+      - IsUnregistered()
+
+      # seedpool.org: 10 days (240h) seed time on every torrent, freeleech included; ratio
+      # doesn't substitute. Unsatisfied after 72h offline before then; <10% downloaded exempt.
+      # https://seedpool.org/ FAQ, read 2026-10-14
+      - TrackerName == "seedpool.org" && SeedingHours >= 324
+
+      # digitalcore.club: per-torrent 1.0 ratio OR 120h seed time after completion. Stopping >1h
+      # before either gives Pre-H&R; >5 real H&Rs is a warning, then a download ban.
+      # Account ratio must stay above 0.5.
+      # https://digitalcore.club/ rules (Hit and Run), read 2026-10-14
+      - TrackerName == "digitalcore.club" && (Ratio >= 1.2 || SeedingHours >= 174)
+
+      # rastastugan.org: per-torrent 1:1 ratio OR 48h seed time once >=20% downloaded,
+      # freeleech included. Account ratio 0.8.
+      # https://rastastugan.org/ rules, read 2026-10-14
+      - TrackerName == "rastastugan.org" && (Ratio >= 1.2 || SeedingHours >= 84)
+
+      # datascene.xyz: 48h seed time on every torrent regardless of ratio, within 10 days of
+      # completion. Each H&R is a warning lasting 270 days; 7 warnings is a download ban, so
+      # extra margin. Account ratio must stay above 0.4.
+      # https://datascene.xyz/ download rules, read 2026-10-14
+      - TrackerName == "datascene.xyz" && SeedingHours >= 96
+
+      # milkie.cc: no H&R or ratio requirements (site-wide freeleech). Seeded generously by
+      # choice, and kept while the swarm has few seeders.
+      # https://milkie.cc/ seeding rules, read 2026-10-14
+      - TrackerName == "milkie.cc" && (Ratio >= 3.0 || SeedingDays >= 30) && Seeds >= 5
+
+      # Public trackers, no obligations.
+      - TrackerName in ["dler.org", "bittor.pw"] && (Ratio >= 1.0 || SeedingHours >= 72)
