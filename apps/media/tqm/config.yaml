@@ -67,5 +67,7 @@ filters:
       # https://milkie.cc/ seeding rules, read 2026-10-14
       - TrackerName == "milkie.cc" && (Ratio >= 3.0 || SeedingDays >= 30) && Seeds >= 5
 
-      # Public trackers, no obligations.
-      - TrackerName in ["dler.org", "bittor.pw"] && (Ratio >= 1.0 || SeedingHours >= 72)
+      # Public trackers, no obligations. Any torrent without the private flag, plus known public
+      # trackers by name in case one sets the flag anyway. Private trackers always set it, and
+      # private torrents with no rule above are kept.
+      - IsPrivate == false && (Ratio >= 1.0 || SeedingHours >= 72)
