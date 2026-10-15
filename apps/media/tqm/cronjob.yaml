@@ -10,10 +10,9 @@
 # checks it against the release's checksums file. To upgrade, bump TQM_VERSION and TQM_SHA256
 # (linux_amd64 line of tqm_<version>_checksums.txt).
 #
-# Dry run until the "would remove" output has been checked against each tracker's H&R page:
-#   kubectl -n media create job --from=cronjob/tqm tqm-manual-1
-#   kubectl -n media logs job/tqm-manual-1 -c tqm
-# then delete --dry-run from the args below.
+# Removes torrents and their data. To preview a rule change first, add --dry-run to the args and run:
+#   kubectl -n media create job --from=cronjob/tqm tqm-manual
+#   kubectl -n media logs job/tqm-manual -c tqm
 #
 
 apiVersion: batch/v1
@@ -93,7 +92,6 @@ spec:
               args:
                 - clean
                 - deluge
-                - --dry-run
                 - --config=/config/config.yaml
                 - --log=/tmp/tqm.log
               env:
