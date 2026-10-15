@@ -2,17 +2,22 @@
 # Reference:
 # https://github.com/autobrr/tqm
 #
-# Removes Deluge torrents that have met their tracker's seeding rules (config.yaml).
-# Talks to the Deluge daemon (deluge.media.svc:58846) as user "tqm"; Deluge itself deletes the
-# files, so this pod needs no access to /data.
+# Two steps, in order:
+#   clean:  removes Deluge torrents (and their data) that have met their tracker's seeding rules
+#           (config.yaml). Talks to the Deluge daemon (deluge.media.svc:58846) as user "tqm";
+#           Deluge itself deletes the files, so this container needs no access to /data.
+#   orphan: deletes files under download_path that no Deluge torrent owns (e.g. torrents removed
+#           without their data). Mounts /data and runs as root, because Deluge (PUID 0) owns the
+#           download folders.
 #
 # tqm publishes no container image, so an init container fetches the pinned release binary and
 # checks it against the release's checksums file. To upgrade, bump TQM_VERSION and TQM_SHA256
 # (linux_amd64 line of tqm_<version>_checksums.txt).
 #
-# Removes torrents and their data. To preview a rule change first, add --dry-run to the args and run:
+# To preview a rule change first, add --dry-run to the clean args / TQM_ORPHAN_ARGS and run:
 #   kubectl -n media create job --from=cronjob/tqm tqm-manual
-#   kubectl -n media logs job/tqm-manual -c tqm
+#   kubectl -n media logs job/tqm-manual -c clean
+#   kubectl -n media logs job/tqm-manual -c orphan
 #
 
 apiVersion: batch/v1
@@ -84,8 +89,7 @@ spec:
                   mountPath: /opt/tqm
                 - name: tmp
                   mountPath: /tmp
-          containers:
-            - name: tqm
+            - name: clean
               image: docker.io/library/alpine:3.22
               imagePullPolicy: IfNotPresent
               command: ['/opt/tqm/tqm']
@@ -93,7 +97,7 @@ spec:
                 - clean
                 - deluge
                 - --config=/config/config.yaml
-                - --log=/tmp/tqm.log
+                - --log=/tmp/tqm-clean.log
               env:
                 - name: TZ
                   value: America/Los_Angeles
@@ -127,6 +131,70 @@ spec:
                 - name: config
                   mountPath: /config
                   readOnly: true
+          containers:
+            - name: orphan
+              image: docker.io/library/alpine:3.22
+              imagePullPolicy: IfNotPresent
+              # tqm treats every file as an orphan if Deluge returns no torrents (e.g. the tqm
+              # login lost its admin level), so a dry run goes first and the real run is skipped
+              # when it sees no torrents or would delete more than half the files.
+              command:
+                - /bin/sh
+                - -euc
+                - |
+                  tqm() { /opt/tqm/tqm orphan deluge --config=/config/config.yaml --log=/tmp/tqm-orphan.log "$@"; }
+                  tqm --dry-run > /tmp/dry-run.out 2>&1 || { cat /tmp/dry-run.out; exit 1; }
+                  torrents=$(sed -n 's/.*Retrieved \([0-9]*\) torrents.*/\1/p' /tmp/dry-run.out | head -n 1)
+                  files=$(sed -n 's/.*: \([0-9]*\) files \/ [0-9]* folders.*/\1/p' /tmp/dry-run.out | head -n 1)
+                  orphans=$(grep -c 'Removing orphan' /tmp/dry-run.out || true)
+                  echo "dry run: ${torrents:-?} torrents, ${files:-?} files, ${orphans} orphans"
+                  if [ "${torrents:-0}" -eq 0 ] || [ $((orphans * 2)) -gt "${files:-0}" ]; then
+                    echo "refusing to delete orphans; dry-run output:" >&2
+                    cat /tmp/dry-run.out >&2
+                    exit 1
+                  fi
+                  [ "$orphans" -eq 0 ] || tqm ${TQM_ORPHAN_ARGS}
+              env:
+                - name: TQM_ORPHAN_ARGS
+                  value: ''
+                - name: TZ
+                  value: America/Los_Angeles
+                - name: XDG_CONFIG_HOME
+                  value: /tmp
+                - name: TQM__CLIENTS_DELUGE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: tqm
+                      key: password
+              # Root only to delete Deluge's root-owned files (every directory under
+              # download_path is root-owned); no capabilities, so no reaching past file modes.
+              securityContext:
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+              volumeMounts:
+                - name: bin
+                  mountPath: /opt/tqm
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+                - name: media-data
+                  mountPath: /data
           volumes:
             - name: bin
               emptyDir: {}
@@ -135,3 +203,6 @@ spec:
             - name: config
               configMap:
                 name: tqm-config
+            - name: media-data
+              persistentVolumeClaim:
+                claimName: media-data-pvc

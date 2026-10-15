@@ -22,6 +22,11 @@ clients:
 filters:
   default:
     DeleteData: true
+    # `tqm orphan` deletes anything under download_path that no Deluge torrent owns. The long
+    # grace period covers files Deluge is still moving in from incomplete/ before it has updated
+    # the torrent's save path.
+    orphan:
+      grace_period: 24h
     ignore:
       - IsTrackerDown()
       # Only act when the last announce succeeded. Deluge keeps counting seed time while announces
