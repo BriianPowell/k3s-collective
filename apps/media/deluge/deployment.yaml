@@ -150,7 +150,8 @@ spec:
               memory: 128Mi
             limits:
               cpu: 1500m
-              memory: 1024Mi
+              # 1Gi was OOMKilled while loading/rechecking torrents after a long stop.
+              memory: 2048Mi
           # livenessProbe:
           #   exec:
           #     command: ["/bin/bash", "-c", "curl -sL --fail http://localhost:8112 && curl -sL --fail https://google.com || exit 1"]

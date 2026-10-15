@@ -47,6 +47,10 @@ spec:
             - crowdsec
     agent:
       revisionHistoryLimit: 3
+      # cert-manager rotates the CA and leaf certs; processes only read them at startup,
+      # so restart on change or new pods fail TLS verification against the old LAPI cert.
+      daemonsetAnnotations:
+        secret.reloader.stakater.com/reload: crowdsec-agent-tls
       # PSA baseline on crowdsec forbids hostPath; we only scrape Traefik via k8s acquisition.
       hostVarLog: false
       podLabels:
@@ -90,6 +94,10 @@ spec:
           enabled: false
     lapi:
       revisionHistoryLimit: 3
+      # Serves its cert from memory, so it must restart when cert-manager rotates the
+      # server cert or the agent/bouncer CA (see agent note above).
+      deployAnnotations:
+        secret.reloader.stakater.com/reload: crowdsec-lapi-tls,crowdsec-agent-tls
       podLabels:
         app.kubernetes.io/component: lapi
         app.kubernetes.io/name: crowdsec-lapi
