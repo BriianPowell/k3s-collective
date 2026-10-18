@@ -13,7 +13,8 @@ spec:
     - match: Host(`prometheus.powell.place`)
       kind: Rule
       middlewares:
-        - name: traefik-forward-auth
+        # Keycloak SSO, realm role cluster-admin only.
+        - name: oauth2-proxy-cluster
           namespace: kube-system
         - name: security
           namespace: kube-system
