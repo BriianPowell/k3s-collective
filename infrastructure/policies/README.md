@@ -5,11 +5,11 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 ## Coverage
 
 | Policy | Namespaces |
-|--------|------------|
+| -------- | ------------ |
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
 | `allow-all-egress` | `media` (except Plex), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub) |
-| `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`apps/media/plex/network-policy.yaml`) |
+| `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
 | `standard-egress` + CNPG | same app namespaces — adds `cnpg-system` to egress |
@@ -34,7 +34,7 @@ See `nix-config/hosts/sheol/kubernetes.nix`: `secrets-encryption`, `protect-kern
 ## Housekeeping (excluding backups)
 
 | # | Item | Status |
-|---|------|--------|
+| --- | ------ | -------- |
 | 1 | Revision caps (`revisionHistoryLimit` / `maxHistory: 3`) | done |
 | 2 | CrowdSec bouncer `updateMaxFailure: -1` | done |
 | 3 | Idle games: `games` Kustomization + HelmRelease `suspend` | done |

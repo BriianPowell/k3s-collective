@@ -1,0 +1,56 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+#
+# Why: on 2026-10-17 an attacker used Plex's companion-proxy endpoints to make Plex fetch
+# code from a host on :8952, and the resulting miner talked to a pool on :3333. The media
+# namespace is allow-all-egress (torrent/VPN workloads), so Plex is carved out of that
+# policy (see permissive-egress.yaml) and limited here.
+#
+# Plex only needs DNS plus HTTPS/HTTP to the internet (plex.tv, metadata agents, relay).
+# Replies to inbound connections (clients, Traefik, the exporter) are allowed implicitly.
+# Private ranges are excluded so a compromised Plex cannot reach the cluster, the LAN or
+# the node. That also stops the companion proxy from calling out to LAN players.
+#
+# This lives here and not in apps/media/plex because that kustomization uses commonLabels,
+# which would inject app.kubernetes.io/part-of=plex into this podSelector. The Plex pod
+# does not carry that label, so the policy would silently select nothing.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: plex-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: plex-media-server
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: plex-media-server
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP

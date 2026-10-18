@@ -38,9 +38,14 @@ spec:
       version: '>=1.9.0 <2.0.0'
   values:
     # The chart's default image (appVersion) lags behind Plex releases, so pin the image here.
-    # 1.41.6.9685 was exploited on 2026-10-17. Bump this deliberately.
+    # 1.41.6.9685 was exploited on 2026-10-17. Bump this deliberately, and update the digest
+    # with it (it is the multi-arch index digest of the tag, as the registry reports it):
+    #   curl -sI -H "Authorization: Bearer $(curl -s 'https://auth.docker.io/token?service=registry.docker.io&scope=repository:plexinc/pms-docker:pull' | jq -r .token)" \
+    #     -H 'Accept: application/vnd.docker.distribution.manifest.list.v2+json' \
+    #     https://registry-1.docker.io/v2/plexinc/pms-docker/manifests/<tag> | grep -i docker-content-digest
     image:
       tag: 1.43.4.10903-e5521bd8c
+      sha: sha256:e0ab27395614a8e1a4fdf84c6bc60ac664915cfdde70c52d030c7728a1c48e14
     ingress:
       enabled: false
     pms:
@@ -59,6 +64,10 @@ spec:
         limits:
           cpu: '4'
           memory: 4Gi
+          # The chart's transcode emptyDir has no size option, and it lives on sheol's root
+          # disk. This counts emptyDir use, so a runaway transcode (or an abuser) cannot fill
+          # the node; the pod is evicted and restarted instead. Typical use is under 1 GiB.
+          ephemeral-storage: 30Gi
           nvidia.com/gpu: 1
     runtimeClassName: nvidia
     # LAN :32400 via Traefik entryPoint plex (see ingress-tcp.yaml). In-cluster stays ClusterIP.
@@ -80,7 +89,9 @@ spec:
       # these to '0' and the same script chowns /config back to root.
       PLEX_UID: '1000'
       PLEX_GID: '1000'
-      ALLOWED_NETWORKS: '10.0.0.0/16'
+      # ALLOWED_NETWORKS is deliberately unset: it makes Plex accept any client in that range
+      # without a token. The image only writes the allowedNetworks preference when this is
+      # non-empty, so it must also be cleared in Plex (Settings > Network) and stays cleared.
     extraVolumeMounts:
       # Plex only reads the library. Read-only means a compromised Plex cannot modify or
       # delete media (the miner ran as root with this mounted read-write).

@@ -12,5 +12,6 @@ resources:
   - manifests/open-egress.yaml
   - manifests/open-ingress.yaml
   - manifests/permissive-egress.yaml
+  - manifests/plex-egress.yaml
   - manifests/standard-egress.yaml
   - manifests/standard-ingress.yaml

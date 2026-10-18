@@ -6,7 +6,7 @@ metadata:
   name: allow-all-egress
   namespace: media
 spec:
-  # Plex is excluded and limited by plex-egress (apps/media/plex/network-policy.yaml).
+  # Plex is excluded and limited by plex-egress (plex-egress.yaml in this directory).
   # NetworkPolicies are additive, so it must not match here or the restriction is a no-op.
   podSelector:
     matchExpressions:
