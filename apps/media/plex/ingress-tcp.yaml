@@ -1,6 +1,28 @@
 # Plex LAN access: Traefik TCP :32400 → plex-media-server (ClusterIP). Do not forward on WAN.
 # HTTPS UI remains IngressRoute plex.powell.place on websecure.
 # Note: Plex UDP discovery (GDM) is not proxied; clients can add http://10.0.2.10:32400 manually.
+#
+# References:
+# https://doc.traefik.io/traefik/v3.1/middlewares/tcp/ipallowlist/
+#
+# Why the allowlist: Traefik terminates the TCP connection, so Plex sees every client as the
+# Traefik pod (a private "Subnet" address) and skips authentication. If :32400 is reachable
+# from the internet, anyone can talk to Plex as if they were on the LAN (this is how the
+# 2026-10-17 cryptominer got in). traefik has externalTrafficPolicy: Local, so the real
+# client IP is preserved here and the allowlist is enforced.
+apiVersion: traefik.io/v1alpha1
+kind: MiddlewareTCP
+metadata:
+  name: plex-lan-only
+  namespace: media
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: plex-lan
+spec:
+  ipAllowList:
+    sourceRange:
+      - 10.0.0.0/16
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
@@ -14,6 +36,8 @@ spec:
     - plex
   routes:
     - match: HostSNI(`*`)
+      middlewares:
+        - name: plex-lan-only
       services:
         - name: plex-media-server
           port: pms

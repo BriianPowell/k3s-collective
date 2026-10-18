@@ -37,9 +37,18 @@ spec:
         namespace: media
       version: '>=0.4.0 <1.0.0'
   values:
+    # Chart 0.x (the newest the version range above allows) pins an old image, so override it.
+    # 1.41.6.9685 was exploited on 2026-10-17. Bump this deliberately; the chart default is stale.
+    image:
+      tag: 1.43.4.10903-e5521bd8c
     ingress:
       enabled: false
     pms:
+      # Plex needs root during s6 init (PLEX_UID=0 below), so only block privilege gain.
+      securityContext:
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
       configStorage: 5Gi
       configExistingClaim: plex-pvc
       resources:
@@ -62,7 +71,6 @@ spec:
         operator: Exists
         effect: NoSchedule
     extraEnv:
-      # PLEX_CLAIM: claim-y9QhWVfUGn22TSEPczbU
       HOSTNAME: PlexServer
       TZ: 'America/Los_Angeles'
       PLEX_UPDATE_CHANNEL: '5'
