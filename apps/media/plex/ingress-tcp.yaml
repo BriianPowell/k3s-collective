@@ -1,5 +1,5 @@
 # Plex LAN access: Traefik TCP :32400 → plex-media-server (ClusterIP). Do not forward on WAN.
-# HTTPS UI remains IngressRoute plex.powell.place on websecure.
+# HTTPS UI remains IngressRoute plex.powell.place on websecure, behind Keycloak SSO (ingress.yaml).
 # Note: Plex UDP discovery (GDM) is not proxied; clients can add http://10.0.2.10:32400 manually.
 #
 # References:

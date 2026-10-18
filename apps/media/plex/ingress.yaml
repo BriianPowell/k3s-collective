@@ -1,3 +1,37 @@
+# Plex at plex.powell.place (public, 443). Two routes, highest priority first:
+#
+# 1. Plex apps / API: requests that carry an X-Plex-Token (header or query) go straight to Plex,
+#    EXCEPT anything under /player. Apps cannot do an SSO redirect, so they need this route.
+# 2. Everything else (a browser, scanners, tokenless requests): Keycloak SSO via
+#    traefik-forward-auth first, like the other admin UIs.
+#
+# Why /player is excluded: on 2026-10-17 an attacker used unauthenticated companion-proxy
+# requests (/player/proxy/poll, /player/timeline/subscribe) to get code execution (see
+# ingress-tcp.yaml). Tested on 1.43.4.10903 from a non-loopback address: those endpoints
+# still return 400, not 401, with no token or a bogus one, so Plex does not authenticate them.
+# They must not be reachable without SSO.
+#
+# Why the path regex is broader than "/player": Plex decodes %2f and resolves ".." itself
+# (/x/..%2fplayer/proxy/poll reaches the handler), so a prefix match is bypassable. Route 1
+# also refuses any path containing "player" (any case), "..", "%", ";", "//" or "\". Verified
+# against 17 bypass variants on a temporary route: none reached Plex. Re-run that test if the
+# Traefik version or this rule changes.
+#
+# A token is only checked for presence here; Traefik cannot validate it. Plex returns 401 for
+# an invalid token on every API path tested (/library, /status, /hubs, /accounts, ...), so the
+# rest of the safety is Plex's own token check. Known gaps: /search and /security/token
+# returned 400 rather than 401 with a bogus token (not exploited, but not token-gated), and
+# /identity is deliberately NOT allowed tokenless, so a client that probes it without a
+# token gets the SSO redirect instead of Plex.
+#
+# Plex clients off the LAN reach this through the custom server access URL in Plex
+# (Settings > Network): https://plex.powell.place (443). Do not forward :32400 on the WAN;
+# ingress-tcp.yaml is LAN-only.
+#
+# References:
+# https://doc.traefik.io/traefik/v3.1/routing/routers/#rule
+# https://doc.traefik.io/traefik/v3.1/routing/providers/kubernetes-crd/
+# https://github.com/thomseddon/traefik-forward-auth
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -11,8 +45,23 @@ spec:
     - websecure
   routes:
     - kind: Rule
+      priority: 200
+      match: >-
+        Host(`plex.powell.place`)
+        && (HeaderRegexp(`X-Plex-Token`, `.+`) || QueryRegexp(`X-Plex-Token`, `.+`))
+        && !PathRegexp(`(?i)player|\.\.|%|;|//|\\`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: plex-media-server
+          port: pms
+    - kind: Rule
+      priority: 100
       match: Host(`plex.powell.place`)
       middlewares:
+        - name: traefik-forward-auth
+          namespace: kube-system
         - name: security
           namespace: kube-system
       services:
