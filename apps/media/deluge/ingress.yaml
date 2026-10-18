@@ -13,6 +13,9 @@ spec:
     - kind: Rule
       match: Host(`deluge.powell.place`)
       middlewares:
+        # Keycloak SSO (realm role media-admin) in front of the app's own login.
+        - name: oauth2-proxy-media
+          namespace: kube-system
         - name: security
           namespace: kube-system
       services:

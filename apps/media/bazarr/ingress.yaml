@@ -14,7 +14,7 @@ spec:
       match: Host(`bazarr.powell.place`)
       middlewares:
         # Keycloak SSO first; the app's own login stays on as a second layer.
-        - name: traefik-forward-auth
+        - name: oauth2-proxy-media
           namespace: kube-system
         - name: security
           namespace: kube-system

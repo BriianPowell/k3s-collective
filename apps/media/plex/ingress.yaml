@@ -3,7 +3,8 @@
 # 1. Plex apps / API: requests that carry an X-Plex-Token (header or query) go straight to Plex,
 #    EXCEPT anything under /player. Apps cannot do an SSO redirect, so they need this route.
 # 2. Everything else (a browser, scanners, tokenless requests): Keycloak SSO via
-#    traefik-forward-auth first, like the other admin UIs.
+#    oauth2-proxy-media first (realm role media-admin), like the other media admin UIs. Other
+#    users reach Plex through the apps/app.plex.tv (route 1), not this browser route.
 #
 # Why /player is excluded: on 2026-10-17 an attacker used unauthenticated companion-proxy
 # requests (/player/proxy/poll, /player/timeline/subscribe) to get code execution (see
@@ -31,7 +32,7 @@
 # References:
 # https://doc.traefik.io/traefik/v3.1/routing/routers/#rule
 # https://doc.traefik.io/traefik/v3.1/routing/providers/kubernetes-crd/
-# https://github.com/thomseddon/traefik-forward-auth
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
@@ -60,7 +61,7 @@ spec:
       priority: 100
       match: Host(`plex.powell.place`)
       middlewares:
-        - name: traefik-forward-auth
+        - name: oauth2-proxy-media
           namespace: kube-system
         - name: security
           namespace: kube-system
