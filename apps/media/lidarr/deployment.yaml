@@ -60,6 +60,15 @@ spec:
               value: '0'
             - name: PUID
               value: '0'
+            # The app's own login form is off: Keycloak SSO (oauth2-proxy-media, realm role
+            # media-admin) is the only way in, and the ingress NetworkPolicy limits which pods can
+            # reach this one. The API key is still required for API calls. Keep both of those in
+            # place before turning this back to Forms.
+            # https://wiki.servarr.com/lidarr/environment-variables
+            - name: LIDARR__AUTH__METHOD
+              value: External
+            - name: LIDARR__AUTH__REQUIRED
+              value: DisabledForLocalAddresses
           ports:
             - name: http
               containerPort: 8686
