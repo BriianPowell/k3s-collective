@@ -35,16 +35,17 @@ spec:
         kind: HelmRepository
         name: plex
         namespace: media
-      version: '>=0.4.0 <1.0.0'
+      version: '>=1.9.0 <2.0.0'
   values:
-    # Chart 0.x (the newest the version range above allows) pins an old image, so override it.
-    # 1.41.6.9685 was exploited on 2026-10-17. Bump this deliberately; the chart default is stale.
+    # The chart's default image (appVersion) lags behind Plex releases, so pin the image here.
+    # 1.41.6.9685 was exploited on 2026-10-17. Bump this deliberately.
     image:
       tag: 1.43.4.10903-e5521bd8c
     ingress:
       enabled: false
     pms:
-      # Plex needs root during s6 init (PLEX_UID=0 below), so only block privilege gain.
+      # The container's s6 init still starts as root (it runs usermod/chown for PLEX_UID below),
+      # but Plex itself runs as uid 1000, so only block privilege gain on top of that.
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
@@ -74,13 +75,18 @@ spec:
       HOSTNAME: PlexServer
       TZ: 'America/Los_Angeles'
       PLEX_UPDATE_CHANNEL: '5'
-      PLEX_UID: '0'
-      PLEX_GID: '0'
+      # Non-root Plex. On the first start after this changed, the image's 40-plex-first-run
+      # chowns /config (about 46k files) and /transcode to this uid/gid. To roll back, set
+      # these to '0' and the same script chowns /config back to root.
+      PLEX_UID: '1000'
+      PLEX_GID: '1000'
       ALLOWED_NETWORKS: '10.0.0.0/16'
     extraVolumeMounts:
+      # Plex only reads the library. Read-only means a compromised Plex cannot modify or
+      # delete media (the miner ran as root with this mounted read-write).
       - name: data
         mountPath: /data
-        readOnly: false
+        readOnly: true
     extraVolumes:
       - name: data
         persistentVolumeClaim:
