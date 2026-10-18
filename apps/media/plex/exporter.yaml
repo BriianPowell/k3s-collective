@@ -46,12 +46,25 @@ spec:
         app.kubernetes.io/name: plex-exporter
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        # The image's own user is `app` (uid 100, gid 101); numeric so kubelet can verify it.
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 101
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: plex-exporter
           image: ghcr.io/axsuul/plex-media-server-exporter:2.1.0 # {"$imagepolicy": "media:plex-exporter"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: PORT
               value: '9594'

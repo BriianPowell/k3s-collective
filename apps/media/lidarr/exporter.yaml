@@ -46,12 +46,25 @@ spec:
         app.kubernetes.io/name: lidarr-exportarr
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        # exportarr's image user is "nonroot" (65532); kubelet can only verify a numeric uid.
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: lidarr-exportarr
           image: ghcr.io/onedr0p/exportarr:v2.3.0 # {"$imagepolicy": "media:exportarr"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           args:
             - lidarr
           env:

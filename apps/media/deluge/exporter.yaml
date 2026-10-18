@@ -46,12 +46,25 @@ spec:
         app.kubernetes.io/name: deluge-exporter
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        # The image has no USER (runs as root by default); stateless, so run as nobody.
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: deluge-exporter
           image: docker.io/ngosang/deluge-exporter:1.0.2 # {"$imagepolicy": "media:deluge-exporter"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: TZ
               value: America/Los_Angeles

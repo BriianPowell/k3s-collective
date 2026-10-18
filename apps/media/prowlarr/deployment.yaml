@@ -46,19 +46,29 @@ spec:
         app.kubernetes.io/name: prowlarr
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: prowlarr
           image: ghcr.io/linuxserver/prowlarr:2.6.5 # {"$imagepolicy": "media:prowlarr"}
           imagePullPolicy: Always
+          # The s6 init stays root to start, then drops the app to PUID/PGID (the same pattern
+          # Plex uses). Prowlarr only writes /config and has no media mount, so it does not
+          # need the shared media uid/gid project. Cannot drop all capabilities: s6 needs
+          # CHOWN/SETUID/SETGID to chown /config and drop privileges.
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
             - name: PGID
-              value: '0'
+              value: '1000'
             - name: PUID
-              value: '0'
+              value: '1000'
           ports:
             - name: http
               containerPort: 9696

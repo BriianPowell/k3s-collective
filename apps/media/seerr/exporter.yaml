@@ -46,12 +46,25 @@ spec:
         app.kubernetes.io/name: seerr-exporter
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        # The image has no USER (runs as root by default); stateless, so run as nobody.
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: seerr-exporter
           image: ghcr.io/willfantom/overseerr-exporter:1.2.1 # {"$imagepolicy": "media:seerr-exporter"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           args:
             - --overseerr.address=http://seerr.media.svc.cluster.local:5055
             - --overseerr.api-key=$(API_KEY)

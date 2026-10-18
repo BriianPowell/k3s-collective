@@ -24,6 +24,12 @@ spec:
         configmap.reloader.stakater.com/reload: recyclarr-config
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        # Makes the existing root-owned /config volume writable by gid 1000 (Seerr does the same).
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
@@ -54,9 +60,16 @@ spec:
               mountPath: /config/recyclarr.yml
               subPath: recyclarr.yml
               readOnly: true
+          # The image's own user is 1000:1000. It only writes /config (fsGroup below makes the
+          # existing root-owned files writable) and reads secrets/config read-only.
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           lifecycle:
             postStart:
               exec:

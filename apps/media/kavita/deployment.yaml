@@ -46,19 +46,30 @@ spec:
         app.kubernetes.io/name: kavita
     spec:
       restartPolicy: Always
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: sheol
       containers:
         - name: kavita
           image: ghcr.io/linuxserver/kavita:0.9.1 # {"$imagepolicy": "media:kavita"}
           imagePullPolicy: Always
+          # The s6 init starts as root, then drops the app to PUID/PGID. The library under
+          # /data is root:root 755 and world-readable (checked to depth 4), so uid 1000 can
+          # read it; /data is mounted read-only below. If a scan misses a folder, look for a
+          # directory that is not world-readable. Cannot drop all capabilities (s6 needs
+          # CHOWN/SETUID/SETGID).
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
             - name: PGID
-              value: '0'
+              value: '1000'
             - name: PUID
-              value: '0'
+              value: '1000'
           ports:
             - name: http
               containerPort: 5000
@@ -75,6 +86,7 @@ spec:
               mountPath: /config
             - name: media-data-pvc
               mountPath: /data
+              readOnly: true
       volumes:
         - name: kavita-pvc
           persistentVolumeClaim:
