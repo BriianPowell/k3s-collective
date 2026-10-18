@@ -49,7 +49,8 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   RuntimeDefault` and drop all capabilities where the app allows. Set
   `automountServiceAccountToken: false` unless the app talks to the Kubernetes API. Do not infer
   "runs as root" from the pod spec alone; many images drop privileges themselves. Check with
-  `kubectl exec <pod> -- id`.
+  `kubectl exec <pod> -- id`, but for s6-based images (linuxserver) `id` reports the root
+  entrypoint even when the app runs as `PUID`; read process owners from `/proc/*/status` too.
 - **Exposure:** assume every hostname Traefik routes is reachable from the internet. A new
   `IngressRoute` needs SSO (`traefik-forward-auth`) in front, or an app login you have verified.
   Do not add a public route for something only other pods use; they call the Service name.
