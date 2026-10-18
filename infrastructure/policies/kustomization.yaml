@@ -9,6 +9,7 @@ resources:
   - manifests/cnpg-ingress.yaml
   - manifests/flaresolverr-egress.yaml
   - manifests/kube-system.yaml
+  - manifests/media-egress.yaml
   - manifests/media-limitrange.yaml
   - manifests/open-egress.yaml
   - manifests/open-ingress.yaml

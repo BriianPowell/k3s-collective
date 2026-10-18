@@ -1,0 +1,59 @@
+#
+# Reference:
+# https://fluxcd.io/flux/guides/image-update/
+# https://hub.docker.com/r/mrcas/kapowarr
+#
+# Flux rewrites the image line in deployment.yaml (the `$imagepolicy` marker) and pushes to main.
+# That is why the image is pinned by tag and not by digest: the setter writes `name:tag` and would
+# drop a digest. The range stops at <2.0.0 so a major release is a deliberate change, not an
+# unattended one (this app runs as root with the media library mounted read-write).
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: kapowarr
+  namespace: media
+spec:
+  image: docker.io/mrcas/kapowarr
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: kapowarr
+  namespace: media
+spec:
+  imageRepositoryRef:
+    name: kapowarr
+    namespace: media
+  policy:
+    semver:
+      range: '>=1.3.1 <2.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: kapowarr
+  namespace: media
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: FluxCDBot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./apps/media/kapowarr
+    strategy: Setters

@@ -49,10 +49,18 @@ spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
+      # Bazarr never talks to the Kubernetes API.
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: bazarr-anime
           image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr-anime"}
           imagePullPolicy: Always
+          # Still root (PUID/PGID 0): see bazarr/deployment.yaml.
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles

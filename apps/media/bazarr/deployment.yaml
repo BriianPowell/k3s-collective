@@ -49,10 +49,20 @@ spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
+      # Bazarr never talks to the Kubernetes API.
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: bazarr
           image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr"}
           imagePullPolicy: Always
+          # Still root (PUID/PGID 0): the whole library under /data is owned by root:root and
+          # Bazarr writes subtitles next to the media. Moving off root needs a shared media
+          # uid/gid across the *arr apps first; see .memories/security-hardening.md.
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles

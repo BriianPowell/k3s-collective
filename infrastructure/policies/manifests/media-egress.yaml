@@ -1,0 +1,118 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+#
+# Why: the media namespace is allow-all-egress (torrent/VPN workloads). Apps that only need DNS
+# and the public web are carved out of that policy (see permissive-egress.yaml) and limited here,
+# so a compromised app cannot reach the cluster API, other namespaces, the LAN or the node, and
+# cannot reach out on odd ports (mining pools, reverse shells). See plex-egress.yaml and
+# flaresolverr-egress.yaml for the same pattern.
+#
+# These live here and not in each app directory because app kustomizations use commonLabels,
+# which would inject app.kubernetes.io/part-of=<app> into a podSelector in the same kustomization
+# and make it silently select nothing. Select on app.kubernetes.io/name only.
+#
+# If a provider/download host stops working, check for a non-80/443 port before widening this.
+---
+# Bazarr (both instances): subtitle providers over HTTP(S), plus Sonarr/Radarr by service name
+# (bazarr -> radarr :7878 and sonarr-tv :8989; bazarr-anime -> sonarr-anime :8989).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bazarr-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: bazarr
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - bazarr
+          - bazarr-anime
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - radarr
+                  - sonarr-tv
+                  - sonarr-anime
+      ports:
+        - port: 7878
+          protocol: TCP
+        - port: 8989
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
+---
+# Kapowarr: ComicVine metadata and direct comic downloads over HTTP(S). No FlareSolverr and no
+# external download client are configured (checked 2026-10-17), so nothing internal is needed.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kapowarr-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: kapowarr
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kapowarr
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP

@@ -13,6 +13,9 @@ spec:
     - kind: Rule
       match: Host(`bazarr-anime.powell.place`)
       middlewares:
+        # Keycloak SSO first; the app's own login stays on as a second layer.
+        - name: traefik-forward-auth
+          namespace: kube-system
         - name: security
           namespace: kube-system
       services:
