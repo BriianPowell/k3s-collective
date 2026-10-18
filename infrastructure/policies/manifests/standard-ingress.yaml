@@ -4,7 +4,17 @@ metadata:
   name: standard-ingress
   namespace: media
 spec:
-  podSelector: {}
+  # Pods with their own ingress policy (manifests/media-ingress.yaml) are excluded; policies
+  # are additive, so leaving them in would let all of kube-system and the namespace through.
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: NotIn
+        values:
+          - radarr
+          - sonarr-tv
+          - sonarr-anime
+          - prowlarr
   policyTypes:
     - Ingress
   ingress:

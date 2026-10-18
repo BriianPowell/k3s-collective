@@ -10,6 +10,7 @@ resources:
   - manifests/flaresolverr-egress.yaml
   - manifests/kube-system.yaml
   - manifests/media-egress.yaml
+  - manifests/media-ingress.yaml
   - manifests/media-limitrange.yaml
   - manifests/open-egress.yaml
   - manifests/open-ingress.yaml

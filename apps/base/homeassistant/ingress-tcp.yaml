@@ -1,8 +1,32 @@
 # MQTT via Traefik TCP (node :1883 / :8883 / :443 → Mosquitto ClusterIP :1883). Mosquitto has no hostNetwork.
 #
-# - :1883 (mqtt): plain MQTT for LAN; do not forward on WAN.
-# - :8883 (mqtts): TLS; optional WAN (some networks block non-443 outbound).
+# Deliberate exception: MQTT is intended to be reachable from both the LAN and the internet
+# (a remote client connects on :8883). It cannot sit behind SSO (non-browser clients), so its
+# protection is TLS plus Mosquitto's password file (allow_anonymous false).
+#
+# - :1883 (mqtt): plain MQTT, LAN only (enforced by the mosquitto-lan-only middleware below).
+# - :8883 (mqtts): TLS; LAN and internet (some networks block non-443 outbound).
 # - :443 (websecure): TLS + SNI mqtt.powell.place (VPN / restrictive egress).
+# References:
+# https://doc.traefik.io/traefik/v3.1/middlewares/tcp/ipallowlist/
+#
+# Why the allowlist: :1883 is plaintext (credentials and payloads unencrypted), and "do not
+# forward on WAN" was only a comment, not enforced. Remote clients must use the TLS routes
+# below. traefik has externalTrafficPolicy: Local, so the real client IP is preserved and
+# the allowlist is enforced (same approach as plex-lan-only in apps/media/plex).
+apiVersion: traefik.io/v1alpha1
+kind: MiddlewareTCP
+metadata:
+  name: mosquitto-lan-only
+  namespace: homeassistant
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: mosquitto-lan-only
+spec:
+  ipAllowList:
+    sourceRange:
+      - 10.0.0.0/16
+---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
@@ -16,6 +40,8 @@ spec:
     - mqtt
   routes:
     - match: HostSNI(`*`)
+      middlewares:
+        - name: mosquitto-lan-only
       services:
         - name: mosquitto
           port: 1883

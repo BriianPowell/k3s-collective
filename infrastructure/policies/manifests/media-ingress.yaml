@@ -1,0 +1,197 @@
+# Per-app ingress for the core *arr apps in `media`.
+#
+# Why: `standard-ingress` lets every pod in kube-system and every pod in the namespace reach
+# every media pod. With an app's own login on, that is tolerable; with it off (SSO only at
+# Traefik) any compromised pod could read /initialize.js, get the API key, and own the app.
+# These policies allow only Traefik, the monitoring namespace, and the named callers below,
+# on the app's own port.
+#
+# The four pods are excluded from `standard-ingress` (manifests/standard-ingress.yaml);
+# policies are additive, so without that exclusion these would restrict nothing.
+#
+# Selectors use `app.kubernetes.io/name` only. The app kustomizations use `commonLabels`,
+# which would rewrite a podSelector here if this file lived next to the apps.
+#
+# Callers were read from each app's live config (Prowlarr Applications, Seerr, Bazarr,
+# Recyclarr, exportarr). Lidarr and Readarr are scaled to 0 and still use `standard-ingress`.
+#
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: radarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: radarr
+  policyTypes:
+    - Ingress
+  ingress:
+    # Traefik (public hostname, behind SSO)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 7878
+          protocol: TCP
+    # Prometheus / monitoring stack
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 7878
+          protocol: TCP
+    # App-to-app callers
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - prowlarr
+                  - seerr
+                  - bazarr
+                  - recyclarr
+                  - radarr-exportarr
+      ports:
+        - port: 7878
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sonarr-tv-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: sonarr-tv
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8989
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 8989
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - prowlarr
+                  - seerr
+                  - bazarr
+                  - recyclarr
+                  - sonarr-tv-exportarr
+      ports:
+        - port: 8989
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sonarr-anime-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: sonarr-anime
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8989
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 8989
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - prowlarr
+                  - seerr
+                  - bazarr-anime
+                  - recyclarr
+                  - sonarr-anime-exportarr
+      ports:
+        - port: 8989
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: prowlarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: prowlarr
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 9696
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 9696
+          protocol: TCP
+    # Sonarr/Radarr call Prowlarr for indexer searches.
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - radarr
+                  - sonarr-tv
+                  - sonarr-anime
+                  - prowlarr-exportarr
+      ports:
+        - port: 9696
+          protocol: TCP
