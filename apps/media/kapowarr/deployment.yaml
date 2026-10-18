@@ -60,7 +60,7 @@ spec:
           # Now an explicit version, bumped by Flux image automation (image-automation.yaml, range
           # >=1.3.1 <2.0.0). v1.3.1 was the running version on 2026-10-17. Not pinned by digest
           # because the image-policy setter would drop it.
-          image: docker.io/mrcas/kapowarr:v1.3.1 # {"$imagepolicy": "media:kapowarr"}
+          image: docker.io/mrcas/kapowarr:v1.3.2 # {"$imagepolicy": "media:kapowarr"}
           imagePullPolicy: IfNotPresent
           # Still root: it writes to /app/db and the root-owned library under /data. Moving off
           # root needs a shared media uid/gid first; see .memories/security-hardening.md.
