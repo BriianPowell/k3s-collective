@@ -1,0 +1,170 @@
+#
+# SSO gate (media): Traefik ForwardAuth -> oauth2-proxy-media -> Keycloak (realm `inferno`).
+# One of TWO instances. They differ only by role, callback host, cookie name and cookie secret:
+#   media   -> realm role `media-admin`,   protects the arr apps, Bazarr, Kapowarr and Plex's browser route
+#   cluster -> realm role `cluster-admin`, protects Prometheus, Alertmanager, Alloy and the Traefik dashboard
+# Never share a cookie name or secret between them. The role is only checked at login, so a
+# shared cookie would let a media-admin session through the cluster gate.
+#
+# Who may pass is decided in Keycloak, not here: only users holding the realm role
+# `media-admin` (--allowed-role). Having an account in the realm is NOT enough. Do not add
+# --email-domain restrictions or whitelists; manage access by assigning the role.
+#
+# How the flow works (see ingress.yaml for the Middleware):
+#   - Traefik calls http://oauth2-proxy-media/ for every request to a protected host and sends
+#     the original URL in X-Forwarded-* headers (--reverse-proxy). A valid session cookie -> 202
+#     (static upstream) and Traefik lets the request through; otherwise oauth2-proxy answers with
+#     a 302 straight to Keycloak (--skip-provider-button) and Traefik relays it to the browser.
+#   - Keycloak returns to https://oauth-media.powell.place/oauth2/callback, which sets a cookie for
+#     .powell.place, so one login covers every subdomain protected by this instance.
+#   - The role is checked at login. A removed role takes effect when the session cookie expires
+#     (--cookie-expire) or the user logs out; shorten it if that matters more than convenience.
+#
+# Reference:
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
+# https://doc.traefik.io/traefik/v3.1/middlewares/http/forwardauth/
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth2-proxy-media
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: oauth2-proxy-media
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: oauth2-proxy-media
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy-media
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: oauth2-proxy-media
+spec:
+  revisionHistoryLimit: 3
+  # Stateless (session lives in the cookie), so two replicas cost little and a node reboot
+  # no longer takes SSO down.
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: oauth2-proxy-media
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: oauth2-proxy-media
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: oauth2-proxy-media
+      containers:
+        - name: oauth2-proxy
+          # Pinned by tag and digest. No Flux image automation manages this line, so bump it by
+          # hand (check https://github.com/oauth2-proxy/oauth2-proxy/releases).
+          image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.5@sha256:8498b0d0ef0a7b29686414000a08aee467f02d0299c9ed1e006a8f33fc017916
+          args:
+            - --provider=keycloak-oidc
+            - --oidc-issuer-url=https://keycloak.powell.place/realms/inferno
+            - --redirect-url=https://oauth-media.powell.place/oauth2/callback
+            - --code-challenge-method=S256
+            # Authorisation: realm role in Keycloak. Email domain is not used for access.
+            - --allowed-role=media-admin
+            - --email-domain=*
+            # ForwardAuth mode: answer 202 when authenticated, never proxy anywhere.
+            - --upstream=static://202
+            - --http-address=0.0.0.0:4180
+            - --skip-provider-button=true
+            # Behind Traefik. Only the pod network may supply X-Forwarded-* headers (k3s pod CIDR).
+            - --reverse-proxy=true
+            - --trusted-proxy-ip=10.42.0.0/16
+            # One cookie for every *.powell.place app; redirects only back to our own domain.
+            - --cookie-domain=.powell.place
+            - --whitelist-domain=.powell.place
+            - --cookie-name=__Secure-oauth2-proxy-media
+            - --cookie-secure=true
+            - --cookie-expire=12h
+            # Many parallel requests (assets) can each start a login; keep a CSRF cookie per request.
+            - --cookie-csrf-per-request=true
+            - --cookie-csrf-expire=5m
+            # Keep OAuth tokens out of the cookie (Keycloak tokens are large). Disables refresh.
+            - --session-cookie-minimal=true
+            - --set-xauthrequest=true
+            - --silence-ping-logging=true
+            - --request-logging=false
+          env:
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: client_id
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: client_secret
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: cookie_secret
+          ports:
+            - name: http
+              containerPort: 4180
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            capabilities:
+              drop:
+                - ALL

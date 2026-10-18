@@ -1,0 +1,98 @@
+#
+# Callback hosts for the two oauth2-proxy instances plus the ForwardAuth middlewares that
+# protected routes reference.
+#
+# Usage on a protected route (replaces traefik-forward-auth):
+#   arr apps, Bazarr, Kapowarr, Plex browser route -> oauth2-proxy-media   (role media-admin)
+#   Prometheus, Alertmanager, Alloy, Traefik dash  -> oauth2-proxy-cluster (role cluster-admin)
+#
+#   middlewares:
+#     - name: oauth2-proxy-media
+#       namespace: kube-system
+#     - name: security
+#       namespace: kube-system
+#
+# The callback hosts are exposed to the internet on purpose: they are the OAuth redirect targets.
+# Only /oauth2/ is routed; nothing else on these hosts reaches the proxy. They serve no app data.
+#
+# Reference:
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview
+# https://doc.traefik.io/traefik/v3.1/middlewares/http/forwardauth/
+#
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: oauth2-proxy-media
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: oauth2-proxy-media
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`oauth-media.powell.place`) && PathPrefix(`/oauth2/`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: oauth2-proxy-media
+          port: http
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: oauth2-proxy-cluster
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: oauth2-proxy-cluster
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`oauth-cluster.powell.place`) && PathPrefix(`/oauth2/`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: oauth2-proxy-cluster
+          port: http
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth2-proxy-media
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: oauth2-proxy-media
+spec:
+  forwardAuth:
+    # Root path on purpose: oauth2-proxy then runs its full flow (202, or 302 to Keycloak).
+    # /oauth2/auth would only ever return 401 and the browser would never be redirected.
+    address: http://oauth2-proxy-media/
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-Request-User
+      - X-Auth-Request-Email
+      - X-Auth-Request-Preferred-Username
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth2-proxy-cluster
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: middleware
+    app.kubernetes.io/name: oauth2-proxy-cluster
+spec:
+  forwardAuth:
+    address: http://oauth2-proxy-cluster/
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-Request-User
+      - X-Auth-Request-Email
+      - X-Auth-Request-Preferred-Username

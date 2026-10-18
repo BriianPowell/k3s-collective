@@ -195,3 +195,34 @@ spec:
       ports:
         - port: 9696
           protocol: TCP
+---
+# FlareSolverr is a headless browser that fetches arbitrary URLs for Prowlarr, so it must only be
+# reachable by Prowlarr. There is deliberately no IngressRoute, so no Traefik rule here. The
+# monitoring namespace may scrape :8192 (PROMETHEUS_ENABLED; the ServiceMonitor is currently
+# commented out in apps/monitoring/prometheus/kustomization.yaml).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: flaresolverr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: flaresolverr
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prowlarr
+      ports:
+        - port: 8191
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 8192
+          protocol: TCP

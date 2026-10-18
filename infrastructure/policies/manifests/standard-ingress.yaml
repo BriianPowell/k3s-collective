@@ -15,6 +15,7 @@ spec:
           - sonarr-tv
           - sonarr-anime
           - prowlarr
+          - flaresolverr
   policyTypes:
     - Ingress
   ingress:
