@@ -10,3 +10,4 @@ resources:
   - image-automation.yaml
   - ingress.yaml
   - ingress-tcp.yaml
+  - network-policy.yaml
