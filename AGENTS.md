@@ -24,10 +24,11 @@ The nodes run NixOS; their configuration is in the separate `nix-config` repo
 
 ## Tools
 
-`helm`, `kustomize`, `kubeconform`, `yq` and `jq` are not installed on the Mac;
-they, plus `kubectl` and `flux`, come from the devShell in the nix-config repo.
-Run them with `nix develop ~/Code/Self/nix-config -c <cmd>`, e.g.
-`nix develop ~/Code/Self/nix-config -c kustomize build apps/media/plex`.
+`kubectl`, `flux` and `jq` are on the Mac's PATH. `helm`, `kustomize`, `kubeconform` and `yq`
+are not installed, and the nix-config devShell no longer provides them (it has only `git` and
+`transcrypt`). Use an ad-hoc shell, e.g.
+`nix shell nixpkgs#kustomize nixpkgs#kubeconform nixpkgs#yq-go -c kustomize build apps/media/plex`
+(`nixpkgs#kubernetes-helm` for `helm`). Re-check with `command -v` if a tool seems missing.
 
 ## Conventions
 
@@ -39,3 +40,41 @@ Run them with `nix develop ~/Code/Self/nix-config -c <cmd>`, e.g.
 - Monitoring is Prometheus, Grafana, Loki and Alloy. New services should expose
   metrics and a `ServiceMonitor` where the app supports it.
 - Reference links go in comments at the top of each manifest, as existing files do.
+
+## Security
+
+This repo is public. Never commit secrets, tokens, or notes about which services are weak.
+
+- **Workloads:** run as non-root, set `allowPrivilegeEscalation: false`, `seccompProfile:
+  RuntimeDefault` and drop all capabilities where the app allows. Set
+  `automountServiceAccountToken: false` unless the app talks to the Kubernetes API. Do not infer
+  "runs as root" from the pod spec alone; many images drop privileges themselves. Check with
+  `kubectl exec <pod> -- id`.
+- **Exposure:** assume every hostname Traefik routes is reachable from the internet. A new
+  `IngressRoute` needs SSO (`traefik-forward-auth`) in front, or an app login you have verified.
+  Do not add a public route for something only other pods use; they call the Service name.
+- **Behind Traefik, clients look local** (the pod IP). Any "no auth for local addresses" setting
+  in an app is effectively "no auth". Loopback is often trusted too, so test auth from a
+  non-loopback address.
+- **Network policies:** put per-app egress restrictions in `infrastructure/policies`, not in the
+  app directory. App kustomizations use `commonLabels`, which rewrites a policy's `podSelector`
+  and can make it silently select nothing; select on `app.kubernetes.io/name` only. Policies are
+  additive, so a pod covered by an allow-all policy must be excluded from it
+  (`matchExpressions NotIn`) for a restriction to take effect.
+- **Images:** pin by tag; pin by digest only where Flux image automation (a
+  `# {"$imagepolicy": ...}` marker) is not managing the line, because automation rewrites it and
+  drops the digest.
+- **Verify before handing back:** render with `kustomize build`, run `kubeconform`, run
+  `kubectl apply --dry-run=server`, and confirm any policy selector matches the live pod's
+  labels (a dry-run cannot detect a no-op policy). After rollout, test the behaviour, not just
+  that the pod is Running.
+- **Workflow:** the maintainer commits and pushes. Agents edit and verify, and do not commit or
+  push.
+
+## Local notes
+
+`.memories/` is gitignored (this repo is public) and may not exist on a fresh clone. If it is
+present, read `.memories/security-hardening.md` before changing exposure, auth, network policies
+or pod security: it has the incident history, what is verified, and a per-service tracker.
+Treat it as a hint, not truth; re-verify against the cluster, and update it when you finish a
+service.

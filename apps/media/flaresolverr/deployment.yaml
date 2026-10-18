@@ -52,10 +52,27 @@ spec:
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: abaddon
+      # FlareSolverr never talks to the Kubernetes API, so do not hand a token to a headless
+      # browser that renders untrusted pages.
+      automountServiceAccountToken: false
+      # The image already runs as uid 1000 (flaresolverr); this makes it enforced.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:v3.5.2 # {"$imagepolicy": "media:flaresolverr"}
           imagePullPolicy: Always
+          # Not read-only: Chrome writes its profile and temp files. Not digest-pinned: the
+          # image line above is rewritten by Flux image automation, which would drop a digest.
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: LOG_LEVEL
               value: info

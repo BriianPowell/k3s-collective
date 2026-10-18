@@ -6,14 +6,16 @@ metadata:
   name: allow-all-egress
   namespace: media
 spec:
-  # Plex is excluded and limited by plex-egress (plex-egress.yaml in this directory).
-  # NetworkPolicies are additive, so it must not match here or the restriction is a no-op.
+  # Plex and FlareSolverr are excluded and limited by plex-egress and flaresolverr-egress
+  # (in this directory). NetworkPolicies are additive, so they must not match here or their
+  # restrictions are a no-op.
   podSelector:
     matchExpressions:
       - key: app.kubernetes.io/name
         operator: NotIn
         values:
           - plex-media-server
+          - flaresolverr
   policyTypes:
     - Egress
   egress:

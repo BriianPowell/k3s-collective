@@ -4,7 +4,10 @@ namespace: media
 commonLabels:
   app.kubernetes.io/part-of: flaresolverr
 
+# There is deliberately no IngressRoute: FlareSolverr has no authentication and fetches any URL
+# it is given, so it must not be reachable from outside the cluster. Prowlarr reaches it at
+# http://flaresolverr.media.svc:8191/. Its egress is restricted by
+# infrastructure/policies/manifests/flaresolverr-egress.yaml.
 resources:
   - deployment.yaml
   - image-automation.yaml
-  - ingress.yaml

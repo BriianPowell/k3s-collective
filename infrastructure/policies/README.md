@@ -8,8 +8,9 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | -------- | ------------ |
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
-| `allow-all-egress` | `media` (except Plex), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub) |
+| `allow-all-egress` | `media` (except Plex and FlareSolverr), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub) |
 | `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
+| `flaresolverr-egress` | `media` FlareSolverr pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/flaresolverr-egress.yaml`) |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
 | `standard-egress` + CNPG | same app namespaces — adds `cnpg-system` to egress |

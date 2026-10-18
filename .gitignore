@@ -1,3 +1,6 @@
+# Local working notes (security findings, incident details). The repo is public: never commit.
+.memories/
+
 # Secrets
 **/*.env
 **/*.env.yaml

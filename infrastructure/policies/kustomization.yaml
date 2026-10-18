@@ -7,6 +7,7 @@ kind: Kustomization
 resources:
   - manifests/cnpg-egress.yaml
   - manifests/cnpg-ingress.yaml
+  - manifests/flaresolverr-egress.yaml
   - manifests/kube-system.yaml
   - manifests/media-limitrange.yaml
   - manifests/open-egress.yaml

@@ -1,0 +1,57 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://github.com/FlareSolverr/FlareSolverr
+#
+# Why: FlareSolverr is an unauthenticated headless browser that loads whatever URL a caller
+# gives it (Prowlarr sends it indexer pages). Anything that can reach it can make it fetch
+# internal addresses (the cluster API, Keycloak, Nextcloud, the LAN) and read the response, so
+# its egress is limited to what indexers need. The media namespace is allow-all-egress, so
+# FlareSolverr is carved out of that policy (see permissive-egress.yaml) and limited here.
+#
+# FlareSolverr only needs DNS plus HTTPS/HTTP to the internet. Replies to inbound connections
+# (Prowlarr, Prometheus) are allowed implicitly. Private ranges are excluded so a caller cannot
+# use it to reach inside the cluster or the LAN.
+#
+# This lives here and not in apps/media/flaresolverr because that kustomization uses
+# commonLabels, which would inject app.kubernetes.io/part-of=flaresolverr into this
+# podSelector. Selecting on name only matches the pod regardless.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: flaresolverr-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: flaresolverr
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: flaresolverr
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP
