@@ -68,6 +68,16 @@ spec:
         secret.reloader.stakater.com/reload: tqm
     spec:
       restartPolicy: Always
+      # automountServiceAccountToken: Deluge never talks to the Kubernetes API.
+      automountServiceAccountToken: false
+      securityContext:
+        # wg-quick sets this for the WireGuard default route. It is NOT a kubelet safe sysctl: sheol's
+        # kubelet must allow it (nix-config hosts/sheol/kubernetes.nix, allowed-unsafe-sysctls),
+        # otherwise the pod is rejected with SysctlForbidden and Deluge stays down (verified with a
+        # test pod). Rebuild sheol BEFORE this change reaches the cluster.
+        sysctls:
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: '1'
       nodeSelector:
         kubernetes.io/hostname: sheol
       initContainers:
@@ -215,13 +225,22 @@ spec:
           #     command: ["/bin/bash", "-c", "curl -sL --fail http://localhost:8112 && curl -sL --fail https://google.com || exit 1"]
           #   initialDelaySeconds: 5
           #   periodSeconds: 5
+          # Not privileged. The in-kernel WireGuard client (wg0) needs NET_ADMIN to create the
+          # interface, routes and the iptables kill switch; the src_valid_mark sysctl wg-quick sets is
+          # supplied at pod level above. /dev/net/tun is only used by the OpenVPN path, which is off.
+          # The runtime's default capability set stays (the image's start scripts run as root and
+          # chown/su), so ALL is deliberately not dropped, and allowPrivilegeEscalation is left at
+          # its default for the same reason. If the VPN fails to come up after a change here, the
+          # kill switch keeps traffic from leaking; revert this block.
           securityContext:
             runAsUser: 0
             runAsGroup: 0
-            # sysctls:
-            #   - name: net.ipv4.conf.all.src_valid_mark
-            #     value: "1"
-            privileged: true
+            privileged: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              add:
+                - NET_ADMIN
           volumeMounts:
             - name: tz
               mountPath: /etc/localtime

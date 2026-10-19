@@ -296,3 +296,56 @@ spec:
       ports:
         - port: 5656
           protocol: TCP
+---
+# Deluge: web UI :8112 for Traefik (behind SSO), the arr download clients and the exporter, and
+# the daemon :58846 for the tqm CronJob only. Peer traffic arrives over the WireGuard tunnel inside
+# the pod (wg0), not on the pod network, so it is not affected by this policy. Prometheus scrapes
+# the exporter, not Deluge. Callers read from tqm/config.yaml and each app's download client
+# (Prowlarr's read from its DB: Deluge at deluge.media.svc:8112).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deluge-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: deluge
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8112
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - radarr
+                  - sonarr-tv
+                  - sonarr-anime
+                  # Prowlarr has its own Deluge download client (manual grabs).
+                  - prowlarr
+                  # Scaled to 0 today; listed so they work when brought back.
+                  - lidarr
+                  - readarr
+                  - deluge-exporter
+      ports:
+        - port: 8112
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: tqm
+      ports:
+        - port: 58846
+          protocol: TCP

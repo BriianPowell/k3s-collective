@@ -1,0 +1,64 @@
+#
+# Reference:
+# https://fluxcd.io/flux/guides/image-update/
+# https://fluxcd.io/flux/components/image/imagepolicies/#image-tag-marker
+# https://quay.io/repository/prometheuscommunity/smartctl-exporter
+#
+# Flux rewrites `image.tag` in smartctl-exporter.yaml (the `$imagepolicy` marker, `:tag` suffix so
+# only the tag is written, not the repository) and pushes to main. The chart's own appVersion
+# default is overridden by that tag. Pinned by tag, not digest, so the setter can rewrite it.
+# The range stops at <1.0.0 so a major release is a deliberate change, not an unattended one.
+# The exporter reads disk SMART data from /dev/sd* and runs privileged, so pull in new releases
+# deliberately: review the release notes if a bump looks large. Non-semver tags (latest, master,
+# v0) are ignored by the semver policy.
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: smartctl-exporter
+  namespace: monitoring
+spec:
+  image: quay.io/prometheuscommunity/smartctl-exporter
+  interval: 24h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: smartctl-exporter
+  namespace: monitoring
+spec:
+  imageRepositoryRef:
+    name: smartctl-exporter
+    namespace: monitoring
+  policy:
+    semver:
+      range: '>=0.14.0 <1.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: smartctl-exporter
+  namespace: monitoring
+spec:
+  interval: 24h0m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: FluxCDBot
+      messageTemplate: |
+        🚨 Image Automation Update 🚨
+        {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
+    push:
+      branch: main
+  update:
+    # Only this file carries the marker; the other files in the directory are left alone.
+    path: ./infrastructure/controllers/kube-prometheus-stack
+    strategy: Setters
