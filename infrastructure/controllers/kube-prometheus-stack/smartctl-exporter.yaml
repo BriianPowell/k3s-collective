@@ -29,7 +29,7 @@ spec:
       # Overrides the image tag whose default is the chart appVersion. Kept current by Flux image
       # automation (smartctl-exporter-image-automation.yaml). Started at what was running (v0.14.0);
       # v0.15.0 exists and is untried, and automation will adopt it within ~24h of the push.
-      tag: v0.14.0 # {"$imagepolicy": "monitoring:smartctl-exporter:tag"}
+      tag: v0.15.0 # {"$imagepolicy": "monitoring:smartctl-exporter:tag"}
       pullPolicy: IfNotPresent
       pullSecrets: []
     serviceMonitor:
