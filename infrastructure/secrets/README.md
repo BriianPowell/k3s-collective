@@ -17,11 +17,11 @@ The operator is deployed by Flux (`infrastructure/controllers/onepassword.yaml`)
 ## Where secrets live in git
 
 | Secret | Manifest | Namespace | Flux kustomization |
-|--------|----------|-----------|-------------------|
+| -------- | ---------- | ----------- | ------------------- |
 | Cloudflare API token | `infrastructure/configs/onepassword-item.yaml` | `cert-manager` | `infra-configs` |
 | CrowdSec enroll key | `infrastructure/controllers/crowdsec-onepassword-item.yaml` | `crowdsec` | `infra-controllers` |
 | AdGuard exporter | `apps/base/adguard/onepassword-item.yaml` | `adguard` | `base` |
-| Forward Auth (OIDC) | `apps/base/forward-auth/onepassword-item.yaml` | `kube-system` | `kube-system` |
+| OAuth2 Proxy (OIDC) | apps/base/oauth2-proxy/onepassword-item.yaml | kube-system | base |
 | Home Assistant | `apps/base/homeassistant/onepassword-item.yaml` | `homeassistant` | `base` |
 | Keycloak | `apps/base/keycloak/onepassword-item.yaml` | `keycloak` | `base` |
 | Nextcloud + SMTP | `apps/base/nextcloud/onepassword-item.yaml` | `nextcloud` | `base` |
@@ -67,18 +67,23 @@ Item **Cloudflare**, field `api-token` → `Secret/cloudflare-api-token` (key `a
 
 AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 
-### Traefik Forward Auth (OIDC)
+### OAuth2 Proxy (OIDC)
+
+1Password item title `Oauth2 Proxy` (exact), vault `Collective`. Labels keep their underscores.
 
 | Label | Used as |
-|-------|---------|
-| `client-id` | `PROVIDERS_OIDC_CLIENT_ID` |
-| `client-secret` | `PROVIDERS_OIDC_CLIENT_SECRET` |
-| `secret` | `SECRET` (cookie signing) |
+| ------- | --------- |
+| `client_id` | `OAUTH2_PROXY_CLIENT_ID` (both instances) |
+| `client_secret` | `OAUTH2_PROXY_CLIENT_SECRET` (both instances) |
+| `cookie_secret` | `OAUTH2_PROXY_COOKIE_SECRET` for `oauth2-proxy-media` |
+| `cluster_cookie_secret` | `OAUTH2_PROXY_COOKIE_SECRET` for `oauth2-proxy-cluster` |
+
+The two cookie secrets must differ, or a media session could pass the cluster gate.
 
 ### Home Assistant
 
 | Label | Used by |
-|-------|---------|
+| ------- | --------- |
 | `secrets.yaml` | Multiline file mounted to `/config/secrets.yaml` |
 | `token` | Also synced to `Secret/prometheus` in `monitoring` for Prometheus scrape |
 | `mqtt-username` | Mosquitto broker init container |
@@ -91,7 +96,7 @@ AdGuard Home UI auth in `helm-release.yaml` is separate (bcrypt in values).
 ### Keycloak
 
 | Label | Notes |
-|-------|-------|
+| ------- | ------- |
 | `DOMAIN` | `KC_HOSTNAME` (e.g. `keycloak.powell.place`) |
 | `KC_ADMN` | Optional legacy bootstrap username |
 | `KC_PASS` | Optional legacy bootstrap password |
@@ -103,7 +108,7 @@ Postgres: CNPG `Secret/keycloak-pgcluster-app`, not this secret.
 **Item Nextcloud** → `Secret/nextcloud`:
 
 | Label | Used by |
-|-------|---------|
+| ------- | --------- |
 | `username` | `NEXTCLOUD_ADMIN_USER` |
 | `password` | `NEXTCLOUD_ADMIN_PASSWORD` |
 | `trusted_domains` | `NEXTCLOUD_TRUSTED_DOMAINS` |
@@ -134,7 +139,7 @@ Item **SMTP** (Login) in vault **Collective** → `Secret/alertmanager-smtp`. Us
 ### Grafana
 
 | Label | Used by |
-|-------|---------|
+| ------- | --------- |
 | `USER` | Admin username |
 | `PASS` | Admin password |
 | `CLIENT_ID` | Keycloak OAuth |
@@ -151,7 +156,7 @@ Keycloak realm **inferno** well-known: `https://keycloak.powell.place/realms/inf
 Item **Arr Stack** → `Secret/arr-stack` in `media`:
 
 | Label | Used by |
-|-------|---------|
+| ------- | --------- |
 | `bazarr_api_key` | Bazarr exportarr |
 | `bazarr_anime_api_key` | Bazarr Anime exportarr |
 | `lidarr_api_key` | Lidarr exportarr |
@@ -184,7 +189,7 @@ for d in $(kubectl -n media get deploy -o name | grep exportarr); do kubectl -n 
 ### Deluge
 
 | Label | Used by |
-|-------|---------|
+| ------- | --------- |
 | `VPN_USER` | Deluge deployment (PIA WireGuard) |
 | `VPN_PASS` | Deluge deployment |
 | `APP_PASS` | deluge-exporter (Web UI password) |

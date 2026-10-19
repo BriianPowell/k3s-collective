@@ -1,4 +1,4 @@
-# Per-app ingress for the core *arr apps in `media`.
+# Per-app ingress for the core *arr apps, Bazarr and Kapowarr in `media`.
 #
 # Why: `standard-ingress` lets every pod in kube-system and every pod in the namespace reach
 # every media pod. With an app's own login on, that is tolerable; with it off (SSO only at
@@ -6,7 +6,7 @@
 # These policies allow only Traefik, the monitoring namespace, and the named callers below,
 # on the app's own port.
 #
-# The four pods are excluded from `standard-ingress` (manifests/standard-ingress.yaml);
+# These pods are excluded from `standard-ingress` (manifests/standard-ingress.yaml);
 # policies are additive, so without that exclusion these would restrict nothing.
 #
 # Selectors use `app.kubernetes.io/name` only. The app kustomizations use `commonLabels`,
@@ -225,4 +225,74 @@ spec:
               kubernetes.io/metadata.name: monitoring
       ports:
         - port: 8192
+          protocol: TCP
+---
+# Bazarr (both instances). With its own login turned off (SSO only at Traefik), reaching the UI
+# means reaching Bazarr's post-processing command setting, which runs arbitrary commands. So only
+# Traefik may connect, plus each instance's exportarr sidecar-style exporter. Bazarr itself calls
+# Sonarr/Radarr (outbound, see media-egress.yaml); nothing else in the cluster calls it.
+# Prometheus scrapes the exporters, not Bazarr, so there is no monitoring rule here.
+# The exporters are listed together for both instances; each only targets its own Bazarr.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bazarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - bazarr
+          - bazarr-anime
+  policyTypes:
+    - Ingress
+  ingress:
+    # Traefik (public hostname, behind SSO)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 6767
+          protocol: TCP
+    # exportarr metrics exporters
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - bazarr-exportarr
+                  - bazarr-anime-exportarr
+      ports:
+        - port: 6767
+          protocol: TCP
+---
+# Kapowarr: only Traefik. It has no exporter and nothing in the cluster calls it.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kapowarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kapowarr
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 5656
           protocol: TCP

@@ -69,6 +69,11 @@ spec:
               value: External
             - name: RADARR__AUTH__REQUIRED
               value: DisabledForLocalAddresses
+            # Reject requests whose Host header is not one of these (the public name, then the
+            # in-cluster names Prowlarr, Seerr, Bazarr, Recyclarr and exportarr use). Update the
+            # public name when hostnames are migrated. No health probes hit the pod IP.
+            - name: RADARR__SERVER__ALLOWEDHOSTS
+              value: radarr.powell.place,radarr.media.svc,radarr.media.svc.cluster.local,radarr
           ports:
             - name: http
               containerPort: 7878

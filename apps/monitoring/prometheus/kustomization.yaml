@@ -16,7 +16,7 @@ resources:
   # Lower-priority media exporters are disabled to reduce Prometheus target volume.
   # - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
-  # - serviceMonitor-deluge.yaml
+  - serviceMonitor-deluge.yaml
   # - serviceMonitor-flaresolverr.yaml
   - serviceMonitor-hass.yaml
   - serviceMonitor-keycloak.yaml

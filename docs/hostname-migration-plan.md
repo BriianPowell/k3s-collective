@@ -44,7 +44,7 @@ have the old hostname hardcoded somewhere *other* than their own
 | Infra | Nextcloud | `nextcloud` | `cloud` | `apps/base/nextcloud/ingress.yaml` |
 | Infra | Home Assistant | `hass` | `home` | `apps/base/homeassistant/ingress.yaml` |
 | Infra | Wiki.js | `wiki` | *(already functional, no change)* | `apps/base/wiki-js/ingress.yaml` |
-| Infra | forward-auth | `auth` | *(already functional, no change)* | `apps/base/forward-auth/ingress.yaml` |
+| Infra | oauth2-proxy | `oauth-media`, `oauth-cluster` | *(callback hosts; do not rename, see below)* | `apps/base/oauth2-proxy/ingress.yaml` |
 
 **Note on FlareSolverr:** it's a CAPTCHA-solving proxy consumed internally by
 Prowlarr, not something a human visits. Recommend dropping its public ingress
@@ -65,13 +65,15 @@ as its ingress, or the app will break even though DNS/TLS still resolve.
 | `grafana.powell.place` | `apps/monitoring/grafana/helm-release.yaml:220` (`root_url`) | OAuth callback + asset URLs break |
 | `keycloak.powell.place` | `apps/monitoring/grafana/helm-release.yaml:225` (commented `signout_redirect_url`) | Cosmetic (already commented out), but update if uncommented later |
 | `nextcloud.powell.place` | `apps/base/nextcloud/deployment.yaml:123` (`OVERWRITEHOST`) | Nextcloud generates broken absolute URLs (shares, previews, CalDAV/CardDAV) |
-| `auth.powell.place` | `apps/base/forward-auth/config.yaml:13` (`AUTH_HOST`) | forward-auth's own OAuth callback breaks — **this would lock everyone out of every SSO-protected app** |
-| `keycloak.powell.place` | `apps/base/forward-auth/config.yaml:16` (`PROVIDERS_OIDC_ISSUER_URL`) | Same — forward-auth can't reach the OIDC issuer, SSO login breaks cluster-wide |
+| `oauth-media.powell.place`, `oauth-cluster.powell.place` | `apps/base/oauth2-proxy/deployment*.yaml` (`--redirect-url`) and the Keycloak client's redirect URIs | oauth2-proxy's OAuth callback breaks — **this would lock everyone out of every SSO-protected app**. Keep these hosts. |
+| `keycloak.powell.place` | `apps/base/oauth2-proxy/deployment*.yaml` (`--oidc-issuer-url`) | oauth2-proxy can't reach the OIDC issuer, SSO login breaks cluster-wide |
+| `*.powell.place` (cookie domain) | `apps/base/oauth2-proxy/deployment*.yaml` (`--cookie-domain`, `--whitelist-domain`) | The session cookie must cover every protected host; keep it apex-wide |
+| Servarr `AllowedHosts` | each arr app's General settings (and `config.xml`) | The renamed public host is rejected by the app itself; add the new name to the list |
 | `atuin.powell.place` | `nix-config/home/atuin/README.md:7`, `nix-config/home/modules/atuin.nix:45` (`sync_address`) | Shell history sync breaks on **every machine** until each is rebuilt with the new config |
 
 **Not found in git (config lives outside this repo / in a running service's own DB — must be changed by hand):**
 
-- **Keycloak realm client redirect URIs.** Any client (Grafana, forward-auth,
+- **Keycloak realm client redirect URIs.** Any client (Grafana, oauth2-proxy,
   anything else using `auth.generic_oauth`) has a "Valid Redirect URIs" list
   configured live in the Keycloak admin console for realm `inferno`. Renaming
   `grafana` → `dashboards`, `auth` → *(unchanged)*, or `keycloak` → `identity`
@@ -117,15 +119,15 @@ Do these last, one at a time, with a rollback plan (see below):
 
 - Grafana → `dashboards` (update `root_url` + Keycloak client redirect URI)
 - Traefik dashboard → `proxy`, Alertmanager → `alerts`, Prometheus → `metrics`,
-  Alloy → `telemetry` (all behind forward-auth; confirm forward-auth's
-  `DOMAINS`/`COOKIE_DOMAIN` being apex-wide means these don't need any
-  forward-auth config change — only their own `externalUrl`/ingress)
+  Alloy → `telemetry` (all behind `oauth2-proxy-cluster`; its cookie domain is
+  apex-wide, so these need no oauth2-proxy change — only their own
+  `externalUrl`/ingress)
 - AdGuard → `dns` (verify this isn't also how you access router-adjacent
   admin during an incident — keep the old host as a fallback longer here)
 - Atuin → `history` (update ingress **and** `nix-config`, then rebuild/switch
   every machine before removing the old host)
-- Keycloak → `identity` **and** forward-auth → keep `auth` as-is, but update
-  `PROVIDERS_OIDC_ISSUER_URL` to the new Keycloak host. Do this last: if it's
+- Keycloak → `identity` **and** oauth2-proxy → keep the `oauth-*` hosts as-is, but update
+  `--oidc-issuer-url` in both Deployments to the new Keycloak host. Do this last: if it's
   wrong, you lose SSO login to every protected app simultaneously, including
   Keycloak's own admin console if that's also gated.
 

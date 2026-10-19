@@ -11,7 +11,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 
 ### Base
 
-- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik) + [Traefik Forward Auth](https://github.com/thomseddon/traefik-forward-auth)
+- [x] [Traefik](https://artifacthub.io/packages/helm/traefik/traefik) + [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/) (Keycloak role-gated SSO)
 - [x] [Cert Manager](https://github.com/cert-manager/cert-manager)
 - [x] [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
 - [x] [Reflector](https://github.com/emberstack/kubernetes-reflector)

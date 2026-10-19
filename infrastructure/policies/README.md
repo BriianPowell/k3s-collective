@@ -13,6 +13,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
 | `flaresolverr-egress` | `media` FlareSolverr pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/flaresolverr-egress.yaml`) |
 | `radarr-ingress`, `sonarr-tv-ingress`, `sonarr-anime-ingress`, `prowlarr-ingress` | `media` core *arr pods — ingress only from Traefik, monitoring and named callers on the app port; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
+| `bazarr-ingress`, `kapowarr-ingress` | `media` Bazarr (both) and Kapowarr — ingress only from Traefik (and Bazarr's own exporters); excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `flaresolverr-ingress` | `media` FlareSolverr — ingress only from Prowlarr (:8191) and monitoring (:8192); no Traefik route; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |

@@ -78,6 +78,11 @@ spec:
               value: External
             - name: PROWLARR__AUTH__REQUIRED
               value: DisabledForLocalAddresses
+            # Reject requests whose Host header is not one of these (the public name, then the
+            # in-cluster names Prowlarr, Seerr, Bazarr, Recyclarr and exportarr use). Update the
+            # public name when hostnames are migrated. No health probes hit the pod IP.
+            - name: PROWLARR__SERVER__ALLOWEDHOSTS
+              value: prowlarr.powell.place,prowlarr.media.svc,prowlarr.media.svc.cluster.local,prowlarr
           ports:
             - name: http
               containerPort: 9696

@@ -52,7 +52,9 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   `kubectl exec <pod> -- id`, but for s6-based images (linuxserver) `id` reports the root
   entrypoint even when the app runs as `PUID`; read process owners from `/proc/*/status` too.
 - **Exposure:** assume every hostname Traefik routes is reachable from the internet. A new
-  `IngressRoute` needs SSO (`traefik-forward-auth`) in front, or an app login you have verified.
+  `IngressRoute` needs SSO in front (the `oauth2-proxy-media` or `oauth2-proxy-cluster` middleware
+  from `apps/base/oauth2-proxy`; access is a Keycloak role, not just a realm login), or an app login
+  you have verified.
   Do not add a public route for something only other pods use; they call the Service name.
 - **Behind Traefik, clients look local** (the pod IP). Any "no auth for local addresses" setting
   in an app is effectively "no auth". Loopback is often trusted too, so test auth from a

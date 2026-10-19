@@ -16,6 +16,9 @@ spec:
           - sonarr-anime
           - prowlarr
           - flaresolverr
+          - bazarr
+          - bazarr-anime
+          - kapowarr
   policyTypes:
     - Ingress
   ingress:
