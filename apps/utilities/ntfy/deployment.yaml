@@ -87,7 +87,7 @@ spec:
               value: 'true'
             - name: NTFY_METRICS_LISTEN_HTTP
               value: ':9090'
-          livesnessProbe:
+          livenessProbe:
             httpGet:
               path: /v1/health
               port: http

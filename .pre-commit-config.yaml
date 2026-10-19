@@ -1,1 +1,45 @@
-/nix/store/lji6781qqwxv3m48qqkv1vs9haxwapr4-pre-commit-config.json
+# Pre-commit hooks for k3s-collective (a PUBLIC repo that deploys a cluster through Flux).
+# Install once per clone:  pre-commit install
+# Run on everything:       pre-commit run --all-files
+# https://pre-commit.com
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-yaml
+        # Manifests hold several documents per file.
+        args: [--allow-multiple-documents]
+
+  # Secret scanning. Secrets belong in 1Password, never in git (see infrastructure/secrets).
+  # https://github.com/sirwart/ripsecrets
+  - repo: https://github.com/sirwart/ripsecrets
+    rev: v0.1.11
+    hooks:
+      - id: ripsecrets
+
+  - repo: local
+    hooks:
+      # Files that .gitignore keeps out on purpose. This only fires if one is force-added
+      # (`git add -f`), which is how a local note or secret would end up in a public repo.
+      - id: forbid-local-only-files
+        name: forbid local-only files (notes, secrets, envrc)
+        language: fail
+        entry: >-
+          This path is local-only (see .gitignore). Do not commit it to this public repo.
+        files: >-
+          (^\.memories/|^\.envrc$|\.env(\.yaml)?$|\.(key|csr|srl)$|(^|/)1password-credentials\.json$|^infrastructure/secrets/[^/]*-secret\.yaml$)
+
+      # Render touched kustomizations and validate them. Needs nix (kustomize and kubeconform are
+      # fetched in an ad-hoc shell on first use).
+      - id: kustomize-kubeconform
+        name: kustomize build + kubeconform
+        language: script
+        entry: scripts/pre-commit-render.sh
+        files: ^(apps|infrastructure|clusters)/.*\.ya?ml$
+        # coredns.yaml is a deliberate fragment (replicas, labels) that Flux server-side-applies onto
+        # k3s's built-in CoreDNS Deployment; it has no pod template and cannot validate standalone.
+        exclude: ^infrastructure/controllers/coredns\.yaml$
+        # One invocation sees every changed file, so each kustomization is built once.
+        require_serial: true
