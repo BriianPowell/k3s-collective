@@ -51,12 +51,23 @@ spec:
         app.kubernetes.io/name: ntfy
     spec:
       restartPolicy: Always
+      # ntfy never calls the Kubernetes API.
+      automountServiceAccountToken: false
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
         - name: ntfy
           image: docker.io/binwiederhier/ntfy:v2.32.0 # {"$imagepolicy": "kube-system:ntfy"}
           imagePullPolicy: Always
+          # Still runs as root (the image default; its data volume is root-owned), so shrink what root can
+          # do: no privilege escalation, default seccomp, and only the capability needed to bind port 80.
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: ['ALL']
+              add: ['NET_BIND_SERVICE']
           args: ['serve']
           env:
             - name: TZ
