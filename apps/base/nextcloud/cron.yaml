@@ -21,6 +21,7 @@ spec:
         app.kubernetes.io/component: cron
         app.kubernetes.io/name: nextcloud-cron
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: cron
           # Same tag as the web deployment so cron never runs a different major version than the app.
