@@ -87,13 +87,15 @@ spec:
         enabled: false
       https:
         enabled: false
+    # The container was OOMKilled about daily at 512Mi (restart count 5 in a week), which drops DNS
+    # until it comes back. 1Gi leaves headroom for the cache, query log and filter lists.
     resources:
       requests:
         cpu: 100m
-        memory: 256Mi
+        memory: 384Mi
       limits:
         cpu: 500m
-        memory: 512Mi
+        memory: 1Gi
     autoscaling:
       enabled: false
       minReplicas: 1
