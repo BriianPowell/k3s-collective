@@ -150,7 +150,10 @@ spec:
         ratelimit: 20
         ratelimit_subnet_len_ipv4: 24
         ratelimit_subnet_len_ipv6: 56
-        ratelimit_whitelist: []
+        # The UDM forwards every LAN client's queries from this one address, so the per-/24 limit of 20 qps
+        # would silently drop bursts. Exempt it.
+        ratelimit_whitelist:
+          - 10.0.2.1
         refuse_any: true
         upstream_dns:
           - https://dns.cloudflare.com/dns-query # DNS-over-HTTPS (DoH) provided by Cloudflare
