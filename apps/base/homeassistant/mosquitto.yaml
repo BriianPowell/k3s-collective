@@ -57,11 +57,24 @@ spec:
         app.kubernetes.io/name: mosquitto
     spec:
       automountServiceAccountToken: false
+      # The image's mosquitto user is 1883. The entrypoint would start as root and chown then drop
+      # privileges; running as 1883 from the start needs no root (data is already owned by 1883).
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1883
+        runAsGroup: 1883
+        fsGroup: 1883
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/hostname: abaddon
       initContainers:
         - name: init-config
           image: docker.io/library/eclipse-mosquitto:2.0.22 # {"$imagepolicy": "homeassistant:mosquitto"}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['ALL']
           command:
             - /bin/sh
             - -c
@@ -89,6 +102,10 @@ spec:
         - name: mosquitto
           image: docker.io/library/eclipse-mosquitto:2.0.22 # {"$imagepolicy": "homeassistant:mosquitto"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['ALL']
           ports:
             - name: mqtt
               containerPort: 1883
