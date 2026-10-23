@@ -46,6 +46,7 @@ spec:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: radarr
     spec:
+      automountServiceAccountToken: false
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol

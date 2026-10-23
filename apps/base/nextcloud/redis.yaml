@@ -37,6 +37,7 @@ spec:
         app.kubernetes.io/component: redis
         app.kubernetes.io/name: nextcloud-redis
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: nextcloud-redis
           image: redis:alpine

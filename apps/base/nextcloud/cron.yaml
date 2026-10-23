@@ -23,7 +23,8 @@ spec:
     spec:
       containers:
         - name: cron
-          image: nextcloud:apache
+          # Same tag as the web deployment so cron never runs a different major version than the app.
+          image: nextcloud:production-apache
           imagePullPolicy: Always
           command:
             - /cron.sh

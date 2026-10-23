@@ -45,6 +45,7 @@ spec:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: sonarr-tv
     spec:
+      automountServiceAccountToken: false
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol

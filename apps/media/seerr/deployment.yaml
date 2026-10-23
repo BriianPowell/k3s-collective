@@ -45,6 +45,7 @@ spec:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: seerr
     spec:
+      automountServiceAccountToken: false
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
@@ -58,6 +59,11 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: ['ALL']
           env:
             - name: LOG_LEVEL
               value: debug

@@ -43,6 +43,7 @@ spec:
             app.kubernetes.io/component: cronjob
             app.kubernetes.io/name: tqm
         spec:
+          automountServiceAccountToken: false
           restartPolicy: Never
           # Deluge's VPN firewall only accepts the daemon port from LAN_NETWORK and sheol's own
           # pod subnet, so tqm must run next to it.
