@@ -13,9 +13,12 @@ never share a number by accident and no app runs as a human login on the nodes.
   repo) is needed only when something on the host acts as that account. The media owner below has
   one, because a host service writes into the same files. Define it in
   `nix-config/hosts/sheol/media-user.nix`.
-- **Leave images with their own fixed uid alone** (PostgreSQL 26, Grafana 472, Loki 10001,
+- **Leave images with their own fixed uid alone** (FlareSolverr 1000, PostgreSQL 26, Grafana 472, Loki 10001,
   1Password Connect 999, Nextcloud 33, Mosquitto 1883, and the 65532/65534 exporters): they are
-  already separate from any login, and changing them risks the app for no gain.
+  already separate from any login, and changing them risks the app for no gain. FlareSolverr runs
+  as 1000 on purpose: it mounts no volumes, so it can never touch the administrator's files, and
+  its Chrome profile paths belong to the image's own user. Mounting a volume there would change
+  this.
 - **Set the same number everywhere it applies:** `PUID`/`PGID` or `runAsUser`/`runAsGroup`, and
   `fsGroup` where the pod uses it.
 
@@ -26,7 +29,7 @@ uid and gid are the same number in every row.
 | Id | Group | Used by |
 | ---- | ----- | ------- |
 | 1500 | media files | Owner of `/mnt/moriyya/media/data` and of the config directories of the Sonarr/Radarr family, Bazarr, Deluge, Kapowarr, Lidarr and Readarr. Host account `media`. |
-| 1501 | media config-only apps | Kavita, Seerr, Prowlarr, Tautulli, Recyclarr, FlareSolverr |
+| 1501 | media config-only apps | Kavita, Seerr, Prowlarr, Tautulli, Recyclarr |
 | 1502 | Plex | Plex only (the most exposed app, so it is kept apart from the media-file owner) |
 | 1510 | monitoring | Prometheus |
 | 1511 | utilities | Atuin, Reflector |
