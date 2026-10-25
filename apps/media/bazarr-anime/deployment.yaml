@@ -58,16 +58,17 @@ spec:
         - name: bazarr-anime
           image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr-anime"}
           imagePullPolicy: Always
-          # Still root (PUID/PGID 0): see bazarr/deployment.yaml.
+          # Same media owner as bazarr (PUID/PGID below, docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
+            # 1500:1500 is the shared `media` owner of /data and of this app's config (see docs/uids.md).
             - name: PGID
-              value: '0'
+              value: '1500'
             - name: PUID
-              value: '0'
+              value: '1500'
           ports:
             - name: http
               containerPort: 6767

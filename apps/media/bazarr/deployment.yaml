@@ -58,18 +58,18 @@ spec:
         - name: bazarr
           image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr"}
           imagePullPolicy: Always
-          # Still root (PUID/PGID 0): the whole library under /data is owned by root:root and
-          # Bazarr writes subtitles next to the media. Moving off root needs a shared media
-          # uid/gid across the *arr apps first; see .memories/security-hardening.md.
+          # Bazarr writes subtitles next to the media, so it runs as the shared media owner
+          # (PUID/PGID below, docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
+            # 1500:1500 is the shared `media` owner of /data and of this app's config (see docs/uids.md).
             - name: PGID
-              value: '0'
+              value: '1500'
             - name: PUID
-              value: '0'
+              value: '1500'
           ports:
             - name: http
               containerPort: 6767
