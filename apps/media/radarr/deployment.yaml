@@ -57,10 +57,12 @@ spec:
           env:
             - name: TZ
               value: America/Los_Angeles
+            # 1500:1500 is the shared `media` owner of /data and of this app's config (nix-config
+            # hosts/sheol/media-user.nix). Keep these numbers in step with it.
             - name: PGID
-              value: '0'
+              value: '1500'
             - name: PUID
-              value: '0'
+              value: '1500'
             # The app's own login form is off: Keycloak SSO (oauth2-proxy-media, realm role
             # media-admin) is the only way in, and the ingress NetworkPolicy limits which pods can
             # reach this one. The API key is still required for API calls. Keep both of those in
