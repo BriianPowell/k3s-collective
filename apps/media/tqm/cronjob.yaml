@@ -7,7 +7,7 @@
 #           (config.yaml). Talks to the Deluge daemon (deluge.media.svc:58846) as user "tqm";
 #           Deluge itself deletes the files, so this container needs no access to /data.
 #   orphan: deletes files under download_path that no Deluge torrent owns (e.g. torrents removed
-#           without their data). Mounts /data and runs as root, because Deluge (PUID 0) owns the
+#           without their data). Mounts /data and runs as the media owner (1500), who owns the
 #           download folders.
 #
 # tqm publishes no container image, so an init container fetches the pinned release binary and
@@ -167,12 +167,12 @@ spec:
                     secretKeyRef:
                       name: tqm
                       key: password
-              # Root only to delete Deluge's root-owned files (every directory under
-              # download_path is root-owned); no capabilities, so no reaching past file modes.
+              # Runs as the shared media owner (docs/uids.md), who owns /data and every download
+              # Deluge writes, so it can delete orphans without root or any capability.
               securityContext:
-                runAsNonRoot: false
-                runAsUser: 0
-                runAsGroup: 0
+                runAsNonRoot: true
+                runAsUser: 1500
+                runAsGroup: 1500
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
                 capabilities:
