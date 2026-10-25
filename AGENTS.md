@@ -40,6 +40,8 @@ are not installed, and the nix-config devShell no longer provides them (it has o
 - Monitoring is Prometheus, Grafana, Loki and Alloy. New services should expose
   metrics and a `ServiceMonitor` where the app supports it.
 - Reference links go in comments at the top of each manifest, as existing files do.
+- Fixed uids/gids come from `docs/uids.md` (never 1000, which is the nodes' admin login). Add a row
+  there in the same change that uses a new number.
 
 ## Security
 
