@@ -50,7 +50,7 @@ spec:
       enabled: false
     pms:
       # The container's s6 init still starts as root (it runs usermod/chown for PLEX_UID below),
-      # but Plex itself runs as uid 1000, so only block privilege gain on top of that.
+      # but Plex itself runs as uid 1502, so only block privilege gain on top of that.
       securityContext:
         allowPrivilegeEscalation: false
         seccompProfile:
@@ -86,9 +86,11 @@ spec:
       PLEX_UPDATE_CHANNEL: '5'
       # Non-root Plex. On the first start after this changed, the image's 40-plex-first-run
       # chowns /config (about 46k files) and /transcode to this uid/gid. To roll back, set
-      # these to '0' and the same script chowns /config back to root.
-      PLEX_UID: '1000'
-      PLEX_GID: '1000'
+      # these to '0' and the same script chowns /config back to root. 1502:1502 is Plex's own
+      # id, kept apart from the media-file owner 1500 (see docs/uids.md); /data is read-only
+      # and world-readable, so Plex needs no access to that owner.
+      PLEX_UID: '1502'
+      PLEX_GID: '1502'
       # ALLOWED_NETWORKS is deliberately unset: it makes Plex accept any client in that range
       # without a token. The image only writes the allowedNetworks preference when this is
       # non-empty, so it must also be cleared in Plex (Settings > Network) and stays cleared.
