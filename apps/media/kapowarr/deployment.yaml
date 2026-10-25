@@ -62,17 +62,16 @@ spec:
           # because the image-policy setter would drop it.
           image: docker.io/mrcas/kapowarr:v1.3.2 # {"$imagepolicy": "media:kapowarr"}
           imagePullPolicy: IfNotPresent
-          # Still root: it writes to /app/db and the root-owned library under /data. Moving off
-          # root needs a shared media uid/gid first; see .memories/security-hardening.md.
+          # The image's entrypoint starts as root, chowns /app/db, /app/logs and
+          # /app/temp_downloads, then drops to PUID:PGID with gosu. 1500:1500 is the shared
+          # `media` owner of /data and of this app's config (see docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
-          # env:
-          #   - name: TZ
-          #     value: America/Los_Angeles
-          #   - name: PGID
-          #     value: '0'
-          #   - name: PUID
-          #     value: '0'
+          env:
+            - name: PUID
+              value: '1500'
+            - name: PGID
+              value: '1500'
           ports:
             - name: http
               containerPort: 5656
