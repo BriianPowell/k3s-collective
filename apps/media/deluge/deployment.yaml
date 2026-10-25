@@ -189,10 +189,12 @@ spec:
               value: 'false'
             # - name: UMASK
             #   value: '000'
+            # The image starts as root (VPN, kill switch) and runs deluged/deluge-web as this id.
+            # 1500:1500 is the shared `media` owner of /data and /config (docs/uids.md).
             - name: PUID
-              value: '0'
+              value: '1500'
             - name: PGID
-              value: '0'
+              value: '1500'
           ports:
             - name: http
               containerPort: 8112
