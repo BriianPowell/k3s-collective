@@ -50,14 +50,15 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: sheol
       securityContext:
-        fsGroup: 1000
+        fsGroup: 1501
       containers:
         - name: seerr
           image: ghcr.io/seerr-team/seerr:v3.5.1 # {"$imagepolicy": "media:seerr"}
           imagePullPolicy: Always
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            # 1501:1501, see docs/uids.md.
+            runAsUser: 1501
+            runAsGroup: 1501
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             seccompProfile:

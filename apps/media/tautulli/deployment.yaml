@@ -58,16 +58,17 @@ spec:
           imagePullPolicy: Always
           # The image's start.sh (TAUTULLI_DOCKER=True) remaps the `tautulli` user to
           # PUID/PGID, chowns /config, then runs the app via gosu. So the container starts as
-          # root and the app runs as 1000. Tautulli only writes /config.
+          # root and the app runs as 1501. Tautulli only writes /config.
+          # 1501:1501 is the shared owner of config-only media apps (see docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
             - name: PGID
-              value: '1000'
+              value: '1501'
             - name: PUID
-              value: '1000'
+              value: '1501'
           ports:
             - name: http
               containerPort: 8181

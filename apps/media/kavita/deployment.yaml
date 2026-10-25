@@ -57,19 +57,20 @@ spec:
           image: ghcr.io/linuxserver/kavita:0.9.1 # {"$imagepolicy": "media:kavita"}
           imagePullPolicy: Always
           # The s6 init starts as root, then drops the app to PUID/PGID. The library under
-          # /data is root:root 755 and world-readable (checked to depth 4), so uid 1000 can
+          # /data is root:root 755 and world-readable (checked to depth 4), so uid 1501 can
           # read it; /data is mounted read-only below. If a scan misses a folder, look for a
           # directory that is not world-readable. Cannot drop all capabilities (s6 needs
           # CHOWN/SETUID/SETGID).
+          # 1501:1501 is the shared owner of config-only media apps (see docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
             - name: PGID
-              value: '1000'
+              value: '1501'
             - name: PUID
-              value: '1000'
+              value: '1501'
           ports:
             - name: http
               containerPort: 5000

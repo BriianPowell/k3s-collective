@@ -60,15 +60,16 @@ spec:
           # Plex uses). Prowlarr only writes /config and has no media mount, so it does not
           # need the shared media uid/gid project. Cannot drop all capabilities: s6 needs
           # CHOWN/SETUID/SETGID to chown /config and drop privileges.
+          # 1501:1501 is the shared owner of config-only media apps (see docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
             - name: PGID
-              value: '1000'
+              value: '1501'
             - name: PUID
-              value: '1000'
+              value: '1501'
             # The app's own login form is off: Keycloak SSO (oauth2-proxy-media, realm role
             # media-admin) is the only way in, and the ingress NetworkPolicy limits which pods can
             # reach this one. The API key is still required for API calls. Keep both of those in
