@@ -6,8 +6,8 @@ metadata:
   name: allow-all-egress
   namespace: media
 spec:
-  # Plex, FlareSolverr, Bazarr and Kapowarr are excluded and limited by plex-egress,
-  # flaresolverr-egress and media-egress (in this directory). NetworkPolicies are additive, so
+  # Every media pod except Deluge and the tqm CronJob is excluded
+  # here and limited by plex-egress, flaresolverr-egress and media-egress (in this directory). NetworkPolicies are additive, so
   # they must not match here or their restrictions are a no-op.
   podSelector:
     matchExpressions:
@@ -19,6 +19,28 @@ spec:
           - bazarr
           - bazarr-anime
           - kapowarr
+          - radarr
+          - sonarr-tv
+          - sonarr-anime
+          - prowlarr
+          - seerr
+          - tautulli
+          - recyclarr
+          - kavita
+          - lidarr
+          - readarr
+          - lidarr-exportarr
+          - readarr-exportarr
+          - bazarr-exportarr
+          - bazarr-anime-exportarr
+          - deluge-exporter
+          - plex-exporter
+          - prowlarr-exportarr
+          - radarr-exportarr
+          - seerr-exporter
+          - sonarr-anime-exportarr
+          - sonarr-tv-exportarr
+          - tautulli-exporter
   policyTypes:
     - Egress
   egress:

@@ -54,6 +54,10 @@ spec:
         - name: radarr
           image: ghcr.io/linuxserver/radarr:6.4.4 # {"$imagepolicy": "media:radarr"}
           imagePullPolicy: Always
+          # The s6 init starts as root, then drops the app to PUID/PGID, so capabilities cannot all
+          # be dropped (it needs CHOWN/SETUID/SETGID). Block privilege gain on top of that.
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles

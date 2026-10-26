@@ -53,6 +53,10 @@ spec:
         - name: sonarr-anime
           image: ghcr.io/linuxserver/sonarr:4.0.20 # {"$imagepolicy": "media:sonarr-anime"}
           imagePullPolicy: Always
+          # The s6 init starts as root, then drops the app to PUID/PGID, so capabilities cannot all
+          # be dropped (it needs CHOWN/SETUID/SETGID). Block privilege gain on top of that.
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: TZ
               value: America/Los_Angeles
