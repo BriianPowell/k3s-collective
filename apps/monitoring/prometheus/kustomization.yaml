@@ -13,8 +13,9 @@ resources:
   - serviceMonitor-adguard.yaml
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
-  # Lower-priority media exporters are disabled to reduce Prometheus target volume.
-  # - serviceMonitor-bazarr.yaml
+  # Still disabled: Lidarr and Readarr (scaled to 0, their targets would only be down) and
+  # FlareSolverr (low value). The other media exporters are scraped; enable these when needed.
+  - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
   - serviceMonitor-deluge.yaml
   # - serviceMonitor-flaresolverr.yaml
@@ -24,13 +25,13 @@ resources:
   # - serviceMonitor-minecraft.yaml
   - serviceMonitor-nextcloud.yaml
   - serviceMonitor-ntfy.yaml
-  # - serviceMonitor-seerr.yaml
+  - serviceMonitor-seerr.yaml
   - serviceMonitor-plex.yaml
-  # - serviceMonitor-prowlarr.yaml
-  # - serviceMonitor-radarr.yaml
+  - serviceMonitor-prowlarr.yaml
+  - serviceMonitor-radarr.yaml
   # - serviceMonitor-readarr.yaml
-  # - serviceMonitor-sonarr.yaml
-  # - serviceMonitor-tautulli.yaml
+  - serviceMonitor-sonarr.yaml
+  - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml
   # - serviceMonitor-v-rising.yaml
   # - serviceMonitor-valheim.yaml
