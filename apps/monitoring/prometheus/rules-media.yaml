@@ -1,0 +1,113 @@
+# References:
+# https://prometheus-operator.dev/docs/api-reference/api/#monitoring.coreos.com/v1.PrometheusRule
+# https://github.com/onedr0p/exportarr (metric names: <app>_system_status, <app>_system_health_issues)
+#
+# Why: alerts for the outages seen in the media namespace. Each one is a failure that was only found
+# by hand: Radarr/Sonarr unable to log in to Deluge (2026-10-24, two days unnoticed), AdGuard
+# OOMKills, a node or VPN problem. Severity follows rules.yaml ("warn" / "critical").
+#
+# Metrics: kube-state-metrics here runs with --custom-resource-state-only=true (see
+# infrastructure/controllers/kube-prometheus-stack/kube-state-metrics-config.yaml), so it exports no
+# kube_pod_* or kube_deployment_* series. These rules therefore use the exporters' own metrics and
+# the kubelet's cAdvisor series (container_oom_events_total, container_start_time_seconds).
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: media-rules
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: prometheus-rule
+    app.kubernetes.io/name: media-rules
+spec:
+  groups:
+    - name: Media Apps
+      rules:
+        - alert: Media App Unreachable
+          # exportarr sets <app>_system_status to 0 when it cannot reach the app it watches.
+          expr: '{__name__=~"(radarr|sonarr|prowlarr|bazarr)_system_status"} == 0'
+          for: 10m
+          labels:
+            severity: critical
+          annotations:
+            summary: The exporter cannot reach the app at {{ $labels.url }}
+        - alert: Plex Down
+          expr: plex_up == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: The Plex exporter reports Plex is not answering
+        - alert: Tautulli Down
+          expr: tautulli_up == 0
+          for: 10m
+          labels:
+            severity: warn
+          annotations:
+            summary: The Tautulli exporter cannot reach Tautulli
+        - alert: Media Download Client Unavailable
+          # Radarr/Sonarr cannot talk to Deluge (wrong password, Deluge down, or blocked by a
+          # NetworkPolicy). Downloads silently stop; this is the 2026-10-24 incident.
+          expr: '{__name__=~"(radarr|sonarr|prowlarr|bazarr)_system_health_issues", source=~"DownloadClient.*"} > 0'
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: '{{ $labels.service }}: {{ $labels.message }}'
+        - alert: Media App Health Error
+          # Anything else the app itself marks as an error (not warnings: Prowlarr/Radarr warn about
+          # long-failing indexers all the time).
+          expr: '{__name__=~"(radarr|sonarr|prowlarr|bazarr)_system_health_issues", type="error", source!~"DownloadClient.*"} > 0'
+          for: 30m
+          labels:
+            severity: warn
+          annotations:
+            summary: '{{ $labels.service }}: {{ $labels.message }}'
+        - alert: Media Exporter Missing Data
+          # The exporter is up but has stopped producing app metrics, for example when its login
+          # to the app fails (Deluge password) while the process itself keeps running.
+          expr: absent(deluge_free_space) or absent(radarr_system_status) or absent(prowlarr_system_status)
+          for: 15m
+          labels:
+            severity: warn
+          annotations:
+            summary: An expected media exporter metric has been missing for 15 minutes
+    - name: Media Downloads
+      rules:
+        - alert: Deluge No Incoming Connections
+          # Usually the VPN provider's forwarded port has changed or the VPN is down.
+          expr: deluge_has_incoming_connections == 0
+          for: 2h
+          labels:
+            severity: warn
+          annotations:
+            summary: Deluge has had no incoming connections for 2 hours (VPN or port forward)
+        - alert: Media Library Disk Low
+          expr: min(radarr_rootfolder_freespace_bytes) < 1e12
+          for: 30m
+          labels:
+            severity: warn
+          annotations:
+            summary: Less than 1 TB free for the media library
+    - name: Media Containers
+      rules:
+        - alert: Container OOM Killed
+          expr: increase(container_oom_events_total{namespace!=""}[15m]) > 0
+          for: 0m
+          labels:
+            severity: warn
+          annotations:
+            summary: A container in {{ $labels.pod }} ({{ $labels.namespace }}) was killed for running out of memory
+        - alert: Media Container Crash Looping
+          expr: changes(container_start_time_seconds{namespace="media", container!="", container!="POD"}[30m]) > 3
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            summary: Container {{ $labels.container }} in {{ $labels.pod }} restarted more than 3 times in 30 minutes
+        - alert: Media Exporter Target Down
+          expr: up{namespace="media"} == 0
+          for: 10m
+          labels:
+            severity: warn
+          annotations:
+            summary: The {{ $labels.job }} metrics target in the media namespace is down
