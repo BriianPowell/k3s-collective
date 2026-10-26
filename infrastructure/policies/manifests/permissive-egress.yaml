@@ -6,7 +6,7 @@ metadata:
   name: allow-all-egress
   namespace: media
 spec:
-  # Every media pod except Deluge and the tqm CronJob is excluded
+  # Every media pod except Deluge (the VPN pod) is excluded
   # here and limited by plex-egress, flaresolverr-egress and media-egress (in this directory). NetworkPolicies are additive, so
   # they must not match here or their restrictions are a no-op.
   podSelector:
@@ -27,6 +27,7 @@ spec:
           - tautulli
           - recyclarr
           - kavita
+          - tqm
           - lidarr
           - readarr
           - lidarr-exportarr

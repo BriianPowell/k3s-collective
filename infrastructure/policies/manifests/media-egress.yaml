@@ -580,3 +580,52 @@ spec:
         - podSelector: {}
       ports:
         - protocol: TCP
+---
+# tqm CronJob: the Deluge daemon (:58846) it manages, and GitHub over HTTPS for the one-off download
+# of the tqm binary in its init container. Nothing else, so a compromised job cannot reach the
+# cluster API or the LAN.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: tqm-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: tqm
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: tqm
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: deluge
+      ports:
+        - port: 58846
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
