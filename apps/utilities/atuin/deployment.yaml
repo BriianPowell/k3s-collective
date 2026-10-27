@@ -87,13 +87,15 @@ spec:
             - name: metrics
               containerPort: 9001
               protocol: TCP
+          # Measured 2026-10-26: about 6 MiB of memory (peak 6.4 MiB over 6 hours) and 0.0003 cores.
+          # The limit leaves headroom for a large first sync from a new machine.
           resources:
             requests:
-              cpu: 250m
-              memory: 1Gi
+              cpu: 10m
+              memory: 32Mi
             limits:
               cpu: 500m
-              memory: 1Gi
+              memory: 256Mi
           startupProbe:
             httpGet:
               path: /healthz
