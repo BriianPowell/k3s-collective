@@ -56,6 +56,14 @@ spec:
     defaultRules:
       labels:
         role: alert-rules
+      # "Overcommit" alerts assume spare nodes: they fire when the sum of requests exceeds
+      # what the cluster holds with its largest node gone. With two unequal nodes (sheol is
+      # the control plane and the only GPU) that is always true or always close to it, and
+      # nothing could reschedule onto abaddon anyway. Actual pressure is covered by the
+      # node CPU/memory alerts.
+      disabled:
+        KubeCPUOvercommit: true
+        KubeMemoryOvercommit: true
     alertmanager:
       enabled: false
     grafana:
