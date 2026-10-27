@@ -62,8 +62,29 @@ spec:
       # so restart on change or new pods fail TLS verification against the old LAPI cert.
       daemonsetAnnotations:
         secret.reloader.stakater.com/reload: crowdsec-agent-tls
-      # PSA baseline on crowdsec forbids hostPath; we only scrape Traefik via k8s acquisition.
+      # Traefik's access logs are the only thing the agent reads, from the node's container logs.
+      # /var/log/containers/*.log are symlinks into /var/log/pods, so both directories are
+      # mounted read-only at their real paths, instead of the chart's whole-/var/log
+      # `hostVarLog`. hostPath needs the crowdsec namespace at PSA `privileged`
+      # (infrastructure/namespaces/crowdsec.yaml). Without these mounts the agent reads nothing
+      # and only the community blocklist works.
       hostVarLog: false
+      extraVolumes:
+        - name: var-log-containers
+          hostPath:
+            path: /var/log/containers
+            type: Directory
+        - name: var-log-pods
+          hostPath:
+            path: /var/log/pods
+            type: Directory
+      extraVolumeMounts:
+        - name: var-log-containers
+          mountPath: /var/log/containers
+          readOnly: true
+        - name: var-log-pods
+          mountPath: /var/log/pods
+          readOnly: true
       podLabels:
         app.kubernetes.io/component: agent
         app.kubernetes.io/name: crowdsec-agent
