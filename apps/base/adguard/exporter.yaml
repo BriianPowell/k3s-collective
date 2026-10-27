@@ -45,6 +45,7 @@ spec:
         app.kubernetes.io/component: app
         app.kubernetes.io/name: adguard-exporter
     spec:
+      automountServiceAccountToken: false
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: abaddon
@@ -52,6 +53,17 @@ spec:
         - name: adguard-exporter
           image: ghcr.io/henrywhitaker3/adguard-exporter:v1.2.1 # {"$imagepolicy": "adguard:adguard-exporter"}
           imagePullPolicy: Always
+          # A static Go binary that only makes HTTP calls to AdGuard's API.
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: ['ALL']
           env:
             - name: ADGUARD_SERVERS
               value: http://adguard-home-http.adguard.svc

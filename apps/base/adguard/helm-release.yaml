@@ -31,14 +31,42 @@ spec:
         name: rm3l-helm-charts
         namespace: adguard
       version: '>=0.1.0 <1.0.0'
+  # The chart has no switch for this, and AdGuard never talks to the Kubernetes API.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: adguard-home
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
     revisionHistoryLimit: 3
     replicaCount: 1
     serviceAccount:
       create: true
       annotations: {}
-    podSecurityContext: {}
-    securityContext: {}
+    # Runs as the fixed non-root id 1513 (docs/uids.md). The data volume is a local-path volume,
+    # where fsGroup does nothing, so its directories must be owned by 1513 on the node (the
+    # `configurator` init container and AdGuard both write there). Port 53 is below 1024, so the
+    # pod lowers the unprivileged-port floor; a capability would be lost when a non-root user
+    # starts the process.
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1513
+      runAsGroup: 1513
+      fsGroup: 1513
+      seccompProfile:
+        type: RuntimeDefault
+      sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: '0'
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ['ALL']
     services:
       adminPanel:
         type: ClusterIP

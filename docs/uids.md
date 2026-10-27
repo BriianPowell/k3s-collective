@@ -34,8 +34,9 @@ uid and gid are the same number in every row.
 | 1510 | monitoring | Prometheus |
 | 1511 | utilities | Atuin, Reflector |
 | 1512 | wiki | Wiki.js |
+| 1513 | DNS | AdGuard Home (data volume owned by it on the node, since `fsGroup` does not apply to local-path volumes) |
 
-Next free id: 1513. Add a row here in the same change that uses the number.
+Next free id: 1514. Add a row here in the same change that uses the number.
 
 ## Changing an app's id
 
