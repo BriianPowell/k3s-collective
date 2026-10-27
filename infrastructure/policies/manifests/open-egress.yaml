@@ -1,16 +1,5 @@
-# LB / game / DNS workloads (paired with allow-all-ingress).
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-all-egress
-  namespace: adguard
-spec:
-  podSelector: {}
-  policyTypes:
-    - Egress
-  egress:
-    - {}
+# Game workloads (paired with allow-all-ingress). AdGuard has its own egress policy
+# (adguard-egress.yaml); its ingress is still open (open-ingress.yaml).
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

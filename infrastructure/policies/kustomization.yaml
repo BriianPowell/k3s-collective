@@ -5,6 +5,7 @@ kind: Kustomization
 # kube-system: CIS ingress policies in manifests/kube-system.yaml.
 
 resources:
+  - manifests/adguard-egress.yaml
   - manifests/cnpg-egress.yaml
   - manifests/cnpg-ingress.yaml
   - manifests/crowdsec-egress.yaml

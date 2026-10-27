@@ -1,0 +1,74 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration
+#
+# Replaces allow-all-egress in `adguard`. AdGuard answers clients on its LoadBalancer ports
+# (ingress, allow-all-ingress); outbound it needs only its encrypted upstreams (DoH 443, DoT 853),
+# the plain bootstrap resolvers that find those upstreams (53), and the HTTPS filter-list downloads.
+# The exporter only calls AdGuard's own API in the same namespace.
+# If the upstream list in AdGuard's settings gains a plain-DNS, QUIC or non-standard-port upstream,
+# add that port here or lookups will time out. Select on app.kubernetes.io/name only (kustomize
+# commonLabels rewrites podSelectors).
+---
+# Every pod in the namespace: DNS through CoreDNS (also used for private reverse lookups) and each
+# other (the exporter -> AdGuard :80).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: adguard-base-egress
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: adguard
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: adguard-home-egress
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: adguard-home
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adguard-home
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 853
+          protocol: TCP
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
