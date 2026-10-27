@@ -27,6 +27,12 @@ spec:
           # Same tag as the web deployment so cron never runs a different major version than the app.
           image: nextcloud:production-apache
           imagePullPolicy: Always
+          # busybox crond runs as root and starts each job as www-data, so root and the usual
+          # capabilities stay. Block privilege gain and use the runtime's default seccomp filter.
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
           command:
             - /cron.sh
           resources:

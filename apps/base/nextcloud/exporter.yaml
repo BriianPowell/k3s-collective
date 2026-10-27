@@ -50,6 +50,17 @@ spec:
         - name: nextcloud-exporter
           image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
           imagePullPolicy: IfNotPresent
+          # A static Go binary; the image's user is already nobody (65534).
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: ['ALL']
           env:
             - name: NEXTCLOUD_SERVER
               value: http://nextcloud.nextcloud.svc

@@ -52,6 +52,13 @@ spec:
         - name: nextcloud
           image: nextcloud:production-apache
           imagePullPolicy: Always
+          # Apache starts as root (to bind :80 and fix ownership of /var/www/html) and runs its
+          # workers as www-data (33), so root and the usual capabilities stay. Block privilege
+          # gain and use the runtime's default seccomp filter.
+          securityContext:
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
           env:
             - name: TIMEZONE
               value: America/Los Angeles
