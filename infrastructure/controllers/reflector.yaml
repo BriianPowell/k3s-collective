@@ -34,6 +34,8 @@ spec:
     # It needs the Kubernetes API (it copies secrets), so the service account token stays mounted.
     podSecurityContext:
       fsGroup: 1511
+      seccompProfile:
+        type: RuntimeDefault
     securityContext:
       runAsNonRoot: true
       runAsUser: 1511

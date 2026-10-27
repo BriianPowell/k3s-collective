@@ -31,7 +31,8 @@ spec:
         name: rm3l-helm-charts
         namespace: adguard
       version: '>=0.1.0 <1.0.0'
-  # The chart has no switch for this, and AdGuard never talks to the Kubernetes API.
+  # The chart has no switch for these: AdGuard never talks to the Kubernetes API, and the
+  # `configurator` init container needs the same no-escalation, no-capabilities context.
   postRenderers:
     - kustomize:
         patches:
@@ -42,6 +43,12 @@ spec:
               - op: add
                 path: /spec/template/spec/automountServiceAccountToken
                 value: false
+              - op: add
+                path: /spec/template/spec/initContainers/0/securityContext
+                value:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop: ['ALL']
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
     revisionHistoryLimit: 3
     replicaCount: 1

@@ -62,6 +62,10 @@ spec:
           app.kubernetes.io/name: reloader
         nodeSelector:
           kubernetes.io/hostname: abaddon
+        containerSecurityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ['ALL']
       serviceAccount:
         labels:
           app.kubernetes.io/component: service-account
