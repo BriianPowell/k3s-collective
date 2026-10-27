@@ -104,6 +104,9 @@ spec:
           podName: traefik-*
           # as in crowdsec configuration, we need to specify the program name to find a matching parser
           program: traefik
+          # The files are symlinks into /var/log/pods; with inotify the agent cannot see kubelet log
+          # rotation and would silently stop reading until restarted. Poll with stat instead.
+          poll_without_inotify: true
       env:
         - name: PARSERS
           value: 'crowdsecurity/cri-logs crowdsecurity/traefik-logs crowdsecurity/whitelists'
