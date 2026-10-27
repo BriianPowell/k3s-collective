@@ -62,8 +62,21 @@ spec:
             limits:
               cpu: 350m
               memory: 1Gi
+          # Not privileged. The integrations in use (HomeKit, MQTT, Apple TV, UniFi, UPnP, HEOS, IPP,
+          # LG ThinQ, Emporia, Thread discovery) are all network-only: no USB, serial or Bluetooth
+          # hardware, so the container needs no host devices. hostNetwork (above) is what HomeKit and
+          # mDNS discovery need. The image's s6 init starts as root and the app stays root, so root
+          # keeps only the capabilities it uses to own files and manage its processes. If an
+          # integration that needs hardware or raw sockets is added, add the one capability or
+          # device it needs rather than restoring `privileged`.
           securityContext:
-            privileged: true
+            privileged: false
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop: ['ALL']
+              add: ['CHOWN', 'DAC_OVERRIDE', 'FOWNER', 'SETUID', 'SETGID', 'KILL', 'NET_BIND_SERVICE']
           lifecycle:
             postStart:
               exec:
