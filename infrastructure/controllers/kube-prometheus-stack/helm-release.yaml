@@ -159,6 +159,15 @@ spec:
         enabled: true
         minAvailable: 1
       prometheusSpec:
+        # Monitoring id 1510 instead of the chart's 1000:2000; see docs/uids.md. Its data is an
+        # emptyDir, so fsGroup alone makes it writable.
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1510
+          runAsGroup: 1510
+          fsGroup: 1510
+          seccompProfile:
+            type: RuntimeDefault
         scrapeInterval: '60s'
         scrapeTimeout: '10s'
         evaluationInterval: '60s'

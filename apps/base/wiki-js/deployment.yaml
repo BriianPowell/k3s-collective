@@ -45,10 +45,24 @@ spec:
         app.kubernetes.io/name: wiki-js
     spec:
       serviceAccountName: wiki-js
+      # Wiki id 1512 instead of the image's own `node` (1000, the nodes' admin login); see
+      # docs/uids.md. The app only needs /wiki/data writable (cache, uploads, a git scratch repo);
+      # that was never persistent, so an emptyDir (made writable by fsGroup) behaves the same.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1512
+        runAsGroup: 1512
+        fsGroup: 1512
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: wiki-js
           image: docker.io/requarks/wiki:2.5.317 # {"$imagepolicy": "wiki:wiki-js"}
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['ALL']
           env:
             - name: DB_TYPE
               value: postgres
@@ -83,6 +97,9 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /wiki/data
           livenessProbe:
             httpGet:
               path: /healthz
@@ -107,3 +124,6 @@ spec:
             limits:
               cpu: 2000m
               memory: 750Mi
+      volumes:
+        - name: data
+          emptyDir: {}

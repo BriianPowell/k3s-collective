@@ -30,6 +30,18 @@ spec:
         namespace: reflector
       version: '>=7.0.0 <8.0.0'
   values:
+    # Utilities id 1511 instead of the chart's 1000 (the nodes' admin login); see docs/uids.md.
+    # It needs the Kubernetes API (it copies secrets), so the service account token stays mounted.
+    podSecurityContext:
+      fsGroup: 1511
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1511
+      runAsGroup: 1511
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
     resources:
       requests:
         cpu: 10m

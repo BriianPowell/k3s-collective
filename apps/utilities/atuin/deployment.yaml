@@ -49,11 +49,12 @@ spec:
         - name: atuin
           image: ghcr.io/atuinsh/atuin:18.24.2 # {"$imagepolicy": "atuin:atuin"}
           imagePullPolicy: Always
-          # The image already runs as uid 1000 (checked with `id` and /proc); this makes that a guarantee.
+          # The image's own user is 1000, which is the nodes' admin login, so run as the utilities id
+          # instead (see docs/uids.md). It mounts no volume and needs no file owned by 1000.
           securityContext:
             runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
+            runAsUser: 1511
+            runAsGroup: 1511
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
