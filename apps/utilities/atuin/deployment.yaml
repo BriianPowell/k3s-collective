@@ -43,8 +43,6 @@ spec:
     spec:
       # The server only talks to Postgres; it never calls the Kubernetes API.
       automountServiceAccountToken: false
-      securityContext:
-        fsGroup: 1511
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
@@ -52,8 +50,10 @@ spec:
           image: ghcr.io/atuinsh/atuin:18.24.2 # {"$imagepolicy": "atuin:atuin"}
           imagePullPolicy: Always
           # The image's own user is 1000, which is the nodes' admin login, so run as the utilities id
-          # instead (see docs/uids.md). The /config volume holds a server.toml owned by 1000 with
-          # mode 600; the pod-level fsGroup below gives gid 1511 read/write on it.
+          # instead (see docs/uids.md). /config is only the server's config directory: the old
+          # volume held a server.toml that was the stock template with every line commented out
+          # (all settings come from the environment below), so an emptyDir is equivalent. The
+          # server writes a fresh default file there on start.
           securityContext:
             runAsNonRoot: true
             runAsUser: 1511
@@ -112,25 +112,9 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
           volumeMounts:
-            - name: atuin-pvc
+            - name: config
               mountPath: /config
       volumes:
-        - name: atuin-pvc
-          persistentVolumeClaim:
-            claimName: atuin-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: atuin-pvc
-  namespace: atuin
-  labels:
-    type: local
-    app.kubernetes.io/component: storage-volume-claim
-    app.kubernetes.io/name: atuin-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Mi
+        - name: config
+          emptyDir:
+            sizeLimit: 10Mi
