@@ -1,10 +1,21 @@
 kube-state-metrics:
-  # For kube-prometheus-stacks that are already installed and configured with
-  # custom collectors, commenting out the collectors and extraArgs below will
-  # retain any existing kube-state-metrics configuration.
-  collectors: [ ]
-  extraArgs:
-    - --custom-resource-state-only=true
+  # Standard Kubernetes object metrics (kube_pod_*, kube_deployment_*, kube_node_*) for the pod and
+  # deployment alerts and the stock dashboards, next to the Flux custom-resource metrics below.
+  # `secrets` and `configmaps` are left out on purpose: those collectors would give this service
+  # account cluster-wide read access to every Secret and ConfigMap.
+  collectors:
+    - cronjobs
+    - daemonsets
+    - deployments
+    - jobs
+    - namespaces
+    - nodes
+    - persistentvolumeclaims
+    - persistentvolumes
+    - poddisruptionbudgets
+    - pods
+    - replicasets
+    - statefulsets
   rbac:
     extraRules:
       - apiGroups:

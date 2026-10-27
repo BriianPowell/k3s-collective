@@ -1,0 +1,72 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://docs.crowdsec.net/docs/next/getting_started/install_crowdsec_kubernetes
+#
+# Replaces allow-all-egress in `crowdsec`. The agents read Traefik's logs from the node (no network)
+# and talk to the LAPI; the LAPI talks to CrowdSec's central API, the hub and the console over HTTPS.
+# Nothing here calls the Kubernetes API (no service account token) or reaches the LAN or other
+# namespaces. Select on app.kubernetes.io/name only (kustomize commonLabels rewrites podSelectors).
+---
+# Every pod in the namespace: DNS, and each other (agent -> LAPI :8080, wait-for-lapi, metrics).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: crowdsec-base-egress
+  namespace: crowdsec
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: crowdsec
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector: {}
+---
+# LAPI and agents: the public CrowdSec services (hub index and collections, CAPI blocklist pull and
+# signal sharing, console enrolment). Private ranges are blocked.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: crowdsec-internet-egress
+  namespace: crowdsec
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: crowdsec
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - crowdsec-lapi
+          - crowdsec-agent
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP

@@ -53,6 +53,13 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   "runs as root" from the pod spec alone; many images drop privileges themselves. Check with
   `kubectl exec <pod> -- id`, but for s6-based images (linuxserver) `id` reports the root
   entrypoint even when the app runs as `PUID`; read process owners from `/proc/*/status` too.
+- **Before dropping capabilities or privilege, test it.** An image whose binary carries a file
+  capability (AdGuard's `cap_net_bind_service`) will not start under `drop: [ALL]` (`exec ... operation
+  not permitted`); keep that one capability. `fsGroup` does nothing on dynamic `local-path` volumes (own
+  the directory on the node, or use an `emptyDir`). `hostPath` and `hostNetwork` need the namespace at
+  PSA `privileged`. A single-replica service with `maxUnavailable: 1` has no pod left during a bad
+  rollout, so have a rollback ready for DNS. Dry-run a PSA change first:
+  `kubectl label --dry-run=server --overwrite ns <ns> pod-security.kubernetes.io/enforce=<level>`.
 - **Exposure:** assume every hostname Traefik routes is reachable from the internet. A new
   `IngressRoute` needs SSO in front (the `oauth2-proxy-media` or `oauth2-proxy-cluster` middleware
   from `apps/base/oauth2-proxy`; access is a Keycloak role, not just a realm login), or an app login

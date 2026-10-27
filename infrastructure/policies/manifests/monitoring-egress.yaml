@@ -1,0 +1,179 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config
+#
+# Replaces allow-all-egress in `monitoring`. Each component gets only what it uses:
+#   all pods        DNS and each other (Grafana -> Prometheus/Loki, Alloy -> Loki, Prometheus ->
+#                   Alertmanager, operator -> Prometheus)
+#   Prometheus      every pod's metrics port in any namespace, and the node IPs for the targets that
+#                   live on the hosts (kubelet, node-exporter, k3s control plane, Home Assistant)
+#   API clients     Prometheus (service discovery), Alloy (pod discovery and log streams),
+#                   kube-state-metrics, the Prometheus operator -> the Kubernetes API
+#   Alertmanager    SMTP submission (smtp.mail.me.com:587)
+#   Grafana         HTTPS: Keycloak through its public name, dashboard downloads, plugin catalogue
+#   Loki, smartctl-exporter, node-exporter: nothing more (node-exporter is hostNetwork, which
+#                   policies do not cover)
+# Select on app.kubernetes.io/name only (kustomize commonLabels rewrites podSelectors). If a new
+# scrape target is on a host port not listed here, Prometheus shows it down with a timeout.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-base-egress
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: monitoring
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: prometheus-egress
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: prometheus
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  policyTypes:
+    - Egress
+  egress:
+    # Pod metrics endpoints in every namespace (many different ports).
+    - to:
+        - ipBlock:
+            cidr: 10.42.0.0/16
+    # Targets on the hosts: kubelet and cAdvisor 10250, node-exporter 9100, Home Assistant 8123,
+    # k3s API 6443, controller-manager 10257, scheduler 10259, etcd 2381, kube-proxy 10249.
+    - to:
+        - ipBlock:
+            cidr: 10.0.2.10/32
+        - ipBlock:
+            cidr: 10.0.2.11/32
+      ports:
+        - port: 6443
+          protocol: TCP
+        - port: 10250
+          protocol: TCP
+        - port: 9100
+          protocol: TCP
+        - port: 8123
+          protocol: TCP
+        - port: 10257
+          protocol: TCP
+        - port: 10259
+          protocol: TCP
+        - port: 2381
+          protocol: TCP
+        - port: 10249
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kube-api-egress
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: monitoring
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - prometheus
+          - alloy
+          - kube-state-metrics
+          - kube-prometheus-stack-prometheus-operator
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.43.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 10.0.2.10/32
+      ports:
+        - port: 6443
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: alertmanager-egress
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: alertmanager
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: alertmanager
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 587
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: grafana-egress
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: grafana
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: grafana
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+        - port: 80
+          protocol: TCP

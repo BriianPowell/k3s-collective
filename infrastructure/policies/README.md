@@ -8,7 +8,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | -------- | ------------ |
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
-| `allow-all-egress` | `media` (except Plex, FlareSolverr, Bazarr, Kapowarr), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub) |
+| `allow-all-egress` | `media` (only Deluge is left: VPN), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub); every other media app has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
 | `bazarr-egress`, `kapowarr-egress` | `media` Bazarr (both) and Kapowarr — DNS + WAN :80/:443, private ranges blocked; Bazarr also reaches Sonarr/Radarr (`manifests/media-egress.yaml`) |
 | `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
 | `flaresolverr-egress` | `media` FlareSolverr pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/flaresolverr-egress.yaml`) |
@@ -24,6 +24,21 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
 
 **No policies:** `flux-system`, `cnpg-system`, `onepassword` — operators and webhooks need broader reach.
+
+## Pod Security Admission
+
+Enforced per namespace by a label in `infrastructure/namespaces/<ns>.yaml`. Before changing a level,
+dry-run it: `kubectl label --dry-run=server --overwrite ns <ns> pod-security.kubernetes.io/enforce=<level>`
+lists the pods that would break.
+
+| Level | Namespaces |
+| ----- | ---------- |
+| `restricted` | `atuin`, `cert-manager`, `cnpg-system`, `onepassword`, `wiki`, `flux-system`, `adguard`, `reflector`, `reloader` |
+| `baseline` | `nextcloud` (Apache and cron start as root), `keycloak`, `minecraft`, `valheim`, `v-rising` (suspended) |
+| `privileged` | `media` (Deluge: NET_ADMIN, hostPath, sysctls), `monitoring` (node-exporter host namespaces, smartctl), `kube-system` (k3s system pods), `homeassistant` (`hostNetwork` for HomeKit), `crowdsec` (agent mounts the node's container logs) |
+
+A `privileged` namespace needs a stated reason. Splitting the one or two pods that need it into their
+own namespace would let the rest tighten, at the cost of renaming their Service DNS names.
 
 ## Apply
 
@@ -64,6 +79,6 @@ Periodic ops (no git): `k3s-remove-unused-rs`, `crictl rmi --prune`, orphan PVC 
 
 ## Later (optional)
 
-- Global PSA via `/var/lib/rancher/k3s/server/psa.yaml` with `kube-system` exempt (conflicts with per-namespace baseline labels until privileged workloads are removed).
+- Global PSA via `/var/lib/rancher/k3s/server/psa.yaml` with `kube-system` exempt (the per-namespace labels above already cover it; this would only set a default for new namespaces).
 - Tighten `allow-all-egress` namespaces (e.g. media torrent ports only) once traffic patterns are known.
 - CIS 5.1.5: extend default SA hardening to `kube-system` / `flux-system` / operators after testing (see second document in each `infrastructure/namespaces/*.yaml` except operator/core namespaces).

@@ -50,6 +50,28 @@ kubectl -n crowdsec exec <lapi-pod> -- cscli decisions list
 
 After unban, retry the client; no Traefik restart is required.
 
+### Prune stale agents and bouncers
+
+Every CrowdSec pod restart registers a new machine or bouncer under its pod IP, and the old entries
+stay. List, then remove the ones that stopped checking in (the durations leave live pods alone):
+
+```bash
+kubectl -n crowdsec exec deploy/crowdsec-lapi -- cscli machines list
+kubectl -n crowdsec exec deploy/crowdsec-lapi -- cscli machines prune -d 5m --force
+kubectl -n crowdsec exec deploy/crowdsec-lapi -- cscli bouncers prune -d 1h --force
+```
+
+### Check the agents are reading Traefik's logs
+
+```bash
+for p in $(kubectl -n crowdsec get pods -l app.kubernetes.io/name=crowdsec-agent -o name); do
+  kubectl -n crowdsec exec $p -c crowdsec-agent -- cscli metrics show acquisition
+done
+```
+
+Zero lines read, or an error about `/var/log/containers`, means the agent has lost its hostPath
+mounts (`infrastructure/controllers/crowdsec.yaml`) and only the community blocklist is working.
+
 ## Resume idle games
 
 Games are idle at two levels: Flux `games` kustomization is suspended, and each `HelmRelease` is suspended with `replicaCount` / `replicas: 0`.

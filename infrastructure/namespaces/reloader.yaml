@@ -3,7 +3,8 @@ kind: Namespace
 metadata:
   name: reloader
   labels:
-    pod-security.kubernetes.io/enforce: baseline
+    # Every pod here passes `restricted`; keep it that way.
+    pod-security.kubernetes.io/enforce: restricted
     pod-security.kubernetes.io/enforce-version: latest
     app.kubernetes.io/component: reloader
 ---

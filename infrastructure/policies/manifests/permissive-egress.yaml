@@ -1,4 +1,6 @@
-# Allow-all egress: workloads need arbitrary ports (torrent/VPN, game UDP, Prometheus scrapes, CrowdSec hub, etc.).
+# Allow-all egress, now only for the media Deluge pod (VPN, torrent ports). `monitoring` and `crowdsec`
+# have per-component egress (monitoring-egress.yaml, crowdsec-egress.yaml); AdGuard and the games are
+# in open-egress.yaml.
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -42,30 +44,6 @@ spec:
           - sonarr-anime-exportarr
           - sonarr-tv-exportarr
           - tautulli-exporter
-  policyTypes:
-    - Egress
-  egress:
-    - {}
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-all-egress
-  namespace: monitoring
-spec:
-  podSelector: {}
-  policyTypes:
-    - Egress
-  egress:
-    - {}
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-all-egress
-  namespace: crowdsec
-spec:
-  podSelector: {}
   policyTypes:
     - Egress
   egress:
