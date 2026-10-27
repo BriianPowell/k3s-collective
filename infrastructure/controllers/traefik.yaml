@@ -166,7 +166,7 @@ spec:
             - 10.43.0.0/16 # k3s service CIDR
     logs:
       general:
-        level: DEBUG
+        level: INFO
       access:
         enabled: true
         fields:
