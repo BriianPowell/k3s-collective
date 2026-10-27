@@ -47,6 +47,17 @@ spec:
             - crowdsec
     agent:
       revisionHistoryLimit: 3
+      # Root stays (the image's start script writes /etc/crowdsec and the hub), but with no
+      # capabilities, no privilege gain and the runtime's default seccomp filter. The chart's
+      # defaults are restated because a values override replaces the whole object.
+      podSecurityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          drop: ['ALL']
       # cert-manager rotates the CA and leaf certs; processes only read them at startup,
       # so restart on change or new pods fail TLS verification against the old LAPI cert.
       daemonsetAnnotations:
@@ -94,6 +105,17 @@ spec:
           enabled: false
     lapi:
       revisionHistoryLimit: 3
+      # Root stays (the image's start script writes /etc/crowdsec and the hub), but with no
+      # capabilities, no privilege gain and the runtime's default seccomp filter. The chart's
+      # defaults are restated because a values override replaces the whole object.
+      podSecurityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          drop: ['ALL']
       # Serves its cert from memory, so it must restart when cert-manager rotates the
       # server cert or the agent/bouncer CA (see agent note above).
       deployAnnotations:
