@@ -46,6 +46,8 @@ spec:
         namespace: monitoring
       version: '>=8.0.0 <9.0.0'
   values:
+    # Grafana has no sidecars and does not call the Kubernetes API, so it gets no token.
+    automountServiceAccountToken: false
     revisionHistoryLimit: 3
     podDisruptionBudget:
       minAvailable: 1

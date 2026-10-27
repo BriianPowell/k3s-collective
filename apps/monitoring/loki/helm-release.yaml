@@ -64,6 +64,13 @@ spec:
         retention_enabled: true
         retention_delete_delay: 2h
         delete_request_store: filesystem
+    # The rules sidecar watches ConfigMaps labelled `loki_rule`, and none exist, so it is off.
+    # With it gone nothing in the Loki pods talks to the Kubernetes API, so no token either.
+    sidecar:
+      rules:
+        enabled: false
+    serviceAccount:
+      automountServiceAccountToken: false
     deploymentMode: SingleBinary
     singleBinary:
       replicas: 1

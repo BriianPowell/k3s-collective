@@ -23,6 +23,16 @@ spec:
         name: prometheus-community
         namespace: monitoring
       version: '>=0.10.0 <1.0.0'
+  # The chart has no switch for this, and the exporter only reads disk SMART data.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: DaemonSet
+            patch: |
+              - op: add
+                path: /spec/template/spec/automountServiceAccountToken
+                value: false
   values:
     image:
       repository: quay.io/prometheuscommunity/smartctl-exporter
