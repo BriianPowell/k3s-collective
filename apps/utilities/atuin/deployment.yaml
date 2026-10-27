@@ -43,6 +43,8 @@ spec:
     spec:
       # The server only talks to Postgres; it never calls the Kubernetes API.
       automountServiceAccountToken: false
+      securityContext:
+        fsGroup: 1511
       nodeSelector:
         kubernetes.io/hostname: abaddon
       containers:
@@ -50,7 +52,8 @@ spec:
           image: ghcr.io/atuinsh/atuin:18.24.2 # {"$imagepolicy": "atuin:atuin"}
           imagePullPolicy: Always
           # The image's own user is 1000, which is the nodes' admin login, so run as the utilities id
-          # instead (see docs/uids.md). It mounts no volume and needs no file owned by 1000.
+          # instead (see docs/uids.md). The /config volume holds a server.toml owned by 1000 with
+          # mode 600; the pod-level fsGroup below gives gid 1511 read/write on it.
           securityContext:
             runAsNonRoot: true
             runAsUser: 1511
