@@ -50,9 +50,9 @@ spec:
       annotations: {}
     # Runs as the fixed non-root id 1513 (docs/uids.md). The data volume is a local-path volume,
     # where fsGroup does nothing, so its directories must be owned by 1513 on the node (the
-    # `configurator` init container and AdGuard both write there). Port 53 is below 1024, so the
-    # pod lowers the unprivileged-port floor; a capability would be lost when a non-root user
-    # starts the process.
+    # `configurator` init container and AdGuard both write there). The image gives the binary the
+    # file capability cap_net_bind_service (to bind port 53), and exec fails with "operation not
+    # permitted" if that capability is dropped, so it is the one capability kept.
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1513
@@ -60,13 +60,11 @@ spec:
       fsGroup: 1513
       seccompProfile:
         type: RuntimeDefault
-      sysctls:
-        - name: net.ipv4.ip_unprivileged_port_start
-          value: '0'
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
         drop: ['ALL']
+        add: ['NET_BIND_SERVICE']
     services:
       adminPanel:
         type: ClusterIP
