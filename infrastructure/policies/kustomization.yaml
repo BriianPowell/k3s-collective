@@ -6,6 +6,7 @@ kind: Kustomization
 
 resources:
   - manifests/adguard-egress.yaml
+  - manifests/atuin-egress.yaml
   - manifests/cnpg-egress.yaml
   - manifests/cnpg-ingress.yaml
   - manifests/crowdsec-egress.yaml

@@ -38,6 +38,32 @@ spec:
       version: '>=0.9.5 <1.0.0'
   values:
     container_runtime: containerd
+    config:
+      # Restated in full: a values override replaces the chart's whole string. The auto_registration
+      # block is the chart default (password-less registration is not used with tls.enabled).
+      # `flush` removes machines and bouncers that have not checked in for 60m, so the entries left
+      # by each Traefik/agent pod restart (new pod IP, new cert identity) clean themselves up.
+      # Live pods check in about every minute. See
+      # https://docs.crowdsec.net/docs/configuration/crowdsec_configuration/#flush
+      config.yaml.local: |
+        api:
+          server:
+            auto_registration:
+              enabled: true
+              token: "${REGISTRATION_TOKEN}"
+              allowed_ranges:
+                - "127.0.0.1/32"
+                - "192.168.0.0/16"
+                - "10.0.0.0/8"
+                - "172.16.0.0/12"
+        db_config:
+          flush:
+            bouncers_autodelete:
+              cert: 60m
+              api_key: 60m
+            agents_autodelete:
+              cert: 60m
+              login_password: 60m
     tls:
       enabled: true
       bouncer:

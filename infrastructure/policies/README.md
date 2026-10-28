@@ -8,7 +8,10 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | -------- | ------------ |
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
-| `allow-all-egress` | `media` (only Deluge is left: VPN), `monitoring`, `crowdsec` — arbitrary ports (torrent/VPN, scrapes, CrowdSec hub); every other media app has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
+| `allow-all-egress` | `media` (only Deluge is left: VPN) — arbitrary ports (torrent/VPN); every other media app has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
+| `monitoring-base-egress` + per-component | `monitoring` — DNS + same namespace for all; Prometheus pod CIDR and node metric ports, API-server access for Prometheus/Alloy/kube-state-metrics/operator, Alertmanager SMTP :587, Grafana WAN :80/:443 (`manifests/monitoring-egress.yaml`) |
+| `crowdsec-base-egress`, `crowdsec-internet-egress` | `crowdsec` — DNS + same namespace; LAPI and agent reach the internet on :80/:443 for hub and CAPI (`manifests/crowdsec-egress.yaml`) |
+| `adguard-base-egress`, `adguard-home-egress` | `adguard` — DNS + same namespace; AdGuard reaches public IPs on TCP 443/853 and 53 (DoH/DoT upstreams, bootstrap, filter lists). Add a port here if you add an upstream on another one (`manifests/adguard-egress.yaml`) |
 | `bazarr-egress`, `kapowarr-egress` | `media` Bazarr (both) and Kapowarr — DNS + WAN :80/:443, private ranges blocked; Bazarr also reaches Sonarr/Radarr (`manifests/media-egress.yaml`) |
 | `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
 | `flaresolverr-egress` | `media` FlareSolverr pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/flaresolverr-egress.yaml`) |
@@ -18,9 +21,10 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `flaresolverr-ingress` | `media` FlareSolverr — ingress only from Prowlarr (:8191) and monitoring (:8192); no Traefik route; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
-| `standard-egress` + CNPG | same app namespaces — adds `cnpg-system` to egress |
+| `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
+| `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
 | `allow-all-ingress` | `adguard`, `minecraft`, `valheim`, `v-rising` (LB / game / DNS ports) |
-| `allow-all-egress` | same open namespaces |
+| `allow-all-egress` | `minecraft`, `valheim`, `v-rising` |
 | `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
 
 **No policies:** `flux-system`, `cnpg-system`, `onepassword` — operators and webhooks need broader reach.

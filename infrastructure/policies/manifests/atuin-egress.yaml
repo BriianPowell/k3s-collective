@@ -1,0 +1,68 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://cloudnative-pg.io/documentation/current/security/
+#
+# Replaces standard-egress in `atuin`. The Atuin server only talks to its own Postgres, and
+# Postgres only needs the Kubernetes API (the CNPG instance manager reads and updates the Cluster
+# resource). Neither calls out to the LAN, other namespaces or the internet; Prometheus and the
+# CNPG operator connect in (see cnpg-ingress.yaml). There are no backups configured; a
+# `backup.barmanObjectStore` would need its object-store endpoint added to the Postgres policy.
+# Select on labels only (kustomize commonLabels rewrites podSelectors in app kustomizations).
+---
+# Every pod: DNS through CoreDNS, and each other (Atuin -> Postgres :5432).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: atuin-base-egress
+  namespace: atuin
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: atuin
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - podSelector: {}
+---
+# Postgres instance manager -> API server (service IP and the control-plane node).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: atuin-pgcluster-egress
+  namespace: atuin
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: atuin-pgcluster
+spec:
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: atuin-pgcluster
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.43.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 10.0.2.10/32
+      ports:
+        - port: 6443
+          protocol: TCP
