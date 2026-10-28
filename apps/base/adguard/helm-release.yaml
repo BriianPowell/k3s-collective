@@ -52,6 +52,12 @@ spec:
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
     revisionHistoryLimit: 3
     replicaCount: 1
+    # The chart's appVersion lags AdGuard (0.25.0 ships v0.107.51), so the tag is pinned here and
+    # bumped by hand; no image automation manages it. Config schema 28 below is migrated up on start
+    # (to 34 in v0.107.79). To roll back, set the tag to v0.107.51: the configurator init container
+    # rewrites AdGuardHome.yaml at schema 28 on every start.
+    image:
+      tag: v0.107.79
     serviceAccount:
       create: true
       annotations: {}
