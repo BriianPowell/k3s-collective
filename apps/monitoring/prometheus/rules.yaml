@@ -84,12 +84,14 @@ spec:
     - name: Housekeeping
       rules:
         - alert: CertManagerCertificateExpiringSoon
-          expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 21 * 24 * 3600
+          # cert-manager starts renewing at 15 days left (renewBefore 360h, duration 90d). Warn only
+          # once that has had 5 days to succeed; the critical alert follows at 7 days.
+          expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 10 * 24 * 3600
           for: 1h
           labels:
             severity: warning
           annotations:
-            summary: Certificate {{ $labels.name }} in {{ $labels.namespace }} expires in less than 21 days
+            summary: Certificate {{ $labels.name }} in {{ $labels.namespace }} expires in less than 10 days (renewal should have started at 15)
             description: Check cert-manager Certificate / ACME renewal (e.g. wildcard-powell-place).
         - alert: CertManagerCertificateExpiringCritical
           expr: (certmanager_certificate_expiration_timestamp_seconds - time()) < 7 * 24 * 3600
