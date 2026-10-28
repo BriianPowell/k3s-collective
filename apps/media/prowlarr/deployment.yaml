@@ -54,7 +54,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:2.6.5 # {"$imagepolicy": "media:prowlarr"}
+          image: ghcr.io/linuxserver/prowlarr:2.7.0 # {"$imagepolicy": "media:prowlarr"}
           imagePullPolicy: Always
           # The s6 init stays root to start, then drops the app to PUID/PGID (the same pattern
           # Plex uses). Prowlarr only writes /config and has no media mount, so it does not
