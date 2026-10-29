@@ -21,13 +21,23 @@ spec:
             summary: Deployment {{$labels.deployment}} is currently having no pods running
     - name: Pods
       rules:
+        # Deluge is excluded: it memory-maps torrent data, so its working set climbs to the 2Gi
+        # limit as active file cache and drops again (0 OOM kills, process memory stays under 250Mi
+        # over 3 days). Its own process-memory alert follows.
         - alert: High Pod Memory
-          expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace!~"valheim|minecraft|v-rising"}) by (namespace,container,pod) > 2000000000
+          expr: sum(container_memory_working_set_bytes{image!="",container!="POD",container!="arch-delugevpn", namespace!~"valheim|minecraft|v-rising"}) by (namespace,container,pod) > 2000000000
           for: 1m
           labels:
             severity: critical
           annotations:
             summary: Pod {{$labels.pod}} is currently utilizing high memory (> 1.2G)
+        - alert: High Deluge Process Memory
+          expr: sum(container_memory_rss{image!="",namespace="media",container="arch-delugevpn"}) by (namespace,container,pod) > 1000000000
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Deluge process memory in {{$labels.pod}} is above 1G (page cache excluded); check for a leak or a mass recheck
         # - alert: High Monitoring Pod Memory
         #   expr: sum(container_memory_working_set_bytes{image!="",container!="POD", namespace=~"monitoring"}) by (namespace,container,pod) > 2000000000
         #   for: 1m
