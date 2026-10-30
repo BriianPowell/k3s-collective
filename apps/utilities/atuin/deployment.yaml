@@ -47,7 +47,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: atuin
-          image: ghcr.io/atuinsh/atuin:18.24.3 # {"$imagepolicy": "atuin:atuin"}
+          image: ghcr.io/atuinsh/atuin:18.24.4 # {"$imagepolicy": "atuin:atuin"}
           imagePullPolicy: Always
           # The image's own user is 1000, which is the nodes' admin login, so run as the utilities id
           # instead (see docs/uids.md). /config is only the server's config directory: the old
