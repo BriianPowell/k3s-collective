@@ -8,7 +8,9 @@ spec:
   # running. To start a game, un-suspend its HelmRelease and set its replicas.
   suspend: false
   interval: 10m0s
-  wait: true
+  # No health wait: suspended HelmReleases keep their last Ready condition (False for V Rising
+  # until it is resumed), so waiting would fail every run.
+  wait: false
   timeout: 5m0s
   retryInterval: 2m0s
   prune: true
