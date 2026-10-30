@@ -1,5 +1,5 @@
-# Game workloads (paired with allow-all-ingress). AdGuard has its own egress policy
-# (adguard-egress.yaml); its ingress is still open (open-ingress.yaml).
+# Game workloads only. Their ingress is restricted to Traefik (games-ingress.yaml); AdGuard has
+# its own egress and ingress policies (adguard-egress.yaml, adguard-ingress.yaml).
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

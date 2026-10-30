@@ -6,18 +6,19 @@ kind: Kustomization
 
 resources:
   - manifests/adguard-egress.yaml
+  - manifests/adguard-ingress.yaml
   - manifests/atuin-egress.yaml
   - manifests/cnpg-egress.yaml
   - manifests/cnpg-ingress.yaml
   - manifests/crowdsec-egress.yaml
   - manifests/flaresolverr-egress.yaml
+  - manifests/games-ingress.yaml
   - manifests/kube-system.yaml
   - manifests/media-egress.yaml
   - manifests/media-ingress.yaml
   - manifests/media-limitrange.yaml
   - manifests/monitoring-egress.yaml
   - manifests/open-egress.yaml
-  - manifests/open-ingress.yaml
   - manifests/permissive-egress.yaml
   - manifests/plex-egress.yaml
   - manifests/standard-egress.yaml

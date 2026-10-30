@@ -1,0 +1,86 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+#
+# Replaces allow-all-ingress in the game namespaces. The game Services are ClusterIP; players
+# reach them through Traefik's TCP/UDP entrypoints (infrastructure/controllers/traefik.yaml), so
+# the only legitimate source is a Traefik pod, on the game's own ports. The games Kustomization
+# is suspended, so these are untested against a running server: after resuming, join a game and
+# check the server logs for the player. Select on app.kubernetes.io/name only.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: minecraft-ingress
+  namespace: minecraft
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: minecraft
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 25565
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: valheim-ingress
+  namespace: valheim
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: valheim
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 2456
+          protocol: UDP
+        - port: 2457
+          protocol: UDP
+        - port: 2458
+          protocol: UDP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: v-rising-ingress
+  namespace: v-rising
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: v-rising
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 9876
+          protocol: UDP
+        - port: 9877
+          protocol: UDP

@@ -23,7 +23,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
 | `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
-| `allow-all-ingress` | `adguard`, `minecraft`, `valheim`, `v-rising` (LB / game / DNS ports) |
+| `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
+| `minecraft-ingress`, `valheim-ingress`, `v-rising-ingress` | game namespaces — Traefik pods only, on each game's ports (`manifests/games-ingress.yaml`; games suspended, untested live) |
 | `allow-all-egress` | `minecraft`, `valheim`, `v-rising` |
 | `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
 

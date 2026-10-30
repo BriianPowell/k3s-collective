@@ -1,0 +1,90 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+#
+# Replaces allow-all-ingress in `adguard`. The DNS LoadBalancers use externalTrafficPolicy: Local,
+# so LAN clients arrive with their real source address; the policy allows RFC1918 sources (LAN,
+# pod and service CIDRs, node IPs for kubelet probes) and nothing routable. AdGuard's own
+# `allowed_clients` is the second layer. The web UI is reached only through Traefik, and the
+# exporter only by Prometheus. Select on app.kubernetes.io/name only (kustomize commonLabels
+# rewrites podSelectors in app kustomizations).
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: adguard-home-ingress
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: adguard-home
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adguard-home
+  policyTypes:
+    - Ingress
+  ingress:
+    # Web UI through Traefik (guard.powell.place, behind the security middleware)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 80
+          protocol: TCP
+    # Exporter -> AdGuard API
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: adguard-exporter
+      ports:
+        - port: 80
+          protocol: TCP
+    # DNS clients: plain (53), DoT (853), DoQ (784, 8853), DNSCrypt (5443); private sources only
+    - from:
+        - ipBlock:
+            cidr: 10.0.0.0/8
+        - ipBlock:
+            cidr: 172.16.0.0/12
+        - ipBlock:
+            cidr: 192.168.0.0/16
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+        - port: 853
+          protocol: TCP
+        - port: 784
+          protocol: UDP
+        - port: 8853
+          protocol: UDP
+        - port: 5443
+          protocol: TCP
+        - port: 5443
+          protocol: UDP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: adguard-exporter-ingress
+  namespace: adguard
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: adguard-exporter
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adguard-exporter
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 9618
+          protocol: TCP
