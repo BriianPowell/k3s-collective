@@ -49,13 +49,39 @@ spec:
                   allowPrivilegeEscalation: false
                   capabilities:
                     drop: ['ALL']
+              # The chart only copies the bootstrap file when AdGuardHome.yaml does not exist yet
+              # (first start or a rebuilt volume). The live file on the volume is the source of
+              # truth afterwards, so values changes do not reach a running install. On that first
+              # copy, fill the password-hash placeholder from the Secret so the hash is not in git.
+              - op: add
+                path: /spec/template/spec/initContainers/0/env
+                value:
+                  - name: ADGUARD_PASSWORD_HASH
+                    valueFrom:
+                      secretKeyRef:
+                        name: adguard
+                        key: password_hash
+              - op: replace
+                path: /spec/template/spec/initContainers/0/command
+                value:
+                  - /bin/sh
+                  - '-c'
+                  - |
+                    if [ -f /opt/adguardhome/conf/AdGuardHome.yaml ]; then
+                      echo "Existing file will NOT be altered: /opt/adguardhome/conf/AdGuardHome.yaml"
+                    else
+                      [ -n "$ADGUARD_PASSWORD_HASH" ] || { echo "password_hash is empty" >&2; exit 1; }
+                      cp -v /var/adguardhome-bootstrap/AdGuardHome.yaml /opt/adguardhome/conf/AdGuardHome.yaml
+                      sed -i "s|__ADGUARD_PASSWORD_HASH__|${ADGUARD_PASSWORD_HASH}|" /opt/adguardhome/conf/AdGuardHome.yaml
+                    fi
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
     revisionHistoryLimit: 3
     replicaCount: 1
     # The chart's appVersion lags AdGuard (0.25.0 ships v0.107.51), so the tag is pinned here and
     # bumped by hand; no image automation manages it. Config schema 28 below is migrated up on start
-    # (to 34 in v0.107.79). To roll back, set the tag to v0.107.51: the configurator init container
-    # rewrites AdGuardHome.yaml at schema 28 on every start.
+    # (to 34 in v0.107.79) and written back to the volume. To roll back, set the tag to v0.107.51 and
+    # restore conf/AdGuardHome.yaml.bak-pre-0.107.79 on the volume: the old binary will not accept
+    # a schema 34 file.
     image:
       tag: v0.107.79
     serviceAccount:
@@ -176,7 +202,9 @@ spec:
           port: 6060
       users:
         - name: BriianPowell
-          password: $2y$10$n15pUze68Bu2D6/GPhE.EOWllRJv7T36dEBjVRABfs1gu7mapWMfG
+          # Placeholder, replaced by the configurator init container with the bcrypt hash from
+          # the `adguard` Secret (key `password_hash`, a field on the 1Password AdGuard item).
+          password: __ADGUARD_PASSWORD_HASH__
       auth_attempts: 5
       block_auth_min: 15
       http_proxy: ''
