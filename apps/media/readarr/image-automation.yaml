@@ -1,4 +1,4 @@
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# apiVersion: image.toolkit.fluxcd.io/v1
 # kind: ImageRepository
 # metadata:
 #   name: readarr
@@ -7,7 +7,7 @@
 #   image: ghcr.io/linuxserver/readarr
 #   interval: 24h
 # ---
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# apiVersion: image.toolkit.fluxcd.io/v1
 # kind: ImagePolicy
 # metadata:
 #   name: readarr
@@ -20,7 +20,7 @@
 #     semver:
 #       range: '>=0.4.2'
 # ---
-# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# apiVersion: image.toolkit.fluxcd.io/v1
 # kind: ImageUpdateAutomation
 # metadata:
 #   name: readarr
@@ -48,7 +48,7 @@
 #     path: ./apps/media/readarr
 #     strategy: Setters
 # ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
   name: readarr-exportarr

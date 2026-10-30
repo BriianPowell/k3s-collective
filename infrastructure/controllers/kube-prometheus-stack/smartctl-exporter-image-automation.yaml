@@ -12,7 +12,7 @@
 # deliberately: review the release notes if a bump looks large. Non-semver tags (latest, master,
 # v0) are ignored by the semver policy.
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
   name: smartctl-exporter
@@ -21,7 +21,7 @@ spec:
   image: quay.io/prometheuscommunity/smartctl-exporter
   interval: 24h
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: smartctl-exporter
@@ -34,7 +34,7 @@ spec:
     semver:
       range: '>=0.14.0 <1.0.0'
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
   name: smartctl-exporter

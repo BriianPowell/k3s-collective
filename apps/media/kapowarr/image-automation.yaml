@@ -8,7 +8,7 @@
 # drop a digest. The range stops at <2.0.0 so a major release is a deliberate change, not an
 # unattended one (this app runs as root with the media library mounted read-write).
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageRepository
 metadata:
   name: kapowarr
@@ -17,7 +17,7 @@ spec:
   image: docker.io/mrcas/kapowarr
   interval: 24h
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImagePolicy
 metadata:
   name: kapowarr
@@ -30,7 +30,7 @@ spec:
     semver:
       range: '>=1.3.1 <2.0.0'
 ---
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
   name: kapowarr

@@ -4,7 +4,7 @@
 # https://github.com/grafana/loki/blob/main/production/helm/loki/Chart.yaml
 #
 
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: loki
