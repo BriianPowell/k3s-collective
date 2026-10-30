@@ -1,3 +1,7 @@
+# Baseline ingress: Traefik pods (kube-system) for routed apps, Prometheus for scrapes, and the
+# namespace's own pods. Not the whole of kube-system or monitoring (oauth2-proxy, ntfy, svclb,
+# Grafana, Alloy, ... have no business calling into these pods). cert-manager, reflector and
+# reloader have no route, so they allow Prometheus and same-namespace only.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -5,7 +9,7 @@ metadata:
   namespace: media
 spec:
   # Pods with their own ingress policy (manifests/media-ingress.yaml) are excluded; policies
-  # are additive, so leaving them in would let all of kube-system and the namespace through.
+  # are additive, so leaving them in would let the namespace's pods reach them freely.
   podSelector:
     matchExpressions:
       - key: app.kubernetes.io/name
@@ -23,14 +27,22 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+    # Traefik only (not all of kube-system)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+    # Prometheus scrapes (not every pod in monitoring)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
     - from:
         - podSelector: {}
 ---
@@ -44,14 +56,14 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+    # Traefik only (not all of kube-system)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: kube-system
-    - from:
-        - namespaceSelector:
+          podSelector:
             matchLabels:
-              kubernetes.io/metadata.name: monitoring
+              app.kubernetes.io/name: traefik
     - from:
         - podSelector: {}
 ---
@@ -65,14 +77,22 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+    # Traefik only (not all of kube-system)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+    # Prometheus scrapes (not every pod in monitoring)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
     - from:
         - podSelector: {}
 ---
@@ -86,14 +106,14 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: kube-system
+    # Prometheus scrapes (not every pod in monitoring)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
     - from:
         - podSelector: {}
 ---
@@ -107,14 +127,14 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: kube-system
+    # Prometheus scrapes (not every pod in monitoring)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
     - from:
         - podSelector: {}
 ---
@@ -128,13 +148,13 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: kube-system
+    # Prometheus scrapes (not every pod in monitoring)
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
     - from:
         - podSelector: {}

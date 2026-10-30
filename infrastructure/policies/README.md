@@ -6,7 +6,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 
 | Policy | Namespaces |
 | -------- | ------------ |
-| `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` |
+| `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` — Traefik pods, Prometheus pods and the namespace itself (cert-manager, reflector, reloader: no Traefik) |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
 | `allow-all-egress` | `media` (only Deluge is left: VPN) — arbitrary ports (torrent/VPN); every other media app has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
 | `monitoring-base-egress` + per-component | `monitoring` — DNS + same namespace for all; Prometheus pod CIDR and node metric ports, API-server access for Prometheus/Alloy/kube-state-metrics/operator, Alertmanager SMTP :587, Grafana WAN :80/:443 (`manifests/monitoring-egress.yaml`) |
@@ -20,7 +20,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `bazarr-ingress`, `kapowarr-ingress` | `media` Bazarr (both) and Kapowarr — ingress only from Traefik (and Bazarr's own exporters); excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `flaresolverr-ingress` | `media` FlareSolverr — ingress only from Prowlarr (:8191) and monitoring (:8192); no Traefik route; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
-| `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` |
+| `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` — as above plus the CloudNativePG operator pod |
 | `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
 | `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
