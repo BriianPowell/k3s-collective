@@ -74,28 +74,23 @@ mounts (`infrastructure/controllers/crowdsec.yaml`) and only the community block
 
 ## Resume idle games
 
-Games are idle at two levels: Flux `games` kustomization is suspended, and each `HelmRelease` is suspended with `replicaCount` / `replicas: 0`.
+The Flux `games` kustomization is active (so the HelmRepositories, volumes and routes stay in sync with git), but each game `HelmRelease` is suspended with `replicaCount` / `replicas: 0`, so nothing runs.
 
 ### Start one game (example: Minecraft)
 
 1. In git, for that game’s `helm-release.yaml`:
    - Set `spec.suspend: false` (or remove it).
    - Set `replicaCount` / `controller.replicas` to `1`.
-2. Commit and push, or patch live for a test:
+2. Commit and push, then reconcile:
 
 ```bash
-flux resume kustomization games -n flux-system
 flux reconcile kustomization games -n flux-system --with-source
 ```
 
 ### Park games again
 
-1. Set `replicaCount` / `replicas` back to `0` and `spec.suspend: true` on each game `HelmRelease`.
-2. Suspend the kustomization:
-
-```bash
-flux suspend kustomization games -n flux-system
-```
+Set `replicaCount` / `replicas` back to `0` and `spec.suspend: true` on the game's `HelmRelease`, then push.
+Leave the `games` kustomization active.
 
 | Game | Namespace | Replicas field |
 |------|-----------|----------------|

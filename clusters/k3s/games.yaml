@@ -4,7 +4,9 @@ metadata:
   name: games
   namespace: flux-system
 spec:
-  suspend: true
+  # Kustomization is active, but every game HelmRelease is `suspend: true` with no workloads
+  # running. To start a game, un-suspend its HelmRelease and set its replicas.
+  suspend: false
   interval: 10m0s
   wait: true
   timeout: 5m0s
