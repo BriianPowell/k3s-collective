@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: renovate
+  labels:
+    # The CronJob runs non-root with a read-only root filesystem and no capabilities.
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    app.kubernetes.io/component: dependency-updates
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: renovate
+automountServiceAccountToken: false

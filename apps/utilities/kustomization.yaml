@@ -6,3 +6,4 @@ resources:
   - error-pages
   - job-cleanup
   - ntfy
+  - renovate

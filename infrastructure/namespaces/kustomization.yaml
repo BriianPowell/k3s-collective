@@ -18,6 +18,7 @@ resources:
   - onepassword.yaml
   - reflector.yaml
   - reloader.yaml
+  - renovate.yaml
   - valheim.yaml
   - v-rising.yaml
   - wiki-js.yaml

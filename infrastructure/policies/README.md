@@ -22,6 +22,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` — as above plus the CloudNativePG operator pod |
 | `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
+| `renovate-ingress`, `renovate-egress` | `renovate` — no ingress at all; egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/renovate-network.yaml`) |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
 | `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
 | `minecraft-ingress`, `valheim-ingress`, `v-rising-ingress` | game namespaces — Traefik pods only, on each game's ports (`manifests/games-ingress.yaml`; games suspended, untested live) |
@@ -38,7 +39,7 @@ lists the pods that would break.
 
 | Level | Namespaces |
 | ----- | ---------- |
-| `restricted` | `atuin`, `cert-manager`, `cnpg-system`, `onepassword`, `wiki`, `flux-system`, `adguard`, `reflector`, `reloader` |
+| `restricted` | `atuin`, `renovate`, `cert-manager`, `cnpg-system`, `onepassword`, `wiki`, `flux-system`, `adguard`, `reflector`, `reloader` |
 | `baseline` | `nextcloud` (Apache and cron start as root), `keycloak`, `minecraft`, `valheim`, `v-rising` (suspended) |
 | `privileged` | `media` (Deluge: NET_ADMIN, hostPath, sysctls), `monitoring` (node-exporter host namespaces, smartctl), `kube-system` (k3s system pods), `homeassistant` (`hostNetwork` for HomeKit), `crowdsec` (agent mounts the node's container logs) |
 

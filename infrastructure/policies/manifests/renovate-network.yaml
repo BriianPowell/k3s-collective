@@ -1,0 +1,63 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+#
+# Renovate runs as a nightly CronJob. Nothing connects to it, and it only needs the public
+# internet: github.com and api.github.com (clone, PRs, App token), the container registries and
+# Helm chart hosts it checks for new versions, all on HTTPS. Private ranges are excluded so a
+# compromised run cannot reach the cluster, the LAN or the node.
+#
+# Select on app.kubernetes.io/name only (see README: commonLabels can rewrite selectors).
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: renovate-ingress
+  namespace: renovate
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: renovate
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  # No ingress rules: deny all.
+  ingress: []
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: renovate-egress
+  namespace: renovate
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: renovate
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: renovate
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP

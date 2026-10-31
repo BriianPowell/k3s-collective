@@ -1,0 +1,79 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "flux",
+    "kubernetes"
+  ],
+  "flux": {
+    "managerFilePatterns": [
+      "/^apps\\/.+\\.ya?ml$/",
+      "/^infrastructure\\/.+\\.ya?ml$/"
+    ]
+  },
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/^apps\\/.+\\.ya?ml$/",
+      "/^infrastructure\\/.+\\.ya?ml$/"
+    ]
+  },
+  "ignorePaths": [
+    "clusters/k3s/flux-system/**",
+    ".memories/**"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 3,
+  "automerge": false,
+  "separateMajorMinor": true,
+  "packageRules": [
+    {
+      "description": "These images are updated by Flux image automation (image-automation.yaml files). A second updater would fight it. Add a new automation's image here.",
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchPackageNames": [
+        "/(^|\\/)binwiederhier\\/ntfy$/",
+        "/(^|\\/)eclipse-mosquitto$/",
+        "/(^|\\/)mrcas\\/kapowarr$/",
+        "/(^|\\/)ngosang\\/deluge-exporter$/",
+        "/(^|\\/)nwalke\\/tautulli_exporter$/",
+        "/(^|\\/)requarks\\/wiki$/",
+        "/(^|\\/)ghcr\\.io\\/atuinsh\\/atuin$/",
+        "/(^|\\/)ghcr\\.io\\/axsuul\\/plex-media-server-exporter$/",
+        "/(^|\\/)ghcr\\.io\\/binhex\\/arch-delugevpn$/",
+        "/(^|\\/)ghcr\\.io\\/flaresolverr\\/flaresolverr$/",
+        "/(^|\\/)ghcr\\.io\\/henrywhitaker3\\/adguard-exporter$/",
+        "/(^|\\/)ghcr\\.io\\/home-assistant\\/home-assistant$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/bazarr$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/kavita$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/lidarr$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/prowlarr$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/radarr$/",
+        "/(^|\\/)ghcr\\.io\\/linuxserver\\/sonarr$/",
+        "/(^|\\/)ghcr\\.io\\/onedr0p\\/exportarr$/",
+        "/(^|\\/)ghcr\\.io\\/recyclarr\\/recyclarr$/",
+        "/(^|\\/)ghcr\\.io\\/seerr-team\\/seerr$/",
+        "/(^|\\/)ghcr\\.io\\/tarampampam\\/error-pages$/",
+        "/(^|\\/)ghcr\\.io\\/tautulli\\/tautulli$/",
+        "/(^|\\/)ghcr\\.io\\/willfantom\\/overseerr-exporter$/",
+        "/(^|\\/)quay\\.io\\/keycloak\\/keycloak$/",
+        "/(^|\\/)quay\\.io\\/prometheuscommunity\\/smartctl-exporter$/"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Flux's own components are upgraded by hand with `flux install --export` (see AGENTS.md), after `flux migrate`.",
+      "matchPackageNames": [
+        "fluxcd/flux2"
+      ],
+      "enabled": false
+    }
+  ],
+  "separateMultipleMajor": true
+}

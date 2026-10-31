@@ -1,0 +1,170 @@
+#
+# Self-hosted Renovate: opens pull requests for Helm chart versions and for image tags that Flux
+# image automation does not manage. It never merges anything; you review the PRs.
+# Behaviour (which files, which packages) is in /renovate.json at the repo root.
+#
+# Auth is a GitHub App. Renovate needs an installation token, which expires after an hour, so an
+# init container mints a fresh one for each run from the App's private key (openssl + curl, no
+# third-party image) and hands it to Renovate through a memory-backed emptyDir.
+#
+# References:
+# https://docs.renovatebot.com/modules/platform/github/#running-as-a-github-app
+# https://docs.renovatebot.com/self-hosted-configuration/
+# https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app
+#
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate
+  namespace: renovate
+  labels:
+    app.kubernetes.io/component: cronjob
+    app.kubernetes.io/name: renovate
+spec:
+  schedule: '0 3 * * *'
+  timeZone: America/Los_Angeles
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 3600
+      ttlSecondsAfterFinished: 86400
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: cronjob
+            app.kubernetes.io/name: renovate
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1514
+            runAsGroup: 1514
+            # Lets uid 1514 read the mounted private key (secret files are root-owned otherwise).
+            fsGroup: 1514
+            seccompProfile:
+              type: RuntimeDefault
+          initContainers:
+            - name: github-app-token
+              image: ghcr.io/renovatebot/renovate:44.198.2
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -eu
+                  b64() { openssl base64 -A | tr '+/' '-_' | tr -d '='; }
+                  now=$(date +%s)
+                  header=$(printf '{"alg":"RS256","typ":"JWT"}' | b64)
+                  payload=$(printf '{"iat":%s,"exp":%s,"iss":"%s"}' "$((now - 60))" "$((now + 540))" "$APP_ID" | b64)
+                  sig=$(printf '%s.%s' "$header" "$payload" | openssl dgst -sha256 -sign /secrets/private_key | b64)
+                  resp=$(curl -fsS -X POST \
+                    -H "Authorization: Bearer ${header}.${payload}.${sig}" \
+                    -H "Accept: application/vnd.github+json" \
+                    -d '{"repositories":["k3s-collective"]}' \
+                    "https://api.github.com/app/installations/${INSTALLATION_ID}/access_tokens")
+                  token=$(printf '%s' "$resp" | sed -n 's/.*"token": *"\([^"]*\)".*/\1/p')
+                  [ -n "$token" ] || { echo "no installation token in the response" >&2; exit 1; }
+                  umask 077
+                  printf '%s' "$token" > /token/token
+                  echo "installation token written"
+              env:
+                - name: APP_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: renovate
+                      key: app_id
+                - name: INSTALLATION_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: renovate
+                      key: installation_id
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+                limits:
+                  memory: 128Mi
+              volumeMounts:
+                - name: app-key
+                  mountPath: /secrets
+                  readOnly: true
+                - name: token
+                  mountPath: /token
+          containers:
+            - name: renovate
+              image: ghcr.io/renovatebot/renovate:44.198.2
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  RENOVATE_TOKEN=$(cat /token/token)
+                  export RENOVATE_TOKEN
+                  exec renovate
+              env:
+                - name: RENOVATE_PLATFORM
+                  value: github
+                - name: RENOVATE_REPOSITORIES
+                  value: BriianPowell/k3s-collective
+                # The repo carries its own renovate.json; do not open onboarding PRs.
+                - name: RENOVATE_ONBOARDING
+                  value: 'false'
+                - name: RENOVATE_REQUIRE_CONFIG
+                  value: required
+                - name: RENOVATE_GIT_AUTHOR
+                  valueFrom:
+                    secretKeyRef:
+                      name: renovate
+                      key: git_author
+                # Renovate must not run commands from the repo (post-upgrade tasks, scripts).
+                - name: RENOVATE_ALLOWED_COMMANDS
+                  value: '[]'
+                - name: RENOVATE_BASE_DIR
+                  value: /tmp/renovate
+                - name: HOME
+                  value: /tmp
+                - name: LOG_LEVEL
+                  value: info
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - ALL
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  memory: 1Gi
+              volumeMounts:
+                - name: token
+                  mountPath: /token
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+          volumes:
+            - name: app-key
+              secret:
+                secretName: renovate
+                defaultMode: 0440
+                items:
+                  - key: private_key
+                    path: private_key
+            - name: token
+              emptyDir:
+                medium: Memory
+                sizeLimit: 1Mi
+            - name: tmp
+              emptyDir:
+                sizeLimit: 2Gi
