@@ -57,7 +57,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: ntfy
-          image: docker.io/binwiederhier/ntfy:v2.34.0 # {"$imagepolicy": "kube-system:ntfy"}
+          image: docker.io/binwiederhier/ntfy:v2.35.0 # {"$imagepolicy": "kube-system:ntfy"}
           imagePullPolicy: Always
           # Still runs as root (the image default; its data volume is root-owned), so shrink what root can
           # do: no privilege escalation, default seccomp, and only the capability needed to bind port 80.
