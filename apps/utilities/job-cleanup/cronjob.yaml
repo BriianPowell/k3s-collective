@@ -30,7 +30,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: kubectl
-              image: registry.k8s.io/kubectl:v1.31.4
+              image: registry.k8s.io/kubectl:v1.31.4@sha256:a519329b1bf8f7889e4c902f7147e6933d6a6e1dde25e8171973642396e31f0d
               imagePullPolicy: IfNotPresent
               command:
                 - kubectl

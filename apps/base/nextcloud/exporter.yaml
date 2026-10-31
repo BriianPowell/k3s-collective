@@ -48,7 +48,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: nextcloud-exporter
-          image: ghcr.io/xperimental/nextcloud-exporter:0.7.0
+          image: ghcr.io/xperimental/nextcloud-exporter:0.7.0@sha256:85d412884b6cc14c0cfc03d68bc1d15a6f5a2144a4152ba333ce902ade681c8b
           imagePullPolicy: IfNotPresent
           # A static Go binary; the image's user is already nobody (65534).
           securityContext:

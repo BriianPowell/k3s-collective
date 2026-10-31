@@ -40,7 +40,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: nextcloud-redis
-          image: redis:alpine
+          image: redis:alpine@sha256:21090af93f8324db2f0f0f4f38a7c60369d47d917e000c3423d89d2ae2883537
           imagePullPolicy: Always
           # The image's own redis user is 999 (it drops to it from root on start). Run as it
           # directly; the image's /data is owned by it and nothing else is written.

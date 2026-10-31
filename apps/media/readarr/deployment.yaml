@@ -50,7 +50,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: readarr
-          image: ghcr.io/linuxserver/readarr:develop #  {"$imagepolicy": "media:readarr"}
+          image: ghcr.io/linuxserver/readarr:develop@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb #  {"$imagepolicy": "media:readarr"}
           imagePullPolicy: Always
           # 1500:1500 is the shared `media` owner of /data and of this app's config (see
           # docs/uids.md). The image fixes /config ownership itself on first start.
