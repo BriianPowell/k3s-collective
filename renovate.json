@@ -93,6 +93,13 @@
       "minimumReleaseAge": null
     },
     {
+      "description": "kubectl client skew: stay within one minor of the cluster (k3s 1.35). Bump this cap when k3s is upgraded in nix-config.",
+      "matchPackageNames": [
+        "registry.k8s.io/kubectl"
+      ],
+      "allowedVersions": "<1.36.0"
+    },
+    {
       "description": "Keep Flux HelmRelease chart versions free of digests.",
       "matchManagers": [
         "flux"
