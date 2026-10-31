@@ -57,7 +57,7 @@ spec:
               type: RuntimeDefault
           initContainers:
             - name: fetch
-              image: docker.io/library/alpine:3.22
+              image: docker.io/library/alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
               imagePullPolicy: IfNotPresent
               env:
                 - name: TQM_VERSION
@@ -91,7 +91,7 @@ spec:
                 - name: tmp
                   mountPath: /tmp
             - name: clean
-              image: docker.io/library/alpine:3.22
+              image: docker.io/library/alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
               imagePullPolicy: IfNotPresent
               command: ['/opt/tqm/tqm']
               args:
@@ -134,7 +134,7 @@ spec:
                   readOnly: true
           containers:
             - name: orphan
-              image: docker.io/library/alpine:3.22
+              image: docker.io/library/alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
               imagePullPolicy: IfNotPresent
               # tqm treats every file as an orphan if Deluge returns no torrents (e.g. the tqm
               # login lost its admin level), so a dry run goes first and the real run is skipped
