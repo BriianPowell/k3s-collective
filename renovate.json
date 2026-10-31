@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:best-practices"
   ],
   "enabledManagers": [
     "flux",
@@ -34,9 +34,6 @@
   "packageRules": [
     {
       "description": "These images are updated by Flux image automation (image-automation.yaml files). A second updater would fight it. Add a new automation's image here.",
-      "matchManagers": [
-        "kubernetes"
-      ],
       "matchPackageNames": [
         "/(^|\\/)binwiederhier\\/ntfy$/",
         "/(^|\\/)eclipse-mosquitto$/",
@@ -73,7 +70,42 @@
         "fluxcd/flux2"
       ],
       "enabled": false
+    },
+    {
+      "description": "Registries and datasources without usable release timestamps are exempt from the cooldown, as are update types that have no release age.",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/**",
+        "quay.io/**",
+        "registry.k8s.io/**"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "git, kubernetes-api and lock-file updates carry no release timestamp.",
+      "matchDatasources": [
+        "git-refs",
+        "git-tags",
+        "kubernetes-api"
+      ],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "Keep Flux HelmRelease chart versions free of digests.",
+      "matchManagers": [
+        "flux"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchDepTypes": [
+        "HelmChart"
+      ],
+      "pinDigests": false
     }
   ],
-  "separateMultipleMajor": true
+  "minimumReleaseAge": "3 days",
+  "minimumReleaseAgeBehaviour": "timestamp-required"
 }
