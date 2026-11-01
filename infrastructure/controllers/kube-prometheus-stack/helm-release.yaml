@@ -33,7 +33,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: monitoring
-      version: '>=60.0.0 <70.0.0'
+      version: '<93.0.0'
   install:
     crds: Create
   upgrade:
