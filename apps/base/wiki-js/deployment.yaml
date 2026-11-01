@@ -57,7 +57,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: wiki-js
-          image: docker.io/requarks/wiki:3.0.1 # {"$imagepolicy": "wiki:wiki-js"}
+          image: docker.io/requarks/wiki:2.5.317 # {"$imagepolicy": "wiki:wiki-js"}
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
