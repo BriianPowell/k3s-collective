@@ -1,6 +1,7 @@
 #
 # Reference:
-# https://artifacthub.io/packages/helm/traefik/traefik/30.0.1
+# https://artifacthub.io/packages/helm/traefik/traefik
+# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/Changelog.md
 #
 
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -34,7 +35,15 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: kube-system
-      version: '<43.0.0'
+      # Values were migrated for chart 42 (ports.*.http.*, log/accessLog). Later majors may rename
+      # values again, so stay on 42.x until they are migrated (see renovate.json).
+      version: '>=42.0.0 <43.0.0'
+  # The chart ships CRDs in crds/, which Helm only installs on first install; keep them current
+  # so Traefik v3.7 sees the schemas it expects.
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     commonLabels:
       app.kubernetes.io/part-of: traefik
@@ -67,14 +76,17 @@ spec:
     service:
       labels:
         app.kubernetes.io/component: service
-      ipFamilyPolicy: PreferDualStack
       spec:
+        ipFamilyPolicy: PreferDualStack
         # Preserve client source IP to the Traefik pod (default Cluster SNATs to node IP)
         externalTrafficPolicy: Local
     ports:
       web:
-        redirectTo:
-          port: websecure
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
         forwardedHeaders:
           insecure: true
           trustedIPs:
@@ -144,10 +156,11 @@ spec:
         exposedPort: 9877
         protocol: UDP
       websecure:
-        middlewares:
-          - kube-system-crowdsec-bouncer@kubernetescrd
-        tls:
-          options: default
+        http:
+          middlewares:
+            - kube-system-crowdsec-bouncer@kubernetescrd
+          tls:
+            options: default
         forwardedHeaders:
           insecure: true
           trustedIPs:
@@ -164,14 +177,13 @@ spec:
             - 10.0.0.0/16 # local subnet
             - 10.42.0.0/16 # k3s pod CIDR
             - 10.43.0.0/16 # k3s service CIDR
-    logs:
-      general:
-        level: INFO
-      access:
-        enabled: true
-        fields:
-          headers:
-            defaultmode: keep
+    log:
+      level: INFO
+    accessLog:
+      enabled: true
+      fields:
+        headers:
+          defaultMode: keep
     providers:
       kubernetesCRD:
         enabled: true

@@ -111,6 +111,16 @@
         "HelmChart"
       ],
       "pinDigests": false
+    },
+    {
+      "description": "Traefik chart majors rename values (v42 needed ports.*.http.*, log/accessLog). Migrate the values by hand and render-test, then raise this cap.",
+      "matchPackageNames": [
+        "traefik"
+      ],
+      "matchDatasources": [
+        "helm"
+      ],
+      "allowedVersions": "<43.0.0"
     }
   ],
   "minimumReleaseAge": "3 days",

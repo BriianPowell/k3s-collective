@@ -57,9 +57,10 @@ spec:
       deployment:
         revisionHistoryLimit: 3
         replicas: 1
+        # Chart 2.x sets app.kubernetes.io/name itself; repeating it here rendered a duplicate key
+        # that the post-renderer rejects.
         labels:
           app.kubernetes.io/component: app
-          app.kubernetes.io/name: reloader
         nodeSelector:
           kubernetes.io/hostname: abaddon
         containerSecurityContext:
@@ -69,7 +70,6 @@ spec:
       serviceAccount:
         labels:
           app.kubernetes.io/component: service-account
-          app.kubernetes.io/name: reloader
       podMonitor:
         enabled: true
         namespace: monitoring
