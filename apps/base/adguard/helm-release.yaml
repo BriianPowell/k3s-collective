@@ -154,12 +154,15 @@ spec:
         enabled: false
     # The container was OOMKilled about daily at 512Mi (restart count 5 in a week), which drops DNS
     # until it comes back. 1Gi leaves headroom for the cache, query log and filter lists.
+    # CPU: average use is ~25m and the 24h peak ~130m, but the Go runtime bursts across several threads
+    # inside each 100ms CFS period, so a 500m limit throttled 27% of periods (up to 57%) and added DNS
+    # latency. 2 cores (abaddon has 4) removes the throttling without raising the steady-state request.
     resources:
       requests:
         cpu: 100m
         memory: 384Mi
       limits:
-        cpu: 500m
+        cpu: 2000m
         memory: 1Gi
     autoscaling:
       enabled: false
