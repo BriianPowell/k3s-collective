@@ -15,6 +15,7 @@ resources:
   - minecraft.yaml
   - monitoring.yaml
   - nextcloud.yaml
+  - obsidian-sync.yaml
   - onepassword.yaml
   - reflector.yaml
   - reloader.yaml

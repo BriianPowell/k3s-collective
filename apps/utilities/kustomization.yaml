@@ -6,4 +6,5 @@ resources:
   - error-pages
   - job-cleanup
   - ntfy
+  - obsidian-sync
   - renovate

@@ -1,0 +1,61 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://docs.couchdb.org/en/stable/
+#
+# Obsidian Self-hosted LiveSync talks to CouchDB through Traefik. CouchDB itself makes no outbound
+# calls (single node, no replication), so egress is DNS only. Select on labels only (kustomize
+# commonLabels rewrites podSelectors in app kustomizations).
+---
+# Ingress: Traefik pods only, on the CouchDB port.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: obsidian-sync-ingress
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: obsidian-sync
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: obsidian-sync
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 5984
+          protocol: TCP
+---
+# Egress: DNS through CoreDNS and nothing else.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: obsidian-sync-egress
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: obsidian-sync
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP

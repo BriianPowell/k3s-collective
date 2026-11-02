@@ -18,6 +18,7 @@ resources:
   - manifests/media-ingress.yaml
   - manifests/media-limitrange.yaml
   - manifests/monitoring-egress.yaml
+  - manifests/obsidian-sync-network.yaml
   - manifests/open-egress.yaml
   - manifests/permissive-egress.yaml
   - manifests/plex-egress.yaml

@@ -36,8 +36,9 @@ uid and gid are the same number in every row.
 | 1512 | wiki | Wiki.js |
 | 1513 | DNS | AdGuard Home (data volume owned by it on the node, since `fsGroup` does not apply to local-path volumes) |
 | 1514 | dependency updates | Renovate CronJob (no persistent volume; `emptyDir` only) |
+| 1515 | obsidian-sync | CouchDB for Obsidian LiveSync (data directory on sheol `/mnt/moriyya/obsidian-sync` owned by it) |
 
-Next free id: 1515. Add a row here in the same change that uses the number.
+Next free id: 1516. Add a row here in the same change that uses the number.
 
 ## Changing an app's id
 

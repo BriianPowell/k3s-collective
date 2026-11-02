@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: obsidian-sync
+  labels:
+    # CouchDB runs as a fixed non-root uid with no capabilities; keep it passing `restricted`.
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    app.kubernetes.io/component: note-sync
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: obsidian-sync
+automountServiceAccountToken: false

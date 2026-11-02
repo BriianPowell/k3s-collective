@@ -1,0 +1,28 @@
+#
+# Reference:
+# https://github.com/vrtmrz/obsidian-livesync
+# https://docs.couchdb.org/en/stable/api/server/common.html
+#
+# The LiveSync plugin is an API client and cannot follow an SSO redirect, so this route has no
+# oauth2-proxy middleware. CouchDB's own login protects it (`require_valid_user` in the ConfigMap).
+# The admin UI (Fauxton, /_utils) is not routed: reach it with `kubectl port-forward` if you need it.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: obsidian-sync-https
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: ingress
+    app.kubernetes.io/name: obsidian-sync-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`obsidian.powell.place`) && !PathPrefix(`/_utils`)
+      kind: Rule
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: obsidian-sync
+          port: http

@@ -1,0 +1,218 @@
+#
+# Reference:
+# https://hub.docker.com/_/couchdb
+# https://docs.couchdb.org/en/stable/config/index.html
+# https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/setup_own_server.md
+#
+# CouchDB backing the Obsidian "Self-hosted LiveSync" plugin. Data lives on sheol's ZFS pool so the
+# Sanoid snapshots cover it. Before first start, on sheol:
+#   sudo install -d -o 1515 -g 1515 -m 0750 /mnt/moriyya/obsidian-sync
+# (`fsGroup` does nothing on local volumes, so the node directory has to be owned by the pod uid.)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: obsidian-sync-config
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/name: obsidian-sync
+data:
+  10-livesync.ini: |
+    [couchdb]
+    single_node = true
+    max_document_size = 50000000
+    ; Fixed so replication checkpoints survive pod restarts (the admin hash and cookie secret are
+    ; re-applied from the Secret on every start; the node's config file is not persistent).
+    uuid = 3c39831975c5452589374e7f7744cb6b
+
+    [chttpd]
+    require_valid_user = true
+    max_http_request_size = 4294967296
+    enable_cors = true
+
+    [chttpd_auth]
+    require_valid_user = true
+    authentication_redirect = /_utils/session.html
+
+    [httpd]
+    WWW-Authenticate = Basic realm="couchdb"
+    enable_cors = true
+
+    [cors]
+    origins = app://obsidian.md,capacitor://localhost,http://localhost
+    credentials = true
+    headers = accept, authorization, content-type, origin, referer
+    methods = GET, PUT, POST, HEAD, DELETE
+    max_age = 3600
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: obsidian-sync
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: obsidian-sync
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: obsidian-sync
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5984
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obsidian-sync
+  namespace: obsidian-sync
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: obsidian-sync
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: obsidian-sync
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: obsidian-sync
+    spec:
+      restartPolicy: Always
+      # CouchDB never calls the Kubernetes API.
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1515
+        runAsGroup: 1515
+        fsGroup: 1515
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: couchdb
+          image: docker.io/library/couchdb:3.5.3
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ['ALL']
+          env:
+            - name: HOME
+              value: /tmp
+            - name: COUCHDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: obsidian-sync
+                  key: username
+            - name: COUCHDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: obsidian-sync
+                  key: password
+            - name: COUCHDB_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: obsidian-sync
+                  key: cookie_secret
+          ports:
+            - name: http
+              containerPort: 5984
+              protocol: TCP
+          # `require_valid_user` makes /_up answer 401, so probe the port instead.
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /opt/couchdb/data
+            - name: config
+              mountPath: /opt/couchdb/etc/default.d/10-livesync.ini
+              subPath: 10-livesync.ini
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: obsidian-sync-pvc
+        - name: config
+          configMap:
+            name: obsidian-sync-config
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: obsidian-sync-pvc
+  namespace: obsidian-sync
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: obsidian-sync-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  volumeName: obsidian-sync-pv
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: obsidian-sync-pv
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: obsidian-sync-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  claimRef:
+    name: obsidian-sync-pvc
+    namespace: obsidian-sync
+  local:
+    path: /mnt/moriyya/obsidian-sync
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol
