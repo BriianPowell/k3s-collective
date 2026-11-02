@@ -44,8 +44,8 @@ spec:
     #     -H 'Accept: application/vnd.docker.distribution.manifest.list.v2+json' \
     #     https://registry-1.docker.io/v2/plexinc/pms-docker/manifests/<tag> | grep -i docker-content-digest
     image:
-      tag: 1.43.4.10903-e5521bd8c
-      sha: sha256:e0ab27395614a8e1a4fdf84c6bc60ac664915cfdde70c52d030c7728a1c48e14
+      tag: 1.43.6.11085-d1e52e169
+      sha: sha256:16ac93c7031813510e58e280eb546909d065b1a09f5e5c022b06a63e11e7d707
     ingress:
       enabled: false
     pms:
