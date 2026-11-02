@@ -28,7 +28,7 @@ spec:
         kind: HelmRepository
         name: reflector
         namespace: reflector
-      version: '>=7.0.0 <8.0.0'
+      version: '<11.0.0'
   values:
     # Utilities id 1511 instead of the chart's 1000 (the nodes' admin login); see docs/uids.md.
     # It needs the Kubernetes API (it copies secrets), so the service account token stays mounted.
