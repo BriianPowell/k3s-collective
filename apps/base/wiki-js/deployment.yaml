@@ -33,7 +33,9 @@ metadata:
     app.kubernetes.io/name: wiki-js
 spec:
   revisionHistoryLimit: 3
-  replicas: 1
+  # Scaled down: notes moved to Obsidian (apps/utilities/obsidian-sync). The manifests, database and
+  # data volume are kept so this can be switched back on by setting this to 1.
+  replicas: 0
   selector:
     matchLabels:
       app.kubernetes.io/component: app
