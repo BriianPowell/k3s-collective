@@ -24,7 +24,9 @@ spec:
     namespace: wiki
   policy:
     semver:
-      range: '>=2.5.303'
+      # Stay on 2.x: Wiki.js 3.x needs PostgreSQL >= 17 (the cluster is on 16) and is a different major
+      # release. Raise this only after the database is upgraded and a migration is planned.
+      range: '>=2.5.303 <3.0.0'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
