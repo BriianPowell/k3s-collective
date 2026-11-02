@@ -57,7 +57,7 @@
 | HomeAssistant Postgres | ✅          | Supported through CPNG API |
 | Keycloak Postgres      | ✅          | Supported through CNPG API |
 | Nextcloud Postgres     | ✅          | Supported through CNPG API |
-| Wiki.Js Postgres       | ✅          | Supported through CNPG API |
+| Wiki.Js Postgres       | ✅          | Supported through CNPG API (hibernated, so no target while Wiki.js is deprecated) |
 
 | Media        | Service Monitor | Supported                                                                                            |
 | ------------ | --------------- | ---------------------------------------------------------------------------------------------------- |

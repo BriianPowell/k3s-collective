@@ -19,7 +19,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 - [x] [Keycloak](https://github.com/keycloak/keycloak)
 - [x] [HomeAssistant](https://github.com/home-assistant)
 - [x] [Nextcloud](https://github.com/nextcloud/server) + [Nextcloud Exporter](https://github.com/xperimental/nextcloud-exporter)
-- [x] [Wiki.js](https://github.com/requarks/wiki)
+- [ ] [Wiki.js](https://github.com/requarks/wiki), **deprecated**: scaled to zero and replaced by Obsidian Sync (see Utilities); the manifests and database volume are kept in `apps/base/wiki-js/`
 - [x] [AdGuard Home](https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/README.md), migrated from [Pi-hole](https://github.com/MoJo2600/pihole-kubernetes)
 - [x] [Cloudnative-PG](https://github.com/cloudnative-pg/cloudnative-pg)
 
@@ -28,6 +28,7 @@ Collection of all of my kubernetes resources created for my k3s cluster, hosted 
 - [x] [Atuin](https://github.com/atuinsh/atuin)
 - [x] [Error Pages](https://github.com/tarampampam/error-pages)
 - [x] [Ntfy](https://github.com/binwiederhier/ntfy)
+- [x] [Obsidian Sync server](https://github.com/vrtmrz/obsidian-livesync) (CouchDB for the Self-hosted LiveSync plugin)
 
 ### Monitoring & Logging
 

@@ -33,7 +33,7 @@ uid and gid are the same number in every row.
 | 1502 | Plex | Plex only (the most exposed app, so it is kept apart from the media-file owner) |
 | 1510 | monitoring | Prometheus |
 | 1511 | utilities | Atuin, Reflector |
-| 1512 | wiki | Wiki.js |
+| 1512 | wiki | Wiki.js (deprecated and scaled to zero; id kept in case it is brought back) |
 | 1513 | DNS | AdGuard Home (data volume owned by it on the node, since `fsGroup` does not apply to local-path volumes) |
 | 1514 | dependency updates | Renovate CronJob (no persistent volume; `emptyDir` only) |
 | 1515 | obsidian-sync | CouchDB for Obsidian LiveSync (data directory on sheol `/mnt/moriyya/obsidian-sync` owned by it) |

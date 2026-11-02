@@ -3,6 +3,12 @@ kind: Cluster
 metadata:
   name: wiki-js-pgcluster
   namespace: wiki
+  annotations:
+    # Wiki.js is deprecated here (notes moved to Obsidian, see apps/utilities/obsidian-sync). The database
+    # is hibernated: no pod runs, but the PVC and the data on sheol are kept. To bring it back, remove this
+    # annotation (or set it to "off"), then re-enable the commented resources in kustomization.yaml.
+    # https://cloudnative-pg.io/documentation/current/declarative_hibernation/
+    cnpg.io/hibernation: 'on'
   labels:
     app.kubernetes.io/component: pgcluster
     app.kubernetes.io/name: wiki-js-pgcluster

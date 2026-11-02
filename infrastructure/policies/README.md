@@ -30,6 +30,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `allow-all-egress` | `minecraft`, `valheim`, `v-rising` |
 | `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
 
+**Deprecated:** the `wiki` namespace (Wiki.js) has no running pods; its database is hibernated and the policies stay so it can be brought back.
+
 **No policies:** `flux-system`, `cnpg-system`, `onepassword` — operators and webhooks need broader reach.
 
 ## Pod Security Admission
