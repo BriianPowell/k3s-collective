@@ -1,0 +1,26 @@
+# References:
+# https://docs.couchdb.org/en/stable/api/server/common.html#api-server-prometheus
+#
+# CouchDB's metrics port (17986) serves only the Prometheus path and takes no credentials; the
+# obsidian-sync NetworkPolicy limits it to Prometheus.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: obsidian-sync
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: obsidian-sync
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: obsidian-sync
+  namespaceSelector:
+    matchNames:
+      - obsidian-sync
+  endpoints:
+    - interval: 1m
+      port: metrics
+      scrapeTimeout: 30s
+      path: /_node/_local/_prometheus

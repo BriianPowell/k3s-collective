@@ -9,6 +9,7 @@
 | Keycloak      | ✅              | Created through API spec |
 | NextCloud     | ✅              | Created through API spec |
 | Ntfy          | ✅              | Created through API spec |
+| Obsidian Sync | ✅              | CouchDB metrics port, no credentials |
 | Wiki.JS       | ❌              | Not currently supported  |
 
 | Game      | Service Monitor | Supported               |

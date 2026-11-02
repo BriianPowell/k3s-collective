@@ -32,6 +32,17 @@ spec:
       ports:
         - port: 5984
           protocol: TCP
+    # Prometheus scrapes the unauthenticated metrics port (17986); Traefik never routes to it.
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - port: 17986
+          protocol: TCP
 ---
 # Egress: DNS through CoreDNS and nothing else.
 apiVersion: networking.k8s.io/v1

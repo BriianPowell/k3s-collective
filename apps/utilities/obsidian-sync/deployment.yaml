@@ -44,6 +44,15 @@ data:
     headers = accept, authorization, content-type, origin, referer
     methods = GET, PUT, POST, HEAD, DELETE
     max_age = 3600
+
+    # Metrics on a separate port. The main port answers /_node/_local/_prometheus only to admins,
+    # while this one serves nothing but the metrics path (every other path is a 404) and needs no
+    # credentials, so Prometheus does not need a copy of the admin password. It is not exposed
+    # through Traefik, and the NetworkPolicy lets only Prometheus reach it.
+    [prometheus]
+    additional_port = true
+    bind_address = 0.0.0.0
+    port = 17986
 ---
 apiVersion: v1
 kind: Service
@@ -63,6 +72,10 @@ spec:
       port: 5984
       protocol: TCP
       targetPort: http
+    - name: metrics
+      port: 17986
+      protocol: TCP
+      targetPort: metrics
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -128,6 +141,9 @@ spec:
           ports:
             - name: http
               containerPort: 5984
+              protocol: TCP
+            - name: metrics
+              containerPort: 17986
               protocol: TCP
           # `require_valid_user` makes /_up answer 401, so probe the port instead.
           startupProbe:

@@ -22,7 +22,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `media-container-limits` | `media` — per-container/pod/PVC min/max and defaults |
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` — as above plus the CloudNativePG operator pod |
 | `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
-| `obsidian-sync-ingress`, `obsidian-sync-egress` | `obsidian-sync` — CouchDB :5984 from Traefik pods only; egress to DNS only (`manifests/obsidian-sync-network.yaml`) |
+| `obsidian-sync-ingress`, `obsidian-sync-egress` | `obsidian-sync` — CouchDB :5984 from Traefik pods, metrics :17986 from Prometheus; egress to DNS only (`manifests/obsidian-sync-network.yaml`) |
 | `renovate-ingress`, `renovate-egress` | `renovate` — no ingress at all; egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/renovate-network.yaml`) |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
 | `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
