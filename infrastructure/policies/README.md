@@ -28,7 +28,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
 | `minecraft-ingress`, `valheim-ingress`, `v-rising-ingress` | game namespaces — Traefik pods only, on each game's ports (`manifests/games-ingress.yaml`; games suspended, untested live) |
 | `allow-all-egress` | `minecraft`, `valheim`, `v-rising` |
-| `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :80, Traefik, metrics-server) |
+| `ntfy-egress` | `kube-system` ntfy — egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/ntfy-egress.yaml`) |
+| `kube-system` bundle | `kube-system` (intra-ns, DNS :53, CoreDNS metrics :9153, ntfy :8080, Traefik, metrics-server) |
 
 **Deprecated:** the `wiki` namespace (Wiki.js) has no running pods; its database is hibernated and the policies stay so it can be brought back.
 

@@ -68,8 +68,9 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+    # ntfy listens on 8080 (non-root cannot bind 80); the Service still exposes port 80.
     - ports:
-        - port: 80
+        - port: 8080
           protocol: TCP
 ---
 # kube-prometheus-stack scrapes ntfy pod IP:9090 (ntfy ServiceMonitor).

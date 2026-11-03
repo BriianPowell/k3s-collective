@@ -17,6 +17,7 @@ resources:
   - manifests/media-egress.yaml
   - manifests/media-ingress.yaml
   - manifests/media-limitrange.yaml
+  - manifests/ntfy-egress.yaml
   - manifests/monitoring-egress.yaml
   - manifests/obsidian-sync-network.yaml
   - manifests/open-egress.yaml

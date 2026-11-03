@@ -1,0 +1,50 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://docs.ntfy.sh/config/#ios-instant-notifications
+#
+# Why: ntfy only calls out to its upstream (https://ntfy.sh, used so iOS apps get instant
+# notifications). It never needs the cluster, the LAN or the API server, so a compromised ntfy
+# could otherwise probe all of them. Allow DNS and public HTTPS only, private ranges excluded.
+# Replies to inbound connections (Traefik, the media apps, Prometheus) are allowed implicitly.
+#
+# This lives here and not in apps/utilities/ntfy because that kustomization uses commonLabels,
+# which would inject app.kubernetes.io/part-of=ntfy into this podSelector. Selecting on name only
+# matches the pod regardless.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ntfy-egress
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: ntfy
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ntfy
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
