@@ -43,6 +43,10 @@ spec:
       port: 80
       protocol: TCP
       targetPort: http
+    - name: metrics
+      port: 44180
+      protocol: TCP
+      targetPort: metrics
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -119,6 +123,7 @@ spec:
             - --set-xauthrequest=true
             - --silence-ping-logging=true
             - --request-logging=false
+            - --metrics-address=0.0.0.0:44180
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
@@ -138,6 +143,9 @@ spec:
           ports:
             - name: http
               containerPort: 4180
+              protocol: TCP
+            - name: metrics
+              containerPort: 44180
               protocol: TCP
           livenessProbe:
             httpGet:

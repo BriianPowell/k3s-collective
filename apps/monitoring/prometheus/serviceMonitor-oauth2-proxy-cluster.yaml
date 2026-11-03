@@ -1,0 +1,25 @@
+# References:
+# https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview#metrics
+#
+# Separate metrics listener (:44180); /metrics is not served on the main port that Traefik routes to.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: oauth2-proxy-cluster
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: oauth2-proxy-cluster
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: oauth2-proxy-cluster
+  namespaceSelector:
+    matchNames:
+      - kube-system
+  endpoints:
+    - interval: 1m
+      port: metrics
+      scrapeTimeout: 30s
+      path: /metrics

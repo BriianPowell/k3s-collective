@@ -94,6 +94,35 @@ spec:
         - port: 9090
           protocol: TCP
 ---
+# kube-prometheus-stack scrapes oauth2-proxy's separate metrics listener (:44180). Traefik reaches
+# the main port through the intra-namespace policy. Select on name only (see AGENTS.md).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-oauth2-proxy-metrics
+  namespace: kube-system
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - oauth2-proxy-media
+          - oauth2-proxy-cluster
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - port: 44180
+          protocol: TCP
+---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
