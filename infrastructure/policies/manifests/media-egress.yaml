@@ -184,7 +184,8 @@ spec:
                 values:
                   - ntfy
       ports:
-        - port: 80
+        # ntfy listens on 8080 (the Service port 80 maps to it, and policies see the pod port).
+        - port: 8080
           protocol: TCP
     - to:
         - ipBlock:
