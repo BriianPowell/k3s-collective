@@ -93,11 +93,15 @@
       "minimumReleaseAge": null
     },
     {
-      "description": "kubectl client skew: stay within one minor of the cluster (k3s 1.36). Bump this cap when k3s is upgraded in nix-config.",
+      "description": "kubectl client skew: stay within one minor of the cluster (k3s 1.36). Patch updates flow; a new minor is listed on the Dependency Dashboard and needs approval, which you give after k3s is upgraded in nix-config.",
       "matchPackageNames": [
         "registry.k8s.io/kubectl"
       ],
-      "allowedVersions": "<1.37.0"
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "dependencyDashboardApproval": true
     },
     {
       "description": "Keep Flux HelmRelease chart versions free of digests.",
@@ -113,14 +117,17 @@
       "pinDigests": false
     },
     {
-      "description": "Traefik chart majors rename values (v42 needed ports.*.http.*, log/accessLog). Migrate the values by hand and render-test, then raise this cap.",
+      "description": "Traefik chart majors rename values (v42 needed ports.*.http.*, log/accessLog). Listed on the Dependency Dashboard; approve there only after migrating the values and render-testing.",
       "matchPackageNames": [
         "traefik"
       ],
       "matchDatasources": [
         "helm"
       ],
-      "allowedVersions": "<43.0.0"
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true
     }
   ],
   "minimumReleaseAge": "3 days",
