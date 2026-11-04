@@ -221,7 +221,9 @@ spec:
       server:
         root_url: https://grafana.powell.place
       auth:
-        disable_login_form: false
+        # SSO only. The local `admin` account still exists as break-glass: re-enable the form here
+        # (git, Flux) if Keycloak is unavailable. Prometheus stays reachable with kubectl port-forward.
+        disable_login_form: true
         disable_signout_menu: false
         auto_login: true
         # signout_redirect_url: https://keycloak.powell.place/realms/inferno/protocol/openid-connect/logout
@@ -239,12 +241,16 @@ spec:
         token_url: $__env{token_url}
         api_url: $__env{user_info_url}
         signout_redirect_url: $__env{logout_url}
-        role_attribute_path: contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'dev') && 'Editor' || 'Viewer'
+        # Access needs an explicit Keycloak group: `admin` -> Admin, `dev` -> Editor, `grafana-viewer`
+        # -> Viewer. With role_attribute_strict a realm account in none of them is denied instead of
+        # getting a Viewer account, so a realm login alone is not enough.
+        role_attribute_path: contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'dev') && 'Editor' || contains(groups[*], 'grafana-viewer') && 'Viewer'
+        role_attribute_strict: true
       users:
         allow_org_create: false
         allow_sign_up: false
         auto_assign_org: true
-        # Fallback only; Keycloak logins get their role from role_attribute_path above (Viewer by default).
+        # Fallback only; Keycloak logins get their role from role_attribute_path above (no match = denied).
         auto_assign_org_role: Viewer
         default_theme: system
         login_hint: email or username
