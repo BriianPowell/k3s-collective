@@ -37,8 +37,8 @@ spec:
         branch: main
     commit:
       author:
-        email: fluxcdbot@users.noreply.github.com
-        name: FluxCDBot
+        email: 352720909+k3s-collective-flux[bot]@users.noreply.github.com
+        name: k3s-collective-flux[bot]
       messageTemplate: |
         🚨 Image Automation Update 🚨
         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
@@ -87,8 +87,8 @@ spec:
         branch: main
     commit:
       author:
-        email: fluxcdbot@users.noreply.github.com
-        name: FluxCDBot
+        email: 352720909+k3s-collective-flux[bot]@users.noreply.github.com
+        name: k3s-collective-flux[bot]
       messageTemplate: |
         🚨 Image Automation Update 🚨
         {{range .Changed.Changes}}{{print .OldValue}} -> {{println .NewValue}}{{end}}
