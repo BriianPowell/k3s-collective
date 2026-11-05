@@ -80,9 +80,6 @@ spec:
       existingClaim: grafana-pvc
     initChownData:
       enabled: false
-    downloadDasboards:
-      securityContext:
-        allowPrivilegeEscalation: true
     admin:
       existingSecret: grafana
       userKey: username

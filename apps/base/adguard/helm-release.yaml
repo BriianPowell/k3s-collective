@@ -43,6 +43,10 @@ spec:
               - op: add
                 path: /spec/template/spec/automountServiceAccountToken
                 value: false
+              # The chart has no value for this (default is 10 old ReplicaSets).
+              - op: add
+                path: /spec/revisionHistoryLimit
+                value: 3
               - op: add
                 path: /spec/template/spec/initContainers/0/securityContext
                 value:
@@ -75,7 +79,6 @@ spec:
                       sed -i "s|__ADGUARD_PASSWORD_HASH__|${ADGUARD_PASSWORD_HASH}|" /opt/adguardhome/conf/AdGuardHome.yaml
                     fi
   values: # https://github.com/rm3l/helm-charts/blob/main/charts/adguard-home/values.yaml
-    revisionHistoryLimit: 3
     replicaCount: 1
     # The chart's appVersion lags AdGuard (0.25.0 ships v0.107.51), so the tag is pinned here and
     # bumped by hand; no image automation manages it. Config schema 28 below is migrated up on start

@@ -114,8 +114,6 @@ spec:
       replicas: 0
     indexGateway:
       replicas: 0
-    bloomCompactor:
-      replicas: 0
     bloomGateway:
       replicas: 0
     resultsCache:
