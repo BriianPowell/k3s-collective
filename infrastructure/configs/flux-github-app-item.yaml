@@ -1,0 +1,19 @@
+#
+# Syncs 1Password item → Secret "flux-github-app" in flux-system: the credentials for the
+# k3s-collective-flux GitHub App (Contents: read/write on this repo only), which Flux uses to
+# fetch and push (image automation) instead of an SSH deploy key.
+# Field labels in 1Password must be exactly: githubAppID, githubAppInstallationID, githubAppPrivateKey
+# https://fluxcd.io/flux/components/source/gitrepositories/#github
+# https://developer.1password.com/docs/k8s/operator
+#
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: flux-github-app
+  namespace: flux-system
+  labels:
+    app.kubernetes.io/component: secrets
+    app.kubernetes.io/name: flux-github-app
+    app.kubernetes.io/part-of: flux
+spec:
+  itemPath: vaults/Collective/items/Flux GitHub App

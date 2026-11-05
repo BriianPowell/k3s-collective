@@ -19,6 +19,7 @@ The operator is deployed by Flux (`infrastructure/controllers/onepassword.yaml`)
 | Secret | Manifest | Namespace | Flux kustomization |
 | -------- | ---------- | ----------- | ------------------- |
 | Cloudflare API token | `infrastructure/configs/onepassword-item.yaml` | `cert-manager` | `infra-configs` |
+| Flux GitHub App | `infrastructure/configs/flux-github-app-item.yaml` | `flux-system` | `infra-configs` |
 | CrowdSec enroll key | `infrastructure/controllers/crowdsec-onepassword-item.yaml` | `crowdsec` | `infra-controllers` |
 | AdGuard exporter | `apps/base/adguard/onepassword-item.yaml` | `adguard` | `base` |
 | OAuth2 Proxy (OIDC) | apps/base/oauth2-proxy/onepassword-item.yaml | kube-system | base |
