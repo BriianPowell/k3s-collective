@@ -3,3 +3,23 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+patches:
+# Authenticate to Git as the k3s-collective-flux GitHub App (Contents: read/write on this repo only)
+# instead of the SSH deploy key. Image automation pushes with the same credentials, and the App can
+# be a bypass actor on a branch ruleset (deploy keys cannot). Kept as a patch so `flux bootstrap`
+# regenerating gotk-sync.yaml does not undo it. The old `flux-system` SSH secret is left in the
+# cluster as the rollback path: remove this patch to go back.
+# https://fluxcd.io/flux/components/source/gitrepositories/#github
+- target:
+    kind: GitRepository
+    name: flux-system
+  patch: |
+    - op: replace
+      path: /spec/url
+      value: https://github.com/BriianPowell/k3s-collective.git
+    - op: replace
+      path: /spec/secretRef/name
+      value: flux-github-app
+    - op: add
+      path: /spec/provider
+      value: github
