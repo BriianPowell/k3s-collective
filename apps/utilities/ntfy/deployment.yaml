@@ -65,7 +65,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: ntfy
-          image: docker.io/binwiederhier/ntfy:v2.37.2 # {"$imagepolicy": "kube-system:ntfy"}
+          image: docker.io/binwiederhier/ntfy:v2.37.1 # {"$imagepolicy": "kube-system:ntfy"}
           imagePullPolicy: Always
           # Non-root, so it cannot bind port 80: it listens on 8080 and the Service still exposes 80.
           securityContext:
