@@ -46,6 +46,9 @@ spec:
         app.kubernetes.io/name: sonarr-anime
     spec:
       automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       restartPolicy: Always
       nodeSelector:
         kubernetes.io/hostname: sheol
@@ -53,10 +56,21 @@ spec:
         - name: sonarr-anime
           image: ghcr.io/linuxserver/sonarr:4.0.20 # {"$imagepolicy": "media:sonarr-anime"}
           imagePullPolicy: Always
-          # The s6 init starts as root, then drops the app to PUID/PGID, so capabilities cannot all
-          # be dropped (it needs CHOWN/SETUID/SETGID). Block privilege gain on top of that.
+          # s6 starts as root, chowns /config and drops the app to PUID/PGID, so it keeps only the
+          # capabilities that needs: CHOWN/DAC_OVERRIDE/FOWNER (ownership), SETUID/SETGID (the drop),
+          # KILL (stopping the app). Tested in a scratch pod: app runs as PUID with no capabilities.
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETUID
+                - SETGID
           env:
             - name: TZ
               value: America/Los_Angeles

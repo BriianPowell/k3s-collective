@@ -58,11 +58,22 @@ spec:
           imagePullPolicy: Always
           # The s6 init stays root to start, then drops the app to PUID/PGID (the same pattern
           # Plex uses). Prowlarr only writes /config and has no media mount, so it does not
-          # need the shared media uid/gid project. Cannot drop all capabilities: s6 needs
-          # CHOWN/SETUID/SETGID to chown /config and drop privileges.
+          # need the shared media uid/gid project. s6 starts as root, chowns /config and drops the
+          # app to PUID/PGID, so only CHOWN/DAC_OVERRIDE/FOWNER/KILL/SETUID/SETGID are kept (tested
+          # for Radarr, same image family).
           # 1501:1501 is the shared owner of config-only media apps (see docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETUID
+                - SETGID
           env:
             - name: TZ
               value: America/Los_Angeles

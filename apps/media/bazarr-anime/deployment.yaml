@@ -61,6 +61,16 @@ spec:
           # Same media owner as bazarr (PUID/PGID below, docs/uids.md).
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETUID
+                - SETGID
           env:
             - name: TZ
               value: America/Los_Angeles
