@@ -1,0 +1,21 @@
+# Split-horizon DNS: inside the cluster, single-label hosts under powell.place resolve to the
+# Traefik Service instead of the public IP, so pods stop hairpinning through the router.
+# k3s's CoreDNS imports /etc/coredns/custom/*.override inside the .:53 server block.
+# Only single-label hosts match, so _acme-challenge.* (cert-manager DNS-01), the apex and
+# multi-label names are untouched. `answer auto` restores the original name in the reply.
+# Pods with egress restrictions need an allow to Traefik on 8443 (see infrastructure/policies).
+# Reference: https://coredns.io/plugins/rewrite/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: coredns-custom
+    app.kubernetes.io/component: dns
+data:
+  powell-split-horizon.override: |
+    rewrite stop {
+        name regex ^([a-z0-9-]+)\.powell\.place\.$ traefik.kube-system.svc.cluster.local.
+        answer auto
+    }
