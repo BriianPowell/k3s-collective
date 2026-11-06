@@ -8,7 +8,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | -------- | ------------ |
 | `standard-ingress` | `media`, `monitoring`, `crowdsec`, `cert-manager`, `reflector`, `reloader` — Traefik pods, Prometheus pods and the namespace itself (cert-manager, reflector, reloader: no Traefik) |
 | `standard-egress` | `cert-manager`, `reflector`, `reloader` — LAN + cluster CIDRs + kube-system + monitoring + DNS + WAN :80/:443 |
-| `allow-all-egress` | `media` (only Deluge is left: VPN) — arbitrary ports (torrent/VPN); every other media app has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
+| `allow-all-egress` | `media`: catch-all for a new, unlisted pod only. Every media pod, Deluge included, has its own egress policy in `manifests/media-egress.yaml` and is excluded here (`manifests/permissive-egress.yaml`) |
+| `deluge-egress` | `media` Deluge: DNS and the public internet only (RFC1918 and link-local blocked); torrent traffic leaves through the WireGuard tunnel, which the cluster sees as UDP to the VPN endpoint (`manifests/media-egress.yaml`) |
 | `monitoring-base-egress` + per-component | `monitoring` — DNS + same namespace for all; Prometheus pod CIDR and node metric ports, API-server access for Prometheus/Alloy/kube-state-metrics/operator, Alertmanager SMTP :587, Grafana WAN :80/:443 (`manifests/monitoring-egress.yaml`) |
 | `crowdsec-base-egress`, `crowdsec-internet-egress` | `crowdsec` — DNS + same namespace; LAPI and agent reach the internet on :80/:443 for hub and CAPI (`manifests/crowdsec-egress.yaml`) |
 | `adguard-base-egress`, `adguard-home-egress` | `adguard` — DNS + same namespace; AdGuard reaches public IPs on TCP 443/853 and 53 (DoH/DoT upstreams, bootstrap, filter lists). Add a port here if you add an upstream on another one (`manifests/adguard-egress.yaml`) |

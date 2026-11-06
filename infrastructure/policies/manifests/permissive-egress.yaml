@@ -1,6 +1,7 @@
-# Allow-all egress, now only for the media Deluge pod (VPN, torrent ports). `monitoring` and `crowdsec`
-# have per-component egress (monitoring-egress.yaml, crowdsec-egress.yaml); AdGuard and the games are
-# in open-egress.yaml.
+# Allow-all egress for media pods that are not listed below. Every media pod now has its own egress
+# policy (Deluge: deluge-egress in media-egress.yaml), so nothing in `media` should match this today; it
+# stays as the catch-all for a new, unlisted pod. `monitoring` and `crowdsec` have per-component egress
+# (monitoring-egress.yaml, crowdsec-egress.yaml); AdGuard and the games are in open-egress.yaml.
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -8,7 +9,7 @@ metadata:
   name: allow-all-egress
   namespace: media
 spec:
-  # Every media pod except Deluge (the VPN pod) is excluded
+  # Every media pod, Deluge (the VPN pod) included, is excluded
   # here and limited by plex-egress, flaresolverr-egress and media-egress (in this directory). NetworkPolicies are additive, so
   # they must not match here or their restrictions are a no-op.
   podSelector:
@@ -17,6 +18,7 @@ spec:
         operator: NotIn
         values:
           - plex-media-server
+          - deluge
           - flaresolverr
           - bazarr
           - bazarr-anime

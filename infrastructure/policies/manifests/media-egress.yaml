@@ -645,3 +645,47 @@ spec:
       ports:
         - port: 443
           protocol: TCP
+---
+# Deluge (VPN pod): DNS, and the public internet only. All torrent traffic leaves through the WireGuard
+# tunnel (wg0), which the cluster only sees as UDP to the VPN endpoint, so this policy cannot name
+# endpoints (they rotate) and instead blocks the private ranges: a compromised torrent client cannot
+# reach the cluster, the nodes or the LAN. Replies to the web UI and the daemon port are allowed by
+# connection tracking. The container's own iptables kill switch is the first line of defence.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deluge-egress
+  namespace: media
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: deluge
+spec:
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - deluge
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
