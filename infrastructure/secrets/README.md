@@ -89,6 +89,8 @@ The two cookie secrets must differ, or a media session could pass the cluster ga
 | `token` | Also synced to `Secret/prometheus` in `monitoring` for Prometheus scrape |
 | `mqtt-username` | Mosquitto broker init container |
 | `mqtt-password` | Mosquitto broker init container |
+| `mqtt-agent-password` (optional) | Mosquitto `on-air-agent` user (publish `on-air/+` only) |
+| `mqtt-sign-password` (optional) | Mosquitto `on-air-sign` user (read `on-air/+` only) |
 
 **Prometheus token:** Home Assistant → Profile → Security → Long-Lived Access Tokens. Same 1Password item, field `token`.
 

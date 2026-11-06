@@ -11,9 +11,29 @@ data:
     listener 1883
     allow_anonymous false
     password_file /mosquitto/config/passwd
+    # Per-user topic permissions; a user or topic not listed in acl.conf is denied.
+    acl_file /mosquitto/config/acl
     persistence true
     persistence_location /mosquitto/data/
     log_dest stdout
+  # Topic layout: on-air/{device} is the retained state each agent publishes and the sign and
+  # Home Assistant read (on-air protocol README); homeassistant/# is HA's own discovery/status.
+  # Logins: `homeassistant` (HA, mqtt-username/-password), `on-air-agent` (publishes) and
+  # `on-air-sign` (subscribes), the last two from the optional secret keys below.
+  acl.conf: |
+    # STAGE 1: the shared `homeassistant` login is still used by the on-air agent and sign, so it
+    # stays unrestricted. Once both use their own logins, replace this block with:
+    #   user homeassistant
+    #   topic read on-air/#
+    #   topic readwrite homeassistant/#
+    user homeassistant
+    topic readwrite #
+
+    user on-air-agent
+    topic write on-air/+
+
+    user on-air-sign
+    topic read on-air/+
 ---
 apiVersion: v1
 kind: Service
@@ -41,6 +61,9 @@ metadata:
   labels:
     app.kubernetes.io/component: broker
     app.kubernetes.io/name: mosquitto
+  annotations:
+    # The config is copied by the init container, so a changed ConfigMap needs a restart.
+    configmap.reloader.stakater.com/reload: mosquitto
 spec:
   revisionHistoryLimit: 3
   replicas: 1
@@ -80,7 +103,15 @@ spec:
             - -c
             - |
               cp /config-template/mosquitto.conf /mosquitto/config/mosquitto.conf
+              cp /config-template/acl.conf /mosquitto/config/acl
               mosquitto_passwd -b -c /mosquitto/config/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
+              # Optional per-client logins; skipped until the 1Password fields exist.
+              if [ -n "$MQTT_AGENT_PASSWORD" ]; then
+                mosquitto_passwd -b /mosquitto/config/passwd on-air-agent "$MQTT_AGENT_PASSWORD"
+              fi
+              if [ -n "$MQTT_SIGN_PASSWORD" ]; then
+                mosquitto_passwd -b /mosquitto/config/passwd on-air-sign "$MQTT_SIGN_PASSWORD"
+              fi
           env:
             - name: MQTT_USERNAME
               valueFrom:
@@ -92,6 +123,18 @@ spec:
                 secretKeyRef:
                   name: homeassistant
                   key: mqtt-password
+            - name: MQTT_AGENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant
+                  key: mqtt-agent-password
+                  optional: true
+            - name: MQTT_SIGN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant
+                  key: mqtt-sign-password
+                  optional: true
           volumeMounts:
             - name: config-template
               mountPath: /config-template

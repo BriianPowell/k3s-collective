@@ -114,7 +114,8 @@ spec:
             - --whitelist-domain=.powell.place
             - --cookie-name=__Secure-oauth2-proxy-cluster
             - --cookie-secure=true
-            - --cookie-expire=12h
+            # 4h (was 12h): a removed Keycloak role only takes effect at expiry or sign-out.
+            - --cookie-expire=4h
             # Many parallel requests (assets) can each start a login; keep a CSRF cookie per request.
             - --cookie-csrf-per-request=true
             - --cookie-csrf-expire=5m
