@@ -93,7 +93,7 @@ spec:
         - name: oauth2-proxy
           # Pinned by tag and digest. No Flux image automation manages this line, so bump it by
           # hand (check https://github.com/oauth2-proxy/oauth2-proxy/releases).
-          image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.5@sha256:8498b0d0ef0a7b29686414000a08aee467f02d0299c9ed1e006a8f33fc017916
+          image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.6@sha256:c3415e8660af553f5e18f5d90db050614c02493c0ac6260ac59442f6d9b12048
           args:
             - --provider=keycloak-oidc
             - --oidc-issuer-url=https://keycloak.powell.place/realms/inferno
