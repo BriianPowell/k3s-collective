@@ -23,6 +23,8 @@ spec:
           - bazarr
           - bazarr-anime
           - kapowarr
+          - lidarr
+          - readarr
           - deluge
   policyTypes:
     - Ingress

@@ -16,7 +16,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `bazarr-egress`, `kapowarr-egress` | `media` Bazarr (both) and Kapowarr — DNS + WAN :80/:443, private ranges blocked; Bazarr also reaches Sonarr/Radarr (`manifests/media-egress.yaml`) |
 | `plex-egress` | `media` Plex pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/plex-egress.yaml`) |
 | `flaresolverr-egress` | `media` FlareSolverr pod only — DNS + WAN :80/:443, private ranges blocked (`manifests/flaresolverr-egress.yaml`) |
-| `radarr-ingress`, `sonarr-tv-ingress`, `sonarr-anime-ingress`, `prowlarr-ingress` | `media` core *arr pods — ingress only from Traefik, monitoring and named callers on the app port; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
+| `radarr-ingress`, `sonarr-tv-ingress`, `sonarr-anime-ingress`, `prowlarr-ingress`, `lidarr-ingress`, `readarr-ingress` | `media` *arr pods (Lidarr and Readarr are scaled to 0) — ingress only from Traefik, monitoring and named callers on the app port; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `deluge-ingress` | `media` Deluge — :8112 from Traefik, Radarr, Sonarr (both), Prowlarr, Lidarr, Readarr and its exporter; daemon :58846 from tqm only; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `bazarr-ingress`, `kapowarr-ingress` | `media` Bazarr (both) and Kapowarr — ingress only from Traefik (and Bazarr's own exporters); excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |
 | `flaresolverr-ingress` | `media` FlareSolverr — ingress only from Prowlarr (:8191) and monitoring (:8192); no Traefik route; excluded from `standard-ingress` (`manifests/media-ingress.yaml`) |

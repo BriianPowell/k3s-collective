@@ -1,4 +1,4 @@
-# Per-app ingress for the core *arr apps, Bazarr and Kapowarr in `media`.
+# Per-app ingress for the *arr apps, Bazarr and Kapowarr in `media`.
 #
 # Why: `standard-ingress` lets every pod in kube-system and every pod in the namespace reach
 # every media pod. With an app's own login on, that is tolerable; with it off (SSO only at
@@ -13,7 +13,7 @@
 # which would rewrite a podSelector here if this file lived next to the apps.
 #
 # Callers were read from each app's live config (Prowlarr Applications, Seerr, Bazarr,
-# Recyclarr, exportarr). Lidarr and Readarr are scaled to 0 and still use `standard-ingress`.
+# Recyclarr, exportarr). Lidarr and Readarr are scaled to 0; their callers are Prowlarr and exportarr.
 #
 # References:
 # https://kubernetes.io/docs/concepts/services-networking/network-policies/
@@ -348,4 +348,92 @@ spec:
               app.kubernetes.io/name: tqm
       ports:
         - port: 58846
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lidarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lidarr
+  policyTypes:
+    - Ingress
+  ingress:
+    # Traefik (public hostname, behind SSO)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8686
+          protocol: TCP
+    # Prometheus / monitoring stack
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 8686
+          protocol: TCP
+    # App-to-app callers (Prowlarr pushes indexers; exportarr scrapes). Scaled to 0 today.
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - prowlarr
+                  - lidarr-exportarr
+      ports:
+        - port: 8686
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: readarr-ingress
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: readarr
+  policyTypes:
+    - Ingress
+  ingress:
+    # Traefik (public hostname, behind SSO)
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8787
+          protocol: TCP
+    # Prometheus / monitoring stack
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+      ports:
+        - port: 8787
+          protocol: TCP
+    # App-to-app callers (Prowlarr pushes indexers; exportarr scrapes). Scaled to 0 today.
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - prowlarr
+                  - readarr-exportarr
+      ports:
+        - port: 8787
           protocol: TCP
