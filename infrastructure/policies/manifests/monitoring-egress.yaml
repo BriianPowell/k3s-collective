@@ -164,6 +164,19 @@ spec:
   policyTypes:
     - Egress
   egress:
+    # Keycloak and other *.powell.place hosts resolve to the Traefik Service inside the cluster
+    # (CoreDNS split-horizon, infrastructure/configs/coredns-custom.yaml). Policies match the pod
+    # port after Service translation, so allow Traefik's websecure container port (8443).
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 8443
+          protocol: TCP
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
