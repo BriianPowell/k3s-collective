@@ -125,12 +125,17 @@ spec:
                   key: mail_from_address
             - name: APACHE_DISABLE_REWRITE_IP
               value: '1'
+            # Only the pod network may set X-Forwarded-For. Traefik reaches this pod from a pod IP
+            # (cross-node traffic is SNATed to the node's flannel address, also in 10.42.0.0/16), so
+            # the LAN range is not needed, and trusting it would let any LAN client spoof its address.
             - name: TRUSTED_PROXIES
-              value: 10.0.0.0/16 10.42.0.0/24
+              value: 10.42.0.0/16
             - name: OVERWRITEHOST
               value: nextcloud.powell.place
             - name: OVERWRITEPROTOCOL
               value: https
+            - name: OVERWRITECLIURL
+              value: https://nextcloud.powell.place
           ports:
             - name: http
               containerPort: 80
