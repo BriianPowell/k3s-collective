@@ -292,7 +292,8 @@ spec:
         - port: 80
           protocol: TCP
 ---
-# Seerr: Radarr, the Sonarrs and Plex by service name, plus the public web (TMDB, plex.tv).
+# Seerr: Radarr, the Sonarrs and Plex by service name, ntfy in kube-system (notifications), plus the
+# public web over HTTPS (TMDB, plex.tv).
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -354,6 +355,22 @@ spec:
       ports:
         - port: 32400
           protocol: TCP
+    # ntfy in kube-system (notifications). ntfy listens on 8080 (the Service port 80 maps to it, and
+    # policies see the pod port).
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - ntfy
+      ports:
+        - port: 8080
+          protocol: TCP
+    # Public web over HTTPS only (TMDB, plex.tv, update check); nothing here needs plain HTTP.
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
@@ -364,8 +381,6 @@ spec:
               - 169.254.0.0/16
       ports:
         - port: 443
-          protocol: TCP
-        - port: 80
           protocol: TCP
 ---
 # Tautulli: Plex by service name, plus the public web (plex.tv, GeoIP, notification services).
