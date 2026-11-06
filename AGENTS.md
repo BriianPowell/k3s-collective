@@ -69,8 +69,8 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   in an app is effectively "no auth". Loopback is often trusted too, so test auth from a
   non-loopback address.
 - **Network policies:** put per-app egress restrictions in `infrastructure/policies`, not in the
-  app directory. App kustomizations use `commonLabels`, which rewrites a policy's `podSelector`
-  and can make it silently select nothing; select on `app.kubernetes.io/name` only. Policies are
+  app directory. App kustomizations add a `part-of` label with `labels` (`includeSelectors: true`), which
+  rewrites a policy's `podSelector` and can make it silently select nothing; select on `app.kubernetes.io/name` only. Policies are
   additive, so a pod covered by an allow-all policy must be excluded from it
   (`matchExpressions NotIn`) for a restriction to take effect.
 - **Images:** pin by tag; pin by digest only where Flux image automation (a

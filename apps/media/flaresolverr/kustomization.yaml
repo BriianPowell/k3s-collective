@@ -1,8 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: media
-commonLabels:
-  app.kubernetes.io/part-of: flaresolverr
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: flaresolverr
+    includeSelectors: true
+    includeTemplates: true
 
 # There is deliberately no IngressRoute: FlareSolverr has no authentication and fetches any URL
 # it is given, so it must not be reachable from outside the cluster. Prowlarr reaches it at
