@@ -231,10 +231,13 @@ spec:
           # Not privileged. The in-kernel WireGuard client (wg0) needs NET_ADMIN to create the
           # interface, routes and the iptables kill switch; the src_valid_mark sysctl wg-quick sets is
           # supplied at pod level above. /dev/net/tun is only used by the OpenVPN path, which is off.
-          # The runtime's default capability set stays (the image's start scripts run as root and
-          # chown/su), so ALL is deliberately not dropped, and allowPrivilegeEscalation is left at
-          # its default for the same reason. If the VPN fails to come up after a change here, the
-          # kill switch keeps traffic from leaking; revert this block.
+          # The start scripts run as root, chown/chmod the config and drop to PUID via su, so the
+          # runtime defaults are cut down to what a scratch pod (same spec, emptyDir volumes) proved
+          # sufficient: VPN up, port forward bound, deluged and deluge-web running as uid 1500 with no
+          # capabilities. CHOWN/DAC_OVERRIDE/FOWNER: ownership of /config and /data. KILL: supervisord
+          # stopping children. SETUID/SETGID: the privilege drop. allowPrivilegeEscalation is left at
+          # its default because the root start script uses su. If the VPN fails to come up after a
+          # change here, the kill switch keeps traffic from leaking; revert this block.
           securityContext:
             runAsUser: 0
             runAsGroup: 0
@@ -242,8 +245,16 @@ spec:
             seccompProfile:
               type: RuntimeDefault
             capabilities:
+              drop:
+                - ALL
               add:
                 - NET_ADMIN
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETUID
+                - SETGID
           volumeMounts:
             - name: tz
               mountPath: /etc/localtime
