@@ -126,13 +126,17 @@ spec:
           port: 53
         udp:
           port: 53
+      # Encrypted DNS is not served (tls.enabled is false below, AdGuard listens only on 53 and 80),
+      # so these LoadBalancers only opened node ports 853, 784, 8853 and 5443 to nothing. Keep them
+      # off unless TLS is configured in AdGuard, and then add the ports back to
+      # infrastructure/policies/manifests/adguard-ingress.yaml.
       dnsOverTls:
-        enabled: true
+        enabled: false
         type: LoadBalancer
         externalTrafficPolicy: Local
         port: 853
       dnsOverQuic:
-        enabled: true
+        enabled: false
         type: LoadBalancer
         externalTrafficPolicy: Local
         port1:
@@ -140,7 +144,7 @@ spec:
         port2:
           port: 8853
       dnscrypt:
-        enabled: true
+        enabled: false
         type: LoadBalancer
         externalTrafficPolicy: Local
         tcp:

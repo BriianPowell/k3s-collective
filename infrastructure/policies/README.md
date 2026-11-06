@@ -26,7 +26,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `obsidian-sync-ingress`, `obsidian-sync-egress` | `obsidian-sync` — CouchDB :5984 from Traefik pods, metrics :17986 from Prometheus; egress to DNS only (`manifests/obsidian-sync-network.yaml`) |
 | `renovate-ingress`, `renovate-egress` | `renovate` — no ingress at all; egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/renovate-network.yaml`) |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
-| `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS ports (53, 853, 784, 8853, 5443) from RFC1918 sources only; exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
+| `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS :53 from RFC1918 sources only (DoT, DoQ and DNSCrypt are off); exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
 | `minecraft-ingress`, `valheim-ingress`, `v-rising-ingress` | game namespaces — Traefik pods only, on each game's ports (`manifests/games-ingress.yaml`; games suspended, untested live) |
 | `allow-all-egress` | `minecraft`, `valheim`, `v-rising` |
 | `ntfy-egress` | `kube-system` ntfy — egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/ntfy-egress.yaml`) |

@@ -42,7 +42,7 @@ spec:
       ports:
         - port: 80
           protocol: TCP
-    # DNS clients: plain (53), DoT (853), DoQ (784, 8853), DNSCrypt (5443); private sources only
+    # DNS clients: plain DNS (53) only; private sources only. Encrypted DNS is off in AdGuard.
     - from:
         - ipBlock:
             cidr: 10.0.0.0/8
@@ -55,16 +55,6 @@ spec:
           protocol: UDP
         - port: 53
           protocol: TCP
-        - port: 853
-          protocol: TCP
-        - port: 784
-          protocol: UDP
-        - port: 8853
-          protocol: UDP
-        - port: 5443
-          protocol: TCP
-        - port: 5443
-          protocol: UDP
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
