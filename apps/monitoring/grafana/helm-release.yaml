@@ -93,6 +93,7 @@ spec:
         datasources:
           - name: Prometheus
             type: prometheus
+            uid: PBFA97CFB590B2093
             url: http://monitor-prometheus.monitoring:9090
             access: proxy
             editable: true
