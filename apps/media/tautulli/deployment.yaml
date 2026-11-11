@@ -54,7 +54,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: tautulli
-          image: ghcr.io/tautulli/tautulli:v2.18.2 # {"$imagepolicy": "media:tautulli"}
+          image: ghcr.io/tautulli/tautulli:v2.19.1 # {"$imagepolicy": "media:tautulli"}
           imagePullPolicy: Always
           # The image's start.sh (TAUTULLI_DOCKER=True) remaps the `tautulli` user to
           # PUID/PGID, chowns /config, then runs the app via gosu. So the container starts as
