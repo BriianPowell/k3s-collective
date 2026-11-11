@@ -1,7 +1,11 @@
 #
 # Self-hosted Renovate: opens pull requests for Helm chart versions and for image tags that Flux
 # image automation does not manage. It never merges anything; you review the PRs.
-# Behaviour (which files, which packages) is in /renovate.json at the repo root.
+# Behaviour (which files, which packages) is in /renovate.json at the repo root. It also runs on
+# grafana-dashboards and hass-config (GitHub Actions and pre-commit pins), each with its own
+# renovate.json; the GitHub App must be installed on every repo listed below. It also runs on
+# grafana-dashboards and hass-config (GitHub Actions and pre-commit pins), each with its own
+# renovate.json; the GitHub App must be installed on every repo listed below.
 #
 # Auth is a GitHub App. Renovate needs an installation token, which expires after an hour, so an
 # init container mints a fresh one for each run from the App's private key (openssl + curl, no
@@ -64,7 +68,7 @@ spec:
                   resp=$(curl -fsS -X POST \
                     -H "Authorization: Bearer ${header}.${payload}.${sig}" \
                     -H "Accept: application/vnd.github+json" \
-                    -d '{"repositories":["k3s-collective"]}' \
+                    -d '{"repositories":["k3s-collective","grafana-dashboards","hass-config"]}' \
                     "https://api.github.com/app/installations/${INSTALLATION_ID}/access_tokens")
                   token=$(printf '%s' "$resp" | sed -n 's/.*"token": *"\([^"]*\)".*/\1/p')
                   [ -n "$token" ] || { echo "no installation token in the response" >&2; exit 1; }
@@ -115,8 +119,8 @@ spec:
                 - name: RENOVATE_PLATFORM
                   value: github
                 - name: RENOVATE_REPOSITORIES
-                  value: BriianPowell/k3s-collective
-                # The repo carries its own renovate.json; do not open onboarding PRs.
+                  value: BriianPowell/k3s-collective,BriianPowell/grafana-dashboards,BriianPowell/hass-config
+                # Each repo carries its own renovate.json; do not open onboarding PRs.
                 - name: RENOVATE_ONBOARDING
                   value: 'false'
                 - name: RENOVATE_REQUIRE_CONFIG
