@@ -53,7 +53,7 @@ spec:
         fsGroup: 1501
       containers:
         - name: seerr
-          image: ghcr.io/seerr-team/seerr:v3.5.1 # {"$imagepolicy": "media:seerr"}
+          image: ghcr.io/seerr-team/seerr:v3.5.2 # {"$imagepolicy": "media:seerr"}
           imagePullPolicy: Always
           securityContext:
             # 1501:1501, see docs/uids.md.
