@@ -75,8 +75,10 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   (`matchExpressions NotIn`) for a restriction to take effect.
 - **Images:** pin by tag; pin by digest only where Flux image automation (a
   `# {"$imagepolicy": ...}` marker) is not managing the line, because automation rewrites it and
-  drops the digest. The cluster's Flux (v2.3.0) has no digest reflection; that needs a Flux
-  upgrade and moving image APIs from `v1beta2` to `v1` (see `.memories/` if present).
+  drops the digest. The cluster's Flux is v2.9 and the image APIs are already `v1`, so
+  `ImagePolicy.spec.digestReflectionPolicy` exists (default `Never`). Setting it to `Always` makes
+  automation write `tag@digest` into the marked line; that has not been rolled out, so
+  automation-managed lines are tag-only today (see `.memories/` if present).
 - **Verify before handing back:** render with `kustomize build`, run `kubeconform`, run
   `kubectl apply --dry-run=server`, and confirm any policy selector matches the live pod's
   labels (a dry-run cannot detect a no-op policy). After rollout, test the behaviour, not just
