@@ -55,7 +55,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: radarr
-          image: ghcr.io/linuxserver/radarr:6.4.4 # {"$imagepolicy": "media:radarr"}
+          image: ghcr.io/linuxserver/radarr:7.0.3 # {"$imagepolicy": "media:radarr"}
           imagePullPolicy: Always
           # s6 starts as root, chowns /config and drops the app to PUID/PGID, so it keeps only the
           # capabilities that needs: CHOWN/DAC_OVERRIDE/FOWNER (ownership), SETUID/SETGID (the drop),
