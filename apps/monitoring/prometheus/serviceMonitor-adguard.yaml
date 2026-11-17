@@ -15,6 +15,8 @@ spec:
     matchNames:
       - adguard
   endpoints:
-    - interval: 4m
+    # 60s rather than the 4m used for other API-polling exporters: one AdGuard API call a minute
+    # is cheap, and the query and latency rate panels are empty at 4m.
+    - interval: 60s
       port: metrics
-      scrapeTimeout: 90s
+      scrapeTimeout: 30s

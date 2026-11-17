@@ -1,0 +1,161 @@
+#
+# Reference:
+# https://docs.linuxserver.io/images/docker-lazylibrarian/
+# https://lazylibrarian.gitlab.io/
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lazylibrarian
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: lazylibrarian
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: lazylibrarian
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5299
+      protocol: TCP
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lazylibrarian
+  namespace: media
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: lazylibrarian
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: app
+      app.kubernetes.io/name: lazylibrarian
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: lazylibrarian
+    spec:
+      restartPolicy: Always
+      # The app never talks to the Kubernetes API.
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/hostname: sheol
+      containers:
+        - name: lazylibrarian
+          # Tag-pinned by hand: the image's versions are commit hashes, which Flux's semver policy cannot
+          # order, so no image-automation marker (Renovate's `kubernetes` manager still proposes bumps).
+          image: ghcr.io/linuxserver/lazylibrarian:28d2809c-ls400
+          imagePullPolicy: IfNotPresent
+          # 1500:1500 is the shared `media` owner of /data and of this app's config (see
+          # docs/uids.md). The image fixes /config ownership itself on first start.
+          # s6 starts as root, chowns /config and drops the app to PUID/PGID, so it keeps only the
+          # capabilities that needs: CHOWN/DAC_OVERRIDE/FOWNER (ownership), SETUID/SETGID (the drop),
+          # KILL (stopping the app). Same set as Radarr/Sonarr, where it was tested in a scratch pod;
+          # NOT yet tested for this image. If it fails to start, read the s6 logs for an EPERM.
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - CHOWN
+                - DAC_OVERRIDE
+                - FOWNER
+                - KILL
+                - SETUID
+                - SETGID
+          env:
+            - name: TZ
+              value: America/Los_Angeles
+            - name: PGID
+              value: '1500'
+            - name: PUID
+              value: '1500'
+            # LazyLibrarian has no environment switch for auth and ships with no login (HTTP_USER and
+            # HTTP_PASS in config.ini are unset), so it has no protection of its own: Traefik makes
+            # every client look local. The oauth2-proxy-media route (Keycloak role media-admin) and
+            # the lazylibrarian-ingress NetworkPolicy are the only gates. Never expose this route
+            # without the oauth2 middleware, and set a UI login too when the app is first configured.
+          ports:
+            - name: http
+              containerPort: 5299
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 200Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          volumeMounts:
+            - name: lazylibrarian-pvc
+              mountPath: /config
+            - name: media-data-pvc
+              mountPath: /data
+      volumes:
+        - name: lazylibrarian-pvc
+          persistentVolumeClaim:
+            claimName: lazylibrarian-pvc
+        - name: media-data-pvc
+          persistentVolumeClaim:
+            claimName: media-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lazylibrarian-pvc
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume-claim
+    app.kubernetes.io/name: lazylibrarian-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: lazylibrarian-pv
+  namespace: media
+  labels:
+    type: local
+    app.kubernetes.io/component: storage-volume
+    app.kubernetes.io/name: lazylibrarian-pv
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    name: lazylibrarian-pvc
+    namespace: media
+  local:
+    path: /mnt/moriyya/media/lazylibrarian
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - sheol

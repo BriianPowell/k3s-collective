@@ -15,7 +15,9 @@ spec:
     matchNames:
       - kube-system
   endpoints:
-    - interval: 4m
+    # In-process counters are cheap to scrape; the request-rate panels need more than the 4m used
+    # for exporters that poll an app API on every scrape.
+    - interval: 60s
       targetPort: 9100
-      scrapeTimeout: 90s
+      scrapeTimeout: 30s
       path: /metrics

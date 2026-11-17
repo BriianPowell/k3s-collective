@@ -25,6 +25,7 @@ spec:
           - kapowarr
           - lidarr
           - readarr
+          - lazylibrarian
           - deluge
   policyTypes:
     - Ingress

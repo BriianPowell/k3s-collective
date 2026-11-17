@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: media
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: lazylibrarian
+    includeSelectors: true
+    includeTemplates: true
+
+resources:
+  - deployment.yaml
+  - ingress.yaml

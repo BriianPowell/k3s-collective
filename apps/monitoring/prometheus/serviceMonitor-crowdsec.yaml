@@ -17,9 +17,11 @@ spec:
   attachMetadata:
     node: true
   endpoints:
-    - interval: 4m
+    # In-process counters are cheap to scrape; the rate panels need more than the 4m used for
+    # exporters that poll an app API on every scrape.
+    - interval: 60s
       port: metrics
-      scrapeTimeout: 90s
+      scrapeTimeout: 30s
       path: /metrics
       metricRelabelings:
         - sourceLabels: [ __meta_kubernetes_pod_node_name ]
@@ -44,9 +46,11 @@ spec:
   attachMetadata:
     node: true
   endpoints:
-    - interval: 4m
+    # In-process counters are cheap to scrape; the rate panels need more than the 4m used for
+    # exporters that poll an app API on every scrape.
+    - interval: 60s
       port: metrics
-      scrapeTimeout: 90s
+      scrapeTimeout: 30s
       path: /metrics
       metricRelabelings:
         - sourceLabels: [ __meta_kubernetes_pod_node_name ]

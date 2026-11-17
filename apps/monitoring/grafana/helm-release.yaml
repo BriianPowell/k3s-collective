@@ -148,14 +148,28 @@ spec:
               path: /var/lib/grafana/dashboards/media-logs
     dashboards: # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
       system-dashboards:
+        adguard:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/adguard/dashboard.json'
+        cloudnative-pg:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/cloudnative-pg/dashboard.json'
+        crowdsec:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/crowdsec/dashboard.json'
+        exportarr:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/exportarr/dashboard.json'
         flux-cluster:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/flux/cluster.json'
         flux-control-plane:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/flux/control-plane.json'
         k3s:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/k3s/dashboard.json'
+        node-exporter:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/node-exporter/dashboard.json'
         ntfy:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/ntfy/dashboard.json'
+        smartctl:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/smartctl/dashboard.json'
+        traefik:
+          url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/system/traefik/dashboard.json'
       app-logs:
         atuin:
           url: 'https://raw.githubusercontent.com/BriianPowell/grafana-dashboards/main/dashboards/logs/apps/atuin.json'

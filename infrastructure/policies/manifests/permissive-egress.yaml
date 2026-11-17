@@ -34,6 +34,7 @@ spec:
           - tqm
           - lidarr
           - readarr
+          - lazylibrarian
           - lidarr-exportarr
           - readarr-exportarr
           - bazarr-exportarr
