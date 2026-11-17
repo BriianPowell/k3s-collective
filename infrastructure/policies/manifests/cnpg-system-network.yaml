@@ -1,0 +1,103 @@
+# References:
+# https://kubernetes.io/docs/concepts/services-networking/network-policies/
+# https://cloudnative-pg.io/documentation/current/security/
+#
+# The CloudNativePG operator (one pod) in `cnpg-system`:
+#   in   -> the API server calling the admission webhooks (:9443; failurePolicy is Fail, so a
+#           blocked webhook stops every Cluster create and update), Prometheus metrics (:8080)
+#   out  -> DNS, the Kubernetes API, and the Postgres instance pods in every namespace (status
+#           endpoint :8000, SQL :5432). The instance pods' own ingress policies (cnpg-ingress.yaml,
+#           atuin-egress.yaml) already admit this operator.
+# The API server runs on the host of the control-plane node, so its connections arrive from that
+# node's address or from the flannel interface address of that node's pod CIDR (10.42.0.0/32 for
+# sheol, 10.42.1.0/32 for abaddon). Select on app.kubernetes.io/name only.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cnpg-operator-ingress
+  namespace: cnpg-system
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: cloudnative-pg
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: cloudnative-pg
+  policyTypes:
+    - Ingress
+  ingress:
+    # Admission webhooks, called by the API server.
+    - from:
+        - ipBlock:
+            cidr: 10.0.2.10/32
+        - ipBlock:
+            cidr: 10.0.2.11/32
+        - ipBlock:
+            cidr: 10.42.0.0/32
+        - ipBlock:
+            cidr: 10.42.1.0/32
+      ports:
+        - port: 9443
+          protocol: TCP
+    # Metrics.
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+      ports:
+        - port: 8080
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cnpg-operator-egress
+  namespace: cnpg-system
+  labels:
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/name: cloudnative-pg
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: cloudnative-pg
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    # Kubernetes API (service IP and the control-plane node).
+    - to:
+        - ipBlock:
+            cidr: 10.43.0.0/16
+      ports:
+        - port: 443
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 10.0.2.10/32
+      ports:
+        - port: 6443
+          protocol: TCP
+    # Postgres instance pods (pod network only).
+    - to:
+        - ipBlock:
+            cidr: 10.42.0.0/16
+      ports:
+        - port: 8000
+          protocol: TCP
+        - port: 5432
+          protocol: TCP

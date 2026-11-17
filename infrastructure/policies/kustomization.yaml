@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Unrestricted: flux-system (gotk policies), cnpg-system, onepassword (cross-ns API clients).
+# Unrestricted: flux-system (gotk policies).
 # kube-system: CIS ingress policies in manifests/kube-system.yaml.
 
 resources:
@@ -10,6 +10,7 @@ resources:
   - manifests/atuin-egress.yaml
   - manifests/cnpg-egress.yaml
   - manifests/cnpg-ingress.yaml
+  - manifests/cnpg-system-network.yaml
   - manifests/crowdsec-egress.yaml
   - manifests/flaresolverr-egress.yaml
   - manifests/games-ingress.yaml
@@ -20,6 +21,7 @@ resources:
   - manifests/ntfy-egress.yaml
   - manifests/monitoring-egress.yaml
   - manifests/obsidian-sync-network.yaml
+  - manifests/onepassword-network.yaml
   - manifests/open-egress.yaml
   - manifests/permissive-egress.yaml
   - manifests/plex-egress.yaml

@@ -24,6 +24,8 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 | `standard-ingress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki`, `atuin` — as above plus the CloudNativePG operator pod |
 | `standard-egress` + CNPG | `homeassistant`, `nextcloud`, `keycloak`, `wiki` — adds `cnpg-system` to egress |
 | `obsidian-sync-ingress`, `obsidian-sync-egress` | `obsidian-sync` — CouchDB :5984 from Traefik pods, metrics :17986 from Prometheus; egress to DNS only (`manifests/obsidian-sync-network.yaml`) |
+| `onepassword-*` (default-deny ingress, `connect-ingress`, `base-egress`, `connect-egress`, `operator-egress`) | `onepassword` — only the operator reaches Connect :8080; Connect egress to public :443 only; operator egress to Connect and the API server (`manifests/onepassword-network.yaml`) |
+| `cnpg-operator-ingress`, `cnpg-operator-egress` | `cnpg-system` operator — webhooks :9443 from the API server (node and flannel addresses), metrics :8080 from Prometheus; egress to DNS, the API server and instance pods :8000/:5432 (`manifests/cnpg-system-network.yaml`) |
 | `renovate-ingress`, `renovate-egress` | `renovate` — no ingress at all; egress to DNS and public HTTPS :443 only, private ranges blocked (`manifests/renovate-network.yaml`) |
 | `atuin-base-egress`, `atuin-pgcluster-egress` | `atuin` — DNS + same namespace; Postgres pod also reaches the API server only; nothing to LAN or internet (`manifests/atuin-egress.yaml`) |
 | `adguard-home-ingress`, `adguard-exporter-ingress` | `adguard` — UI from Traefik :80, exporter from AdGuard, DNS :53 from RFC1918 sources only (DoT, DoQ and DNSCrypt are off); exporter :9618 from `monitoring` (`manifests/adguard-ingress.yaml`) |
@@ -34,7 +36,7 @@ Ingress-focused policies aligned with the [K3s CIS hardening guide](https://docs
 
 **Deprecated:** the `wiki` namespace (Wiki.js) has no running pods; its database is hibernated and the policies stay so it can be brought back.
 
-**No policies:** `flux-system`, `cnpg-system`, `onepassword` — operators and webhooks need broader reach.
+**No policies:** `flux-system` only (the Flux controllers have their own gotk policies).
 
 ## Pod Security Admission
 

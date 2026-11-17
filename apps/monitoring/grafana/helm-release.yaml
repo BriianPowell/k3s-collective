@@ -100,6 +100,9 @@ spec:
             orgId: 1
             version: 1
             isDefault: true
+            jsonData:
+              # Match the Prometheus scrape interval so $__rate_interval spans enough samples.
+              timeInterval: 60s
           - name: Loki
             type: loki
             uid: P8E80F9AEF21F6940
