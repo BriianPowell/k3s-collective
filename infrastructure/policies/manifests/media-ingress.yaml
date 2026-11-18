@@ -421,3 +421,11 @@ spec:
       ports:
         - port: 5299
           protocol: TCP
+    # Prowlarr pushes indexers to LazyLibrarian (Settings > Apps) over its API.
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prowlarr
+      ports:
+        - port: 5299
+          protocol: TCP

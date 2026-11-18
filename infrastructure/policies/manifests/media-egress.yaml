@@ -259,6 +259,13 @@ spec:
           protocol: TCP
     - to:
         - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: lazylibrarian
+      ports:
+        - port: 5299
+          protocol: TCP
+    - to:
+        - podSelector:
             matchExpressions:
               - key: app.kubernetes.io/name
                 operator: In
