@@ -21,7 +21,7 @@ have the old hostname hardcoded somewhere *other* than their own
 | Media | Sonarr (TV) | `sonarr-tv` | `tv` | `apps/media/sonarr-tv/ingress.yaml` |
 | Media | Sonarr (Anime) | `sonarr-anime` | `tv-anime` | `apps/media/sonarr-anime/ingress.yaml` |
 | Media | Lidarr | `lidarr` | `music` | `apps/media/lidarr/ingress.yaml` |
-| Media | Readarr | `readarr` | `library` | `apps/media/readarr/ingress.yaml` |
+| Media | LazyLibrarian | *(deployed as `library` from the start)* | `library` | `apps/media/lazylibrarian/ingress.yaml` |
 | Media | Kapowarr | `kapowarr` | `comics` | `apps/media/kapowarr/ingress.yaml` |
 | Media | Bazarr | `bazarr` | `subtitles` | `apps/media/bazarr/ingress.yaml` |
 | Media | Bazarr (Anime) | `bazarr-anime` | `subtitles-anime` | `apps/media/bazarr-anime/ingress.yaml` |
@@ -101,7 +101,7 @@ as its ingress, or the app will break even though DNS/TLS still resolve.
 ## Risk tiers / suggested rollout order
 
 **Tier 1 — Low risk, no external references found.** Safe to batch together:
-Radarr, Sonarr (TV + Anime), Lidarr, Readarr, Kapowarr, Bazarr (+ anime),
+Radarr, Sonarr (TV + Anime), Lidarr, LazyLibrarian, Kapowarr, Bazarr (+ anime),
 Prowlarr, Kavita, Deluge, Home Assistant, Wiki.js *(no-op)*.
 
 **Tier 2 — Low-medium risk, one extra file to update, no live/manual config:**

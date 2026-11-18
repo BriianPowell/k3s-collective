@@ -41,7 +41,7 @@ filters:
       # Only *arr-managed torrents. Their library copy is a hardlink on the same volume, or the
       # *arr upgraded/deleted it, so the torrent's files are safe to delete. Unlabelled and
       # prowlarr (manual grab) torrents may be the only copy and are left alone.
-      - Label not in ["radarr", "sonarr", "sonarr-tv", "sonarr-anime", "lidarr", "readarr"]
+      - Label not in ["radarr", "sonarr", "sonarr-tv", "sonarr-anime", "lidarr"]
 
     remove:
       # Deleted on the tracker ("Error: Torrent has been deleted."); no seeding obligation left.

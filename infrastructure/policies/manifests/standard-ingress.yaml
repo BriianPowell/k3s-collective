@@ -24,7 +24,6 @@ spec:
           - bazarr-anime
           - kapowarr
           - lidarr
-          - readarr
           - lazylibrarian
           - deluge
   policyTypes:

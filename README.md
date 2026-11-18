@@ -72,7 +72,7 @@ _In Installation Order_
 - [x] [Seerr](https://github.com/seerr-team/seerr) + [overseer-exporter](https://github.com/WillFantom/overseerr-exporter)
 - [x] [Tautulli](https://github.com/Tautulli/Tautulli) + [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)
 - [x] [Kavita](https://github.com/Kareadita/Kavita)
-- [x] [Readarr](https://github.com/Readarr/Readarr) + [Exportarr](https://github.com/onedr0p/exportarr)
+- [x] [LazyLibrarian](https://lazylibrarian.gitlab.io/)
 - [x] [Kapowarr](https://github.com/Casvt/Kapowarr)
 
 ### [Secrets Management](./infrastructure/secrets/README.md)

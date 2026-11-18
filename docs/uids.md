@@ -28,7 +28,7 @@ uid and gid are the same number in every row.
 
 | Id | Group | Used by |
 | ---- | ----- | ------- |
-| 1500 | media files | Owner of `/mnt/moriyya/media/data` and of the config directories of the Sonarr/Radarr family, Bazarr, Deluge, Kapowarr, Lidarr, Readarr and LazyLibrarian. Host account `media`. |
+| 1500 | media files | Owner of `/mnt/moriyya/media/data` and of the config directories of the Sonarr/Radarr family, Bazarr, Deluge, Kapowarr, Lidarr and LazyLibrarian. Host account `media`. |
 | 1501 | media config-only apps | Kavita, Seerr, Prowlarr, Tautulli, Recyclarr |
 | 1502 | Plex | Plex only (the most exposed app, so it is kept apart from the media-file owner) |
 | 1510 | monitoring | Prometheus |

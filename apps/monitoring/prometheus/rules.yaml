@@ -11,7 +11,7 @@ spec:
     - name: Deployment Groups
       rules:
         - alert: Deployment at 0 Replicas
-          # Only deployments that are meant to run: apps scaled to 0 on purpose (Lidarr, Readarr, the
+          # Only deployments that are meant to run: apps scaled to 0 on purpose (Lidarr, the
           # suspended games) have spec replicas 0 and must not alert.
           expr: sum(kube_deployment_status_replicas_available) by (deployment,namespace) < 1 and sum(kube_deployment_spec_replicas) by (deployment,namespace) > 0
           for: 1m

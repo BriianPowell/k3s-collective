@@ -11,7 +11,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`lazylibrarian.powell.place`)
+      match: Host(`library.powell.place`)
       middlewares:
         # Keycloak SSO first; the app's own login stays on as a second layer.
         - name: oauth2-proxy-media

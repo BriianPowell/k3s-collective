@@ -17,7 +17,7 @@ resources:
   - serviceMonitor-adguard.yaml
   - serviceMonitor-alertmanager.yaml
   # - serviceMonitor-atuin.yaml
-  # Still disabled: Lidarr and Readarr (scaled to 0, their targets would only be down) and
+  # Still disabled: Lidarr (scaled to 0, their targets would only be down) and
   # FlareSolverr (low value). The other media exporters are scraped; enable these when needed.
   - serviceMonitor-bazarr.yaml
   - serviceMonitor-crowdsec.yaml
@@ -36,7 +36,6 @@ resources:
   - serviceMonitor-plex.yaml
   - serviceMonitor-prowlarr.yaml
   - serviceMonitor-radarr.yaml
-  # - serviceMonitor-readarr.yaml
   - serviceMonitor-sonarr.yaml
   - serviceMonitor-tautulli.yaml
   - serviceMonitor-traefik.yaml

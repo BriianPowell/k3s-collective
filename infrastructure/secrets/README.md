@@ -165,7 +165,6 @@ Item **Arr Stack** → `Secret/arr-stack` in `media`:
 | `lidarr_api_key` | Lidarr exportarr |
 | `prowlarr_api_key` | Prowlarr exportarr |
 | `radarr_api_key` | Radarr exportarr |
-| `readarr_api_key` | Readarr exportarr |
 | `sonarr_tv_api_key` | Sonarr TV exportarr |
 | `sonarr_anime_api_key` | Sonarr Anime exportarr |
 | `plex_token` | Plex exporter |

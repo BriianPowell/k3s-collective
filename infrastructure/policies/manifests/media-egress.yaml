@@ -117,7 +117,7 @@ spec:
         - port: 80
           protocol: TCP
 ---
-# Radarr, Sonarr-TV, Sonarr-Anime (and Lidarr/Readarr, scaled to 0): Prowlarr (indexer search), Deluge web API (download client),
+# Radarr, Sonarr-TV, Sonarr-Anime (and Lidarr, scaled to 0): Prowlarr (indexer search), Deluge web API (download client),
 # ntfy in kube-system (notifications), and the public web (metadata, lists, update checks).
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -137,7 +137,6 @@ spec:
           - sonarr-tv
           - sonarr-anime
           - lidarr
-          - readarr
   policyTypes:
     - Egress
   egress:
@@ -201,7 +200,7 @@ spec:
         - port: 80
           protocol: TCP
 ---
-# Prowlarr: the apps it syncs indexers to (Lidarr/Readarr are scaled to 0 but listed so they work
+# Prowlarr: the apps it syncs indexers to (Lidarr is scaled to 0 but listed so it works
 # again when re-enabled), FlareSolverr, and indexers over HTTP(S). If an indexer stops working,
 # check for a non-80/443 port before widening this.
 apiVersion: networking.k8s.io/v1
@@ -257,16 +256,6 @@ spec:
                   - lidarr
       ports:
         - port: 8686
-          protocol: TCP
-    - to:
-        - podSelector:
-            matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                  - readarr
-      ports:
-        - port: 8787
           protocol: TCP
     - to:
         - podSelector:
@@ -589,7 +578,6 @@ spec:
           - sonarr-tv-exportarr
           - tautulli-exporter
           - lidarr-exportarr
-          - readarr-exportarr
   policyTypes:
     - Egress
   egress:
