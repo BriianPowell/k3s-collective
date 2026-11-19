@@ -1,12 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices"
-  ],
-  "enabledManagers": [
-    "flux",
-    "kubernetes"
-  ],
+  "extends": ["config:best-practices"],
+  "enabledManagers": ["flux", "kubernetes"],
   "flux": {
     "managerFilePatterns": [
       "/^apps\\/.+\\.ya?ml$/",
@@ -19,14 +14,11 @@
       "/^infrastructure\\/.+\\.ya?ml$/"
     ]
   },
-  "ignorePaths": [
-    "clusters/k3s/flux-system/**",
-    ".memories/**"
-  ],
-  "labels": [
-    "dependencies"
-  ],
-  "dependencyDashboard": true,
+  "ignorePaths": ["clusters/k3s/flux-system/**", ".memories/**"],
+  "labels": ["dependencies"],
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "prConcurrentLimit": 5,
   "prHourlyLimit": 3,
   "automerge": false,
@@ -66,67 +58,38 @@
     },
     {
       "description": "Flux's own components are upgraded by hand with `flux install --export` (see AGENTS.md), after `flux migrate`.",
-      "matchPackageNames": [
-        "fluxcd/flux2"
-      ],
+      "matchPackageNames": ["fluxcd/flux2"],
       "enabled": false
     },
     {
       "description": "Registries and datasources without usable release timestamps are exempt from the cooldown, as are update types that have no release age.",
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/**",
-        "quay.io/**",
-        "registry.k8s.io/**"
-      ],
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/**", "quay.io/**", "registry.k8s.io/**"],
       "minimumReleaseAge": null
     },
     {
       "description": "git, kubernetes-api and lock-file updates carry no release timestamp.",
-      "matchDatasources": [
-        "git-refs",
-        "git-tags",
-        "kubernetes-api"
-      ],
+      "matchDatasources": ["git-refs", "git-tags", "kubernetes-api"],
       "minimumReleaseAge": null
     },
     {
       "description": "kubectl client skew: stay within one minor of the cluster (k3s 1.36). Patch updates flow; a new minor is listed on the Dependency Dashboard and needs approval, which you give after k3s is upgraded in nix-config.",
-      "matchPackageNames": [
-        "registry.k8s.io/kubectl"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "major"
-      ],
+      "matchPackageNames": ["registry.k8s.io/kubectl"],
+      "matchUpdateTypes": ["minor", "major"],
       "dependencyDashboardApproval": true
     },
     {
       "description": "Keep Flux HelmRelease chart versions free of digests.",
-      "matchManagers": [
-        "flux"
-      ],
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchDepTypes": [
-        "HelmChart"
-      ],
+      "matchManagers": ["flux"],
+      "matchDatasources": ["docker"],
+      "matchDepTypes": ["HelmChart"],
       "pinDigests": false
     },
     {
       "description": "Traefik chart majors rename values (v42 needed ports.*.http.*, log/accessLog). Listed on the Dependency Dashboard; approve there only after migrating the values and render-testing.",
-      "matchPackageNames": [
-        "traefik"
-      ],
-      "matchDatasources": [
-        "helm"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
+      "matchPackageNames": ["traefik"],
+      "matchDatasources": ["helm"],
+      "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
     }
   ],
