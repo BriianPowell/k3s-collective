@@ -58,7 +58,7 @@ spec:
         - name: lazylibrarian
           # Tag-pinned by hand: the image's versions are commit hashes, which Flux's semver policy cannot
           # order, so no image-automation marker (Renovate's `kubernetes` manager still proposes bumps).
-          image: ghcr.io/linuxserver/lazylibrarian:28d2809c-ls400
+          image: ghcr.io/linuxserver/lazylibrarian:28d2809c-ls400@sha256:cbacdbdbaf1eab86a0ecaffdc27cd788999ec0502c8ea0ffa972914e9a149f79
           imagePullPolicy: IfNotPresent
           # 1500:1500 is the shared `media` owner of /data and of this app's config (see
           # docs/uids.md). The image fixes /config ownership itself on first start.
