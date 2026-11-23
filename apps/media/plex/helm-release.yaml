@@ -91,6 +91,14 @@ spec:
       # and world-readable, so Plex needs no access to that owner.
       PLEX_UID: '1502'
       PLEX_GID: '1502'
+      # Hardware transcoding: Plex's transcoder is a musl binary, which does not read the glibc
+      # ld.so.cache and only finds the NVIDIA driver libraries (libcuda, libnvcuvid,
+      # libnvidia-encode) in standard directories. On NixOS they live under /nix/store, so
+      # without this the log shows "Cannot load libcuda.so.1" and every transcode falls back to
+      # the CPU. /usr/local/nvidia/lib is a stable bind mount of the driver's lib directory
+      # (hosts/sheol/nvidia.nix in nix-config), so it survives driver upgrades. Verified with
+      # Plex Transcoder -hwaccel nvdec: fails without it, works with it.
+      LD_LIBRARY_PATH: /usr/local/nvidia/lib
       # ALLOWED_NETWORKS is deliberately unset: it makes Plex accept any client in that range
       # without a token. The image only writes the allowedNetworks preference when this is
       # non-empty, so it must also be cleared in Plex (Settings > Network) and stays cleared.
