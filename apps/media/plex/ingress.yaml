@@ -1,6 +1,7 @@
 # Plex at plex.powell.place (public, 443). Routes, highest priority first:
 #
-# 0. GET /identity (exact path) goes straight to Plex without a token; see below.
+# 0. Two tokenless GET paths that clients cannot send a token on go straight to Plex: exactly
+#    /identity, and the playlist/segment URLs of a transcode session; see below.
 #
 # 1. Plex apps / API: requests that carry an X-Plex-Token (header or query) go straight to Plex,
 #    EXCEPT anything under /player. Apps cannot do an SSO redirect, so they need this route.
@@ -25,7 +26,17 @@
 # rest of the safety is Plex's own token check. Known gaps: /search and /security/token
 # returned 400 rather than 401 with a bogus token (not exploited, but not token-gated).
 #
-# Route 0 exists for connection tests: a Plex client checks a server address by calling
+# Route 0, part 2: HLS/DASH sub-requests. Native iOS/tvOS players fetch the playlist for a transcode
+# session (/video/:/transcode/universal/session/<id>/base/index.m3u8, .../<n>/header, segments)
+# as plain relative URLs that do not carry the X-Plex-Token, even though start.m3u8 did.
+# Behind the SSO redirect they got a 302 and playback failed (found on 2026-11-22 once the
+# clients stopped using the plex.tv Relay). Plex itself serves these paths without a token and
+# treats the random 36-character session id as the secret: a real id returns 200, an unknown
+# one 404, and /library/* still returns 401 (tested from a non-loopback pod). The rule only
+# matches GET on that exact shape, with the id and file name restricted to [0-9A-Za-z._-], so
+# nothing with "..", "%", ";" or "player" can match.
+#
+# Route 0, part 1: connection tests. a Plex client checks a server address by calling
 # GET /identity without a token. Behind the SSO redirect that probe failed, clients wrote the
 # direct address off, and they fell back to the plex.tv Relay (connections from 127.0.0.1
 # marked WAN, capped near 2 Mbps, and counted against WanPerUserStreamCount). /identity
@@ -34,8 +45,12 @@
 # still fall through to route 2 (SSO).
 #
 # Plex clients off the LAN reach this through the custom server access URL in Plex
-# (Settings > Network): https://plex.powell.place (443). Do not forward :32400 on the WAN;
-# ingress-tcp.yaml is LAN-only.
+# (Settings > Network). It must be https://plex.powell.place:443 WITH the port: without it
+# Plex publishes the address to plex.tv as plex.powell.place:32400, which is LAN-only, so
+# remote clients cannot connect directly and fall back to the plex.tv Relay (connections from
+# 127.0.0.1, capped near 2 Mbps). Check what is published with the server's plex.tv resources
+# list: the plex.powell.place connection should show port="443". Do not forward :32400 on the
+# WAN; ingress-tcp.yaml is LAN-only.
 #
 # References:
 # https://doc.traefik.io/traefik/v3.1/routing/routers/#rule
@@ -55,7 +70,10 @@ spec:
   routes:
     - kind: Rule
       priority: 300
-      match: Host(`plex.powell.place`) && Method(`GET`) && Path(`/identity`)
+      match: >-
+        Host(`plex.powell.place`) && Method(`GET`)
+        && (Path(`/identity`)
+        || PathRegexp(`^/video/:/transcode/universal/session/[0-9A-Za-z-]{16,64}/(base|[0-9]{1,4})/[0-9A-Za-z_-]+(\.[0-9A-Za-z_-]+)?$`))
       middlewares:
         - name: security
           namespace: kube-system
