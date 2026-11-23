@@ -1,4 +1,6 @@
-# Plex at plex.powell.place (public, 443). Two routes, highest priority first:
+# Plex at plex.powell.place (public, 443). Routes, highest priority first:
+#
+# 0. GET /identity (exact path) goes straight to Plex without a token; see below.
 #
 # 1. Plex apps / API: requests that carry an X-Plex-Token (header or query) go straight to Plex,
 #    EXCEPT anything under /player. Apps cannot do an SSO redirect, so they need this route.
@@ -21,9 +23,15 @@
 # A token is only checked for presence here; Traefik cannot validate it. Plex returns 401 for
 # an invalid token on every API path tested (/library, /status, /hubs, /accounts, ...), so the
 # rest of the safety is Plex's own token check. Known gaps: /search and /security/token
-# returned 400 rather than 401 with a bogus token (not exploited, but not token-gated), and
-# /identity is deliberately NOT allowed tokenless, so a client that probes it without a
-# token gets the SSO redirect instead of Plex.
+# returned 400 rather than 401 with a bogus token (not exploited, but not token-gated).
+#
+# Route 0 exists for connection tests: a Plex client checks a server address by calling
+# GET /identity without a token. Behind the SSO redirect that probe failed, clients wrote the
+# direct address off, and they fell back to the plex.tv Relay (connections from 127.0.0.1
+# marked WAN, capped near 2 Mbps, and counted against WanPerUserStreamCount). /identity
+# returns only the server name, version and machine id. The match is the exact path
+# /identity with GET, so /identity/, /identity/.., encoded variants and the /player paths
+# still fall through to route 2 (SSO).
 #
 # Plex clients off the LAN reach this through the custom server access URL in Plex
 # (Settings > Network): https://plex.powell.place (443). Do not forward :32400 on the WAN;
@@ -45,6 +53,15 @@ spec:
   entryPoints:
     - websecure
   routes:
+    - kind: Rule
+      priority: 300
+      match: Host(`plex.powell.place`) && Method(`GET`) && Path(`/identity`)
+      middlewares:
+        - name: security
+          namespace: kube-system
+      services:
+        - name: plex-media-server
+          port: pms
     - kind: Rule
       priority: 200
       match: >-
