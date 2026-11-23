@@ -99,6 +99,11 @@ spec:
       # (hosts/sheol/nvidia.nix in nix-config), so it survives driver upgrades. Verified with
       # Plex Transcoder -hwaccel nvdec: fails without it, works with it.
       LD_LIBRARY_PATH: /usr/local/nvidia/lib
+      # The address Plex publishes to plex.tv as its "custom server access URL" (the image writes it
+      # to the customConnections preference on every start). It must carry :443, or Plex publishes
+      # plex.powell.place:32400, which is LAN-only; remote clients then fail their direct
+      # connection and fall back to the plex.tv Relay (about 2 Mbps, counted as a WAN stream).
+      ADVERTISE_IP: 'https://plex.powell.place:443'
       # ALLOWED_NETWORKS is deliberately unset: it makes Plex accept any client in that range
       # without a token. The image only writes the allowedNetworks preference when this is
       # non-empty, so it must also be cleared in Plex (Settings > Network) and stays cleared.
