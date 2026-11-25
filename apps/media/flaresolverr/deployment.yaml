@@ -82,6 +82,17 @@ spec:
               value: 'true'
             - name: PROMETHEUS_PORT
               value: '8192'
+          # Headless Chrome grows with each challenge it solves. Over 30 days the working set
+          # peaked at about 2.5Gi (p99 about 1Gi), so the limit sits above that peak; a lower one
+          # would kill it mid-solve and fail the indexer search. It runs alone on abaddon (16 GiB,
+          # about 5.5Gi in use). No CPU limit: solving is bursty and a limit would stretch solves
+          # past Prowlarr's 60 s timeout.
+          resources:
+            requests:
+              cpu: 50m
+              memory: 768Mi
+            limits:
+              memory: 3Gi
           ports:
             - name: http
               containerPort: 8191
