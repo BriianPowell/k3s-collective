@@ -53,7 +53,7 @@ spec:
               type: RuntimeDefault
           initContainers:
             - name: github-app-token
-              image: ghcr.io/renovatebot/renovate:44.258.1@sha256:f88c659a3fbec410e4661cfc1f3a1c1a848c421c81418cd5d6f491c05cf4412e
+              image: ghcr.io/renovatebot/renovate:44.262.1@sha256:9f571539ab94f0798d9439110ecf38c1e540920520794d87e111fbb97c322d50
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
@@ -106,7 +106,7 @@ spec:
                   mountPath: /token
           containers:
             - name: renovate
-              image: ghcr.io/renovatebot/renovate:44.258.1@sha256:f88c659a3fbec410e4661cfc1f3a1c1a848c421c81418cd5d6f491c05cf4412e
+              image: ghcr.io/renovatebot/renovate:44.262.1@sha256:9f571539ab94f0798d9439110ecf38c1e540920520794d87e111fbb97c322d50
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
