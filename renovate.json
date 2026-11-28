@@ -42,7 +42,7 @@
     "enabled": true
   },
   "prConcurrentLimit": 5,
-  "prHourlyLimit": 3,
+  "prHourlyLimit": 10,
   "automerge": false,
   "separateMajorMinor": true,
   "packageRules": [
