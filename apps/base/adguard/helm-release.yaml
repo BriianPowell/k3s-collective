@@ -86,7 +86,7 @@ spec:
     # restore conf/AdGuardHome.yaml.bak-pre-0.107.79 on the volume: the old binary will not accept
     # a schema 34 file.
     image:
-      tag: v0.107.79
+      tag: v1.0.0
     serviceAccount:
       create: true
       annotations: {}
