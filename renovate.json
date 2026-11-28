@@ -80,6 +80,11 @@
       "labels": ["dependencies", "flux"]
     },
     {
+      "description": "linuxserver/lidarr also publishes the legacy 0.8.1.2135 build as the tag 8.1.2135, which Renovate reads as a major upgrade. The real releases are 2.x and 3.x (3.1.6 is latest); the 0.8 code cannot read their database.",
+      "matchPackageNames": ["ghcr.io/linuxserver/lidarr"],
+      "allowedVersions": "<8.0.0"
+    },
+    {
       "description": "binhex tags look like 2.2.0-9-01-libtorrentv1 (version, build, rebuild, variant). Stay on the libtorrentv1 variant.",
       "matchPackageNames": ["ghcr.io/binhex/arch-delugevpn"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<build>\\d+)-\\d+-(?<compatibility>libtorrentv1)$"
