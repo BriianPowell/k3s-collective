@@ -80,11 +80,6 @@
       "labels": ["dependencies", "flux"]
     },
     {
-      "description": "linuxserver/lidarr also publishes an 8.x line (not the stable 2.x release line this runs). Stay on 2.x.",
-      "matchPackageNames": ["ghcr.io/linuxserver/lidarr"],
-      "allowedVersions": "<3.0.0"
-    },
-    {
       "description": "binhex tags look like 2.2.0-9-01-libtorrentv1 (version, build, rebuild, variant). Stay on the libtorrentv1 variant.",
       "matchPackageNames": ["ghcr.io/binhex/arch-delugevpn"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<build>\\d+)-\\d+-(?<compatibility>libtorrentv1)$"
