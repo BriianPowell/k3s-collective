@@ -56,7 +56,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: lidarr
-          image: ghcr.io/linuxserver/lidarr:2.14.5
+          image: ghcr.io/linuxserver/lidarr:8.1.2135@sha256:8455e2c2f3a7e0fb56ab4de6be924d81aa441bfe9a740cf110d46b25a39b42ba
           imagePullPolicy: Always
           # 1500:1500 is the shared `media` owner of /data and of this app's config (see
           # docs/uids.md). The image fixes /config ownership itself on first start.
