@@ -1,9 +1,31 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices"],
-  "enabledManagers": ["flux", "kubernetes"],
+  "enabledManagers": ["flux", "kubernetes", "custom.regex"],
+  "customManagers": [
+    {
+      "description": "The smartctl exporter image is set through HelmRelease values, which neither the flux nor the kubernetes manager reads.",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^infrastructure\\/controllers\\/kube-prometheus-stack\\/smartctl-exporter\\.yaml$/"
+      ],
+      "matchStrings": [
+        "repository: (?<depName>\\S+)\\n(?:\\s*#.*\\n)*\\s*tag: (?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "description": "AdGuard Home's image tag is set in HelmRelease values without a repository (the chart supplies it).",
+      "customType": "regex",
+      "managerFilePatterns": ["/^apps\\/base\\/adguard\\/helm-release\\.yaml$/"],
+      "matchStrings": ["image:\\n\\s+tag: (?<currentValue>v\\S+)"],
+      "depNameTemplate": "docker.io/adguard/adguardhome",
+      "datasourceTemplate": "docker"
+    }
+  ],
   "flux": {
     "managerFilePatterns": [
+      "/(^|\\/)flux-system\\/gotk-components\\.yaml$/",
       "/^apps\\/.+\\.ya?ml$/",
       "/^infrastructure\\/.+\\.ya?ml$/"
     ]
@@ -14,7 +36,7 @@
       "/^infrastructure\\/.+\\.ya?ml$/"
     ]
   },
-  "ignorePaths": ["clusters/k3s/flux-system/**", ".memories/**"],
+  "ignorePaths": [".memories/**"],
   "labels": ["dependencies"],
   "dependencyDashboard": {
     "enabled": true
@@ -25,42 +47,10 @@
   "separateMajorMinor": true,
   "packageRules": [
     {
-      "description": "These images are updated by Flux image automation (image-automation.yaml files). A second updater would fight it. Add a new automation's image here. The media apps are not listed: Renovate owns them (rules below).",
-      "matchPackageNames": [
-        "/(^|\\/)binwiederhier\\/ntfy$/",
-        "/(^|\\/)eclipse-mosquitto$/",
-        "/(^|\\/)requarks\\/wiki$/",
-        "/(^|\\/)ghcr\\.io\\/atuinsh\\/atuin$/",
-        "/(^|\\/)ghcr\\.io\\/henrywhitaker3\\/adguard-exporter$/",
-        "/(^|\\/)ghcr\\.io\\/home-assistant\\/home-assistant$/",
-        "/(^|\\/)ghcr\\.io\\/tarampampam\\/error-pages$/",
-        "/(^|\\/)quay\\.io\\/keycloak\\/keycloak$/",
-        "/(^|\\/)quay\\.io\\/prometheuscommunity\\/smartctl-exporter$/"
-      ],
-      "enabled": false
-    },
-    {
-      "description": "Standard policy for everything Renovate manages: minor, patch, digest and pin updates are pushed straight to main (branch automerge, no PR). Needs the Renovate GitHub App to be allowed to push to main. Rules further down (kubectl, Traefik) can still hold an update for approval.",
-      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
-      "automerge": true,
-      "automergeType": "branch",
-      "platformAutomerge": false
-    },
-    {
-      "description": "A major version is never merged unattended: it opens a PR labelled major.",
-      "matchUpdateTypes": ["major"],
-      "automerge": false,
-      "labels": ["dependencies", "major"]
-    },
-    {
-      "description": "binhex tags look like 2.2.0-9-01-libtorrentv1 (version, build, rebuild, variant). Stay on the libtorrentv1 variant.",
-      "matchPackageNames": ["ghcr.io/binhex/arch-delugevpn"],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<build>\\d+)-\\d+-(?<compatibility>libtorrentv1)$"
-    },
-    {
-      "description": "Flux's own components are upgraded by hand with `flux install --export` (see AGENTS.md), after `flux migrate`.",
+      "description": "Flux itself. A new version regenerates clusters/k3s/flux-system/gotk-components.yaml with `flux install --export` and the Components header, so the extra image controllers stay. Always a PR: read the release notes and run `flux migrate` first when a minor needs it.",
       "matchPackageNames": ["fluxcd/flux2"],
-      "enabled": false
+      "automerge": false,
+      "labels": ["dependencies", "flux"]
     },
     {
       "description": "Registries and datasources without usable release timestamps are exempt from the cooldown, as are update types that have no release age.",

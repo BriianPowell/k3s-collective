@@ -9,10 +9,8 @@ labels:
 
 resources:
   - deployment.yaml
-  - image-automation.yaml
   - ingress.yaml
   - ingress-tcp.yaml
   - mosquitto.yaml
-  - mosquitto-image-automation.yaml
   - onepassword-item.yaml
   - pgcluster.yaml

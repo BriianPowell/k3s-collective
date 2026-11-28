@@ -9,7 +9,6 @@ labels:
 
 resources:
   # - deployment.yaml
-  # - image-automation.yaml
   # - ingress.yaml
   - pgcluster.yaml
   - service-account.yaml

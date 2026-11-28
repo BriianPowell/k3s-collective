@@ -10,7 +10,6 @@ labels:
 resources:
   - helm-release.yaml
   - smartctl-exporter.yaml
-  - smartctl-exporter-image-automation.yaml
 
 configMapGenerator:
   - name: flux-kube-state-metrics-config

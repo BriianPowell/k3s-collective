@@ -10,6 +10,5 @@ labels:
 resources:
   - deployment.yaml
   - onepassword-item.yaml
-  # - image-automation.yaml # version 26 of keycloak is busted
   - ingress.yaml
   - pgcluster.yaml
