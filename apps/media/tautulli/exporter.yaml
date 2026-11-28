@@ -58,7 +58,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: tautulli-exportarr
-          image: docker.io/nwalke/tautulli_exporter:v0.1.0 # {"$imagepolicy": "media:tautulli-exporter"}
+          image: docker.io/nwalke/tautulli_exporter:v0.1.0
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false

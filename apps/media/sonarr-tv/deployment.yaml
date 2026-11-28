@@ -54,7 +54,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: sonarr-tv
-          image: ghcr.io/linuxserver/sonarr:4.0.20 # {"$imagepolicy": "media:sonarr-tv"}
+          image: ghcr.io/linuxserver/sonarr:4.0.20
           imagePullPolicy: Always
           # s6 starts as root, chowns /config and drops the app to PUID/PGID, so it keeps only the
           # capabilities that needs: CHOWN/DAC_OVERRIDE/FOWNER (ownership), SETUID/SETGID (the drop),

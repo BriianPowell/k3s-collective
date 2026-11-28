@@ -56,7 +56,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: bazarr-anime
-          image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr-anime"}
+          image: ghcr.io/linuxserver/bazarr:1.6.2
           imagePullPolicy: Always
           # Same media owner as bazarr (PUID/PGID below, docs/uids.md).
           securityContext:

@@ -9,5 +9,4 @@ labels:
 
 resources:
   - deployment.yaml
-  - image-automation.yaml
   - ingress.yaml

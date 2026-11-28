@@ -10,6 +10,5 @@ labels:
 resources:
   - exporter.yaml
   - helm-release.yaml
-  - image-automation.yaml
   - ingress.yaml
   - ingress-tcp.yaml

@@ -58,7 +58,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: deluge-exporter
-          image: docker.io/ngosang/deluge-exporter:1.0.2 # {"$imagepolicy": "media:deluge-exporter"}
+          image: docker.io/ngosang/deluge-exporter:1.0.2
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false

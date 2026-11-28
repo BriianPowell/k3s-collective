@@ -58,7 +58,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: seerr-exporter
-          image: ghcr.io/willfantom/overseerr-exporter:1.2.1 # {"$imagepolicy": "media:seerr-exporter"}
+          image: ghcr.io/willfantom/overseerr-exporter:1.2.1
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false

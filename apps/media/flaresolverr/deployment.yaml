@@ -64,7 +64,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:v3.5.2 # {"$imagepolicy": "media:flaresolverr"}
+          image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
           imagePullPolicy: Always
           # Not read-only: Chrome writes its profile and temp files. Not digest-pinned: the
           # image line above is rewritten by Flux image automation, which would drop a digest.

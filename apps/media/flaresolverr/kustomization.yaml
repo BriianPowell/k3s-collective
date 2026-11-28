@@ -13,4 +13,3 @@ labels:
 # infrastructure/policies/manifests/flaresolverr-egress.yaml.
 resources:
   - deployment.yaml
-  - image-automation.yaml

@@ -10,5 +10,4 @@ labels:
 resources:
   - deployment.yaml
   - exporter.yaml
-  - image-automation.yaml
   - ingress.yaml

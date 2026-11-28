@@ -58,7 +58,7 @@ spec:
         kubernetes.io/hostname: abaddon
       containers:
         - name: bazarr-exportarr
-          image: ghcr.io/onedr0p/exportarr:v2.3.0 # {"$imagepolicy": "media:exportarr"}
+          image: ghcr.io/onedr0p/exportarr:v2.3.0
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false

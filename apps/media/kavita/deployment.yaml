@@ -54,7 +54,7 @@ spec:
         kubernetes.io/hostname: sheol
       containers:
         - name: kavita
-          image: ghcr.io/linuxserver/kavita:0.9.1 # {"$imagepolicy": "media:kavita"}
+          image: ghcr.io/linuxserver/kavita:0.9.1
           imagePullPolicy: Always
           # The s6 init starts as root, then drops the app to PUID/PGID. The library under
           # /data is root:root 755 and world-readable (checked to depth 4), so uid 1501 can

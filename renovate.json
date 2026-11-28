@@ -25,36 +25,37 @@
   "separateMajorMinor": true,
   "packageRules": [
     {
-      "description": "These images are updated by Flux image automation (image-automation.yaml files). A second updater would fight it. Add a new automation's image here.",
+      "description": "These images are updated by Flux image automation (image-automation.yaml files). A second updater would fight it. Add a new automation's image here. The media apps are not listed: Renovate owns them (rules below).",
       "matchPackageNames": [
         "/(^|\\/)binwiederhier\\/ntfy$/",
         "/(^|\\/)eclipse-mosquitto$/",
-        "/(^|\\/)mrcas\\/kapowarr$/",
-        "/(^|\\/)ngosang\\/deluge-exporter$/",
-        "/(^|\\/)nwalke\\/tautulli_exporter$/",
         "/(^|\\/)requarks\\/wiki$/",
         "/(^|\\/)ghcr\\.io\\/atuinsh\\/atuin$/",
-        "/(^|\\/)ghcr\\.io\\/axsuul\\/plex-media-server-exporter$/",
-        "/(^|\\/)ghcr\\.io\\/binhex\\/arch-delugevpn$/",
-        "/(^|\\/)ghcr\\.io\\/flaresolverr\\/flaresolverr$/",
         "/(^|\\/)ghcr\\.io\\/henrywhitaker3\\/adguard-exporter$/",
         "/(^|\\/)ghcr\\.io\\/home-assistant\\/home-assistant$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/bazarr$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/kavita$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/lidarr$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/prowlarr$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/radarr$/",
-        "/(^|\\/)ghcr\\.io\\/linuxserver\\/sonarr$/",
-        "/(^|\\/)ghcr\\.io\\/onedr0p\\/exportarr$/",
-        "/(^|\\/)ghcr\\.io\\/recyclarr\\/recyclarr$/",
-        "/(^|\\/)ghcr\\.io\\/seerr-team\\/seerr$/",
         "/(^|\\/)ghcr\\.io\\/tarampampam\\/error-pages$/",
-        "/(^|\\/)ghcr\\.io\\/tautulli\\/tautulli$/",
-        "/(^|\\/)ghcr\\.io\\/willfantom\\/overseerr-exporter$/",
         "/(^|\\/)quay\\.io\\/keycloak\\/keycloak$/",
         "/(^|\\/)quay\\.io\\/prometheuscommunity\\/smartctl-exporter$/"
       ],
       "enabled": false
+    },
+    {
+      "description": "Standard policy for everything Renovate manages: minor, patch, digest and pin updates are pushed straight to main (branch automerge, no PR). Needs the Renovate GitHub App to be allowed to push to main. Rules further down (kubectl, Traefik) can still hold an update for approval.",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
+      "automerge": true,
+      "automergeType": "branch",
+      "platformAutomerge": false
+    },
+    {
+      "description": "A major version is never merged unattended: it opens a PR labelled major.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major"]
+    },
+    {
+      "description": "binhex tags look like 2.2.0-9-01-libtorrentv1 (version, build, rebuild, variant). Stay on the libtorrentv1 variant.",
+      "matchPackageNames": ["ghcr.io/binhex/arch-delugevpn"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<build>\\d+)-\\d+-(?<compatibility>libtorrentv1)$"
     },
     {
       "description": "Flux's own components are upgraded by hand with `flux install --export` (see AGENTS.md), after `flux migrate`.",

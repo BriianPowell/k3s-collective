@@ -56,7 +56,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: bazarr
-          image: ghcr.io/linuxserver/bazarr:1.6.2 # {"$imagepolicy": "media:bazarr"}
+          image: ghcr.io/linuxserver/bazarr:1.6.2
           imagePullPolicy: Always
           # Bazarr writes subtitles next to the media, so it runs as the shared media owner
           # (PUID/PGID below, docs/uids.md).

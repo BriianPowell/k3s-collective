@@ -72,7 +72,10 @@ This repo is public. Never commit secrets, tokens, or notes about which services
   rewrites a policy's `podSelector` and can make it silently select nothing; select on `app.kubernetes.io/name` only. Policies are
   additive, so a pod covered by an allow-all policy must be excluded from it
   (`matchExpressions NotIn`) for a restriction to take effect.
-- **Images:** pin by tag; pin by digest only where Flux image automation (a
+- **Updates:** everything Renovate manages (`renovate.json`, including all `apps/media` images)
+  gets minor, patch and digest updates pushed straight to `main`; majors open a PR. Images:
+  pin by tag;
+  pin by digest only where Flux image automation (a
   `# {"$imagepolicy": ...}` marker) is not managing the line, because automation rewrites it and
   drops the digest. The cluster's Flux is v2.9 and the image APIs are already `v1`, so
   `ImagePolicy.spec.digestReflectionPolicy` exists (default `Never`). Setting it to `Always` makes
