@@ -41,16 +41,53 @@
   "dependencyDashboard": {
     "enabled": true
   },
-  "prConcurrentLimit": 5,
+  "prConcurrentLimit": 10,
   "prHourlyLimit": 10,
   "automerge": false,
   "separateMajorMinor": true,
   "packageRules": [
     {
-      "description": "Flux itself. A new version regenerates clusters/k3s/flux-system/gotk-components.yaml with `flux install --export` and the Components header, so the extra image controllers stay. Always a PR: read the release notes and run `flux migrate` first when a minor needs it.",
+      "description": "Standard policy for everything Renovate manages: minor, patch, digest and pin updates are pushed straight to main (branch automerge). prCreation waits for the checks so a PR only appears when they fail. Needs the Renovate GitHub App to be allowed to push to main. Rules further down can hold an update back.",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
+      "automerge": true,
+      "automergeType": "branch",
+      "platformAutomerge": false,
+      "prCreation": "not-pending"
+    },
+    {
+      "description": "A major version is never merged unattended: it opens a PR labelled major.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major"]
+    },
+    {
+      "description": "Home Assistant releases monthly 'minor' versions that behave like majors (breaking integration changes), and hass-config is checked against this version in CI. Every update, even a patch, is a PR.",
+      "matchPackageNames": ["ghcr.io/home-assistant/home-assistant"],
+      "automerge": false,
+      "prCreation": "immediate"
+    },
+    {
+      "description": "AdGuard Home migrates its config schema on start and old binaries cannot read the newer file (see the comment in helm-release.yaml), and it is the cluster's DNS. Every update is a PR.",
+      "matchPackageNames": ["docker.io/adguard/adguardhome"],
+      "automerge": false,
+      "prCreation": "immediate"
+    },
+    {
+      "description": "Flux itself. A new version regenerates clusters/k3s/flux-system/gotk-components.yaml with `flux install --export` and the Components header, so the extra image controllers stay. Always a PR: run `flux migrate` and read the release notes first.",
       "matchPackageNames": ["fluxcd/flux2"],
       "automerge": false,
+      "prCreation": "immediate",
       "labels": ["dependencies", "flux"]
+    },
+    {
+      "description": "linuxserver/lidarr also publishes an 8.x line (not the stable 2.x release line this runs). Stay on 2.x.",
+      "matchPackageNames": ["ghcr.io/linuxserver/lidarr"],
+      "allowedVersions": "<3.0.0"
+    },
+    {
+      "description": "binhex tags look like 2.2.0-9-01-libtorrentv1 (version, build, rebuild, variant). Stay on the libtorrentv1 variant.",
+      "matchPackageNames": ["ghcr.io/binhex/arch-delugevpn"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<build>\\d+)-\\d+-(?<compatibility>libtorrentv1)$"
     },
     {
       "description": "Registries and datasources without usable release timestamps are exempt from the cooldown, as are update types that have no release age.",
