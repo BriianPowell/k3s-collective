@@ -13,7 +13,7 @@
 # which would rewrite a podSelector here if this file lived next to the apps.
 #
 # Callers were read from each app's live config (Prowlarr Applications, Seerr, Bazarr,
-# Recyclarr, exportarr). Lidarr is scaled to 0; its callers are Prowlarr and exportarr.
+# Recyclarr, exportarr). Lidarr's callers are Prowlarr and exportarr.
 #
 # References:
 # https://kubernetes.io/docs/concepts/services-networking/network-policies/
@@ -181,7 +181,7 @@ spec:
       ports:
         - port: 9696
           protocol: TCP
-    # Sonarr/Radarr call Prowlarr for indexer searches.
+    # Sonarr/Radarr/Lidarr call Prowlarr for indexer searches.
     - from:
         - podSelector:
             matchExpressions:
@@ -191,6 +191,7 @@ spec:
                   - radarr
                   - sonarr-tv
                   - sonarr-anime
+                  - lidarr
                   - prowlarr-exportarr
                   # LazyLibrarian searches indexers through Prowlarr (Torznab).
                   - lazylibrarian
@@ -384,7 +385,7 @@ spec:
       ports:
         - port: 8686
           protocol: TCP
-    # App-to-app callers (Prowlarr pushes indexers; exportarr scrapes). Scaled to 0 today.
+    # App-to-app callers (Prowlarr pushes indexers; exportarr scrapes).
     - from:
         - podSelector:
             matchExpressions:
