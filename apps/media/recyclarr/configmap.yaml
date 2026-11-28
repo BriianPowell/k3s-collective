@@ -7,6 +7,13 @@ metadata:
     app.kubernetes.io/component: config
     app.kubernetes.io/name: recyclarr
 data:
+  # v9 server settings. The sync schedule defaults to daily at midnight; logging stays text for
+  # `kubectl logs` (v9 defaults to JSON when not on a terminal).
+  # https://recyclarr.dev/guide/upgrade-guide/v9.0/
+  settings.yml: |
+    server:
+      logging:
+        format: text
   recyclarr.yml: |
     # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 

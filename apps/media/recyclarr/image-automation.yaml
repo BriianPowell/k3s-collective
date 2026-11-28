@@ -18,7 +18,7 @@ spec:
     namespace: media
   policy:
     semver:
-      range: '>=7.2.2'
+      range: '>=9.0.0'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation

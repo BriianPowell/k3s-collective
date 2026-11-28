@@ -24,11 +24,10 @@ The nodes run NixOS; their configuration is in the separate `nix-config` repo
 
 ## Tools
 
-`kubectl`, `flux` and `jq` are on the Mac's PATH. `helm`, `kustomize`, `kubeconform` and `yq`
-are not installed, and the nix-config devShell no longer provides them (it has only `git` and
-`transcrypt`). Use an ad-hoc shell, e.g.
-`nix shell nixpkgs#kustomize nixpkgs#kubeconform nixpkgs#yq-go -c kustomize build apps/media/plex`
-(`nixpkgs#kubernetes-helm` for `helm`). Re-check with `command -v` if a tool seems missing.
+Entering the repo loads the nix-config `#k3s` devShell through direnv (`.envrc`): `kubectl`, `flux`,
+`jq`, `kustomize`, `kubeconform`, `yq` and `helm`, plus `pre-commit`. Outside direnv (or if a tool
+seems missing, check with `command -v`), run `nix develop path:../nix-config#k3s`, or use an ad-hoc
+shell, e.g. `nix shell nixpkgs#kustomize nixpkgs#kubeconform nixpkgs#yq-go -c kustomize build apps/media/plex`.
 
 ## Conventions
 
