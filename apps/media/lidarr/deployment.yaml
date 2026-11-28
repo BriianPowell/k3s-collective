@@ -91,6 +91,11 @@ spec:
               value: External
             - name: LIDARR__AUTH__REQUIRED
               value: DisabledForLocalAddresses
+            # The 0.8 line (tag 8.x) predates the Auth section and the External method: it reads
+            # the flat config.xml keys and has only None, Basic and Forms. None matches External
+            # here, since oauth2-proxy-media and the NetworkPolicy are the gate.
+            - name: LIDARR__AUTHENTICATIONMETHOD
+              value: None
             # Reject requests whose Host header is not one of these (the public name, then the
             # in-cluster names Prowlarr, Seerr, Bazarr, Recyclarr and exportarr use). Update the
             # public name when hostnames are migrated. No health probes hit the pod IP.
