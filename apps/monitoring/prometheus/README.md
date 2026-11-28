@@ -73,6 +73,6 @@
 | Plex         | ✅              | Supported through [plex-media-server-exporter](https://github.com/axsuul/plex-media-server-exporter) |
 | Prowlarr     | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Radarr       | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
-| Recyclarr    | ❌              | Not currently supported, but also not really needed                                                  |
+| Recyclarr    | ✅              | Native v9 server metrics on the management port (`/metrics`, 7983)                                    |
 | Sonarr       | ✅              | Supported through [exportarr](https://github.com/onedr0p/exportarr)                                  |
 | Tautulli     | ✅              | Supported through [tautulli-exporter](https://github.com/nwalke/tautulli-exporter)                   |

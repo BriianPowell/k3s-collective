@@ -1,0 +1,21 @@
+# Management port only (health probes and Prometheus metrics). The API port is not published:
+# nothing in the cluster calls it and the CLI runs inside the pod with `kubectl exec`.
+# https://recyclarr.dev/reference/monitoring/
+apiVersion: v1
+kind: Service
+metadata:
+  name: recyclarr
+  namespace: media
+  labels:
+    app.kubernetes.io/component: service
+    app.kubernetes.io/name: recyclarr
+spec:
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: recyclarr
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: 7983
+      protocol: TCP
+      targetPort: management

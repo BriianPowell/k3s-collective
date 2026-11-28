@@ -170,7 +170,7 @@ Item **Arr Stack** → `Secret/arr-stack` in `media`:
 | `plex_token` | Plex exporter |
 | `seerr_api_key` | Seerr exporter |
 | `tautulli_api_key` | Tautulli exporter |
-| `secrets.yml` | Recyclarr (multiline YAML → `/config/secrets.yml`) |
+| `secrets.yml` | Recyclarr (multiline YAML, projected to `/config/secrets.yml`) |
 | `recyclarr_api_key` | Recyclarr v9 server API key (`openssl rand -hex 32`, 32+ chars) |
 
 Example `secrets.yml` (plain YAML in 1Password, no markdown fences):

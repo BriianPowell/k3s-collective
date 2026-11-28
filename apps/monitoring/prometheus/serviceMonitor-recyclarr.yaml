@@ -1,0 +1,21 @@
+# https://recyclarr.dev/reference/monitoring/
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: recyclarr
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: service-monitor
+    app.kubernetes.io/name: recyclarr
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/name: recyclarr
+  namespaceSelector:
+    matchNames:
+      - media
+  endpoints:
+    - interval: 1m
+      port: metrics
+      path: /metrics

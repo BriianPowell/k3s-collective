@@ -47,11 +47,44 @@ spec:
                 secretKeyRef:
                   name: arr-stack
                   key: recyclarr_api_key
+            # Config, state and data are separate directories so /config can be read-only and only
+            # /state needs the persistent volume (back it up: it records which Sonarr/Radarr
+            # resources Recyclarr manages). /data holds regenerable downloads and logs.
+            # https://recyclarr.dev/reference/env-vars/
+            - name: RECYCLARR_CONFIG_DIR
+              value: /config
+            - name: RECYCLARR_STATE_DIR
+              value: /state
+            - name: RECYCLARR_DATA_DIR
+              value: /data
           ports:
-            # Server API; nothing in the cluster calls it, so there is no Service.
+            # Server API; nothing in the cluster calls it, so the Service does not publish it.
             - name: http
               containerPort: 7982
               protocol: TCP
+            # Health probes (/livez, /readyz) and Prometheus metrics (/metrics); no API key.
+            # https://recyclarr.dev/reference/monitoring/
+            - name: management
+              containerPort: 7983
+              protocol: TCP
+          # The server opens no port until startup finishes, which includes the first download of
+          # the TRaSH Guides, so allow a few minutes before liveness takes over.
+          startupProbe:
+            httpGet:
+              path: /livez
+              port: management
+            periodSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: management
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: management
+            periodSeconds: 30
           resources:
             requests:
               cpu: 25m
@@ -60,24 +93,15 @@ spec:
               cpu: 500m
               memory: 750Mi
           volumeMounts:
-            - name: recyclarr-pvc
+            - name: config
               mountPath: /config
-            # Mounted rather than copied in a postStart hook: v9 validates every config file when the
-            # server starts, and a copy would race with that and could crash-loop it.
-            - name: secrets
-              mountPath: /config/secrets.yml
-              subPath: secrets.yml
               readOnly: true
-            - name: recyclarr-config
-              mountPath: /config/recyclarr.yml
-              subPath: recyclarr.yml
-              readOnly: true
-            - name: recyclarr-config
-              mountPath: /config/settings.yml
-              subPath: settings.yml
-              readOnly: true
-          # The image's own user is 1000:1000; 1501:1501 is the shared config-only id (docs/uids.md). It only writes /config (fsGroup below makes the
-          # existing root-owned files writable) and reads secrets/config read-only.
+            - name: recyclarr-pvc
+              mountPath: /state
+            - name: data
+              mountPath: /data
+          # The image's own user is 1000:1000; 1501:1501 is the shared config-only id (docs/uids.md). It only writes /state (fsGroup below makes the
+          # existing root-owned files writable) and /data, and reads /config read-only.
           securityContext:
             runAsNonRoot: true
             runAsUser: 1501
@@ -90,15 +114,20 @@ spec:
         - name: recyclarr-pvc
           persistentVolumeClaim:
             claimName: recyclarr-pvc
-        - name: secrets
-          secret:
-            secretName: arr-stack
-            items:
-              - key: secrets.yml
-                path: secrets.yml
-        - name: recyclarr-config
-          configMap:
-            name: recyclarr-config
+        # Everything the server reads, as one read-only directory. Projected rather than copied or
+        # subPath-mounted: v9 validates every file when it starts, so they must all exist already.
+        - name: config
+          projected:
+            sources:
+              - configMap:
+                  name: recyclarr-config
+              - secret:
+                  name: arr-stack
+                  items:
+                    - key: secrets.yml
+                      path: secrets.yml
+        - name: data
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

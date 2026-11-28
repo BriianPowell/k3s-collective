@@ -10,4 +10,5 @@ labels:
 resources:
   - configmap.yaml
   - deployment.yaml
+  - service.yaml
   - image-automation.yaml
