@@ -45,10 +45,12 @@ spec:
           automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
-            runAsUser: 1514
-            runAsGroup: 1514
-            # Lets uid 1514 read the mounted private key (secret files are root-owned otherwise).
-            fsGroup: 1514
+            # The image's own user (docs/uids.md). Renovate installs tools such as `flux` on demand
+            # (binarySource=install) into /opt/containerbase, which only this uid can write.
+            runAsUser: 12021
+            runAsGroup: 12021
+            # Lets that uid read the mounted private key (secret files are root-owned otherwise).
+            fsGroup: 12021
             seccompProfile:
               type: RuntimeDefault
           initContainers:
@@ -139,9 +141,16 @@ spec:
                   value: /tmp
                 - name: LOG_LEVEL
                   value: info
+                # The flux manager regenerates gotk-components.yaml with `flux install --export`
+                # at the new version, so the binary is installed per run (egress is HTTPS only).
+                - name: RENOVATE_BINARY_SOURCE
+                  value: install
               securityContext:
                 allowPrivilegeEscalation: false
-                readOnlyRootFilesystem: true
+                # Writable root filesystem: the tool install writes under /opt/containerbase.
+                # The pod still runs non-root with no capabilities and HTTPS-only egress to the
+                # public internet (infrastructure/policies/manifests/renovate-network.yaml).
+                readOnlyRootFilesystem: false
                 capabilities:
                   drop:
                     - ALL

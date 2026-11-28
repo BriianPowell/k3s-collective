@@ -14,7 +14,7 @@ never share a number by accident and no app runs as a human login on the nodes.
   one, because a host service writes into the same files. Define it in
   `nix-config/hosts/sheol/media-user.nix`.
 - **Leave images with their own fixed uid alone** (FlareSolverr 1000, PostgreSQL 26, Grafana 472, Loki 10001,
-  1Password Connect 999, Nextcloud 33, Mosquitto 1883, and the 65532/65534 exporters): they are
+  1Password Connect 999, Nextcloud 33, Mosquitto 1883, Renovate 12021, and the 65532/65534 exporters): they are
   already separate from any login, and changing them risks the app for no gain. FlareSolverr runs
   as 1000 on purpose: it mounts no volumes, so it can never touch the administrator's files, and
   its Chrome profile paths belong to the image's own user. Mounting a volume there would change
@@ -35,7 +35,7 @@ uid and gid are the same number in every row.
 | 1511 | utilities | Atuin, Reflector |
 | 1512 | wiki | Wiki.js (deprecated and scaled to zero; id kept in case it is brought back) |
 | 1513 | DNS | AdGuard Home (data volume owned by it on the node, since `fsGroup` does not apply to local-path volumes) |
-| 1514 | dependency updates | Renovate CronJob (no persistent volume; `emptyDir` only) |
+| 1514 | (unused) | Was the Renovate CronJob. Renovate now runs as its image's own uid 12021, because tool installs write to `/opt/containerbase`. |
 | 1515 | obsidian-sync | CouchDB for Obsidian LiveSync (data directory on sheol `/mnt/moriyya/obsidian-sync` owned by it) |
 | 1516 | ntfy | ntfy server (volume `/data/ntfy` on abaddon, handed over by `fsGroup`; it is a static `local` volume) |
 
